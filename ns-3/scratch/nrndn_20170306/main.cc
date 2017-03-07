@@ -808,7 +808,7 @@ nrndnExample::InstallNrndnApplications ()
 void nrndnExample::Look_at_clock()
 {
 	
-	//wsy:cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
 }
