@@ -308,25 +308,30 @@ nrndnExample::RunNrndnSim ()
 
 	std::cout<<"读取交通数据"<<std::endl;
 	LoadTraffic();
+	
 	std::cout<<"创造节点"<<std::endl;
 	CreateNodes();
+	
 	std::cout<<"创造设备"<<std::endl;
 	CreateDevices();
+	
 	//InstallInternetStack();
 	std::cout<<"初始化Mobility"<<std::endl;
 	InstallMobility();
+	
 	std::cout<<"安装传感器"<<std::endl;
 	InstallSensor();
+	
 	std::cout<<"初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
-
+	
 	//InstallTestMobility();
 	std::cout<<"安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
+	
 	//InstallTestApplications();
 	std::cout<<"安装交通状况"<<std::endl;
 	InstallTraffics();
-
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
@@ -334,6 +339,9 @@ nrndnExample::RunNrndnSim ()
 
 	Simulator::Stop(Seconds(totalTime));
 	std::cout << "开始运行：\n";
+	//Added by wsy
+	getchar();
+	
 	Simulator::Run();
 
 	Simulator::Destroy();
@@ -566,11 +574,14 @@ void
 nrndnExample::LoadTraffic()
 {
 	cout<<"Method: "<<name<<endl;
+	// Added by wsy
+	getchar();
 	DIR* dir=NULL;
 	DIR* subdir=NULL;
 	//打开数据源
 	if((dir = opendir(inputDir.data()))==NULL)
 		NS_FATAL_ERROR("Cannot open input path "<<inputDir.data()<<", Aborted.");
+	// wsy 未找到路径home/input/name
 	outputDir += '/' + name;
 	if((subdir = opendir(outputDir.data()))==NULL)
 	{
@@ -582,19 +593,22 @@ nrndnExample::LoadTraffic()
 	string routexmlpath = inputDir + "/routes.rou.xml";
 	string fcdxmlpath   = inputDir + "/fcdoutput.xml";
 
+	//wsy 未找到文件result.txt
 	string outfile      = outputDir + "/result.txt";
 
 	std::cout<<"输出文件路径："<<outfile<<std::endl;
 	os.open(outfile.data(),ios::out);
 	std::cout<<"文件打开成功。"<<std::endl;
 
+	// wsy VANETmobilityHelper是什么
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
 	std::cout<<"读取完毕！"<<std::endl;
-//获取结点size
+    //获取结点size
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
+	// wsy accidentNum的值
 	if(accidentNum == 0 || accidentNum == 999)
 	{
 		if(accidentNum != 999) //999表示非随机
@@ -607,7 +621,6 @@ nrndnExample::LoadTraffic()
 		accidentNum = size * 1;
 	}
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
-
 }
 
 void
@@ -753,7 +766,6 @@ nrndnExample::InstallMobility()
 	totalTime = readTotalTime < totalTime ? readTotalTime : totalTime;
 	std::cout<<"总时间："<<totalTime<<std::endl;
 }
-
 
 
 void

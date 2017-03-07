@@ -209,7 +209,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	str<<"PriorityList is";
 
 	// The default order of multimap is ascending order,
-	// but I need a descending order 降序排列
+	// but I need a descending order
 	std::multimap<double,uint32_t,std::greater<double> > sortlist;
 
 	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
@@ -295,8 +295,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			msgdirection.second > 0)// or from front
 	{
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
-		// Is new packet
-		if(!isDuplicatedInterest(nodeId,seq))
+		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			DropInterestePacket(interest);
