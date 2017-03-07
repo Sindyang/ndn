@@ -807,8 +807,8 @@ nrndnExample::InstallNrndnApplications ()
 //这个函数只是1秒执行一次
 void nrndnExample::Look_at_clock()
 {
-
-	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
+	
+	//wsy:cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
 }
