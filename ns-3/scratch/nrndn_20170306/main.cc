@@ -581,7 +581,7 @@ nrndnExample::LoadTraffic()
 	//打开数据源
 	if((dir = opendir(inputDir.data()))==NULL)
 		NS_FATAL_ERROR("Cannot open input path "<<inputDir.data()<<", Aborted.");
-	// wsy 未找到路径home/input/name
+	
 	outputDir += '/' + name;
 	if((subdir = opendir(outputDir.data()))==NULL)
 	{
@@ -593,14 +593,12 @@ nrndnExample::LoadTraffic()
 	string routexmlpath = inputDir + "/routes.rou.xml";
 	string fcdxmlpath   = inputDir + "/fcdoutput.xml";
 
-	//wsy 未找到文件result.txt
 	string outfile      = outputDir + "/result.txt";
 
 	std::cout<<"输出文件路径："<<outfile<<std::endl;
 	os.open(outfile.data(),ios::out);
 	std::cout<<"文件打开成功。"<<std::endl;
 
-	// wsy VANETmobilityHelper是什么
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
 	std::cout<<"读取完毕！"<<std::endl;
@@ -620,7 +618,7 @@ nrndnExample::LoadTraffic()
 			cout << "随机" << endl;
 		accidentNum = size * 1;
 	}
-	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
+	std::cout<<"(main.cc)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
 }
 
 void
