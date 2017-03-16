@@ -285,9 +285,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first
-	//wsy:不懂
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
+		//wsy
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
@@ -409,7 +409,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 	std::vector<uint32_t> newPriorityList;
-	bool IsClearhopCountTag=true;
+	bool IsClearhopCountTag=true; //wsy 
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first. Stop message contains an empty priority list
@@ -750,7 +750,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		NS_LOG_FUNCTION (this);
 
 	//    if the node has multiple out Netdevice face, send the interest package to them all
-	//    makde sure this is a NetDeviceFace!!!!!!!!!!!1
+	//    makde sure this is a NetDeviceFace!!!!!!!!!!!
 	vector<Ptr<Face> >::iterator fit;
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
