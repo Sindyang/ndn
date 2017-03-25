@@ -83,7 +83,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
 	AllowedHelloLoss (2),
-	m_htimer (Timer::CANCEL_ON_DESTROY), //wsy
+	m_htimer (Timer::CANCEL_ON_DESTROY), 
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 	m_interestNonceSeen(m_CacheSize),
@@ -94,10 +94,9 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_runningCounter(0),
 	m_HelloLogEnable(true), 
 	m_gap(20),
-	m_TTLMax(3), //wsy
-	NoFwStop(false)//wsy 初始化后没有重新赋值
+	m_TTLMax(3),
+	NoFwStop(false)
 {
-	//wsy 不懂
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -114,7 +113,6 @@ void NavigationRouteHeuristic::Start()
 	if(!m_runningCounter)
 	{
 		m_running = true;
-		//wsy:这三句是在做什么操作
 		m_offset = MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100));
 		m_htimer.Schedule(m_offset);
 		m_nb.ScheduleTimer();
@@ -250,7 +248,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
 
 		// 2. record the Interest Packet
-		// wsy:标记将要换发的兴趣包？
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
 
 		// 3. Then forward the interest packet directly
@@ -272,22 +269,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//wsy:nrPayload是什么
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:nrPayload和nrheader的关系是什么
 	nrPayload->PeekHeader(nrheader);
 	nodeId=nrheader.getSourceId();
 	seq=interest->GetNonce();
-	//wsy:应该是GetPriorityList??
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
-	//Deal with the stop message first
+	//Deal with the stop message first 
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
-		//wsy
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
@@ -307,7 +300,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			//wsy:这个函数的作用是什么
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
@@ -321,7 +313,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		// Update finish
 
-		//wsy：兴趣包为什么会转发给不在转发优先级列表中的节点
 		//evaluate whether receiver's id is in sender's priority list
 		bool idIsInPriorityList;
 		vector<uint32_t>::const_iterator idit;
@@ -337,10 +328,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
 
 			NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
-			//wsy:NoFwStop初始化为false,在该文件中没有被重新赋值
 			if(NoFwStop)
 				IsPitCoverTheRestOfRoute = false;
-			//wsy
 			if (IsPitCoverTheRestOfRoute)
 			{
 				BroadcastStopMessage(interest);
@@ -353,7 +342,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this, //wsy 不是很懂这个函数
+						&NavigationRouteHeuristic::ForwardInterestPacket, this, 
 						interest);
 			}
 		}
@@ -364,7 +353,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 
 	}
-
 }
 
 
@@ -409,14 +397,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 	std::vector<uint32_t> newPriorityList;
-	bool IsClearhopCountTag=true; //wsy 
+	bool IsClearhopCountTag=true; 
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
 		if(!WillInterestedData(data))// if it is interested about the data, ignore the stop message)
-			//wsy:该函数的作用 
 			ExpireDataPacketTimer(nodeId,signature);
 		return;
 	}
@@ -433,7 +420,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(!isDuplicatedData(nodeId,signature))
 		{
-			//wsy:为什么会收到该节点后方发来的数据分组
 			if(WillInterestedData(data))
 			{
 				// 1.Buffer the data in ContentStore
@@ -459,7 +445,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
-			//wsy:数据包为什么会发给不在转发优先级列表中的节点
 			if(priorityListIt==pri.end())
 			{
 				ExpireDataPacketTimer(nodeId,signature);
@@ -476,7 +461,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
-				//wsy:数据包为什么会发给不在转发优先级列表中的节点
 				if (priorityListIt == pri.end())
 				{
 					DropDataPacket(data);
@@ -484,7 +468,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				}
 				else
 				{
-					//wsy 没看懂嘤嘤
 					bool isTTLReachMax;
 					/*
 					 * 		When a data is received by disinterested node,
@@ -561,7 +544,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			 * */
 			Time sendInterval;
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
-			//wsy 我还是不懂 为啥会出现这种情况
 			if(priorityListIt ==pri.end())
 			{
 				sendInterval = (MilliSeconds(random) + m_gap * m_timeSlot);
@@ -611,7 +593,6 @@ bool NavigationRouteHeuristic::isDuplicatedInterest(
 		return m_sendingInterestEvent[id].count(nonce);
 }
 
-//wsy 这个函数的作用是什么 eventid是什么
 void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_t seq)
 {
 	NS_LOG_FUNCTION (this<< "ExpireInterestPacketTimer id"<<nodeId<<"sequence"<<seq);
@@ -633,7 +614,6 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	interest->SetNack(Interest::NACK_LOOP);
 
 	//3.Remove the useless payload, save the bandwidth
-	//wsy:这里不懂
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader srcheader,dstheader;
 	nrPayload->PeekHeader( srcheader);
@@ -791,7 +771,6 @@ NavigationRouteHeuristic::HelloTimerExpire ()
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	SendHello();
-	//wsy:这部分在干什么
 	m_htimer.Cancel();
 	Time base(HelloInterval - m_offset);
 	m_offset = MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100));
@@ -854,12 +833,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:这句看不懂 获取头部信息？
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
-	//wsy:之后的部分好像没有什么实际操作
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化 
 	{//发送兴趣包
@@ -903,7 +880,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 }
 
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
-{   //wsy nrPayload与srcPayload相比，有哪些不同
+{  
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
@@ -942,7 +919,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
 	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
-	//wsy:entry是啥
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)
 	{
@@ -1000,7 +976,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	return priorityList;
 }
 
-//wsy:这个函数的作用是什么
 void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId,uint32_t signature)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ExpireDataPacketTimer");
@@ -1016,7 +991,6 @@ Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::isInterestedData");
-	//wsy:m_pit的定义在哪里啊
 	return m_pit->Find(data->GetName());
 }
 
@@ -1036,7 +1010,6 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
-	//1. copy the interest packet wsy:为什么是interest packet
 	Ptr<Data> data = Create<Data> (*src);
 
 	//2.Remove the useless payload, save the bandwidth
@@ -1067,7 +1040,6 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	Ptr<Packet> nrPayload=src->GetPayload()->Copy();
 	//Ptr<Packet> newPayload	= Create<Packet> ();
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:去除头部，加入新的转发优先级列表后再加入头部？
 	nrPayload->RemoveHeader(nrheader);
 	double x= m_sensor->getX();
 	double y= m_sensor->getY();
@@ -1087,7 +1059,6 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 //	newPayload->AddPacketTag(hopCountTag);
 
 	// 	2.3 copy the data packet, and install new payload to data
-	//wsy:为什么要复制一遍呢
 	Ptr<Data> data = Create<Data> (*src);
 	data->SetPayload(nrPayload);
 
@@ -1127,7 +1098,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 			else
 			{	if (result.second < 0)
 				{	// from local route behind
-					if(!LookupPri.count(nb->first)) //wsy 为什么不能存在于之前的转发优先级列表中
+					if(!LookupPri.count(nb->first)) 
 						sortInterestBack.insert(
 							std::pair<double, uint32_t>(-result.second,
 									nb->first));
@@ -1246,7 +1217,6 @@ void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 		//App::OnData() will be executed,
 		//including nrProducer::OnData.
 		//But none of its business, just ignore
-		//wsy:这句是在做什么操作
 		(*fit)->SendData(data);
 	}
 }

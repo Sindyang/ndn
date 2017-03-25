@@ -441,10 +441,8 @@ private:
 	//Provides uniform random variables.
 	Ptr<UniformRandomVariable> m_uniformRandomVariable;
 
-	//wsy：m_sensor表示什么
 	Ptr<ndn::nrndn::NodeSensor> m_sensor;
 
-	//wsy:m_nrpit这是啥
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 
 	uint32_t				m_CacheSize;
