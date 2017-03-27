@@ -156,7 +156,6 @@ private:
 	 * @param route		the navigation route which is to be compared 
 	 * \return priority list
 	 */
-	 // wsy:route指的是什么?是当前节点的兴趣路线吗
 	std::vector<uint32_t> GetPriorityList(const vector<string>& route);
 
 	/**
@@ -425,9 +424,9 @@ private:
 	  * Every HelloInterval the node broadcast a  Hello message
 	  */
 	Time HelloInterval;
-	uint32_t AllowedHelloLoss;  ///< \brief Number of hello messages which may be loss for valid link
+	uint32_t AllowedHelloLoss;  ///< \brief Number of hello messages which may be loss for valid link 
 
-	Timer m_htimer;			///< \brief Hello timer
+	Timer m_htimer;			///< \brief Hello timer 
 
 	//It is use for finding a scheduled sending event for a paticular interest packet, nodeid+seq can locate a sending event
 	std::map< uint32_t, std::map<uint32_t, EventId> > m_sendingInterestEvent;
@@ -442,10 +441,8 @@ private:
 	//Provides uniform random variables.
 	Ptr<UniformRandomVariable> m_uniformRandomVariable;
 
-	//wsy：m_sensor表示什么
 	Ptr<ndn::nrndn::NodeSensor> m_sensor;
 
-	//wsy:m_nrpit这是啥
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 
 	uint32_t				m_CacheSize;
@@ -461,7 +458,6 @@ private:
 
 	Ptr<Node>               m_node;///< \brief the node which forwarding strategy is installed
 
-	//wsy:该变量的含义是什么
 	Time	m_offset;  	///< \brief record the last random value in scheduling the HELLO timer
 
 	Neighbors m_nb;  ///< \brief Handle neighbors

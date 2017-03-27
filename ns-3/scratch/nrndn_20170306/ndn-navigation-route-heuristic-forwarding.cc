@@ -36,7 +36,6 @@ namespace nrndn
 
 NS_OBJECT_ENSURE_REGISTERED (NavigationRouteHeuristic);
 
-//wsy:这个函数没有被调用
 TypeId NavigationRouteHeuristic::GetTypeId(void)
 {
 	  static TypeId tid = TypeId ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic")
@@ -84,7 +83,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
 	AllowedHelloLoss (2),
-	m_htimer (Timer::CANCEL_ON_DESTROY),
+	m_htimer (Timer::CANCEL_ON_DESTROY), 
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 	m_interestNonceSeen(m_CacheSize),
@@ -93,12 +92,11 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_preNB (HelloInterval),
 	m_running(false),
 	m_runningCounter(0),
-	m_HelloLogEnable(true),
+	m_HelloLogEnable(true), 
 	m_gap(20),
-	m_TTLMax(3),
+	m_TTLMax(3), 
 	NoFwStop(false)
 {
-
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -117,11 +115,9 @@ void NavigationRouteHeuristic::Start()
 		m_running = true;
 		m_offset = MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100));
 		m_htimer.Schedule(m_offset);
-		//wsy:这句是在做什么操作
 		m_nb.ScheduleTimer();
 	}
 	m_runningCounter++;
-
 }
 
 void NavigationRouteHeuristic::Stop()
@@ -193,6 +189,7 @@ void NavigationRouteHeuristic::RemoveFace(Ptr<Face> face)
 		m_outFaceList.erase(find(m_outFaceList.begin(),m_outFaceList.end(),face));
 	}
 }
+
 void NavigationRouteHeuristic::DidReceiveValidNack(
 		Ptr<Face> incomingFace, uint32_t nackCode, Ptr<const Interest> nack,
 		Ptr<pit::Entry> pitEntry)
@@ -201,7 +198,6 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	 NS_LOG_UNCOND(this <<" is in unused function");
 }
 
-//wsy:已读
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
 {
@@ -212,24 +208,15 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 
 	// The default order of multimap is ascending order（升序）,
 	// but I need a descending order（降序）
-	// wsy：key为距离，value为节点的id?
 	std::multimap<double,uint32_t,std::greater<double> > sortlist;
 
 	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
-	// wsy:unordered_map内部实现了一个哈希表，因此其元素的排列顺序是杂乱的，无序的
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	//wsy:遍历该节点所有的1跳邻居？
 	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
 	{
-		/*wsy:result表示该邻居在当前节点的前方（后方，其他方向）和具体的距离
-		*(true,+value) if it is from the front
-		*(true,-value) if it is from behind
-		*(false,-1)    if it is not on the route of the packet
-		*/
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
 		// Be careful with the order, increasing or descending?
-		//wsy：按照当前节点与这些邻居之间的距离从远到近排序
 		if(result.first && result.second >= 0)
 			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
 	}
@@ -242,7 +229,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		str<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	//wsy:PriorityList中的内容为节点id
 	return PriorityList;
 }
 
@@ -259,8 +245,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
-		//wsy:兴趣包不是没有Payload吗
-		//wsy:GetNrPayload与GetPayload的区别
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
 
 		// 2. record the Interest Packet
@@ -272,7 +256,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//wsy:interest->GetScope()返回的类型是什么
 	if(HELLO_MESSAGE==interest->GetScope())
 	{
 		ProcessHello(interest);
@@ -286,22 +269,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//wsy:nrPayload是什么
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:nrPayload和nrheader的关系是什么
-	nrPayload->PeekHeader( nrheader);
-	//wsy:得到该兴趣包的节点id
+	nrPayload->PeekHeader(nrheader);
 	nodeId=nrheader.getSourceId();
-	//wsy:该兴趣包的序列号
 	seq=interest->GetNonce();
-	//wsy:应该是GetPriorityList??
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first
-	//wsy:不懂
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
 		ExpireInterestPacketTimer(nodeId,seq);
@@ -323,27 +300,20 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			//wsy:这个函数的作用是什么
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		//wsy：remoteRoute为该兴趣分组的兴趣路线
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
 		// Update the PIT here
-		/*wsy:节点将对该兴趣分组的兴趣路线与自身的兴趣路线对比，
-		*并把兴趣分组的源节点ID记入对应的重合路段的感兴趣节点列表中，
-		*以表示对应路段有哪些节点感兴趣。
-		*/
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
-		//wsy:为什么要判断这个呢
 		bool idIsInPriorityList;
 		vector<uint32_t>::const_iterator idit;
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
@@ -358,7 +328,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
 
 			NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
-			//wsy:NoFwStop初始化为false,在该文件中没有被重新赋值
 			if(NoFwStop)
 				IsPitCoverTheRestOfRoute = false;
 
@@ -374,7 +343,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this,
+						&NavigationRouteHeuristic::ForwardInterestPacket, this, 
 						interest);
 			}
 		}
@@ -426,7 +395,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:看不懂
 	nrPayload->PeekHeader(nrheader);
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
@@ -435,11 +403,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first. Stop message contains an empty priority list
-	//wsy:为什么会存在空的可能性
 	if(pri.empty())
 	{
 		if(!WillInterestedData(data))// if it is interested about the data, ignore the stop message)
-			//wsy:该函数的作用 
 			ExpireDataPacketTimer(nodeId,signature);
 		return;
 	}
@@ -456,7 +422,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(!isDuplicatedData(nodeId,signature))
 		{
-			//wsy:为什么会收到该节点后方发来的数据分组
 			if(WillInterestedData(data))
 			{
 				// 1.Buffer the data in ContentStore
@@ -482,7 +447,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
-			//wsy:不懂
 			if(priorityListIt==pri.end())
 			{
 				ExpireDataPacketTimer(nodeId,signature);
@@ -499,7 +463,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
-				//wsy:不懂
 				if (priorityListIt == pri.end())
 				{
 					DropDataPacket(data);
@@ -611,15 +574,11 @@ pair<bool, double>
 NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 {
 	NS_LOG_FUNCTION (this);
-	//wsy:nrPayload是啥
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:PeekHeader是干啥的
 	nrPayload->PeekHeader( nrheader);
-	//wsy:route是该兴趣包的所有兴趣路段吗
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
 	
-	//wsy:所以nrheader到底是啥呢……
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
 
@@ -773,7 +732,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		NS_LOG_FUNCTION (this);
 
 	//    if the node has multiple out Netdevice face, send the interest package to them all
-	//    makde sure this is a NetDeviceFace!!!!!!!!!!!1
+	//    makde sure this is a NetDeviceFace!!!!!!!!!!!
 	vector<Ptr<Face> >::iterator fit;
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
@@ -814,7 +773,6 @@ NavigationRouteHeuristic::HelloTimerExpire ()
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	SendHello();
-
 	m_htimer.Cancel();
 	Time base(HelloInterval - m_offset);
 	m_offset = MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100));
@@ -877,13 +835,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	//wsy:这句看不懂
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
 	//进行邻居变化的检测
-	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
+	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化 
 	{//发送兴趣包
 			//cout<<"邻居数量变化，重发"<<endl;
 	}
@@ -900,7 +857,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				break;
 			}
 		}
-		if(nbChange)
+		if(nbChange) 
 		{//邻居变化，发送兴趣包
 		//	cout<<"邻居变化，重发"<<endl;
 		}
@@ -908,7 +865,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_preNB=m_nb;//更新把上一次的邻居表
 }
 
-//wsy:这个函数有啥用？
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
 {
 	return GetPriorityList(m_sensor->getNavigationRoute());
@@ -926,7 +882,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 }
 
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
-{
+{   
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
@@ -958,15 +914,13 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	return nrPayload;
 }
 
-//wsy:已读
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(const Name& dataName)
 {
 	NS_LOG_INFO("GetPriorityListOfDataSource");
 	std::vector<uint32_t> priorityList;
-	std::multimap<double,uint32_t,std::greater<double> > sortInterest;//wsy:降序排列
-	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;//wsy:降序排列
+	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
+	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
-	//wsy:entry是啥
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)
 	{
@@ -976,23 +930,16 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	}
 	//NS_ASSERT_MSG(entry!=0," entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
 	//		<<" Current dataName:"<<dataName.toUri());
-	//wsy:interestNodes表示什么 当前节点的待处理兴趣列表？
 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 	const vector<string>& route  = m_sensor->getNavigationRoute();
 	if(!interestNodes.empty())// There is interested nodes behind
 	{
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-		//wsy：m_nb为邻居列表
 		for(nb=m_nb.getNb().begin();nb!=m_nb.getNb().end();++nb)//O(n) complexity
 		{
 			std::pair<bool, double> result = m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
 			if(interestNodes.count(nb->first))//O(1) complexity
 			{
-				/*wsy:result表示该邻居在当前节点的前方（后方，其他方向）和具体的距离
-		         *(true,+value) if it is from the front
-		         *(true,-value) if it is from behind
-		         *(false,-1)    if it is not on the route of the packet
-		        */
 				if(!result.first)//from other direction, maybe from other lane behind
 				{
 					NS_LOG_DEBUG("At "<<Simulator::Now().GetSeconds()<<", "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" do not on its route, but in its interest list.Check!!");
@@ -1065,7 +1012,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
-	//1. copy the interest packet
+	//1. copy the data packet 
 	Ptr<Data> data = Create<Data> (*src);
 
 	//2.Remove the useless payload, save the bandwidth
@@ -1154,7 +1101,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 			else
 			{	if (result.second < 0)
 				{	// from local route behind
-					if(!LookupPri.count(nb->first))
+					if(!LookupPri.count(nb->first)) 
 						sortInterestBack.insert(
 							std::pair<double, uint32_t>(-result.second,
 									nb->first));
@@ -1259,8 +1206,6 @@ void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 	NS_LOG_DEBUG ("To content store.(Just a trace)");
 	return;
 }
-
-
 
 void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 {
