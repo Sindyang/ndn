@@ -339,7 +339,7 @@ nrndnExample::RunNrndnSim ()
 
 	Simulator::Stop(Seconds(totalTime));
 	std::cout << "开始运行：\n";
-	//Added by wsy
+	//Added by SY
 	getchar();
 	
 	Simulator::Run();
@@ -574,7 +574,7 @@ void
 nrndnExample::LoadTraffic()
 {
 	cout<<"Method: "<<name<<endl;
-	// Added by wsy
+	// Added by SY
 	getchar();
 	DIR* dir=NULL;
 	DIR* subdir=NULL;

@@ -364,10 +364,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {
 	NS_LOG_FUNCTION (this);
+	//Added by SY
+	cout<<"Function Name: OnData"<<endl;
+	getchar();
+	
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
+		//Added by SY
+		cout<<"Get data packet from APPLICATION"<<endl;
+		getchar();
+		
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
@@ -1191,7 +1199,7 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 	
 	//Added by SY
 	uint32_t signature = data->GetSignature();
-	cout<<"Sending:The signature of data packet is "<<signature<<endl;
+	cout<<"Send:The signature of data packet is "<<signature<<endl;
 	getchar();
 	
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
@@ -1215,7 +1223,7 @@ void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 {
 	//Added by SY
 	uint32_t signature = data->GetSignature();
-	cout<<"Sending:The signature of data packet is "<<signature<<endl;
+	cout<<"Receive:The signature of data packet is "<<signature<<endl;
 	getchar();
 	
 	NS_LOG_DEBUG ("To content store.(Just a trace)");
