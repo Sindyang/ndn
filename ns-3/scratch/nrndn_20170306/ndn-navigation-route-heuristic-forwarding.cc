@@ -1187,13 +1187,13 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::SendDataPacket");
+	vector<Ptr<Face> >::iterator fit;
 	
 	//Added by SY
-	uint32_t signature=data->GetSignature();
-	cout<<"Received: The signature of Data Packet is "<<signature<<endl;
+	uint32_t signature = data->GetSignature();
+	cout<<"Sending:The signature of data packet is "<<signature<<endl;
 	getchar();
 	
-	vector<Ptr<Face> >::iterator fit;
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
 	{
 		(*fit)->SendData(data);
@@ -1214,8 +1214,8 @@ std::unordered_set<uint32_t> NavigationRouteHeuristic::converVectorList(
 void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 {
 	//Added by SY
-	uint32_t signature=data->GetSignature();
-	cout<<"Received: The signature of Data Packet is "<<signature<<endl;
+	uint32_t signature = data->GetSignature();
+	cout<<"Sending:The signature of data packet is "<<signature<<endl;
 	getchar();
 	
 	NS_LOG_DEBUG ("To content store.(Just a trace)");
@@ -1245,4 +1245,5 @@ void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 } /* namespace fw */
 } /* namespace ndn */
 } /* namespace ns3 */
+
 

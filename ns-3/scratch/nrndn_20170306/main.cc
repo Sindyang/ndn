@@ -308,30 +308,25 @@ nrndnExample::RunNrndnSim ()
 
 	std::cout<<"读取交通数据"<<std::endl;
 	LoadTraffic();
-	
 	std::cout<<"创造节点"<<std::endl;
 	CreateNodes();
-	
 	std::cout<<"创造设备"<<std::endl;
 	CreateDevices();
-	
 	//InstallInternetStack();
 	std::cout<<"初始化Mobility"<<std::endl;
 	InstallMobility();
-	
 	std::cout<<"安装传感器"<<std::endl;
 	InstallSensor();
-	
 	std::cout<<"初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
-	
+
 	//InstallTestMobility();
 	std::cout<<"安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
-	
 	//InstallTestApplications();
 	std::cout<<"安装交通状况"<<std::endl;
 	InstallTraffics();
+
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
@@ -339,9 +334,6 @@ nrndnExample::RunNrndnSim ()
 
 	Simulator::Stop(Seconds(totalTime));
 	std::cout << "开始运行：\n";
-	//Added by wsy
-	getchar();
-	
 	Simulator::Run();
 
 	Simulator::Destroy();
@@ -574,14 +566,11 @@ void
 nrndnExample::LoadTraffic()
 {
 	cout<<"Method: "<<name<<endl;
-	// Added by wsy
-	getchar();
 	DIR* dir=NULL;
 	DIR* subdir=NULL;
 	//打开数据源
 	if((dir = opendir(inputDir.data()))==NULL)
 		NS_FATAL_ERROR("Cannot open input path "<<inputDir.data()<<", Aborted.");
-	
 	outputDir += '/' + name;
 	if((subdir = opendir(outputDir.data()))==NULL)
 	{
@@ -602,11 +591,10 @@ nrndnExample::LoadTraffic()
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
 	std::cout<<"读取完毕！"<<std::endl;
-    //获取结点size
+//获取结点size
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
-	// wsy accidentNum的值
 	if(accidentNum == 0 || accidentNum == 999)
 	{
 		if(accidentNum != 999) //999表示非随机
@@ -618,7 +606,8 @@ nrndnExample::LoadTraffic()
 			cout << "随机" << endl;
 		accidentNum = size * 1;
 	}
-	std::cout<<"(main.cc)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
+	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
+
 }
 
 void
@@ -766,6 +755,7 @@ nrndnExample::InstallMobility()
 }
 
 
+
 void
 nrndnExample::InstallNrndnApplications ()
 {
@@ -817,7 +807,7 @@ nrndnExample::InstallNrndnApplications ()
 //这个函数只是1秒执行一次
 void nrndnExample::Look_at_clock()
 {
-	
+
 	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
