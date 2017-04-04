@@ -83,7 +83,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
 	AllowedHelloLoss (2),
-	m_htimer (Timer::CANCEL_ON_DESTROY), 
+	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 	m_interestNonceSeen(m_CacheSize),
@@ -92,11 +92,12 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_preNB (HelloInterval),
 	m_running(false),
 	m_runningCounter(0),
-	m_HelloLogEnable(true), 
+	m_HelloLogEnable(true),
 	m_gap(20),
-	m_TTLMax(3), 
+	m_TTLMax(3),
 	NoFwStop(false)
 {
+
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -118,6 +119,7 @@ void NavigationRouteHeuristic::Start()
 		m_nb.ScheduleTimer();
 	}
 	m_runningCounter++;
+
 }
 
 void NavigationRouteHeuristic::Stop()
@@ -189,7 +191,6 @@ void NavigationRouteHeuristic::RemoveFace(Ptr<Face> face)
 		m_outFaceList.erase(find(m_outFaceList.begin(),m_outFaceList.end(),face));
 	}
 }
-
 void NavigationRouteHeuristic::DidReceiveValidNack(
 		Ptr<Face> incomingFace, uint32_t nackCode, Ptr<const Interest> nack,
 		Ptr<pit::Entry> pitEntry)
@@ -197,6 +198,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	 NS_LOG_FUNCTION (this);
 	 NS_LOG_UNCOND(this <<" is in unused function");
 }
+
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
@@ -206,8 +208,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::ostringstream str;
 	str<<"PriorityList is";
 
-	// The default order of multimap is ascending order（升序）,
-	// but I need a descending order（降序）
+	// The default order of multimap is ascending order,
+	// but I need a descending order
 	std::multimap<double,uint32_t,std::greater<double> > sortlist;
 
 	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
@@ -229,6 +231,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		str<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
+
 	return PriorityList;
 }
 
@@ -273,7 +276,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader(nrheader);
+	nrPayload->PeekHeader( nrheader);
 	nodeId=nrheader.getSourceId();
 	seq=interest->GetNonce();
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
@@ -343,7 +346,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this, 
+						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
 			}
 		}
@@ -363,7 +366,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
-	{                   
+	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
@@ -578,7 +581,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	
+
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
 
@@ -732,7 +735,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		NS_LOG_FUNCTION (this);
 
 	//    if the node has multiple out Netdevice face, send the interest package to them all
-	//    makde sure this is a NetDeviceFace!!!!!!!!!!!
+	//    makde sure this is a NetDeviceFace!!!!!!!!!!!1
 	vector<Ptr<Face> >::iterator fit;
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
@@ -773,6 +776,7 @@ NavigationRouteHeuristic::HelloTimerExpire ()
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	SendHello();
+
 	m_htimer.Cancel();
 	Time base(HelloInterval - m_offset);
 	m_offset = MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100));
@@ -840,7 +844,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
 	//进行邻居变化的检测
-	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化 
+	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
 			//cout<<"邻居数量变化，重发"<<endl;
 	}
@@ -857,7 +861,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				break;
 			}
 		}
-		if(nbChange) 
+		if(nbChange)
 		{//邻居变化，发送兴趣包
 		//	cout<<"邻居变化，重发"<<endl;
 		}
@@ -882,7 +886,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 }
 
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
-{   
+{
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
@@ -1012,7 +1016,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
-	//1. copy the data packet 
+	//1. copy the interest packet
 	Ptr<Data> data = Create<Data> (*src);
 
 	//2.Remove the useless payload, save the bandwidth
@@ -1101,7 +1105,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 			else
 			{	if (result.second < 0)
 				{	// from local route behind
-					if(!LookupPri.count(nb->first)) 
+					if(!LookupPri.count(nb->first))
 						sortInterestBack.insert(
 							std::pair<double, uint32_t>(-result.second,
 									nb->first));
@@ -1183,6 +1187,12 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::SendDataPacket");
+	
+	//Added by SY
+	uint32_t signature=data->GetSignature();
+	cout<<"Received: The signature of Data Packet is "<<signature<<endl;
+	getchar();
+	
 	vector<Ptr<Face> >::iterator fit;
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
 	{
@@ -1203,9 +1213,16 @@ std::unordered_set<uint32_t> NavigationRouteHeuristic::converVectorList(
 
 void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 {
+	//Added by SY
+	uint32_t signature=data->GetSignature();
+	cout<<"Received: The signature of Data Packet is "<<signature<<endl;
+	getchar();
+	
 	NS_LOG_DEBUG ("To content store.(Just a trace)");
 	return;
 }
+
+
 
 void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 {
@@ -1228,5 +1245,4 @@ void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 } /* namespace fw */
 } /* namespace ndn */
 } /* namespace ns3 */
-
 

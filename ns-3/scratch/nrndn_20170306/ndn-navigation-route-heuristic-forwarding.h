@@ -153,7 +153,7 @@ private:
 
 	/**
 	 * @brief Get priority list of interest packet
-	 * @param route		the navigation route which is to be compared 
+	 * @param route		the navigation route which is to be compared
 	 * \return priority list
 	 */
 	std::vector<uint32_t> GetPriorityList(const vector<string>& route);
@@ -424,9 +424,9 @@ private:
 	  * Every HelloInterval the node broadcast a  Hello message
 	  */
 	Time HelloInterval;
-	uint32_t AllowedHelloLoss;  ///< \brief Number of hello messages which may be loss for valid link 
+	uint32_t AllowedHelloLoss;  ///< \brief Number of hello messages which may be loss for valid link
 
-	Timer m_htimer;			///< \brief Hello timer 
+	Timer m_htimer;			///< \brief Hello timer
 
 	//It is use for finding a scheduled sending event for a paticular interest packet, nodeid+seq can locate a sending event
 	std::map< uint32_t, std::map<uint32_t, EventId> > m_sendingInterestEvent;
