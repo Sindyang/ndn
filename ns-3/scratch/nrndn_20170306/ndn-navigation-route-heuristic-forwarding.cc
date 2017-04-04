@@ -379,6 +379,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
+		//Added by SY
+		cout<<"The size of payload is "<<payload->GetSize()<<endl;
 		if(!payload->GetSize())
 			return;
 		//Added by SY
