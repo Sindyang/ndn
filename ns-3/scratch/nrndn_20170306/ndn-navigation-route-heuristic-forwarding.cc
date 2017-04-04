@@ -913,10 +913,12 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	
+	
 	//Added by SY
 	cout<<"the size of srcPayload is: "<<srcPayload->GetSize()<<endl;
+	//Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
+	Ptr<Packet> nrPayload = srcPayload->Copy();
 	
-	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	//Added by SY
 	cout<<"the size of nrPayload is: "<<nrPayload->GetSize()<<endl;
 	
