@@ -381,6 +381,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//Added by SY
 		cout<<"The size of payload is "<<payload->GetSize()<<endl;
+		getchar();
+		
 		if(!payload->GetSize())
 			return;
 		//Added by SY
@@ -903,6 +905,10 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
+	//Added by SY
+	cout<<"Function name: GetNrPayload"<<endl;
+	getchar();
+	
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
 	switch (type)
@@ -926,10 +932,15 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	}
 	}
 
+	
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrPayload->AddHeader(nrheader);
+	//Added by SY
+	cout<<"The nrheader has been added into nrPayload"<<endl;
+	getchar();
+	
 	return nrPayload;
 }
 
