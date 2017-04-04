@@ -377,7 +377,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		getchar();
 		
 		//Added by SY
-		cout<<"Get the data payload"<<data->GetPayload()->GetSize()<<endl;
+		cout<<"Get the data payload: "<<data->GetPayload()->GetSize()<<endl;
 		getchar();
 		
 		
@@ -913,7 +913,13 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	
+	//Added by SY
+	cout<<"the size of srcPayload is: "<<srcPayload->GetSize()<<endl;
+	
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
+	//Added by SY
+	cout<<"the size of nrPayload is: "<<nrPayload->GetSize()<<endl;
+	
 	std::vector<uint32_t> priorityList;
 	switch (type)
 	{
