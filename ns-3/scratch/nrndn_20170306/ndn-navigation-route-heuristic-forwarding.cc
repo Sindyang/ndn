@@ -933,8 +933,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrPayload->AddHeader(nrheader);
-	//Added by SY
-	cout<<"The nrheader has been added into nrPayload"<<endl;
 	return nrPayload;
 }
 
