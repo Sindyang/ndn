@@ -251,6 +251,9 @@ void nrProducer::OnSendingTrafficData()
 		return;
 
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
+	//Added by SY
+	cout<<"The size of m_virtualPayloadSize is:"<<m_virtualPayloadSize<<endl;
+	
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 	dataName->append(m_postfix);//m_postfix is "/", seems OK
 	data->SetName(dataName);
