@@ -381,10 +381,15 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		if(!payload->GetSize())
 			return;
+		//Added by SY
+		cout<<"the payload of data packet is nonzero"<<endl;
+		getchar();
+		
 		data->SetPayload(payload);
 
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
+		
 
 		// 3. Then forward the data packet directly
 		Simulator::Schedule(
