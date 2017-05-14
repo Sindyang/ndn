@@ -241,9 +241,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 {
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
-	
-	//Added by SY
-	cout<<"Function Name: OnInterest"<<endl;
 	if(!m_running) return;
 
 	if(Face::APPLICATION==face->GetFlags())
@@ -367,43 +364,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {
 	NS_LOG_FUNCTION (this);
-	//Added by SY
-	cout<<"Function Name: OnData"<<endl;
-	
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
-		
-		//Added by SY
-		cout<<"Get data packet from APPLICATION"<<endl;
-		getchar();
-		
-		//Added by SY
-		cout<<"Get the data payload: "<<data->GetPayload()->GetSize()<<endl;
-		getchar();
-		
-		
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
-		
-		//Added by SY
-		cout<<"The size of payload is "<<payload->GetSize()<<endl;
-		getchar();
-		
 		if(!payload->GetSize())
 			return;
-		
-		//Added by SY
-		cout<<"the payload of data packet is nonzero"<<endl;
-		getchar();
-		
 		data->SetPayload(payload);
 
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
-		
 
 		// 3. Then forward the data packet directly
 		Simulator::Schedule(
@@ -915,16 +888,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
-	
-	//Added by SY
-	cout<<"the size of srcPayload is: "<<srcPayload->GetSize()<<endl;
-	
-	//Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
-	Ptr<Packet> nrPayload = Create<Packet>(srcPayload->GetSize());
-	
-	//Added by SY
-	cout<<"the size of nrPayload is: "<<nrPayload->GetSize()<<endl;
-	
+	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
 	switch (type)
 	{
@@ -1224,12 +1188,6 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::SendDataPacket");
 	vector<Ptr<Face> >::iterator fit;
-	
-	//Added by SY
-	uint32_t signature = data->GetSignature();
-	cout<<"Send:The signature of data packet is "<<signature<<endl;
-	getchar();
-	
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
 	{
 		(*fit)->SendData(data);
@@ -1249,11 +1207,6 @@ std::unordered_set<uint32_t> NavigationRouteHeuristic::converVectorList(
 
 void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 {
-	//Added by SY
-	uint32_t signature = data->GetSignature();
-	cout<<"Receive:The signature of data packet is "<<signature<<endl;
-	getchar();
-	
 	NS_LOG_DEBUG ("To content store.(Just a trace)");
 	return;
 }
