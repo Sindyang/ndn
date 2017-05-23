@@ -895,6 +895,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
+	//added by sy
+	cout<<"nrPayload's size "<<nrPayload->GetSize()<<endl;
 	
 	std::vector<uint32_t> priorityList;
 	switch (type)
@@ -911,8 +913,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				cout<<"(forwardint.cc)"<<m_node->GetId()<<"优先级列表为空"<<endl;
-				getchar();
+				cout<<"(forwardint.cc)"<<m_node->GetId()<<" 优先级列表为空"<<endl;
 				return Create<Packet>();
 			}	
 			break;
