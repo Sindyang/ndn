@@ -21,6 +21,8 @@
 #include "NodeSensor.h"
 
 #include <vector>
+#include <set>
+#include <queue>
 
 
 namespace ns3
@@ -97,7 +99,9 @@ public:
 
   virtual Ptr<Entry>
   Next (Ptr<Entry>);
-
+  //获取车辆当前所在的路段
+  //added by siukwan
+  std::string getCurrentLane();
   /**
    * This function update the pit using Interest packet
    * not simply add the name into the pit
@@ -105,7 +109,7 @@ public:
    */
   bool UpdatePit(const std::vector<std::string>& route,const uint32_t& id);
 
-
+  void showPit();
   void laneChange(std::string oldLane, std::string newLane);
 
   //小锟添加，2015-8-23

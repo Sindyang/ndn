@@ -43,7 +43,8 @@ namespace nrndn
  */
 class NavigationRouteHeuristic: public GreenYellowRed
 {
-public:
+public: 
+    int m_nbChange_mode; //added by siukwan
 	static TypeId
 	GetTypeId(void);
 
@@ -475,6 +476,8 @@ private:
 	uint32_t m_TTLMax;// \brief This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded
 
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
+	
+	double m_resendInterestTime;//added by siukwan
 };
 } /* namespace nrndn */
 } /* namespace fw */

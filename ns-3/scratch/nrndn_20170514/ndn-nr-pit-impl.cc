@@ -77,7 +77,10 @@ NrPitImpl::NotifyNewAggregate ()
 			m_sensor->TraceConnectWithoutContext("LaneChange",
 					MakeCallback(&NrPitImpl::laneChange, this));
 
+			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
+			cout<<"(ndn-nr-pit-impl)初始化PIT"<<std::endl;
+			getchar();
 			InitializeNrPitEntry();
 		}
 	}
@@ -85,17 +88,36 @@ NrPitImpl::NotifyNewAggregate ()
   Pit::NotifyNewAggregate ();
 }
 
+//获取车辆当前所在的路段
+std::string NrPitImpl::getCurrentLane()
+{
+	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
+	Ptr<Entry> entry = *pit;
+	//获取兴趣
+	Name::const_iterator head=entry->GetInterest()->GetName().begin();
+	//当前路段为：uriConvertToString(head->toUri())
+	return uriConvertToString(head->toUri());
+}
+
+//更新PIT表
 bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& id)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
+	//获取兴趣
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
 			std::find(route.begin(),route.end(),head->toUri());
+			
+	//当前路段为：uriConvertToString(head->toUri())
+	cout<<"当前路段"<<uriConvertToString(head->toUri())<<std::endl;
+	
+	//找不到
 	if(it==route.end())
 		return false;
+	//找到，把后面的添加进去
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
@@ -104,14 +126,30 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+			cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
+			getchar();
 		}
 		else
 			break;
 
 	}
+	cout<<"(pit-impl.cc)添加后"<<id<<endl;
+	showPit();
+	getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
 	NS_LOG_DEBUG("update pit:"<<os.str());
 	return true;
+}
+
+void 
+NrPitImpl::showPit()
+{
+	cout<<"(pit-impl.cc)显示pit内容："<<endl;
+	for(uint32_t i=0;i<m_pitContainer.size();++i)
+	{
+		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);
+		pitEntry_siu->listPitEntry();
+	}
 }
 
 void
@@ -145,9 +183,12 @@ NrPitImpl::Find (const Name &prefix)
 	//NS_ASSERT_MSG(false,"In NrPitImpl,NrPitImpl::Find (const Name &prefix) should not be invoked");
 	 NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
 	 std::vector<Ptr<Entry> >::iterator it;
-	 NS_ASSERT_MSG(m_pitContainer.size()!=0,"Empty pit container. No initialization?");
+	  if(m_pitContainer.size() == 0)
+	 	return 0;
+	 //NS_ASSERT_MSG(m_pitContainer.size()!=0,"Empty pit container. No initialization?");
 	 for(it=m_pitContainer.begin();it!=m_pitContainer.end();++it)
 	 {
+		  //如果找到兴趣，就返回入口
 		 if((*it)->GetPrefix()==prefix)
 			 return *it;
 	 }
@@ -166,12 +207,15 @@ NrPitImpl::Create (Ptr<const Interest> header)
 	return 0;
 }
 
+//PIT表初始化
 bool
 NrPitImpl::InitializeNrPitEntry()
 {
 	NS_LOG_FUNCTION (this);
+	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
 	std::vector<std::string>::const_iterator rit;
+	//每个路段配置一个兴趣
 	for(rit=route.begin();rit!=route.end();++rit)
 	{
 		Ptr<Name> name = ns3::Create<Name>('/'+*rit);
@@ -280,48 +324,61 @@ std::string NrPitImpl::uriConvertToString(std::string str)
 	}
 	return ret;
 }
+
 void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 {
+	cout << "ndn-nr-pit-impl.cc:" << "lanechange" <<endl;
+	int needtoUpdateroot=0;
 	if (oldLane.empty()
 			|| (ndn::nrndn::NodeSensor::emptyLane == oldLane
 					&& ndn::nrndn::NodeSensor::emptyLane != newLane))
 		return;
 	NS_LOG_INFO ("Deleting old lane pit entry of "<<oldLane);
+	cout << "ndn-nr-pit-impl.cc:" << "Deleting old lane pit entry of "<<oldLane <<endl;
 
 	std::vector<Ptr<Entry> >::iterator it;
 	it =m_pitContainer.begin();
+
 	if(it == m_pitContainer.end())
-	{//pit表为空
-		return;
+	{
+		//已经为空，不用删除
+		cout << "pit container is NULL" << endl;
+		return ;
 	}
 
+	cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
 	bool IsOldLaneAtPitBegin =(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())==(oldLane));
+	cout << "ndn-nr-pit-impl.cc:" << "IsOldLaneAtPitBegin" <<endl;
 
 	if(!IsOldLaneAtPitBegin)
 	{
-		std::cout<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
-
+		cout<< "ndn-nr-pit-impl.cc:"<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
 		//遍历整个Pit
 		std::vector<Ptr<Entry> >::iterator itTraversal;
 		itTraversal =m_pitContainer.begin();
 		bool findOldLane=false;
-		std::cout<<"寻找oldLane中...\n";
+		cout<<"寻找oldLane中...\n";
 		for(;itTraversal!=m_pitContainer.end();itTraversal++)
-		{//遍历整个PIT表，寻找oldLane是否在表中
+		{
+			//遍历整个PIT表，寻找oldLane是否在表中
 			if( uriConvertToString((*itTraversal)->GetInterest()->GetName().get(0).toUri()) == (oldLane) )
-			{//如果找到则直接跳出
+			{
+				//如果找到则直接跳出
 				findOldLane=true;
 				break;
 			}
 		}
 		if(findOldLane)
 		{
+			cout << "ndn-nr-pit-impl.cc:" << "findOldLane" <<endl;
+			//就路段不在头部，但是在后面
+			needtoUpdateroot=1;
 			it =m_pitContainer.begin();
 			int a=0;
 			while(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())!=(oldLane)
 					&&it!=m_pitContainer.end())
 			{
-				std::cout<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				cout<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				a++;
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				m_pitContainer.erase(it);
@@ -329,36 +386,48 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			}
 			if(it<=m_pitContainer.end())
 			{
-				std::cout<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				cout<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				//2. erase it
 				m_pitContainer.erase(it);
-				std::cout<<"删除完毕\n";
+				cout<<"删除完毕\n";
 			}
 			else
-				std::cout<<"删除完毕：迭代器为空\n";
+			{
+				cout<<"删除完毕：迭代器为空\n";
+			}
 
 		}
 		else
 		{
-			std::cout<<"没找到...\n";
+			/cout<<"没找到...\n";
 		}
 	}
 	else
-	{//旧路段在pit头部才进行删除
-
-			//报错？
+	{
+		//旧路段在pit头部才进行删除
+		cout << "ndn-nr-pit-impl.cc:" << "旧路段在pit头部才进行删除" <<endl;
+		//报错？
 		//NS_ASSERT_MSG(IsOldLaneAtPitBegin,"The old lane should at the beginning of the pitContainer. Please Check~");
 		//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
 		DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 
+		//就路段在头部，但是在后面
+		needtoUpdateroot=2;
 		//2. erase it
 		m_pitContainer.erase(it);
-		//std::cout<<"erase OK!"<<std::endl;
+		cout<<"erase OK!"<<std::endl;
 		return;
 	}
-
+	if(needtoUpdateroot)
+	{
+		cout<<"\n(ndn-nr-pit-impl)needtoUpdateroot新路段："<<newLane<<"  "<<needtoUpdateroot<<endl;
+   	    m_nrtree->levelOrder();
+		m_nrtree->updateNowRoot(m_nrtree->prefix+newLane);
+		m_nrtree->levelOrder();
+		getchar();
+	}
 }
 
 void NrPitImpl::DoInitialize(void)
