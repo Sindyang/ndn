@@ -66,6 +66,18 @@ public:
 	{
 		m_sourceId = sourceId;
 	}
+	
+	//added by siukwan
+	uint32_t getForwardId() const
+	{
+		return m_forwardId;
+	}
+
+	//added by siukwan
+	void setForwardId(uint32_t forwardId)
+	{
+		m_forwardId = forwardId;
+	}
 
 	double getX() const
 	{
@@ -86,6 +98,17 @@ public:
 	{
 		m_y = y;
 	}
+	
+	//added by siukwan
+	std::string getLane() const
+	{
+		return m_lane;
+	}
+	//added by siukwan
+	void setLane(std::string lane)
+	{
+		m_lane = lane;
+	}
 
 	//\}
 
@@ -95,6 +118,7 @@ private:
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
+	std::string m_lane;
 };
 
 } /* namespace nrndn */

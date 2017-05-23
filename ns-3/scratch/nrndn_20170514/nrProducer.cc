@@ -81,8 +81,7 @@ nrProducer::~nrProducer()
 void nrProducer::OnInterest(Ptr<const Interest> interest)
 {
 
-	NS_ASSERT_MSG(false,"nrProducer should not be supposed to"
-			" receive Interest Packet!!");
+	//NS_ASSERT_MSG(false,"nrProducer should not be supposed to"" receive Interest Packet!!");
 	/*
 	App::OnInterest(interest); // tracing inside
 
@@ -263,21 +262,31 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_DEBUG(
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
-	//siukwan add 2015.8.28
-	std::cout<<"siu:"<<"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-
+	//siukwan add 2016.6.28
+	cout<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
+	getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-
+	cout<<"nrProducer.cc: m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
+	getchar();
+	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
 						data->GetSignature(), m_prefix.get(0).toUri());
+	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
+	cout<<"nrProducer.cc:SetNodeSize"<<std::endl;
+	getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
+	cout<<"nrProducer.cc:SetInterestedNodeSize"<<std::endl;
+	getchar();
 	m_face->ReceiveData(data);
+	cout<<"nrProducer.cc:ReceiveData"<<std::endl;
+	getchar();
 	m_transmittedDatas(data, this, m_face);
-
+	cout<<"nrProducer.cc:m_transmittedDatas"<<std::endl;
+	getchar();
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)
@@ -368,10 +377,12 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
-
+	cout << "sensor->getNavigationRoute()" << endl;
+	getchar();
 	it =std::find(route.begin(),route.end(),currentLane);
 
 	it2=std::find(it,route.end(),lane);
+	cout << "return (it2!=route.end());" << endl;
 
 	return (it2!=route.end());
 }

@@ -48,20 +48,33 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	uint32_t interestSize=0;
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
+	int idx = 0;
+	cout<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
+		cout << "producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
 		else
-		{
+		{//非活跃节点直接跳过，避免段错误
+	        idx++;
+			cout << "no active" << endl;
 			continue;
 		}
+		//cout << "IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
+		{
 			++interestSize;
+			cout<<idx<<" ";
+		}
+		idx++;
+		cout << "idx++ " << endl;
 	}
+	cout<<"utils:统计结束"<<endl;
+	getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
 void nrUtils::SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize)
@@ -210,6 +223,10 @@ double nrUtils::GetAverageHitRate()
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
+				
+				//cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
+				//cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
+				//getchar();
 			}
 
 		}
@@ -313,6 +330,9 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	DataByteSent+= size;
+	cout << "nrUtils.cc data size" << size << endl;
+	getchar();
+	
 }
 
 void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
@@ -321,9 +341,16 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	if(2==interest->GetScope())//Hello message
+	{
 		HelloByteSent += size;
+		cout << "nrUtils.cc Hello size" << size << endl;
+	}	
 	else
+	{
 		InterestByteSent += size;
+		cout << "nrUtils.cc Interest size" << size << endl;
+		getchar();
+	}
 }
 
 } /* namespace nrndn */
