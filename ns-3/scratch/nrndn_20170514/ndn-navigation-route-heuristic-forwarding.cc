@@ -944,14 +944,20 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	{
 		cout<<" entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
 			<<" Current dataName:"<<dataName.toUri();
+		getchar();
 		return priorityList;
 	}
 	//NS_ASSERT_MSG(entry!=0," entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
 	//		<<" Current dataName:"<<dataName.toUri());
 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 	const vector<string>& route  = m_sensor->getNavigationRoute();
+	//added by sy
+	cout<<"GetPriorityListOfDataSource："<<interestNodes.size()<<endl;
+	getchar();
 	if(!interestNodes.empty())// There is interested nodes behind
 	{
+		cout<<"数据包所在的位置有兴趣节点"<<endl;
+		getchar();
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 		for(nb=m_nb.getNb().begin();nb!=m_nb.getNb().end();++nb)//O(n) complexity
 		{
@@ -992,6 +998,13 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		//step 2. push the not interested nodes
 		for(it = sortNotInterest.begin();it!=sortNotInterest.end();++it)
 			priorityList.push_back(it->second);
+		
+		//added by sy
+		if(priorityList.empty())
+		{
+			cout<<"GetPriorityListOfDataSource: "<<m_node->GetId()<<" "<<"转发优先级列表为空"<<endl;
+			getchar();
+		}
 	}
 	return priorityList;
 }
