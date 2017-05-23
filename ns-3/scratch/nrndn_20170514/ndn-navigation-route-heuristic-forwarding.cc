@@ -372,9 +372,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// 1.Set the payload
 		//added by sy
 		cout<<"size before GetNrPayload: "<<data->GetPayload()->GetSize()<<endl;
+		getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//added by sy
 		cout<<"size after GetNrPayload: "<<payload->GetSize()<<endl;
+		getchar();
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -910,6 +912,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			{
 				//added by sy
 				cout<<"(forwardint.cc)"<<m_node->GetId()<<"优先级列表为空"<<endl;
+				getchar();
 				return Create<Packet>();
 			}	
 			break;
