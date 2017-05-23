@@ -370,7 +370,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
+		//added by sy
+		cout<<"size before GetNrPayload: "<<data->GetSize()<<endl;
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
+		//added by sy
+		cout<<"size after GetNrPayload: "<<payload->GetSize()<<endl;
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -889,26 +893,32 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
+	
 	std::vector<uint32_t> priorityList;
 	switch (type)
 	{
-	case HeaderHelper::INTEREST_NDNSIM:
-	{
-		priorityList = GetPriorityList();
-		break;
-	}
-	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
-	{
-		priorityList = GetPriorityListOfDataSource(dataName);
-		if(priorityList.empty())//There is no interested nodes behind
-			return Create<Packet>();
-		break;
-	}
-	default:
-	{
-		NS_ASSERT_MSG(false, "unrecognize packet type");
-		break;
-	}
+		case HeaderHelper::INTEREST_NDNSIM:
+		{
+			priorityList = GetPriorityList();
+			break;
+		}
+		case HeaderHelper::CONTENT_OBJECT_NDNSIM:
+		{
+			priorityList = GetPriorityListOfDataSource(dataName);
+			//There is no interested nodes behind
+			if(priorityList.empty())
+			{
+				//added by sy
+				cout<<"(forwardint.cc)"<<m_node->GetId()<<"优先级列表为空"<<endl;
+				return Create<Packet>();
+			}	
+			break;
+		}
+		default:
+		{
+			NS_ASSERT_MSG(false, "unrecognize packet type");
+			break;
+		}
 	}
 
 	const double& x = m_sensor->getX();
