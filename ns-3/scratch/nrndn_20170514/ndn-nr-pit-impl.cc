@@ -133,7 +133,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			break;
 
 	}
-	cout<<"(pit-impl.cc)添加后"<<id<<std::endl;
+	std::cout<<"(pit-impl.cc)添加后"<<id<<std::endl;
 	showPit();
 	getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
