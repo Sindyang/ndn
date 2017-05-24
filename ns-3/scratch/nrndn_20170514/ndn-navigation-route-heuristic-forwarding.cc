@@ -96,7 +96,6 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false)
-	m_resendInterestTime(-1) //added by siukwan
 {
     m_firstSendInterest=true; //added by siukwan
 	m_nbChange_mode=0; //added by siukwan
@@ -257,7 +256,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
-		m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds(); //added by siukwan
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
@@ -304,10 +302,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
@@ -381,10 +377,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
-	getchar();
-	
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
 	{

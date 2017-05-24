@@ -114,6 +114,7 @@ public:
 
 private:
 	uint32_t		m_sourceId;	//\ (source)	id of source node (source)
+	uint32_t		m_forwardId;//\ (source)	id of forward node (source)
 	double			m_x;		//\ (forwarder)	forwarder x coordinate, not source node position!!!!
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
