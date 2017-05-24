@@ -566,7 +566,7 @@ nrndnExample::Report ()
 void
 nrndnExample::LoadTraffic()
 {
-	cout<<"Method: "<<name<<endl;
+	cout<<"(main.cc)Method: "<<name<<endl;
 	DIR* dir=NULL;
 	DIR* subdir=NULL;
 	//打开数据源

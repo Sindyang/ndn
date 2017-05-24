@@ -298,7 +298,7 @@ void nrProducer::OnData(Ptr<const Data> contentObject)
 
 void nrProducer::ScheduleAccident(double t)
 {
-	std::cout<<"(nrProducer.cc-ScheduleAccident)siu: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
+	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData,this);
 }
@@ -311,7 +311,7 @@ void nrProducer::setContentStore(std::string prefix)
 
 void nrProducer::addAccident()
 {
-	std::cout<<"(nrProducer.cc-addAccident)siu: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 	double mean=start+(end-start)/2;
@@ -350,7 +350,7 @@ void nrProducer::addAccident(double iType)
 
 	}*/
 
-	std::cout<<"(nrProducer.cc-addAccident)siu: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
@@ -358,7 +358,7 @@ void nrProducer::addAccident(double iType)
 	for(double dTime = start + 100; dTime < end - 50; dTime += iType)
 	{
 		ScheduleAccident(dTime);
-		std::cout<<"(nrProducer.cc-addAccident)siu: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+		std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
 	}
 
 	return;
@@ -377,12 +377,12 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
-	cout << "sensor->getNavigationRoute()" << endl;
+	cout << "(nrProducer.cc-IsInterestLane)sensor->getNavigationRoute()" << endl;
 	getchar();
 	it =std::find(route.begin(),route.end(),currentLane);
 
 	it2=std::find(it,route.end(),lane);
-	cout << "return (it2!=route.end());" << endl;
+	cout << "(nrProducer.cc-IsInterestLane)return (it2!=route.end());" << endl;
 
 	return (it2!=route.end());
 }
