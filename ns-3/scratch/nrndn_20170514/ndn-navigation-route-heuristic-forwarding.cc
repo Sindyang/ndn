@@ -519,8 +519,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
 					if (isTTLReachMax)
 					{
-						cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() 
-							<< " nodeId:" << nodeId << " sig:" << signature << " fwdID:" << forwardId << endl;
 						cout << "isTTLReachMax:" <<  hopCountTag.Get() << endl;
 						getchar();
 						DropDataPacket(data);

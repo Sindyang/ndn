@@ -446,6 +446,7 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 
+	bool m_firstSendInterest;
 	uint32_t				m_CacheSize;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
