@@ -101,9 +101,9 @@ void nrConsumer::ScheduleNextPacket()
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"test2\n";
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)"<<GetNode()->GetId()<<" ";
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)NodeId "<<GetNode()->GetId()<<endl;
 	//getchar();
-	cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n";
+	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n";
 	//3. Schedule next packet
 	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();

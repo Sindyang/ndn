@@ -132,7 +132,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			break;
 
 	}
-	std::cout<<"(pit-impl.cc)添加后"<<id<<std::endl;
+	std::cout<<"(pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
@@ -143,7 +143,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 void 
 NrPitImpl::showPit()
 {
-	std::cout<<"(pit-impl.cc)显示pit内容："<<std::endl;
+	std::cout<<"(pit-impl.cc-showPit)显示pit内容："<<std::endl;
 	for(uint32_t i=0;i<m_pitContainer.size();++i)
 	{
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);

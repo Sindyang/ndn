@@ -386,11 +386,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		//added by sy
-		cout<<"size before GetNrPayload: "<<data->GetPayload()->GetSize()<<endl;
+		cout<<"(forwarding.cc-OnData)size before GetNrPayload: "<<data->GetPayload()->GetSize()<<endl;
 		getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//added by sy
-		cout<<"size after GetNrPayload: "<<payload->GetSize()<<endl;
+		cout<<"(forwarding.cc-OnData)size after GetNrPayload: "<<payload->GetSize()<<endl;
 		getchar();
 		if(!payload->GetSize())
 			return;
@@ -621,7 +621,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	getchar();
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
-	cout << "(forwarding.cc-packetFromDirection) result " << route.size() <<endl;
+	cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
 	getchar();
 	return result;
 }
@@ -961,7 +961,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				cout<<"(forwardint.cc-GetNrPayload)"<<m_node->GetId()<<" 优先级列表为空"<<endl;
+				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 优先级列表为空"<<endl;
 				return Create<Packet>();
 			}	
 			break;
@@ -1000,7 +1000,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 	const vector<string>& route  = m_sensor->getNavigationRoute();
 	//added by sy
-	cout<<"(GetPriorityListOfDataSource) the size of interestNodes: "<<interestNodes.size()<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the size of interestNodes: "<<interestNodes.size()<<endl;
 	getchar();
 	
 	if(!interestNodes.empty())// There is interested nodes behind

@@ -162,7 +162,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	std::cout<<"(nrProducer.cc-StartApplication) node: " << GetNode ()->GetId ()<<endl;
+	std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
@@ -243,7 +243,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
-	std::cout<<"siu:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 
@@ -263,11 +263,11 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG(
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
-	cout<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
 	getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	cout<<"nrProducer.cc: m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
 	getchar();
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
@@ -275,17 +275,17 @@ void nrProducer::OnSendingTrafficData()
 						data->GetSignature(), m_prefix.get(0).toUri());
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
-	cout<<"nrProducer.cc:SetNodeSize"<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
 	getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
-	cout<<"nrProducer.cc:SetInterestedNodeSize"<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
 	getchar();
 	m_face->ReceiveData(data);
-	cout<<"nrProducer.cc:ReceiveData"<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
 	getchar();
 	m_transmittedDatas(data, this, m_face);
-	cout<<"nrProducer.cc:m_transmittedDatas"<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
 	getchar();
 }
 

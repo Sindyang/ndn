@@ -130,7 +130,7 @@ const std::string& SumoNodeSensor::getType()
 const std::string& SumoNodeSensor::getLane()
 {
 	NodeSensor::getLane();
-	cout << "(SumoNodeSensor.cc-getLane)" << endl;
+	//cout << "(SumoNodeSensor.cc-getLane)" << endl;
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
 	//cout << "Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();" << endl;
 	Vector pos = mobility->GetPosition();
@@ -138,7 +138,7 @@ const std::string& SumoNodeSensor::getLane()
 	Ptr<Node> node = this->GetObject<Node>();
 	//cout << "node" << endl;
 	uint32_t id = node->GetId();
-	cout << "(SumoNodeSensor.cc-getLane)" << "id " << id << endl;
+	cout << "(SumoNodeSensor.cc-getLane)" << "NodeId " << id << endl;
 	
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
@@ -225,11 +225,11 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
-	cout << "(SumoNodeSensor.cc-getDistanceWith )" << endl;
+	cout << "(SumoNodeSensor.cc-getDistanceWith)" << endl;
 	const string& localLane = getLane();
-	cout << "(SumoNodeSensor.cc-getLane )" << endl;
+	//cout << "(SumoNodeSensor.cc-getLane)" << endl;
 	const double& localPos  = getPos();
-	cout << "(SumoNodeSensor.cc-getPos )" << endl;
+	//cout << "(SumoNodeSensor.cc-getPos )" << endl;
 
 	vector<string>::const_iterator localLaneIterator;
 	vector<string>::const_iterator remoteLaneIterator;

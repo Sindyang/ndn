@@ -49,19 +49,19 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	cout<<"感兴趣的节点：";
+	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
-		cout << "producer " << endl;
+		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
 		else
 		{//非活跃节点直接跳过，避免段错误
 	        idx++;
-			cout << "no active" << endl;
+			cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
 			continue;
 		}
 		//cout << "IsInterestLane " << endl;
@@ -71,9 +71,9 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 			cout<<idx<<" ";
 		}
 		idx++;
-		cout << "idx++ " << endl;
+		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
 	}
-	cout<<"utils:统计结束"<<endl;
+	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) utils:统计结束"<<endl;
 	getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
@@ -224,9 +224,9 @@ double nrUtils::GetAverageHitRate()
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
 				
-				//cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
-				//cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
-				//getchar();
+				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
+				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
+				getchar();
 			}
 
 		}

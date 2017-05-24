@@ -106,7 +106,7 @@ void EntryNrImpl::CleanAllNodes()
 //cout表项内容
 void EntryNrImpl::listPitEntry()
 {
-	std::cout<<"(pit-entry.cc)兴趣："<<m_interest_name<<" ";
+	std::cout<<"(pit-entry.cc-listPitEntry)兴趣："<<m_interest_name<<" ";
 /*	std::cout<<"(pit-entry.cc)id及耗时:"<<std::endl;
 	for(std::unordered_map< uint32_t,EventId>::iterator ite = m_nbTimeoutEvent.begin();ite!=m_nbTimeoutEvent.end();ite++)
 	{
