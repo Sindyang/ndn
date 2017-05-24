@@ -76,11 +76,10 @@ NrPitImpl::NotifyNewAggregate ()
 		{
 			m_sensor->TraceConnectWithoutContext("LaneChange",
 					MakeCallback(&NrPitImpl::laneChange, this));
-
 			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
-			std::cout<<"(ndn-nr-pit-impl)初始化PIT"<<std::endl;
-			getchar();
+			std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl;
+			//getchar();
 			InitializeNrPitEntry();
 		}
 	}
@@ -112,7 +111,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			std::find(route.begin(),route.end(),head->toUri());
 			
 	//当前路段为：uriConvertToString(head->toUri())
-	std::cout<<"当前路段"<<uriConvertToString(head->toUri())<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)当前路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
 	//找不到
 	if(it==route.end())

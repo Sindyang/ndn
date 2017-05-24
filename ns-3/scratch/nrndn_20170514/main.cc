@@ -188,7 +188,7 @@ int main (int argc, char **argv)
 		NS_FATAL_ERROR("Configuration failed. Aborted.");
 	if(test.getMethod() == 3)
 	{
-		cout<<"编译完成，退出程序"<<endl;
+		cout<<"(main.cc)编译完成，退出程序"<<endl;
 		return 0;
 	}
 	test.Run();
@@ -244,6 +244,7 @@ nrndnExample::~nrndnExample()
 {
 	os.close();
 }
+
 bool
 nrndnExample::Configure (int argc, char **argv)
 {
@@ -251,7 +252,7 @@ nrndnExample::Configure (int argc, char **argv)
   // LogComponentEnable("AodvRoutingProtocol", LOG_LEVEL_ALL);
   //name = strrchr(argv[0], '/');
   time_t now = time(NULL);
-  cout<<"NR-NDN simulation begin at "<<ctime(&now);
+  cout<<"(main.cc)NR-NDN simulation begin at "<<ctime(&now);
 
   SeedManager::SetSeed (12345);
   CommandLine cmd;
@@ -276,14 +277,14 @@ nrndnExample::Configure (int argc, char **argv)
   cmd.AddValue("interestFreq","Interest Packet Sending Frequency(Hz)",interestFrequency);
   cmd.AddValue("virtualPayloadSize","Virtual payload size for traffic Content packets",virtualPayloadSize);
   cmd.Parse (argc, argv);
-  std::cout<<"(main.cc)兴趣包发送频率:"<<interestFrequency<<std::endl;
+  std::cout<<"(main.cc)兴趣包发送频率: "<<interestFrequency<<std::endl;
  // getchar();
   return true;
 }
 
 void nrndnExample::Run()
 {
-	std::cout<<"运行方法是："<<method<<std::endl;
+	std::cout<<"(main.cc)运行方法是："<<method<<std::endl;
 	switch(method)
 	{
 	case 0:
@@ -306,34 +307,34 @@ nrndnExample::RunNrndnSim ()
 {
 	name = "NR-NDN-Simulation";
 
-	std::cout<<"读取交通数据"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
 	LoadTraffic();
-	std::cout<<"创造节点"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
 	CreateNodes();
-	std::cout<<"创造设备"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
 	CreateDevices();
 	//InstallInternetStack();
-	std::cout<<"初始化Mobility"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
 	InstallMobility();
-	std::cout<<"安装传感器"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
 	InstallSensor();
-	std::cout<<"初始化NrNdnStack"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
 
 	//InstallTestMobility();
-	std::cout<<"安装Nrndn应用程序"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
 	//InstallTestApplications();
-	std::cout<<"安装交通状况"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
-	std::cout << "Starting simulation for " << totalTime << " s ...\n";
+	std::cout << "(main.cc-RunNrndnSim)Starting simulation for " << totalTime << " s ...\n";
 
 	Simulator::Stop(Seconds(totalTime));
-	std::cout << "开始运行：\n";
+	std::cout << "(main.cc-RunNrndnSim)开始运行：\n";
 	Simulator::Run();
 
 	Simulator::Destroy();
@@ -343,26 +344,26 @@ nrndnExample::RunNrndnSim ()
 void nrndnExample::RunDistSim()
 {
 	name = "Dist-Simulation";
-	std::cout<<"读取交通数据"<<std::endl;
+	std::cout<<"(main.cc)读取交通数据"<<std::endl;
 	LoadTraffic();
-	std::cout<<"创造节点"<<std::endl;
+	std::cout<<"(main.cc)创造节点"<<std::endl;
 	CreateNodes();
-	std::cout<<"创造设备"<<std::endl;
+	std::cout<<"(main.cc)创造设备"<<std::endl;
 	CreateDevices();
-	std::cout<<"初始化Mobility"<<std::endl;
+	std::cout<<"(main.cc)初始化Mobility"<<std::endl;
 	InstallMobility();
-	std::cout<<"安装传感器"<<std::endl;
+	std::cout<<"(main.cc)安装传感器"<<std::endl;
 	InstallSensor();
-	std::cout<<"初始化DistNdnStack"<<std::endl;
+	std::cout<<"(main.cc)初始化DistNdnStack"<<std::endl;
 	InstallDistNdnStack();
-	std::cout<<"安装Dist应用程序"<<std::endl;
+	std::cout<<"(main.cc)安装Dist应用程序"<<std::endl;
 	InstallDistApplications();
-	std::cout<<"安装交通状况"<<std::endl;
+	std::cout<<"(main.cc)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
-	std::cout << "Starting simulation for " << totalTime << " s ...\n";
+	std::cout << "(main.cc)Starting simulation for " << totalTime << " s ...\n";
 
 	Simulator::Stop(Seconds(totalTime));
 	Simulator::Run();
@@ -384,7 +385,7 @@ void nrndnExample::RunCDSSim()
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
-	std::cout << "Starting simulation for " << totalTime << " s ...\n";
+	std::cout << "(main.cc-RunCDSSim)Starting simulation for " << totalTime << " s ...\n";
 
 	Simulator::Stop(Seconds(totalTime));
 	Simulator::Run();
@@ -483,9 +484,9 @@ nrndnExample::Report ()
 	cout<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
 
 
-	cout<<"总花费时间为："<<TimeUse<<"ms"<<endl;
-	cout<<"总花费时间为："<<TimeUse/1000<<"s"<<endl;
-	cout<<"总花费时间为："<<(int)(TimeUse/1000)/60<<"分"<<((int)(TimeUse/1000))%60<<"秒"<<endl;
+	cout<<"(main.cc)总花费时间为："<<TimeUse<<"ms"<<endl;
+	cout<<"(main.cc)总花费时间为："<<TimeUse/1000<<"s"<<endl;
+	cout<<"(main.cc)总花费时间为："<<(int)(TimeUse/1000)/60<<"分"<<((int)(TimeUse/1000))%60<<"秒"<<endl;
 
 	//2. output the result
 	os<<std::left<<std::setw(11)<<"arrivalR"
@@ -584,36 +585,36 @@ nrndnExample::LoadTraffic()
 
 	string outfile      = outputDir + "/result.txt";
 
-	std::cout<<"输出文件路径："<<outfile<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)输出文件路径："<<outfile<<std::endl;
 	os.open(outfile.data(),ios::out);
-	std::cout<<"文件打开成功。"<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)文件打开成功"<<std::endl;
 
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
-	std::cout<<"读取完毕！"<<std::endl;
-//获取结点size
+	std::cout<<"(main.cc-LoadTraffic)读取完毕！"<<std::endl;
+    //获取结点size
 	size = mobility->GetNodeSize();
-	std::cout<<"节点size："<<size<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)节点size："<<size<<std::endl;
 
 	if(accidentNum == 0 || accidentNum == 999)
 	{
 		if(accidentNum != 999) //999表示非随机
 		{
 			random_accident = 1;//如果没有输入事件数量，则使用定点发
-			cout << "定点发数据" << endl;
+			cout << "(main.cc-LoadTraffic)定点发数据" << endl;
 		}
 		else
-			cout << "随机" << endl;
+			cout << "(main.cc-LoadTraffic)随机" << endl;
 		accidentNum = size * 1;
 	}
-	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
 
 }
 
 void
 nrndnExample::CreateNodes ()
 {
-	std::cout << "Creating " << (unsigned) size << " vehicle nodes.\n";
+	std::cout << "(main.cc-CreateNodes)Creating " << (unsigned) size << " vehicle nodes.\n";
 	nodes.Create(size);
 	// Name nodes
 	for (uint32_t i = 0; i < size; ++i)
@@ -623,7 +624,7 @@ nrndnExample::CreateNodes ()
 		Names::Add(os.str(), nodes.Get(i));
 	}
 
-	std::cout << "创建完毕\n";
+	std::cout << "(main.cc-CreateNodes)创建完毕\n";
 }
 
 void
@@ -700,8 +701,8 @@ nrndnExample::InstallNrNdnStack()
 	std::ostringstream pitCleanIntervalStr;
 	uint32_t pitCleanInterval = 1.0 / interestFrequency;
 	//uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
-		pitCleanIntervalStr<<pitCleanInterval;
-	cout<<"pitInterval="<<pitCleanIntervalStr.str()<<endl;
+	pitCleanIntervalStr<<pitCleanInterval;
+	cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
 	ndnHelper.SetContentStore ("ns3::ndn::cs::Lru", "MaxSize", "1000");
 	ndnHelper.SetPit("ns3::ndn::pit::nrndn::NrPitImpl","CleanInterval",pitCleanIntervalStr.str());
@@ -746,12 +747,12 @@ void
 nrndnExample::InstallMobility()
 {
 	//double maxTime = 0;
-	std::cout<<"正在安装mobility.."<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
 	mobility->Install();
-	std::cout<<"正在读取总时间："<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
 	readTotalTime = mobility->GetReadTotalTime();
 	totalTime = readTotalTime < totalTime ? readTotalTime : totalTime;
-	std::cout<<"总时间："<<totalTime<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
 }
 
 
@@ -808,7 +809,7 @@ nrndnExample::InstallNrndnApplications ()
 void nrndnExample::Look_at_clock()
 {
 
-	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"\n(main.cc-Look_at_clock) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
 }
@@ -907,7 +908,7 @@ void nrndnExample::InstallTraffics()
 {
 	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN());
-	std::cout<<"插入事件："<<accidentNum<<endl;
+	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl;
 	if(random_accident)
 	{
 		
@@ -947,7 +948,7 @@ void nrndnExample::InstallTraffics()
 		}
 	}
 	
-	std::cout<<"插入事件：完毕"<<endl;
+	std::cout<<"(main.cc-InstallTraffics)插入事件：完毕"<<endl;
 	getchar();
 	/*
 	uint32_t InsertIndex=10;//for debug only

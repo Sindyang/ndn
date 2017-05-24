@@ -343,12 +343,12 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	if(2==interest->GetScope())//Hello message
 	{
 		HelloByteSent += size;
-		cout << "nrUtils.cc Hello size" << size << endl;
+		cout << "(nrUtils.cc-AggrateInterestPacketSize)Hello size " << size << endl;
 	}	
 	else
 	{
 		InterestByteSent += size;
-		cout << "nrUtils.cc Interest size" << size << endl;
+		cout << "(nrUtils.cc-AggrateInterestPacketSize)Interest size " << size << endl;
 		getchar();
 	}
 }

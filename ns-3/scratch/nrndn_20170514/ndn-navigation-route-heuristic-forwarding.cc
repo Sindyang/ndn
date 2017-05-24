@@ -244,11 +244,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-
-	cout << "来自应用层" <<endl;
+	cout<<"(forwarding.cc-OnInterest)"<<endl;
+	
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
+		cout << "(forwarding.cc-OnInterest)兴趣包来自应用层" <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -262,9 +263,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	cout << "心跳包" <<endl;
+	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{
+		cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		ProcessHello(interest);
 		return;
 	}
@@ -278,12 +280,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	cout << "GetPayload" <<endl;
+	cout << "(forwarding.cc-OnInterest) GetPayload" <<endl;
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
-	cout<<"(forwarding.cc) PeekHeader"<<endl;
+	cout<<"(forwarding.cc-OnInterest) PeekHeader"<<endl;
 	nrPayload->PeekHeader( nrheader);
 	//获取发送兴趣包节点的ID
 	nodeId=nrheader.getSourceId();
@@ -291,7 +293,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	seq=interest->GetNonce();
 	
 	//获取优先列表
-	cout << "获取优先列表" << endl;
+	cout << "(forwarding.cc-OnInterest) 获取优先列表" << endl;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first
@@ -612,14 +614,14 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	cout << nrheader.getX() << " " << nrheader.getY() <<endl;
+	cout<<"(forwarding.cc-packetFromDirection) " << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	getchar();
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	cout << m_running << " route.size:" << route.size() <<endl;
+	cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
 	getchar();
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
-	cout << "result" << route.size() <<endl;
+	cout << "(forwarding.cc-packetFromDirection) result " << route.size() <<endl;
 	getchar();
 	return result;
 }
@@ -743,11 +745,11 @@ bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
 
 void NavigationRouteHeuristic::DoInitialize(void)
 {
-	cout<<"(NavigationRouteHeuristic):初始化"<<m_node->GetId()<<std::endl;
-	getchar();
+	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化"<<m_node->GetId()<<std::endl;
+	//getchar();
 	super::DoInitialize();
-	cout<<"(NavigationRouteHeuristic):初始化完成"<<std::endl;
-	getchar();
+	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
+	//getchar();
 }
 
 void NavigationRouteHeuristic::DropPacket()
@@ -802,13 +804,13 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 
   if (m_nrpit == 0)
   {
-	  cout<<"新建PIT表"<<endl;
-	  getchar();
+	  cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
+	  //getchar();
 	  Ptr<Pit> pit=GetObject<Pit>();
 	  if(pit)
 		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
-	  cout<<"建立完毕"<<endl;
-	  getchar();
+	  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+	  //getchar();
   }
   
   if(m_node==0)
@@ -942,7 +944,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	//added by sy
-	cout<<"nrPayload's size "<<nrPayload->GetSize()<<endl;
+	cout<<"(forwarding.cc-GetNrPayload)nrPayload's size "<<nrPayload->GetSize()<<endl;
 	
 	std::vector<uint32_t> priorityList;
 	switch (type)
@@ -959,7 +961,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				cout<<"(forwardint.cc)"<<m_node->GetId()<<" 优先级列表为空"<<endl;
+				cout<<"(forwardint.cc-GetNrPayload)"<<m_node->GetId()<<" 优先级列表为空"<<endl;
 				return Create<Packet>();
 			}	
 			break;

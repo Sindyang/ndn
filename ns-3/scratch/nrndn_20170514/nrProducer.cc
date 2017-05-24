@@ -162,7 +162,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	std::cout<<"siu:"<<"StartApplication: " << GetNode ()->GetId ()<<endl;
+	std::cout<<"(nrProducer.cc-StartApplication) node: " << GetNode ()->GetId ()<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
@@ -298,7 +298,7 @@ void nrProducer::OnData(Ptr<const Data> contentObject)
 
 void nrProducer::ScheduleAccident(double t)
 {
-	std::cout<<"siu:"<<GetNode()->GetId()<<"ScheduleAccident"<<endl;
+	std::cout<<"(nrProducer.cc-ScheduleAccident)siu: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData,this);
 }
@@ -311,7 +311,7 @@ void nrProducer::setContentStore(std::string prefix)
 
 void nrProducer::addAccident()
 {
-	std::cout<<"siu:"<<GetNode()->GetId()<<"addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident)siu: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 	double mean=start+(end-start)/2;
@@ -331,7 +331,7 @@ void nrProducer::addAccident()
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
-	std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<<t<<endl;
+	std::cout<<"(nrProducer.cc-addAccident)siu: "<<m_node->GetId()<<" add accident at "<<t<<endl;
 
 	return;
 }
@@ -350,7 +350,7 @@ void nrProducer::addAccident(double iType)
 
 	}*/
 
-	std::cout<<"siu:"<<GetNode()->GetId()<<"addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident)siu: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
@@ -358,7 +358,7 @@ void nrProducer::addAccident(double iType)
 	for(double dTime = start + 100; dTime < end - 50; dTime += iType)
 	{
 		ScheduleAccident(dTime);
-		std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+		std::cout<<"(nrProducer.cc-addAccident)siu: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
 	}
 
 	return;
