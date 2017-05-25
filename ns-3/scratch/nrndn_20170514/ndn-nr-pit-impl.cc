@@ -103,8 +103,10 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
+	//Question: entry代表什么
 	Ptr<Entry> entry = *pit;
 	//获取兴趣
+	//Question: head代表什么
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
@@ -113,6 +115,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	//当前路段为：uriConvertToString(head->toUri())
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)当前路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
+	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	//找不到
 	if(it==route.end())
 		return false;
@@ -120,19 +123,20 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
+		cout<<"(ndn-nr-pit-impl.cc-UpdatePit) pitName: "<<uriConvertToString(pitName.toUri())<<endl;
 		if(pitName.toUri() == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
 			getchar();
 		}
 		else
 			break;
 
 	}
-	std::cout<<"(pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
@@ -219,8 +223,8 @@ NrPitImpl::InitializeNrPitEntry()
 	{
 		Ptr<Name> name = ns3::Create<Name>('/'+*rit);
 		Ptr<Interest> interest=ns3::Create<Interest> ();
-		interest->SetName				(name);
-		interest->SetInterestLifetime	(Time::Max());//never expire
+		interest->SetName(name);
+		interest->SetInterestLifetime(Time::Max());//never expire
 
 		//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
 		Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
@@ -228,6 +232,7 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
+		cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<name->toUri<<endl;
 	}
 	return true;
 }

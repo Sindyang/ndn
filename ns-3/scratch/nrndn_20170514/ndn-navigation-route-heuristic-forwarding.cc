@@ -800,7 +800,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   if (m_sensor == 0)
   {
 	  m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
-   }
+  }
 
   if (m_nrpit == 0)
   {

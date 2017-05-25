@@ -309,23 +309,23 @@ nrndnExample::RunNrndnSim ()
 
 	std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
 	LoadTraffic();
-	std::cout<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
 	CreateNodes();
-	std::cout<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
 	CreateDevices();
 	//InstallInternetStack();
-	std::cout<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
 	InstallMobility();
-	std::cout<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
 	InstallSensor();
-	std::cout<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
 
 	//InstallTestMobility();
-	std::cout<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
 	//InstallTestApplications();
-	std::cout<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 
@@ -566,7 +566,7 @@ nrndnExample::Report ()
 void
 nrndnExample::LoadTraffic()
 {
-	cout<<"(main.cc)Method: "<<name<<endl;
+	cout<<endl<<"(main.cc-LoadTraffic)Method: "<<name<<endl;
 	DIR* dir=NULL;
 	DIR* subdir=NULL;
 	//打开数据源
@@ -704,10 +704,15 @@ nrndnExample::InstallNrNdnStack()
 	pitCleanIntervalStr<<pitCleanInterval;
 	cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
+	cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
 	ndnHelper.SetContentStore ("ns3::ndn::cs::Lru", "MaxSize", "1000");
+	cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
 	ndnHelper.SetPit("ns3::ndn::pit::nrndn::NrPitImpl","CleanInterval",pitCleanIntervalStr.str());
+	cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
 	ndnHelper.SetDefaultRoutes (true);
+	cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl;
 	ndnHelper.Install (nodes);
+	cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
 }
 
 void nrndnExample::InstallDistNdnStack()

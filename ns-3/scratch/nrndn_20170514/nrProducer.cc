@@ -188,7 +188,7 @@ void nrProducer::StopApplication()
 
 	if(m_DistanceForwarding)
 		m_DistanceForwarding->Stop();
-	std::cout<<"siu:"<<"Stop: " << GetNode ()->GetId ()<<endl;
+	std::cout<<"(nrProducer.cc-StopApplication) "<<"Stop: Node: " << GetNode ()->GetId ()<<endl;
 
 	App::StopApplication();
 }
@@ -231,7 +231,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
-	std::cout<<"siu:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
 	//        when A sending traffic data, it's data name may be lane_1 because
@@ -267,7 +267,7 @@ void nrProducer::OnSendingTrafficData()
 	getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
 	getchar();
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
@@ -276,14 +276,14 @@ void nrProducer::OnSendingTrafficData()
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
 	cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
-	getchar();
+	//getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
 	cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
-	getchar();
+	//getchar();
 	m_face->ReceiveData(data);
 	cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
-	getchar();
+	//getchar();
 	m_transmittedDatas(data, this, m_face);
 	cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
 	getchar();
@@ -292,13 +292,13 @@ void nrProducer::OnSendingTrafficData()
 void nrProducer::OnData(Ptr<const Data> contentObject)
 {
 	NS_LOG_FUNCTION ("None its business");
-	std::cout<<"siu:"<<"None its business"<<endl;
+	std::cout<<"(nrProducer.cc-OnData)"<<"None its business"<<endl;
 	App::OnData(contentObject);
 }
 
 void nrProducer::ScheduleAccident(double t)
 {
-	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
+	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData,this);
 }
@@ -311,7 +311,7 @@ void nrProducer::setContentStore(std::string prefix)
 
 void nrProducer::addAccident()
 {
-	std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident()) NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 	double mean=start+(end-start)/2;
@@ -331,15 +331,14 @@ void nrProducer::addAccident()
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
-	std::cout<<"(nrProducer.cc-addAccident)siu: "<<m_node->GetId()<<" add accident at "<<t<<endl;
-
+	std::cout<<"(nrProducer.cc-addAccident()) m_node->GetId(): "<<m_node->GetId()<<" add accident at "<<t<<endl;
 	return;
 }
 
 void nrProducer::addAccident(double iType)
 {
 	if(iType <= 0.00001)
-	{//产生随机事件
+	{   //产生随机事件
 		addAccident();
 		return;
 	}
@@ -350,15 +349,15 @@ void nrProducer::addAccident(double iType)
 
 	}*/
 
-	std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
-
+    //Question:这是在干啥
 	for(double dTime = start + 100; dTime < end - 50; dTime += iType)
 	{
 		ScheduleAccident(dTime);
-		std::cout<<"(nrProducer.cc-addAccident)NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+		std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
 	}
 
 	return;
