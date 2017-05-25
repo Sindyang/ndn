@@ -107,12 +107,12 @@ void EntryNrImpl::CleanAllNodes()
 void EntryNrImpl::listPitEntry()
 {
 	std::cout<<"(pit-entry.cc-listPitEntry)兴趣："<<m_interest_name<<" ";
-/*	std::cout<<"(pit-entry.cc)id及耗时:"<<std::endl;
+	std::cout<<"(pit-entry.cc-listPitEntry)id及耗时:"<<std::endl;
 	for(std::unordered_map< uint32_t,EventId>::iterator ite = m_nbTimeoutEvent.begin();ite!=m_nbTimeoutEvent.end();ite++)
 	{
 		std::cout<<ite->first<<"("<<ite->second<<") ";
-	}*/
-	std::cout<<"id:";
+	}
+	std::cout<<"(pit-entry.cc-listPitEntry)"<<"id:";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
 		std::cout<<*ite<<" ";

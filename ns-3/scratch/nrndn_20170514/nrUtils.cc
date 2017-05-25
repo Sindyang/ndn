@@ -64,11 +64,11 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 			cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
 			continue;
 		}
-		//cout << "IsInterestLane " << endl;
+		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{
 			++interestSize;
-			cout<<idx<<" ";
+			cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
 		}
 		idx++;
 		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
@@ -330,7 +330,7 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	DataByteSent+= size;
-	cout << "nrUtils.cc data size" << size << endl;
+	cout << "(nrUtils.cc-AggrateDataPacketSize) data size" << size << endl;
 	getchar();
 	
 }

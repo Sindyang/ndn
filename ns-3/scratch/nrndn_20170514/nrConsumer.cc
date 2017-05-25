@@ -87,23 +87,23 @@ void nrConsumer::ScheduleNextPacket()
 	 {
 		 prefix+=*it;
 	 }
-	//	std::cout<<"test\n";
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test1"<<endl;
 
 	 //2. set the Interest (reverse of  the residual navigation route)
-	//std::cout<<prefix<<std::endl;
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)"<<prefix<<std::endl;
 	if(prefix=="")
 	{//兴趣为空，直接返回
-		std::cout<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
+		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
 		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
 	// if (m_firstTime)
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
-	//std::cout<<"test2\n";
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)NodeId "<<GetNode()->GetId()<<endl;
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<endl;
 	//getchar();
-	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n";
+	cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n";
 	//3. Schedule next packet
 	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();
@@ -123,7 +123,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
 	{
-		//std::cout<<this->GetNode()->GetId()<<" "<<*it <<"\t"<<currentLane.data() <<std::endl;
+		std::cout<<"(nrConsumer.cc-GetCurrentInterest)"<<this->GetNode()->GetId()<<" "<<*it <<"\t"<<currentLane.data() <<std::endl;
 		if(*it==currentLane)//一直遍历寻找到当前道路，然后把后面的压紧容器返回
 			break;
 	}
@@ -197,9 +197,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  //std::cout<<"准备出错\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"准备出错\n";
 	  ScheduleNextPacket ();
-	//  std::cout<<"已经出错\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经出错\n";
 
 	  //std::cout<<"ScheduleNextPacket \n";
 }
@@ -240,7 +240,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	std::cout<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
+	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
 	getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
