@@ -134,7 +134,7 @@ const std::string& SumoNodeSensor::getLane()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t id = node->GetId();
-	cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
+	//cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
@@ -168,7 +168,7 @@ const std::string& SumoNodeSensor::getLane()
 		//cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
 	}
 	//cout <<"(SumoNodeSensor.cc-getLane) "<< "GetTraceid" << endl;
-	std::cout<<"(SumoNodeSensor.cc-getLane) "<<"id's current lane "<<m_lane<<std::endl;
+	std::cout<<"(SumoNodeSensor.cc-getLane) NodeId "<<id<<"'s current lane is "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
 	//cout <<"(SumoNodeSensor.cc-getLane) m_sumoLane " << m_sumoLane << endl;
     return m_sumoLane;
@@ -238,8 +238,8 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
-    cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "localLane " << localLane << endl;
-	cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "remoteLane " << remoteLane << endl;
+    //cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "localLane " << localLane << endl;
+	//cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "remoteLane " << remoteLane << endl;
 
 	if(remoteLaneIterator==route.end()||
 			localLaneIterator==route.end())
@@ -247,14 +247,14 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		Vector 	localPos = GetObject<MobilityModel>()->GetPosition();
 		localPos.z=0;//Just in case
 		Vector remotePos(x,y,0);
-		cout <<"(SumoNodeSensor.cc-getDistanceWith) "<< "CalculateDistance " << endl;
+		//cout <<"(SumoNodeSensor.cc-getDistanceWith) "<< "CalculateDistance " << endl;
 		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
 	}
 
 	uint32_t localIndex = distance(route.begin(),localLaneIterator);
 	uint32_t remoteIndex= distance(route.begin(),remoteLaneIterator);
     
-	cout << "(SuNodeSensor.cc-getDistanceWith) localIndex==remoteIndex " << endl;
+	//cout << "(SuNodeSensor.cc-getDistanceWith) localIndex==remoteIndex " << endl;
 	if(localIndex==remoteIndex)//在同一条路上
 		return pair<bool, double>(true, remotePos-localPos);
 
@@ -264,7 +264,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	if(localIndex>remoteIndex)
 	{
-		cout << "(SuNodeSensor.cc-getDistanceWith) "<< "localIndex>remoteIndex " << endl;
+		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "localIndex>remoteIndex " << endl;
 		//From behind
 		eit = edges.find(uriConvertToString(route.at(remoteIndex)));
 		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane << "注意查看uriConvertToString转码是否缺少情况");
@@ -279,12 +279,12 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
 		}
-		cout << "(SuNodeSensor.cc-getDistanceWith) "<< "(beginLen+middleLen+localPos)" << endl;
+		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "(beginLen+middleLen+localPos)" << endl;
 		distance = -(beginLen+middleLen+localPos);
 	}
 	else
 	{
-		cout << "(SuNodeSensor.cc-getDistanceWith) "<< "else" << endl;
+		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "else" << endl;
 		//From front
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
 		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane);
@@ -299,13 +299,12 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
 		}
-		cout << "(SuNodeSensor.cc-getDistanceWith) "<< " beginLen+middleLen+remotePos" << endl;
+		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< " beginLen+middleLen+remotePos" << endl;
 		distance = beginLen+middleLen+remotePos;
 
 	}
 	cout << "(SuNodeSensor.cc-getDistanceWith) "<< "return" << endl;
 	return std::pair<bool, double>(true,distance);
-
 }
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(

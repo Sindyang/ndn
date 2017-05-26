@@ -209,6 +209,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
+	cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -231,6 +232,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<'\t'<<it->second;
+		cout<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
 
@@ -261,6 +263,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl;
 		return;
 	}
 
@@ -310,6 +313,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
+		cout<<"(forwrding.cc-OnInterest) Get interest packet from front or other direction"<<endl;
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
@@ -676,6 +680,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
+	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -746,11 +751,11 @@ bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
 
 void NavigationRouteHeuristic::DoInitialize(void)
 {
-	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化"<<m_node->GetId()<<std::endl;
+	//cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化"<<m_node->GetId()<<std::endl;
 	//getchar();
 	//Question:super
 	super::DoInitialize();
-	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
+	//cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
 	//getchar();
 }
 

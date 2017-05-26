@@ -231,7 +231,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
 	//        when A sending traffic data, it's data name may be lane_1 because
