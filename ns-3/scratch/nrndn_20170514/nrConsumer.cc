@@ -103,7 +103,7 @@ void nrConsumer::ScheduleNextPacket()
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
 	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<endl;
 	//getchar();
-	cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n";
+	cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
 	//3. Schedule next packet
 	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();
@@ -123,7 +123,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
 	{
-		std::cout<<"(nrConsumer.cc-GetCurrentInterest)"<<this->GetNode()->GetId()<<" "<<*it <<"\t"<<currentLane.data() <<std::endl;
+		std::cout<<"(nrConsumer.cc-GetCurrentInterest) NodeId "<<this->GetNode()->GetId()<<" "<<"route "<<*it <<"\t"<<"currentLane "<<currentLane.data() <<std::endl;
 		if(*it==currentLane)//一直遍历寻找到当前道路，然后把后面的压紧容器返回
 			break;
 	}
@@ -133,6 +133,11 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 		str=prefix+(*it);
 		result.push_back(str);
 	//	++routeSum;
+	}
+	cout<<"(nrConsumer.cc-GetCurrentInterest)"<<endl;
+	for(it = result.begin();it != result.end();it++)
+	{
+		std::cout<<*it<<std::endl;
 	}
 	return result;
 }
@@ -183,9 +188,9 @@ void nrConsumer::SendPacket()
 	  nameWithSequence->appendSeqNum (seq);
 
 	  Ptr<Interest> interest = Create<Interest> ();
-	  interest->SetNonce               (m_rand.GetValue ());
-	  interest->SetName                (nameWithSequence);
-	  interest->SetInterestLifetime    (m_interestLifeTime);
+	  interest->SetNonce(m_rand.GetValue ());
+	  interest->SetName(nameWithSequence);
+	  interest->SetInterestLifetime(m_interestLifeTime);
 
 	  // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
 	  NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
@@ -197,9 +202,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"准备出错\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"sentPacket\n";
 	  ScheduleNextPacket ();
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经出错\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"ScheduleNextPacket\n\n";
 
 	  //std::cout<<"ScheduleNextPacket \n";
 }

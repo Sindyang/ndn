@@ -1,7 +1,8 @@
-(main.cc)NR-NDN simulation begin at Thu May 25 11:13:49 2017
+(main.cc)NR-NDN simulation begin at Fri May 26 10:01:43 2017
 (main.cc)兴趣包发送频率: 2
 (main.cc)运行方法是：0
 (main.cc-RunNrndnSim)读取交通数据
+
 (main.cc-LoadTraffic)Method: NR-NDN-Simulation
 (main.cc-LoadTraffic)输出文件路径：/home/wangsiyang/input/NR-NDN-Simulation/result.txt
 (main.cc-LoadTraffic)文件打开成功
@@ -15,15 +16,19 @@ src/vanetmobility/model/SumoMobility.cc: InitializeCoordinateToLane OK
 (main.cc-LoadTraffic)节点size：53
 (main.cc-LoadTraffic)定点发数据
 (main.cc-LoadTraffic)修改accidentNum为size的4倍 53
+
 (main.cc-RunNrndnSim)创造节点
 (main.cc-CreateNodes)Creating 53 vehicle nodes.
 (main.cc-CreateNodes)创建完毕
+
 (main.cc-RunNrndnSim)创造设备
+
 (main.cc-RunNrndnSim)初始化Mobility
 (main.cc-InstallMobility)正在安装mobility..
 Max time in fcdoutput.xml is 309
 (main.cc-InstallMobility)正在读取总时间：
 (main.cc-InstallMobility)总时间：310
+
 (main.cc-RunNrndnSim)安装传感器
 
 (main.cc-RunNrndnSim)初始化NrNdnStack
@@ -35,399 +40,530 @@ Max time in fcdoutput.xml is 309
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-0to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-3
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-3to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-0
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
 
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-0to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-3
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-3to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-0
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
 
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-0to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-3
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-3to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-0
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
 
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-0to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-3
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-3to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-0
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
-(forwarding.cc-NotifyNewAggregate)新建PIT表
-(forwarding.cc-NotifyNewAggregate)建立完毕
-(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to3-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
 
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
-(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
 
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to2-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-1to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
+(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
+(forwarding.cc-NotifyNewAggregate)新建PIT表
+(forwarding.cc-NotifyNewAggregate)建立完毕
+(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-0to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-3
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-3to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to1-0
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /0-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to3-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to3-1
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to1-1
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-1to0-1
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
-
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-1to3-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /3-2to2-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /2-2to1-2
+
 (ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: /1-2to0-2
+
 (main.cc-InstallNrNdnStack) Install
 
 (main.cc-RunNrndnSim)安装Nrndn应用程序
@@ -437,645 +573,1097 @@ Max time in fcdoutput.xml is 309
 (nrProducer.cc-addAccident(double iType))NodeId: 0 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 14 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 150
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 160
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 170
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 180
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 190
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 200
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 210
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 220
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 230
 (nrProducer.cc-ScheduleAccident)NodeId: 14 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 240
 (nrProducer.cc-addAccident(double iType))NodeId: 27 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 103
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 113
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 123
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 133
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 143
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 153
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 163
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 173
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 183
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 193
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 203
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 213
 (nrProducer.cc-ScheduleAccident)NodeId: 27 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 223
 (nrProducer.cc-addAccident(double iType))NodeId: 12 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 103
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 113
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 123
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 133
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 143
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 153
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 163
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 173
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 183
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 193
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 203
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 213
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 223
 (nrProducer.cc-ScheduleAccident)NodeId: 12 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 233
 (nrProducer.cc-addAccident(double iType))NodeId: 33 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 106
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 116
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 126
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 136
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 146
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 156
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 166
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 176
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 186
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 196
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 206
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 216
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 226
 (nrProducer.cc-ScheduleAccident)NodeId: 33 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 236
 (nrProducer.cc-addAccident(double iType))NodeId: 25 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 106
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 116
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 126
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 136
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 146
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 156
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 166
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 176
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 186
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 196
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 206
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 216
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 226
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 236
 (nrProducer.cc-ScheduleAccident)NodeId: 25 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 246
 (nrProducer.cc-addAccident(double iType))NodeId: 24 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 103
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 113
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 123
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 133
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 143
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 153
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 163
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 173
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 183
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 193
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 203
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 213
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 223
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 233
 (nrProducer.cc-ScheduleAccident)NodeId: 24 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 243
 (nrProducer.cc-addAccident(double iType))NodeId: 50 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 115
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 125
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 135
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 145
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 155
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 165
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 175
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 185
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 195
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 205
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 215
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 225
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 235
 (nrProducer.cc-ScheduleAccident)NodeId: 50 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 245
 (nrProducer.cc-addAccident(double iType))NodeId: 11 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 103
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 113
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 123
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 133
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 143
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 153
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 163
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 173
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 183
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 193
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 203
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 213
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 223
 (nrProducer.cc-ScheduleAccident)NodeId: 11 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 233
 (nrProducer.cc-addAccident(double iType))NodeId: 17 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 150
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 160
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 170
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 180
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 190
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 200
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 210
 (nrProducer.cc-ScheduleAccident)NodeId: 17 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 220
 (nrProducer.cc-addAccident(double iType))NodeId: 8 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 8 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 38 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 38 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 7 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 1 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 29 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 29 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 30 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 109
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 119
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 129
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 139
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 149
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 159
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 169
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 179
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 189
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 199
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 209
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 219
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 229
 (nrProducer.cc-ScheduleAccident)NodeId: 30 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 239
 (nrProducer.cc-addAccident(double iType))NodeId: 18 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 100
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 110
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 120
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 130
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 140
 (nrProducer.cc-ScheduleAccident)NodeId: 18 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 47 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 109
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 119
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 129
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 139
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 149
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 159
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 169
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 179
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 189
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 199
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 209
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 219
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 229
 (nrProducer.cc-ScheduleAccident)NodeId: 47 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 239
 (nrProducer.cc-addAccident(double iType))NodeId: 23 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 103
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 113
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 123
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 133
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 143
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 153
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 163
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 173
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 183
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 193
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 203
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 213
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 223
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 233
 (nrProducer.cc-ScheduleAccident)NodeId: 23 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 243
 (nrProducer.cc-addAccident(double iType))NodeId: 31 addAccident
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 109
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 119
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 129
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 139
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 149
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 159
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 169
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 179
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 189
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 199
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 209
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 219
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 229
 (nrProducer.cc-ScheduleAccident)NodeId: 31 ScheduleAccident
-
 (nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 239
 (main.cc-InstallTraffics)插入事件：完毕
+
+(main.cc-RunNrndnSim)Starting simulation for 310 s ...
+(main.cc-RunNrndnSim)开始运行：
+(NavigationRouteHeuristic.cc-DoInitialize):初始化0
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化1
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化2
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化3
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化4
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化5
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化6
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化7
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化8
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化9
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化10
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化11
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化12
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化13
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化14
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化15
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化16
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化17
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化18
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化19
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化20
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化21
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化22
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化23
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化24
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化25
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化26
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化27
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化28
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化29
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化30
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化31
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化32
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化33
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化34
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化35
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化36
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化37
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化38
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化39
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化40
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化41
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化42
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化43
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化44
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化45
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化46
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化47
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化48
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化49
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化50
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化51
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+(NavigationRouteHeuristic.cc-DoInitialize):初始化52
+(NavigationRouteHeuristic.cc-DoInitialize):初始化完成
+
+(main.cc-Look_at_clock) Time now: 0
+(SumoNodeSensor.cc-getLane)NodeId 0
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)0 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 0
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 0
+(SumoNodeSensor.cc-getLane)NodeId 1
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)1 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 1
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 1
+(SumoNodeSensor.cc-getLane)NodeId 2
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)2 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 2
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 2
+(SumoNodeSensor.cc-getLane)NodeId 3
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-1to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest)3 0-1to1-1	0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 3
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 3
+(SumoNodeSensor.cc-getLane)NodeId 4
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)4 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 4
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 4
+(SumoNodeSensor.cc-getLane)NodeId 5
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to3-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to3-1
+(nrConsumer.cc-GetCurrentInterest)5 3-2to3-1	3-2to3-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 5
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 5
+(SumoNodeSensor.cc-getLane)NodeId 6
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to2-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest)6 3-1to2-1	3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 6
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 6
+(SumoNodeSensor.cc-getLane)NodeId 7
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to2-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest)7 3-2to2-2	3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 7
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 7
+(SumoNodeSensor.cc-getLane)NodeId 8
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)8 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 8
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 8
+(SumoNodeSensor.cc-getLane)NodeId 9
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)9 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 9
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 9
+(SumoNodeSensor.cc-getLane)NodeId 13
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-1to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest)13 0-1to1-1	0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 13
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 13
+(SumoNodeSensor.cc-getLane)NodeId 14
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to3-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to3-2
+(nrConsumer.cc-GetCurrentInterest)14 3-1to3-2	3-1to3-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 14
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 14
+(SumoNodeSensor.cc-getLane)NodeId 16
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to2-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest)16 3-1to2-1	3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 16
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 16
+(SumoNodeSensor.cc-getLane)NodeId 17
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to2-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest)17 3-2to2-2	3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 17
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 17
+(SumoNodeSensor.cc-getLane)NodeId 18
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)18 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 18
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 18
+(SumoNodeSensor.cc-getLane)NodeId 19
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)19 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 19
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 19
+(SumoNodeSensor.cc-getLane)NodeId 28
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)28 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 28
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 28
+(SumoNodeSensor.cc-getLane)NodeId 29
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)29 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 29
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 29
+(SumoNodeSensor.cc-getLane)NodeId 38
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)38 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 38
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 38
+(SumoNodeSensor.cc-getLane)NodeId 39
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)39 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 39
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrProducer.cc-StartApplication) NodeId: 39
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 0
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)0 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 0
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 1
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)1 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 1
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 2
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)2 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 2
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 3
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-1to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest)3 0-1to1-1	0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 3
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 4
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-2to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest)4 0-2to1-2	0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/0-2to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 4
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 5
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to3-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to3-1
+(nrConsumer.cc-GetCurrentInterest)5 3-2to3-1	3-2to3-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 5
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 6
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to2-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest)6 3-1to2-1	3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 6
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 7
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to2-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest)7 3-2to2-2	3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 7
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 8
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)8 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 8
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 9
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)9 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 9
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 13
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 0-1to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest)13 0-1to1-1	0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 13
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 14
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to3-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to3-2
+(nrConsumer.cc-GetCurrentInterest)14 3-1to3-2	3-1to3-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 14
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 16
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to2-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest)16 3-1to2-1	3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 16
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 17
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-2to2-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest)17 3-2to2-2	3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 17
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 18
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)18 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 18
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 19
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)19 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 19
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 28
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)28 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 28
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 29
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)29 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 29
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 38
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-0to1-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest)38 1-0to1-1	1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 38
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(nrConsumer.cc-SendPacket)准备出错
+(SumoNodeSensor.cc-getLane)NodeId 39
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest)39 1-3to1-2	1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test1
+(nrConsumer.cc-ScheduleNextPacket)/1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-ScheduleNextPacket) test2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 39
+(nrConsumer.cc-ScheduleNextPacket)test3
+(nrConsumer.cc-SendPacket)已经出错
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 75
+
+(SumoNodeSensor.cc-getLane)NodeId 6
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 3-1to2-1
+(SumoNodeSensor.cc-getLane) m_sumoLane 3-1to2-1
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) GetPayload
+(forwarding.cc-OnInterest) PeekHeader
+(forwarding.cc-OnInterest) 获取优先列表
+(forwarding.cc-packetFromDirection) x: 988.45 y: 2980.25
+
+(forwarding.cc-packetFromDirection)1 route.size:4
+
+(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane)NodeId 19
+(SumoNodeSensor.cc-getLane) GetTraceid
+(SumoNodeSensor.cc-getLane) id's current lane 1-3to1-2
+(SumoNodeSensor.cc-getLane) m_sumoLane 1-3to1-2
+(SuNodeSensor.cc-getDistanceWith) convertCoordinateToLanePos
+(SumoNodeSensor.cc-getDistanceWith)localLane 1-3to1-2
+(SumoNodeSensor.cc-getDistanceWith)remoteLane 1-3to1-2
+(SuNodeSensor.cc-getDistanceWith) localIndex==remoteIndex 
+(forwarding.cc-packetFromDirection) route size 4
+
+(ndn-nr-pit-impl.cc-UpdatePit)当前路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) pitName: 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) /1-3to1-2 
