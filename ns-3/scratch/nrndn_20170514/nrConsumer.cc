@@ -79,6 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)"<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -87,10 +88,10 @@ void nrConsumer::ScheduleNextPacket()
 	 {
 		 prefix+=*it;
 	 }
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test1"<<endl;
+	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test1"<<endl;
 
 	 //2. set the Interest (reverse of  the residual navigation route)
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)"<<prefix<<std::endl;
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) prefix "<<prefix<<std::endl;
 	if(prefix=="")
 	{//兴趣为空，直接返回
 		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
@@ -99,11 +100,11 @@ void nrConsumer::ScheduleNextPacket()
 	}
 	// if (m_firstTime)
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
+	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<endl;
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<std::endl;
 	//getchar();
-	cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
+	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
 	//3. Schedule next packet
 	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();
@@ -111,6 +112,7 @@ void nrConsumer::ScheduleNextPacket()
 
 std::vector<std::string> nrConsumer::GetCurrentInterest()
 {
+	std::cout<<"(nrConsumer.cc-GetCurrentInterest)"<<endl;
 	std::string prefix = "/";
 	std::string str;
 	std::vector<std::string> result;
@@ -123,7 +125,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
 	{
-		std::cout<<"(nrConsumer.cc-GetCurrentInterest) NodeId "<<this->GetNode()->GetId()<<" "<<"route "<<*it <<"\t"<<"currentLane "<<currentLane.data() <<std::endl;
+		//std::cout<<"(nrConsumer.cc-GetCurrentInterest) NodeId "<<this->GetNode()->GetId()<<" "<<"route "<<*it <<"\t"<<"currentLane "<<currentLane.data() <<std::endl;
 		if(*it==currentLane)//一直遍历寻找到当前道路，然后把后面的压紧容器返回
 			break;
 	}
@@ -134,11 +136,12 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 		result.push_back(str);
 	//	++routeSum;
 	}
-	cout<<"(nrConsumer.cc-GetCurrentInterest)"<<endl;
+	cout<<"(nrConsumer.cc-GetCurrentInterest) CurrentInterest :"<<" ";
 	for(it = result.begin();it != result.end();it++)
 	{
-		std::cout<<*it<<std::endl;
+		std::cout<<*it<<" ";
 	}
+	std::cout<<std::endl;
 	return result;
 }
 
@@ -205,8 +208,6 @@ void nrConsumer::SendPacket()
 	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"sentPacket\n";
 	  ScheduleNextPacket ();
 	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"ScheduleNextPacket\n\n";
-
-	  //std::cout<<"ScheduleNextPacket \n";
 }
 
 

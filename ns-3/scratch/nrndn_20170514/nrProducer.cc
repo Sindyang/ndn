@@ -145,7 +145,7 @@ void nrProducer::laneChange(std::string oldLane, std::string newLane)
 
 }
 
-
+//Question:什么时候执行这个函数
 void nrProducer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();

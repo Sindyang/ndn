@@ -123,14 +123,14 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
 		if(pitName.toUri() == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
-			getchar();
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) Pit: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//getchar();
 		}
 		else
 			break;

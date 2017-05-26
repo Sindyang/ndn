@@ -221,7 +221,7 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
-	cout << "(SumoNodeSensor.cc-getDistanceWith)" << endl;
+	cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
 	const string& localLane = getLane();
 	//cout << "(SumoNodeSensor.cc-getLane)" << endl;
 	const double& localPos  = getPos();
@@ -232,7 +232,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 
 	std::pair<std::string, double> remoteInfo =
 			convertCoordinateToLanePos(x,y);
-	cout << "(SuNodeSensor.cc-getDistanceWith) convertCoordinateToLanePos" <<endl;
+	//cout << "(SuNodeSensor.cc-getDistanceWith) convertCoordinateToLanePos" <<endl;
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;//另一节点的位置
 

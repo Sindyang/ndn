@@ -244,7 +244,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-	cout<<"(forwarding.cc-OnInterest)"<<endl;
+	cout<<"进入(forwarding.cc-OnInterest)"<<endl;
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
@@ -257,6 +257,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
+		cout<<"(forwarding.cc-OnInterest) 记录兴趣包"<<endl;
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
@@ -615,14 +616,14 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	cout<<"(forwarding.cc-packetFromDirection) " << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
-	getchar();
+	//getchar();
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
-	getchar();
+	//cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
+	//getchar();
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
 	cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
-	getchar();
+	//getchar();
 	return result;
 }
 
@@ -747,6 +748,7 @@ void NavigationRouteHeuristic::DoInitialize(void)
 {
 	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化"<<m_node->GetId()<<std::endl;
 	//getchar();
+	//Question:super
 	super::DoInitialize();
 	cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
 	//getchar();

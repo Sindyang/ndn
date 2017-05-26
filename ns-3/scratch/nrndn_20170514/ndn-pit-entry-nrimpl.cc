@@ -106,13 +106,13 @@ void EntryNrImpl::CleanAllNodes()
 //cout表项内容
 void EntryNrImpl::listPitEntry()
 {
-	std::cout<<"(pit-entry.cc-listPitEntry)兴趣："<<m_interest_name<<" ";
+	std::cout<<"(pit-entry.cc-listPitEntry) Pit："<<m_interest_name<<std::endl;
 	//std::cout<<"(pit-entry.cc-listPitEntry)id及耗时:"<<std::endl;
 	/*for(std::unordered_map< uint32_t,EventId>::iterator ite = m_nbTimeoutEvent.begin();ite!=m_nbTimeoutEvent.end();ite++)
 	{
 		std::cout<<ite->first<<"("<<ite->second<<") ";
 	}*/
-	std::cout<<"(pit-entry.cc-listPitEntry)"<<"id:";
+	std::cout<<"(pit-entry.cc-listPitEntry)"<<"incomingnbs's NodeId:";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
 		std::cout<<*ite<<" ";
