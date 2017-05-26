@@ -123,7 +123,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
-		cout<<"(ndn-nr-pit-impl.cc-UpdatePit) pitName: "<<uriConvertToString(pitName.toUri())<<endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
 		if(pitName.toUri() == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
@@ -232,7 +232,7 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
-		cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<name->toUri<<endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<name->toUri<<std::endl;
 	}
 	return true;
 }
