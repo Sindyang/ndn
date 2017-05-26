@@ -78,7 +78,7 @@ NrPitImpl::NotifyNewAggregate ()
 					MakeCallback(&NrPitImpl::laneChange, this));
 			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
-			std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl<<std::endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl;
 			//getchar();
 			InitializeNrPitEntry();
 		}
@@ -232,7 +232,7 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
-		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl<<std::endl;
 	}
 	return true;
 }

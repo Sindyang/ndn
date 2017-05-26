@@ -298,7 +298,7 @@ void nrProducer::OnData(Ptr<const Data> contentObject)
 
 void nrProducer::ScheduleAccident(double t)
 {
-	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl<<endl;
+	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData,this);
 }

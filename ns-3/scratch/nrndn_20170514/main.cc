@@ -607,6 +607,7 @@ nrndnExample::LoadTraffic()
 			cout << "(main.cc-LoadTraffic)随机" << endl;
 		accidentNum = size * 1;
 	}
+	//Question 4倍？
 	std::cout<<"(main.cc-LoadTraffic)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
 
 }
