@@ -344,7 +344,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							ExtractRouteFromName(interest->GetName());
 
 		cout<<"(forwarding.cc-OnInterest) 得到该兴趣包的兴趣路线"<<endl;
-		vector<string>::iterator it;
+		std::vector<string>::iterator it;
 		for(it = remoteRoute.begin();it != remoteRoute.end();it++)
 		{
 			cout<<*it<<" ";
