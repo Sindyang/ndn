@@ -49,29 +49,29 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
+	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
-		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
+		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
 		else
 		{//非活跃节点直接跳过，避免段错误
 	        idx++;
-			cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
+			//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
 			continue;
 		}
-		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) IsInterestLane " << endl;
+		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{
 			++interestSize;
-			cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
+			//cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
 		}
 		idx++;
-		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
+		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
 	}
 	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) utils:统计结束"<<endl;
 	getchar();

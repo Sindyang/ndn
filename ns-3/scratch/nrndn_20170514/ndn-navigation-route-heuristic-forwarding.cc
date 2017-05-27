@@ -248,6 +248,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	cout<<"进入(forwarding.cc-OnInterest)"<<endl;
+	gerchar();
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
@@ -395,14 +396,18 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(Face::APPLICATION & face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
+		cout<<"(forwarding.cc-OnData)数据包来自应用层"<<endl;
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		//added by sy
-		cout<<"(forwarding.cc-OnData)size before GetNrPayload: "<<data->GetPayload()->GetSize()<<endl;
+	    ndn::nrndn::nrHeader nrheader;
+	    data->GetPayload()->PeekHeader(nrheader);
+	    uint32_t nodeId = nrheader.getSourceId();
+		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
 		getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//added by sy
-		cout<<"(forwarding.cc-OnData)size after GetNrPayload: "<<payload->GetSize()<<endl;
+		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
 		getchar();
 		if(!payload->GetSize())
 			return;

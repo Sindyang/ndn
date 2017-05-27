@@ -205,9 +205,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"sentPacket\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经sentPacket\n";
 	  ScheduleNextPacket ();
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"ScheduleNextPacket\n\n";
+	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经ScheduleNextPacket\n\n";
 }
 
 

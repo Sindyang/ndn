@@ -231,7 +231,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
 	//        when A sending traffic data, it's data name may be lane_1 because
@@ -243,7 +243,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 
@@ -263,12 +263,12 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG(
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
-	cout<<"(nrProducer.cc-OnSendingTrafficData) "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	getchar();
+	cout<<"(nrProducer.cc-OnSendingTrafficData) at time "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
+	//getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
-	getchar();
+	//cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
+	//getchar();
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
@@ -370,18 +370,20 @@ bool nrProducer::IsActive()
 
 bool nrProducer::IsInterestLane(const std::string& lane)
 {
+	//cout<<"(nrProducer.cc-IsInterestLane)"<<endl;
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	const std::string& currentLane = sensor->getLane();
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
-	cout << "(nrProducer.cc-IsInterestLane)sensor->getNavigationRoute()" << endl;
-	getchar();
+	//cout << "(nrProducer.cc-IsInterestLane)sensor->getNavigationRoute()" << endl;
+	//getchar();
+	//找出当前路段在导航路线中的位置
 	it =std::find(route.begin(),route.end(),currentLane);
 
 	it2=std::find(it,route.end(),lane);
-	cout << "(nrProducer.cc-IsInterestLane)return (it2!=route.end());" << endl;
+	//cout << "(nrProducer.cc-IsInterestLane)" << endl;
 
 	return (it2!=route.end());
 }

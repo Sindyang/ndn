@@ -138,7 +138,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
-	getchar();
+	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
 	NS_LOG_DEBUG("update pit:"<<os.str());
 	return true;
@@ -234,7 +234,6 @@ NrPitImpl::InitializeNrPitEntry()
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
-	showPit();
 	std::cout<<std::endl;
 	return true;
 }
