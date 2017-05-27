@@ -260,7 +260,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         
         //added by sy
         ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload->PeekHeader(nrheader);
+        interest->GetPayload()->PeekHeader(nrheader);
         uint32_t nodeId = nrheader.getSourceId();
 
 		// 2. record the Interest Packet
