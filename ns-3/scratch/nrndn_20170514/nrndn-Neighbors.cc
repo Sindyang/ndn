@@ -63,10 +63,16 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 {
 	std::cout<<"进入(Neighbors.cc-Update)"<<std::endl;
 	std::cout<<"发送该心跳包的NodeId为: "<<id<<std::endl;
+	//added by sy
+	Ptr<Node> node = this->GetObject<Node>();
+	uint32_t nodeid = node->GetId();
+	std::cout<<"收到该心跳包的NodeId为："<<nodeid<<std::endl;
+	
 	std::unordered_map<uint32_t,Neighbor>::iterator it = m_nb.find(id);
 	if (it != m_nb.end())
 	{
 		//Found the neighbor
+		cout<<"(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一"<<endl;
 		// setp 1. update the expire time
 		 it->second.m_expireTime
 		   = std::max (expire + Simulator::Now (), it->second.m_expireTime);
@@ -84,6 +90,7 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	// I think implementing default constructor will cause unnecessary copy and initialize
 
 	//Use insert instead:
+	cout<<"(Neighbors.cc-Update)将该节点添加至邻居列表中"<<endl;
 	m_nb.insert(std::unordered_map<uint32_t,Neighbor>::
 			value_type(id,Neighbor(x, y,expire + Simulator::Now ())));
 

@@ -112,7 +112,7 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"(forwarding.cc-Start)"<<endl;
+	cout<<"进入(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -345,7 +345,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
-		cout<<"(forwarding.cc-OnInterest) 得到该兴趣包的兴趣路线"<<endl;
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -647,6 +646,9 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//getchar();
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
+	//added by sy
+	//Question:determine real size
+	cout<<"(forwarding.cc-packetFromDirection) interest's size" <<interest->GetName().size()<<endl;
 	cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
 	//getchar();
 	return result;
@@ -810,7 +812,13 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-SendInterestPacket)"<<endl;
+
+	//added by sy
+    ndn::nrndn::nrHeader nrheader;
+    interest->GetPayload()->PeekHeader(nrheader);
+    uint32_t nodeId = nrheader.getSourceId();
+
+	cout<<"进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -858,6 +866,7 @@ void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
