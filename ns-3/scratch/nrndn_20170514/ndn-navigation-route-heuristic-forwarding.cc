@@ -248,7 +248,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	cout<<"进入(forwarding.cc-OnInterest)"<<endl;
-	gerchar();
+	getchar();
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
