@@ -247,13 +247,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-OnInterest)"<<endl;
 	getchar();
+	cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
-		cout << "(forwarding.cc-OnInterest)兴趣包来自应用层" <<endl;
+		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -286,18 +286,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		cout<<"(forwarding.cc-OnInterest)The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce()<<endl;
-		getchar();
+		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<endl;
+		//getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 
-	cout << "(forwarding.cc-OnInterest) GetPayload" <<endl;
+	//cout << "(forwarding.cc-OnInterest) GetPayload" <<endl;
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
-	cout<<"(forwarding.cc-OnInterest) PeekHeader"<<endl;
+	//cout<<"(forwarding.cc-OnInterest) PeekHeader"<<endl;
 	nrPayload->PeekHeader( nrheader);
 	//获取发送兴趣包节点的ID
 	nodeId=nrheader.getSourceId();
@@ -321,24 +321,35 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
-		cout<<"(forwrding.cc-OnInterest) Get interest packet from front or other direction"<<endl;
+		//cout<<"(forwrding.cc-OnInterest) Get interest packet from front or other direction"<<endl;
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的"<<endl;
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的"<<endl;
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到"<<endl;
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
+
+		cout<<"(forwarding.cc-OnInterest) 得到该兴趣包的兴趣路线"<<endl;
+		vector<string>::iterator it;
+		for(it = remoteRoute.begin();it ！= remoteRoute.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<endl;
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);

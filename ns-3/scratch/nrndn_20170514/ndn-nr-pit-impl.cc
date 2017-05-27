@@ -106,14 +106,13 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	//Question: entry代表什么
 	Ptr<Entry> entry = *pit;
 	//获取兴趣
-	//Question: head代表什么
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
 			std::find(route.begin(),route.end(),head->toUri());
 			
 	//当前路段为：uriConvertToString(head->toUri())
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)当前路段 "<<uriConvertToString(head->toUri())<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
 	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	//找不到
@@ -129,14 +128,13 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) Pit: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 		else
 			break;
-
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
