@@ -112,6 +112,7 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
+	cout<<"(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -126,6 +127,7 @@ void NavigationRouteHeuristic::Start()
 void NavigationRouteHeuristic::Stop()
 {
 	NS_LOG_FUNCTION (this);
+	cout<<"(forwarding.cc-Stop)"<<endl;
 	if(m_runningCounter)
 		m_runningCounter--;
 	else
@@ -438,6 +440,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//If the data packet has already been sent, do not proceed the packet
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
+		cout<<"(forwarding.cc-OnData)该数据包已经被发送，不再发送数据包 "<<data->GetSignature()<<endl;
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
@@ -451,6 +454,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
+	cout<<"(forwarding.cc-OnData)获得转发优先级列表"<<endl;
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
@@ -660,6 +664,7 @@ bool NavigationRouteHeuristic::isDuplicatedInterest(
 
 void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_t seq)
 {
+	cout<<"(forwarding.cc-ExpireInterestPacketTimer) nodeId"<<nodeId<<"sequence "<<seq<<endl;
 	NS_LOG_FUNCTION (this<< "ExpireInterestPacketTimer id"<<nodeId<<"sequence"<<seq);
 	//1. Find the waiting timer
 	EventId& eventid = m_sendingInterestEvent[nodeId][seq];
@@ -671,6 +676,7 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-BroadcastStopMessage) 广播停止的消息为 "<<src->GetName().toUri() <<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the interest packet
 	Ptr<Interest> interest = Create<Interest> (*src);
@@ -731,6 +737,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	//直接转发
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
+	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",nonce为"<<nonce<<endl;
 
 	// 记录转发次数
 	// 4. record the forward times
@@ -880,6 +887,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
+	cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
@@ -1013,6 +1021,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(const Name& dataName)
 {
 	NS_LOG_INFO("GetPriorityListOfDataSource");
+	cout<<"进入(forwarding.cc-GetPriorityListOfDataSource)"<<endl;
 	std::vector<uint32_t> priorityList;
 	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
 	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
@@ -1092,6 +1101,7 @@ void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId,uint32_t si
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ExpireDataPacketTimer");
 	NS_LOG_FUNCTION (this<< "ExpireDataPacketTimer id\t"<<nodeId<<"\tsignature:"<<signature);
+	cout<<"(forwarding.cc-ExpireDataPacketTimer) NodeId: "<<nodeId<<" signature: "<<signature<<endl;
 	//1. Find the waiting timer
 	EventId& eventid = m_sendingDataEvent[nodeId][signature];
 
@@ -1119,6 +1129,7 @@ bool NavigationRouteHeuristic::isDuplicatedData(uint32_t id, uint32_t signature)
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-BroadcastStopMessage)"<<endl;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
@@ -1191,6 +1202,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		const std::unordered_set<uint32_t>& interestNodes,
 		const std::vector<uint32_t>& recPri)
 {
+	cout<<"进入(forwarding.cc-GetPriorityListOfDataForwarderInterestd)"<<endl;
 	std::vector<uint32_t> priorityList;
 	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);
 
@@ -1263,6 +1275,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri)
 {
+	cout<<"进入(forwarding.cc-GetPriorityListOfDataForwarderDisinterestd)"<<endl;
 	std::vector<uint32_t> priorityList;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);
@@ -1297,6 +1310,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderDi
 void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-sendDataPacket)"<<endl;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::SendDataPacket");
 	vector<Ptr<Face> >::iterator fit;
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
@@ -1327,6 +1341,7 @@ void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-NotifyUpperLayer)"<<endl;
 	// 1. record the Data Packet received
 	m_dataSignatureSeen.Put(data->GetSignature(),true);
 
