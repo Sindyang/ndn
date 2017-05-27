@@ -234,6 +234,7 @@ NrPitImpl::InitializeNrPitEntry()
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
+	showPit();
 	std::cout<<std::endl;
 	return true;
 }

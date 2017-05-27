@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket)"<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -91,10 +91,10 @@ void nrConsumer::ScheduleNextPacket()
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test1"<<endl;
 
 	 //2. set the Interest (reverse of  the residual navigation route)
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) prefix "<<prefix<<std::endl;
+	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) 兴趣 "<<prefix<<std::endl;
 	if(prefix=="")
 	{//兴趣为空，直接返回
-		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
+		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
 		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
@@ -102,7 +102,7 @@ void nrConsumer::ScheduleNextPacket()
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<std::endl;
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
 	//getchar();
 	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
 	//3. Schedule next packet
@@ -112,7 +112,7 @@ void nrConsumer::ScheduleNextPacket()
 
 std::vector<std::string> nrConsumer::GetCurrentInterest()
 {
-	std::cout<<"(nrConsumer.cc-GetCurrentInterest)"<<endl;
+	std::cout<<"进入(nrConsumer.cc-GetCurrentInterest)"<<endl;
 	std::string prefix = "/";
 	std::string str;
 	std::vector<std::string> result;

@@ -219,6 +219,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
 	{
+		cout<<"(forwarding.cc-GetPriorityList) 邻居数目不为空"<<endl;
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
 		// Be careful with the order, increasing or descending?
@@ -235,7 +236,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		cout<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-
+	cout<<endl;
 	return PriorityList;
 }
 
@@ -256,14 +257,20 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+        
+        //added by sy
+        ndn::nrndn::nrHeader nrheader;
+        interest->GetPayload->PeekHeader(nrheader);
+        uint32_t nodeId = nrheader.getSourceId();
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
-		cout<<"(forwarding.cc-OnInterest) 记录兴趣包"<<endl;
+		cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
+
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl;
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
 		return;
 	}
 
@@ -297,7 +304,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	seq=interest->GetNonce();
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 获取优先列表" << endl;
+	cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first
@@ -619,7 +626,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	cout<<"(forwarding.cc-packetFromDirection) " << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
+	cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
 	//cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
@@ -786,6 +793,7 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-SendInterestPacket)"<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -894,6 +902,7 @@ void
 NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running) return;
+	cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
 
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());

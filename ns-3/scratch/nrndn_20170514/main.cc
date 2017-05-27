@@ -711,7 +711,7 @@ nrndnExample::InstallNrNdnStack()
 	ndnHelper.SetPit("ns3::ndn::pit::nrndn::NrPitImpl","CleanInterval",pitCleanIntervalStr.str());
 	cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
 	ndnHelper.SetDefaultRoutes (true);
-	cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl<<endl;
 	ndnHelper.Install (nodes);
 	cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
 }
@@ -914,7 +914,7 @@ void nrndnExample::InstallTraffics()
 {
 	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN());
-	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl;
+	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
 	if(random_accident)
 	{
 		
