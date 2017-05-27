@@ -344,12 +344,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							ExtractRouteFromName(interest->GetName());
 
 		cout<<"(forwarding.cc-OnInterest) 得到该兴趣包的兴趣路线"<<endl;
-		const std::vector<string>::iterator it;
-		for(it=remoteRoute.begin();it != remoteRoute.end();it++)
-		{
-			cout<<*it<<" ";
-		}
-		cout<<endl;
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -966,8 +960,12 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	// eg. if the navigation route is R1-R2-R3, the name is /R3/R2/R1
 	vector<string> result;
 	Name::const_reverse_iterator it;
+	cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
 	for(it=name.rbegin();it!=name.rend();++it)
+	{
 		result.push_back(it->toUri());
+		cout<<it->toUri()<<endl;
+	}
 	return result;
 }
 
