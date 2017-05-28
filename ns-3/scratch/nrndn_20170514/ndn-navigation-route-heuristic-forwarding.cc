@@ -318,6 +318,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//避免回环
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包为NACK_LOOP。发送兴趣包的节点为： "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
@@ -332,13 +333,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的"<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的"<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
@@ -652,7 +653,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
 	//added by sy
 	//Question:determine real size
-	cout<<"(forwarding.cc-packetFromDirection) interest's size" <<interest->GetName().size()<<endl;
+	cout<<"(forwarding.cc-packetFromDirection) interest's size " <<interest->GetName().size()<<endl;
 	cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
 	//getchar();
 	return result;
@@ -822,7 +823,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 
-	cout<<"进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
+	cout<<endl<<"进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -870,7 +871,7 @@ void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
+	cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
