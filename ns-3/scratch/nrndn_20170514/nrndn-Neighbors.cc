@@ -68,7 +68,7 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	if (it != m_nb.end())
 	{
 		//Found the neighbor
-		cout<<"(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一"<<std::endl;
+		std::cout<<"(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一"<<std::endl;
 		// setp 1. update the expire time
 		 it->second.m_expireTime
 		   = std::max (expire + Simulator::Now (), it->second.m_expireTime);
