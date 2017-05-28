@@ -1,4 +1,4 @@
-(main.cc)NR-NDN simulation begin at Sat May 27 09:46:56 2017
+(main.cc)NR-NDN simulation begin at Sun May 28 20:21:46 2017
 (main.cc)兴趣包发送频率: 2
 (main.cc)运行方法是：0
 (main.cc-RunNrndnSim)读取交通数据
@@ -37,6 +37,7 @@ Max time in fcdoutput.xml is 309
 (main.cc-InstallNrNdnStack) SetContentStore
 (main.cc-InstallNrNdnStack) SetPit
 (main.cc-InstallNrNdnStack) SetDefaultRoutes
+
 (forwarding.cc-NotifyNewAggregate)新建PIT表
 (forwarding.cc-NotifyNewAggregate)建立完毕
 (ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT
@@ -439,658 +440,652 @@ Max time in fcdoutput.xml is 309
 
 (main.cc-RunNrndnSim)安装交通状况
 (main.cc-InstallTraffics)插入事件：53
+
 (nrProducer.cc-addAccident(double iType))NodeId: 0 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 14 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 150
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 160
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 170
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 180
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 190
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 200
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 210
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 220
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 230
-(nrProducer.cc-addAccident(double iType))NodeId: 14 add accident at 240
 (nrProducer.cc-addAccident(double iType))NodeId: 27 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 103
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 113
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 123
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 133
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 143
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 153
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 163
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 173
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 183
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 193
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 203
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 213
-(nrProducer.cc-addAccident(double iType))NodeId: 27 add accident at 223
 (nrProducer.cc-addAccident(double iType))NodeId: 12 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 103
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 113
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 123
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 133
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 143
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 153
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 163
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 173
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 183
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 193
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 203
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 213
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 223
-(nrProducer.cc-addAccident(double iType))NodeId: 12 add accident at 233
 (nrProducer.cc-addAccident(double iType))NodeId: 33 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 106
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 116
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 126
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 136
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 146
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 156
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 166
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 176
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 186
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 196
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 206
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 216
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 226
-(nrProducer.cc-addAccident(double iType))NodeId: 33 add accident at 236
 (nrProducer.cc-addAccident(double iType))NodeId: 25 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 106
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 116
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 126
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 136
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 146
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 156
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 166
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 176
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 186
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 196
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 206
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 216
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 226
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 236
-(nrProducer.cc-addAccident(double iType))NodeId: 25 add accident at 246
 (nrProducer.cc-addAccident(double iType))NodeId: 24 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 103
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 113
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 123
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 133
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 143
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 153
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 163
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 173
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 183
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 193
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 203
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 213
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 223
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 233
-(nrProducer.cc-addAccident(double iType))NodeId: 24 add accident at 243
 (nrProducer.cc-addAccident(double iType))NodeId: 50 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 115
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 125
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 135
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 145
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 155
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 165
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 175
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 185
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 195
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 205
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 215
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 225
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 235
-(nrProducer.cc-addAccident(double iType))NodeId: 50 add accident at 245
 (nrProducer.cc-addAccident(double iType))NodeId: 11 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 103
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 113
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 123
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 133
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 143
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 153
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 163
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 173
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 183
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 193
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 203
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 213
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 223
-(nrProducer.cc-addAccident(double iType))NodeId: 11 add accident at 233
 (nrProducer.cc-addAccident(double iType))NodeId: 17 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 150
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 160
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 170
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 180
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 190
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 200
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 210
-(nrProducer.cc-addAccident(double iType))NodeId: 17 add accident at 220
 (nrProducer.cc-addAccident(double iType))NodeId: 8 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 8 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 38 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 38 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 7 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 1 addAccident
 (nrProducer.cc-addAccident(double iType))NodeId: 29 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 29 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 30 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 109
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 119
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 129
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 139
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 149
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 159
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 169
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 179
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 189
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 199
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 209
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 219
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 229
-(nrProducer.cc-addAccident(double iType))NodeId: 30 add accident at 239
 (nrProducer.cc-addAccident(double iType))NodeId: 18 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 100
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 110
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 120
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 130
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 140
-(nrProducer.cc-addAccident(double iType))NodeId: 18 add accident at 150
 (nrProducer.cc-addAccident(double iType))NodeId: 47 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 109
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 119
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 129
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 139
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 149
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 159
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 169
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 179
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 189
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 199
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 209
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 219
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 229
-(nrProducer.cc-addAccident(double iType))NodeId: 47 add accident at 239
 (nrProducer.cc-addAccident(double iType))NodeId: 23 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 103
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 113
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 123
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 133
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 143
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 153
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 163
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 173
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 183
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 193
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 203
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 213
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 223
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 233
-(nrProducer.cc-addAccident(double iType))NodeId: 23 add accident at 243
 (nrProducer.cc-addAccident(double iType))NodeId: 31 addAccident
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 109
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 119
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 129
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 139
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 149
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 159
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 169
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 179
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 189
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 199
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 209
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 219
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 229
-(nrProducer.cc-addAccident(double iType))NodeId: 31 add accident at 239
 (main.cc-InstallTraffics)插入事件：完毕
 
 (main.cc-RunNrndnSim)Starting simulation for 310 s ...
 (main.cc-RunNrndnSim)开始运行：
 
 (main.cc-Look_at_clock) Time now: 0
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 0
+(nrConsumer.cc-ScheduleNextPacket) NodeId 0 now is interested on /0-2to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 0
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 1
+(nrConsumer.cc-ScheduleNextPacket) NodeId 1 now is interested on /0-2to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 1
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 2
+(nrConsumer.cc-ScheduleNextPacket) NodeId 2 now is interested on /0-2to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 2
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 3
+(nrConsumer.cc-ScheduleNextPacket) NodeId 3 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 3
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 4
+(nrConsumer.cc-ScheduleNextPacket) NodeId 4 now is interested on /0-2to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 4
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 5
+(nrConsumer.cc-ScheduleNextPacket) NodeId 5 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 5
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /3-1to2-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 6
+(nrConsumer.cc-ScheduleNextPacket) NodeId 6 now is interested on /3-1to2-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 6
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /3-2to2-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 7
+(nrConsumer.cc-ScheduleNextPacket) NodeId 7 now is interested on /3-2to2-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 7
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 8
+(nrConsumer.cc-ScheduleNextPacket) NodeId 8 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 8
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 9
+(nrConsumer.cc-ScheduleNextPacket) NodeId 9 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 9
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 13
+(nrConsumer.cc-ScheduleNextPacket) NodeId 13 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 13
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 14
+(nrConsumer.cc-ScheduleNextPacket) NodeId 14 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 14
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 16
+(nrConsumer.cc-ScheduleNextPacket) NodeId 16 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 16
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 17
+(nrConsumer.cc-ScheduleNextPacket) NodeId 17 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 17
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 18
+(nrConsumer.cc-ScheduleNextPacket) NodeId 18 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 18
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 19
+(nrConsumer.cc-ScheduleNextPacket) NodeId 19 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 19
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 28
+(nrConsumer.cc-ScheduleNextPacket) NodeId 28 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 28
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 29
+(nrConsumer.cc-ScheduleNextPacket) NodeId 29 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 29
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 38
+(nrConsumer.cc-ScheduleNextPacket) NodeId 38 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 38
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 39
+(nrConsumer.cc-ScheduleNextPacket) NodeId 39 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+进入(forwarding.cc-Start)
 (nrProducer.cc-StartApplication) NodeId: 39
+
+
+
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 4214477565 from NodeId 0
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 0
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 0 now is interested on /0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1124607250 from NodeId 1
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 1
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 1 now is interested on /0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1343058520 from NodeId 2
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 2
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 2 now is interested on /0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 481154759 from NodeId 3
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 3
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 3 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1289510784 from NodeId 4
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /0-2to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 4
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 4 now is interested on /0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2960881247 from NodeId 5
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 5
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 5 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 416773320 from NodeId 6
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /3-1to2-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 6
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 6 now is interested on /3-1to2-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 818021951 from NodeId 7
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /3-2to2-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 7
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 7 now is interested on /3-2to2-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 4208215321 from NodeId 8
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 8
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 8 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 207574640 from NodeId 9
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 9
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 9 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2535657238 from NodeId 13
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 13
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 13 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3052981866 from NodeId 14
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 14
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 14 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3886998360 from NodeId 16
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 16
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 16 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1110188431 from NodeId 17
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 17
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 17 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3935434051 from NodeId 18
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 18
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 18 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3790217290 from NodeId 19
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 19
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 19 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3879182681 from NodeId 28
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 28
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 28 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3133815627 from NodeId 29
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 29
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 29 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 741397859 from NodeId 38
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-2to1-3/1-1to1-2/1-0to1-1
-(nrConsumer.cc-ScheduleNextPacket) NodeId 38
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 38 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
 
 进入(forwarding.cc-OnInterest)
-(forwarding.cc-OnInterest)兴趣包来自应用层
+(forwarding.cc-OnInterest)该兴趣包来自应用层
 (forwarding.cc-GetNrPayload)nrPayload's size 0
-(forwarding.cc-GetPriorityList)PriorityList is (forwarding.cc-OnInterest) 记录兴趣包
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1017878566 from NodeId 39
 (forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
-(nrConsumer.cc-SendPacket)sentPacket
-(nrConsumer.cc-ScheduleNextPacket)
-(nrConsumer.cc-GetCurrentInterest)
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
-(nrConsumer.cc-ScheduleNextPacket) prefix /1-1to1-0/1-2to1-1/1-3to1-2
-(nrConsumer.cc-ScheduleNextPacket) NodeId 39
-(nrConsumer.cc-SendPacket)ScheduleNextPacket
+(nrConsumer.cc-ScheduleNextPacket) NodeId 39 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
 
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 75
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 6
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 988.45 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 9
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 988.45 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 9
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 988.45 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 9
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 9
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:9 
+

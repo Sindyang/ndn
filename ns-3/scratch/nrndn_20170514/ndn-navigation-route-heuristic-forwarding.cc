@@ -279,8 +279,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	
 	if(HELLO_MESSAGE==interest->GetScope())
-	{
+	{		
 		cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
+		//added by sy
+		//只想知道节点当前所在路线
+		const string& localLane=m_sensor->getLane();
+		cout<<"localLane "<<localLane<<endl;
 		ProcessHello(interest);
 		return;
 	}
@@ -861,7 +865,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   super::NotifyNewAggregate ();
 }
 
-
+//Question:这个函数的作用
 void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
@@ -977,6 +981,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	// eg. if the navigation route is R1-R2-R3, the name is /R3/R2/R1
 	vector<string> result;
 	Name::const_reverse_iterator it;
+	//Question:有非字符内容输出
 	cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
 	for(it=name.rbegin();it!=name.rend();++it)
 	{
