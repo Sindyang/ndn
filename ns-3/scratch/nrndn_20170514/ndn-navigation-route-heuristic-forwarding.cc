@@ -650,7 +650,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
+	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
 	//cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
@@ -659,8 +659,8 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
 	//added by sy
 	//Question:determine real size
-	cout<<"(forwarding.cc-packetFromDirection) interest's size " <<interest->GetName().size()<<endl;
-	cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
+	//cout<<"(forwarding.cc-packetFromDirection) interest's size " <<interest->GetName().size()<<endl;
+	//cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
 	//getchar();
 	return result;
 }
@@ -990,11 +990,11 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	vector<string> result;
 	Name::const_reverse_iterator it;
 	//Question:有非字符内容输出
-	cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
+	//cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
 	for(it=name.rbegin();it!=name.rend();++it)
 	{
 		result.push_back(it->toUri());
-		cout<<it->toUri()<<endl;
+		//cout<<it->toUri()<<endl;
 	}
 	return result;
 }

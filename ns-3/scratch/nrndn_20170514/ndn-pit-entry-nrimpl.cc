@@ -112,7 +112,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<ite->first<<"("<<ite->second<<") ";
 	}*/
-	std::cout<<"(pit-entry.cc-listPitEntry)"<<"incomingnbs's NodeId:";
+	//std::cout<<"(pit-entry.cc-listPitEntry)"<<"incomingnbs's NodeId:";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
 		std::cout<<*ite<<" ";
