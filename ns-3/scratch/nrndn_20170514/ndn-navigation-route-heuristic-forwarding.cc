@@ -282,9 +282,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		//added by sy
-		//只想知道节点当前所在路线
-		const string& localLane=m_sensor->getLane();
-		//cout<<"localLane "<<localLane<<endl;
+		//只想知道节点id
+		uint32_t id = m_sensor->getNode();
+		cout<<"Node "<<id<<endl;
 		ProcessHello(interest);
 		return;
 	}
@@ -351,8 +351,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							ExtractRouteFromName(interest->GetName());
 							
 		//added by sy
-		//只想知道节点当前所在路线
-		const string& localLane=m_sensor->getLane();					
+		const uint32_t id = m_sensor->getNode();
+		cout<<"Node "<<id<<endl;				
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -415,7 +415,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// 1.Set the payload
 		//added by sy
 		//只想知道节点当前所在路线和节点Id
-		const string& localLane=m_sensor->getLane();
+		const uint32_t id = m_sensor->getNode();
+		cout<<"Node "<<id<<endl;
+		
 		//added by sy
 	    ndn::nrndn::nrHeader nrheader;
 	    data->GetPayload()->PeekHeader(nrheader);
