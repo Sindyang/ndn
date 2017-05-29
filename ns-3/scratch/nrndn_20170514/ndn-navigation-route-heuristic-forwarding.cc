@@ -280,7 +280,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
-		cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
+		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		//added by sy
 		//只想知道节点当前所在路线
 		const string& localLane=m_sensor->getLane();
@@ -877,8 +877,8 @@ void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
-	getchar();
-	cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
+	//getchar();
+	//cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
