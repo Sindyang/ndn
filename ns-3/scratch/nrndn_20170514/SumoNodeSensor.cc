@@ -136,6 +136,7 @@ const std::string& SumoNodeSensor::getLane()
 	uint32_t id = node->GetId();
 	cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
+	//Question
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
 		cout << "(SumoNodeSensor.cc-getLane) " << "m_sumodata == NULL" <<endl;

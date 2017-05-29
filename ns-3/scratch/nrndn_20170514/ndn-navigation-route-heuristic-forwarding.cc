@@ -871,6 +871,7 @@ void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
+	getchar();
 	cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)

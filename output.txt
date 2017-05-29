@@ -1,4 +1,4 @@
-(main.cc)NR-NDN simulation begin at Sun May 28 20:21:46 2017
+(main.cc)NR-NDN simulation begin at Mon May 29 12:53:45 2017
 (main.cc)兴趣包发送频率: 2
 (main.cc)运行方法是：0
 (main.cc-RunNrndnSim)读取交通数据
@@ -470,6 +470,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 0 now is interested on /0-2to1-2
@@ -479,6 +480,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 1 now is interested on /0-2to1-2
@@ -488,6 +490,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 2 now is interested on /0-2to1-2
@@ -497,6 +500,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 3
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 3 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
@@ -506,6 +510,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 4
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 4 now is interested on /0-2to1-2
@@ -515,6 +520,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 5 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
@@ -524,6 +530,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 6 now is interested on /3-1to2-1
@@ -533,6 +540,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 7 now is interested on /3-2to2-2
@@ -542,6 +550,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 8 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -551,6 +560,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 9 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -560,6 +570,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 13
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 13 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
@@ -569,6 +580,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 14
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 14 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
@@ -578,6 +590,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 16
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 16 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
@@ -587,6 +600,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 17 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
@@ -596,6 +610,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 18 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -605,6 +620,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 19 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -614,6 +630,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 28 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -623,6 +640,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 29 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -632,6 +650,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 38 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -641,6 +660,7 @@ Max time in fcdoutput.xml is 309
 进入(forwarding.cc-Start)
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 39 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -659,6 +679,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 0 now is interested on /0-2to1-2
@@ -676,6 +697,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 1 now is interested on /0-2to1-2
@@ -693,6 +715,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 2 now is interested on /0-2to1-2
@@ -710,6 +733,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 3
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 3 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
@@ -727,6 +751,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 4
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 4 now is interested on /0-2to1-2
@@ -744,6 +769,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 5 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
@@ -761,6 +787,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 6 now is interested on /3-1to2-1
@@ -778,6 +805,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 7 now is interested on /3-2to2-2
@@ -795,6 +823,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 8 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -812,6 +841,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 9 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -829,6 +859,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 13
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 13 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
@@ -846,6 +877,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 14
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 14 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
@@ -863,6 +895,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 16
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 16 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
@@ -880,6 +913,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 17 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
@@ -897,6 +931,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 18 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -914,6 +949,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 19 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -931,6 +967,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 28 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -948,6 +985,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 29 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
@@ -965,6 +1003,7 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 38 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
@@ -982,17 +1021,22 @@ Max time in fcdoutput.xml is 309
 (nrConsumer.cc-SendPacket)已经sentPacket
 进入(nrConsumer.cc-ScheduleNextPacket)
 进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 (nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
 (nrConsumer.cc-ScheduleNextPacket) NodeId 39 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
 (nrConsumer.cc-SendPacket)已经ScheduleNextPacket
 
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 75
 
+
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 6
 (nrUtils.cc-AggrateInterestPacketSize)Hello size 52
 
@@ -1006,8 +1050,9 @@ Max time in fcdoutput.xml is 309
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
-(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1037,8 +1082,9 @@ Max time in fcdoutput.xml is 309
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
-(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1068,8 +1114,9 @@ Max time in fcdoutput.xml is 309
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
-(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1092,6 +1139,7 @@ Max time in fcdoutput.xml is 309
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 localLane 3-1to2-1
 进入(forwarding.cc-ProcessHello)
@@ -1102,14 +1150,17 @@ localLane 3-1to2-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 localLane 3-1to3-2
 进入(forwarding.cc-ProcessHello)
 进入(Neighbors.cc-Update)
 发送该心跳包的NodeId为: 6
 (Neighbors.cc-Update)将该节点添加至邻居列表中
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 13
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 19
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 75
@@ -1126,8 +1177,9 @@ localLane 3-1to3-2
 1-2to2-2
 2-2to3-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 3
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
-(forwarding.cc-packetFromDirection) interest's size5
+(forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1161,8 +1213,9 @@ localLane 3-1to3-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
-(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1192,8 +1245,9 @@ localLane 3-1to3-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
-(forwarding.cc-packetFromDirection) interest's size4
+(forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1212,6 +1266,39 @@ localLane 3-1to3-2
 (pit-entry.cc-listPitEntry)incomingnbs's NodeId:19 
 (pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
 (pit-entry.cc-listPitEntry)incomingnbs's NodeId:19 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 991.75 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 19
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 19
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 19
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:19 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:19 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:19 
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 2
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 55
 
@@ -1224,8 +1311,9 @@ localLane 3-1to3-2
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
-(forwarding.cc-packetFromDirection) interest's size2
+(forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1245,8 +1333,9 @@ localLane 3-1to3-2
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 4
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
-(forwarding.cc-packetFromDirection) interest's size2
+(forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1266,8 +1355,9 @@ localLane 3-1to3-2
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
-(forwarding.cc-packetFromDirection) interest's size2
+(forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1281,9 +1371,12 @@ localLane 3-1to3-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 28
 (nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 16
 (nrUtils.cc-AggrateInterestPacketSize)Interest size 85
 
@@ -1291,6 +1384,7 @@ localLane 3-1to3-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1301,6 +1395,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1311,6 +1406,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1329,8 +1425,9 @@ localLane 1-0to1-1
 1-1to1-2
 1-2to0-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
-(forwarding.cc-packetFromDirection) interest's size5
+(forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
 (forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
@@ -1356,6 +1453,7 @@ localLane 1-0to1-1
 1-1to1-2
 1-2to0-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 14
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -1373,6 +1471,7 @@ localLane 1-0to1-1
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1386,6 +1485,7 @@ localLane 1-0to1-1
 (pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
 (pit-entry.cc-listPitEntry)incomingnbs's NodeId:4 
 
+
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 获取优先级列表
 (forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1998.35
@@ -1393,6 +1493,7 @@ localLane 1-0to1-1
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1414,6 +1515,7 @@ localLane 1-0to1-1
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1429,6 +1531,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 1
@@ -1437,6 +1540,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1447,6 +1551,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1457,6 +1562,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1476,6 +1582,7 @@ localLane 0-2to1-2
 %00
 3-2to2-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1503,6 +1610,7 @@ localLane 0-2to1-2
 %00
 3-2to2-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1526,6 +1634,7 @@ localLane 0-2to1-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1557,7 +1666,40 @@ localLane 0-2to1-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 29
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 29
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 29
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:29 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:29 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:29 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 995.05 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
@@ -1580,6 +1722,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 13
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 13
@@ -1595,6 +1738,7 @@ localLane 0-2to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1626,6 +1770,7 @@ localLane 0-2to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1657,6 +1802,7 @@ localLane 0-2to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1681,6 +1827,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 3
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 localLane 0-1to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1690,6 +1837,7 @@ localLane 0-1to1-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 8
@@ -1702,6 +1850,7 @@ localLane 0-1to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1712,6 +1861,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1722,6 +1872,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1737,6 +1888,7 @@ localLane 1-0to1-1
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
@@ -1758,7 +1910,30 @@ localLane 1-0to1-1
 %00
 0-2to1-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 1
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:1 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1991.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 (forwarding.cc-packetFromDirection) interest's size 2
 (forwarding.cc-packetFromDirection) route size 2
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
@@ -1773,6 +1948,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 0
 (SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 0
@@ -1780,6 +1956,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 7
@@ -1787,6 +1964,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 18
@@ -1795,6 +1973,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
 (SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1805,6 +1984,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1815,6 +1995,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1825,6 +2006,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
 (SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1835,6 +2017,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 localLane 3-2to2-2
 进入(forwarding.cc-ProcessHello)
@@ -1845,6 +2028,7 @@ localLane 3-2to2-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 localLane 1-0to1-1
 进入(forwarding.cc-ProcessHello)
@@ -1855,6 +2039,7 @@ localLane 1-0to1-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
 (SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
 localLane 0-2to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1865,6 +2050,7 @@ localLane 0-2to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 localLane 3-2to3-1
 进入(forwarding.cc-ProcessHello)
@@ -1874,6 +2060,7 @@ localLane 3-2to3-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 39
@@ -1882,6 +2069,7 @@ localLane 3-2to3-1
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1892,6 +2080,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1902,6 +2091,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -1927,6 +2117,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 18
 (SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1958,6 +2149,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -1989,6 +2181,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -2020,6 +2213,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 8
 (SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -2051,6 +2245,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 28
 (SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -2082,6 +2277,7 @@ localLane 1-3to1-2
 1-1to1-2
 1-2to1-3
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 38
 (SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -2105,6 +2301,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 19
@@ -2113,6 +2310,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -2123,7 +2321,19 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
 进入(Neighbors.cc-Update)
@@ -2136,6 +2346,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 9
 (SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
@@ -2156,6 +2367,7 @@ localLane 1-3to1-2
 2-2to1-2
 1-2to0-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2172,6 +2384,7 @@ localLane 1-3to1-2
 2-2to1-2
 1-2to0-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 16
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2180,6 +2393,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -2190,6 +2404,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -2200,6 +2415,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
 (SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
 localLane 1-3to1-2
 进入(forwarding.cc-ProcessHello)
@@ -2218,6 +2434,7 @@ localLane 1-3to1-2
 1-2to2-2
 2-2to3-2
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 13
 (SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2258,6 +2475,7 @@ localLane 1-3to1-2
 2-1to1-1
 1-1to0-1
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2274,6 +2492,7 @@ localLane 1-3to1-2
 2-1to1-1
 1-1to0-1
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2293,6 +2512,7 @@ localLane 1-3to1-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 29
 (SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
@@ -2324,7 +2544,40 @@ localLane 1-3to1-2
 1-2to1-1
 1-1to1-0
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 19
 (SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-3to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-3to1-2 add Neighbor 39
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 39
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-0 add Neighbor 39
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-3to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:39 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:39 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-0
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:39 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 998.35 y: 2980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-3to1-2
+1-2to1-1
+1-1to1-0
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
 (forwarding.cc-packetFromDirection) interest's size 4
 (forwarding.cc-packetFromDirection) route size 4
 (forwarding.cc-OnInterest) 该兴趣包从后方得到
@@ -2360,6 +2613,7 @@ localLane 1-3to1-2
 1-2to1-1
 1-1to0-1
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2387,6 +2641,7 @@ localLane 1-3to1-2
 1-2to1-1
 1-1to0-1
 进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 (forwarding.cc-packetFromDirection) interest's size 5
 (forwarding.cc-packetFromDirection) route size 5
@@ -2394,6 +2649,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 5
 (SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 5
@@ -2402,6 +2658,7 @@ localLane 1-3to1-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
 (SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
 localLane 3-2to2-2
 进入(forwarding.cc-ProcessHello)
@@ -2412,6 +2669,7 @@ localLane 3-2to2-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
 (SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
 localLane 3-2to2-2
 进入(forwarding.cc-ProcessHello)
@@ -2421,6 +2679,7 @@ localLane 3-2to2-2
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 14
 (SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 14
@@ -2429,7 +2688,19 @@ localLane 3-2to2-2
 
 进入(forwarding.cc-OnInterest)
 (forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
 (SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 localLane 3-1to2-1
 进入(forwarding.cc-ProcessHello)
 进入(Neighbors.cc-Update)
@@ -2438,6 +2709,7 @@ localLane 3-1to2-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 3
 (SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 3
@@ -2445,9 +2717,4630 @@ localLane 3-1to2-1
 
 进入(forwarding.cc-HelloTimerExpire)
 进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 16
 (SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
 
 进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 16
 (nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 17
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 29
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 28
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 75
+
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 38
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1004.95 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 28
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1004.95 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 28
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1004.95 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 28
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 28
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:28 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 4
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 0
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 55
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1988.45
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 0
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:0 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1988.45
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 0
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:0 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1988.45
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 0
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:0 
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 2
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 6
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 55
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1011.55
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-1to2-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-1to2-1 add Neighbor 6
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:6 
+(pit-entry.cc-listPitEntry) interest_name：/2-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-2to0-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1011.55
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+(forwarding.cc-packetFromDirection) interest's size 2
+(forwarding.cc-packetFromDirection) route size 2
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 6
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 20
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 21
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 25
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 30
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 31
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 32
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 33
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 34
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 35
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 36
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 37
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 40
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 41
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 42
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 43
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 44
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 45
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 46
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 47
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 50
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 51
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 52
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+
+(main.cc-Look_at_clock) Time now: 1
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 18
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 6
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 6
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 6
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 2
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 28
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 39
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 8
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 7
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 17
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 1
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 5
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 14
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 19
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 4
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 16
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 38
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 0
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 3
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 13
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 13
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 29
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 20
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 21
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 25
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 30
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 31
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 32
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 33
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 34
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 35
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 36
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 37
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 40
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 41
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 42
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 43
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 44
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 45
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 46
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 47
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 50
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 51
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 52
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+
+(不再记录已经发送的心跳包和已经收到的心跳包)
+
+(main.cc-Look_at_clock) Time now: 2
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 16
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 18
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 18
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 14
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 38
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 2
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 2
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 7
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 4
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 17
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 8
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 39
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 3
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 29
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 0
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 28
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 5
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 13
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 13
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 19
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 1
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 1
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 6
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 6
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 6
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to2-2 /2-2to3-2 /3-2to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 10 now is interested on /3-2to3-1/2-2to3-2/1-2to2-2/0-2to1-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 10
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) NodeId 11's current lane is 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to2-1 /2-1to3-1 /3-1to3-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 11 now is interested on /3-1to3-2/2-1to3-1/1-1to2-1/0-1to1-1
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 11
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to1-1 /1-1to2-1 /2-1to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 12 now is interested on /2-1to3-1/1-1to2-1/1-2to1-1/0-2to1-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 12
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 15 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 15
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to1-1 /1-1to2-1 /2-1to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 22 now is interested on /2-1to3-1/1-1to2-1/1-2to1-1/0-2to1-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 22
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) NodeId 23's current lane is 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 23 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 23
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 24 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 24
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 26 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 26
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 27 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 27
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) NodeId 48's current lane is 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 48 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 48
+
+进入(forwarding.cc-Start)
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 49 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+进入(forwarding.cc-Start)
+(nrProducer.cc-StartApplication) NodeId: 49
+
+(SumoNodeSensor.cc-getLane) NodeId 20
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 21
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 25
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 30
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 31
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 32
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 33
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 34
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 35
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 36
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 37
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 40
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 41
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 42
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 43
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 44
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 45
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 46
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 47
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 50
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 51
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+(SumoNodeSensor.cc-getLane) NodeId 52
+(SumoNodeSensor.cc-getLane) m_sumodata == NULL
+(SumoNodeSensor.cc-getLane) m_sumoLane
+
+(main.cc-Look_at_clock) Time now: 3
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 5
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 10
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2639435060 from NodeId 10
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to2-2 /2-2to3-2 /3-2to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 10 now is interested on /3-2to3-1/2-2to3-2/1-2to2-2/0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2941353573 from NodeId 11
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) NodeId 11's current lane is 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to2-1 /2-1to3-1 /3-1to3-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 11 now is interested on /3-1to3-2/2-1to3-1/1-1to2-1/0-1to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2207671899 from NodeId 12
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to1-1 /1-1to2-1 /2-1to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 12 now is interested on /2-1to3-1/1-1to2-1/1-2to1-1/0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 3122324593 from NodeId 15
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to3-1 /3-1to2-1 /2-1to1-1 /1-1to0-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 15 now is interested on /1-1to0-1/2-1to1-1/3-1to2-1/3-2to3-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2500217385 from NodeId 22
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-2to1-2 /1-2to1-1 /1-1to2-1 /2-1to3-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 22 now is interested on /2-1to3-1/1-1to2-1/1-2to1-1/0-2to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 363442030 from NodeId 23
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) NodeId 23's current lane is 0-1to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /0-1to1-1 /1-1to1-2 /1-2to2-2 /2-2to3-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 23 now is interested on /2-2to3-2/1-2to2-2/1-1to1-2/0-1to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2078922584 from NodeId 24
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to3-2 /3-2to2-2 /2-2to1-2 /1-2to0-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 24 now is interested on /1-2to0-2/2-2to1-2/3-2to2-2/3-1to3-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 2573885460 from NodeId 26
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-1to2-1 /2-1to1-1 /1-1to1-2 /1-2to0-2 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 26 now is interested on /1-2to0-2/1-1to1-2/2-1to1-1/3-1to2-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 645917841 from NodeId 27
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /3-2to2-2 /2-2to1-2 /1-2to1-1 /1-1to0-1 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 27 now is interested on /1-1to0-1/1-2to1-1/2-2to1-2/3-2to2-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 1228052049 from NodeId 48
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) NodeId 48's current lane is 1-0to1-1
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-0to1-1 /1-1to1-2 /1-2to1-3 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 48 now is interested on /1-2to1-3/1-1to1-2/1-0to1-1
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest)该兴趣包来自应用层
+(forwarding.cc-GetNrPayload)nrPayload's size 0
+(forwarding.cc-GetPriorityList)PriorityList is 
+(forwarding.cc-OnInterest) 记录兴趣包 nonce 786450890 from NodeId 49
+(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕
+
+(nrConsumer.cc-SendPacket)已经sentPacket
+进入(nrConsumer.cc-ScheduleNextPacket)
+进入(nrConsumer.cc-GetCurrentInterest)
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+(nrConsumer.cc-GetCurrentInterest) CurrentInterest : /1-3to1-2 /1-2to1-1 /1-1to1-0 
+(nrConsumer.cc-ScheduleNextPacket) NodeId 49 now is interested on /1-1to1-0/1-2to1-1/1-3to1-2
+(nrConsumer.cc-SendPacket)已经ScheduleNextPacket
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 10
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 5
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 48
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 75
+
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 16
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1011.55 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 48
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1011.55 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 48
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1011.55 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 48
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 1011.55 y: 19.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+(forwarding.cc-packetFromDirection) interest's size 4
+(forwarding.cc-packetFromDirection) route size 4
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+1-0to1-1
+1-1to1-2
+1-2to1-3
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 1-0to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-0to1-1 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 48
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-3 add Neighbor 48
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/1-0to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-3
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:48 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 16
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 11
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) NodeId 23's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 11
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:11 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 11
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:11 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to2-1
+2-1to3-1
+3-1to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 11
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:11 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 29
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 29
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 24
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 27
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 27
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 24
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 27
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 24
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 27
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 24
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 24
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 27
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 8
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) NodeId 48's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 8
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 26
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 26
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 26
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 26
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 26
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 26
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 15
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-1to2-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-1to2-1 add Neighbor 26
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-1to1-1 add Neighbor 26
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 26
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to0-2 add Neighbor 26
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:26 
+(pit-entry.cc-listPitEntry) interest_name：/2-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:26 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:26 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to0-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:26 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-1to2-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-1to2-1 add Neighbor 26
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:26 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 26
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 1004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to2-1
+2-1to1-1
+1-1to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 26
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 15
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 15
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 15
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 15
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 15
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 28
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2988.45 y: 1980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to3-1
+3-1to2-1
+2-1to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to3-1
+3-1to2-1
+2-1to1-1
+1-1to0-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-2to3-1 add Neighbor 15
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-1to2-1 add Neighbor 15
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-1to1-1 add Neighbor 15
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to0-1 add Neighbor 15
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-2to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:15 
+(pit-entry.cc-listPitEntry) interest_name：/3-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:15 
+(pit-entry.cc-listPitEntry) interest_name：/2-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:15 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to0-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:15 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2988.45 y: 1980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to3-1
+3-1to2-1
+2-1to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 15
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2988.45 y: 1980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to3-1
+3-1to2-1
+2-1to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 15
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2988.45 y: 1980.25
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to3-1
+3-1to2-1
+2-1to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 15
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) NodeId 48's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 28
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 9
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 9
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 10
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 27
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-1to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/1-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-1to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1995.05
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to2-2
+2-2to3-2
+3-2to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 10
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:10 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 2004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-2to2-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-2to2-2 add Neighbor 27
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-2to1-2 add Neighbor 27
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 27
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to0-1 add Neighbor 27
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:27 
+(pit-entry.cc-listPitEntry) interest_name：/2-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:27 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:27 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to0-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:27 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 2004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-2to2-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-2to2-2 add Neighbor 27
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:27 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 2004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 27
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 2980.25 y: 2004.95
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-2to2-2
+2-2to1-2
+1-2to1-1
+1-1to0-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 27
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 7
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 7
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 19
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 19
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 12
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 12
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 17
+(SumoNodeSensor.cc-getLane) NodeId 17's current lane is 3-2to2-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 17
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 7
+(SumoNodeSensor.cc-getLane) NodeId 7's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 27
+(SumoNodeSensor.cc-getLane) NodeId 27's current lane is 3-2to2-2
+localLane 3-2to2-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 15
+(SumoNodeSensor.cc-getLane) NodeId 15's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 5
+(SumoNodeSensor.cc-getLane) NodeId 5's current lane is 3-2to3-1
+localLane 3-2to3-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 17
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 38
+(SumoNodeSensor.cc-getLane) NodeId 38's current lane is 1-0to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 38
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 28
+(SumoNodeSensor.cc-getLane) NodeId 28's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 18
+(SumoNodeSensor.cc-getLane) NodeId 18's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 8
+(SumoNodeSensor.cc-getLane) NodeId 8's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 48
+(SumoNodeSensor.cc-getLane) NodeId 48's current lane is 1-0to1-1
+localLane 1-0to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 38
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 0
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 0
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) NodeId 11's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 11
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) NodeId 23's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 23
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 11
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 23
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 3
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) NodeId 11's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 23
+(SumoNodeSensor.cc-getLane) NodeId 23's current lane is 0-1to1-1
+localLane 0-1to1-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 3
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 14
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 39
+(SumoNodeSensor.cc-getLane) NodeId 39's current lane is 1-3to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 39
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 29
+(SumoNodeSensor.cc-getLane) NodeId 29's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 19
+(SumoNodeSensor.cc-getLane) NodeId 19's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 9
+(SumoNodeSensor.cc-getLane) NodeId 9's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 24
+(SumoNodeSensor.cc-getLane) NodeId 24's current lane is 3-1to3-2
+localLane 3-1to3-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 49
+(SumoNodeSensor.cc-getLane) NodeId 49's current lane is 1-3to1-2
+localLane 1-3to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 39
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+localLane 3-1to2-1
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 14
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+进入(forwarding.cc-HelloTimerExpire)
+进入(forwarding.cc-SendHello)
+(SumoNodeSensor.cc-getLane) NodeId 4
+(SumoNodeSensor.cc-getLane) NodeId 4's current lane is 0-2to1-2
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 4
+(nrUtils.cc-AggrateInterestPacketSize)Hello size 52
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 2
+(SumoNodeSensor.cc-getLane) NodeId 2's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 1
+(SumoNodeSensor.cc-getLane) NodeId 1's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 0
+(SumoNodeSensor.cc-getLane) NodeId 0's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)发送心跳包的该节点本来就是邻居之一
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 心跳包
+(SumoNodeSensor.cc-getLane) NodeId 12
+(SumoNodeSensor.cc-getLane) NodeId 12's current lane is 0-2to1-2
+localLane 0-2to1-2
+进入(forwarding.cc-ProcessHello)
+进入(Neighbors.cc-Update)
+发送该心跳包的NodeId为: 4
+(Neighbors.cc-Update)将该节点添加至邻居列表中
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 24
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 3001.65 y: 1019.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to3-2
+3-2to2-2
+2-2to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 14
+(SumoNodeSensor.cc-getLane) NodeId 14's current lane is 3-1to3-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to3-2
+3-2to2-2
+2-2to1-2
+1-2to0-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 3-1to3-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-1to3-2 add Neighbor 24
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /3-2to2-2 add Neighbor 24
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-2to1-2 add Neighbor 24
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to0-2 add Neighbor 24
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/3-1to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:24 
+(pit-entry.cc-listPitEntry) interest_name：/3-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:24 
+(pit-entry.cc-listPitEntry) interest_name：/2-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:24 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to0-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:24 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 3001.65 y: 1019.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to3-2
+3-2to2-2
+2-2to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 26
+(SumoNodeSensor.cc-getLane) NodeId 26's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 24
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 3001.65 y: 1019.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to3-2
+3-2to2-2
+2-2to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 6
+(SumoNodeSensor.cc-getLane) NodeId 6's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 24
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 3001.65 y: 1019.75
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+3-1to3-2
+3-2to2-2
+2-2to1-2
+1-2to0-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 16
+(SumoNodeSensor.cc-getLane) NodeId 16's current lane is 3-1to2-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： 24
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 23
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 12
+(nrUtils.cc-AggrateInterestPacketSize)Interest size 85
+
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 998.35
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 11
+(SumoNodeSensor.cc-getLane) NodeId 11's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 23
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-1to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/3-1to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 998.35
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 3
+(SumoNodeSensor.cc-getLane) NodeId 3's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to2-2 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-2to3-2 add Neighbor 23
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 998.35
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 13
+(SumoNodeSensor.cc-getLane) NodeId 13's current lane is 0-1to1-1
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-1to1-1
+1-1to1-2
+1-2to2-2
+2-2to3-2
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-1to1-1
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-1to1-1 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to1-2 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to2-2 add Neighbor 23
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-2to3-2 add Neighbor 23
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-1to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:23 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1988.45
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to1-1
+1-1to2-1
+2-1to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 22
+(SumoNodeSensor.cc-getLane) NodeId 22's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to1-1
+1-1to2-1
+2-1to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 12
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-2to1-1 add Neighbor 12
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /1-1to2-1 add Neighbor 12
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /2-1to3-1 add Neighbor 12
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:12 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to1-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:12 
+(pit-entry.cc-listPitEntry) interest_name：/1-1to2-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:12 
+(pit-entry.cc-listPitEntry) interest_name：/2-1to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:12 
+
+
+进入(forwarding.cc-OnInterest)
+(forwarding.cc-OnInterest) 获取优先级列表
+(forwarding.cc-packetFromDirection) 收到兴趣包的位置x: 19.75 y: 1988.45
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to1-1
+1-1to2-1
+2-1to3-1
+进入(SumoNodeSensor.cc-getDistanceWith)
+(SumoNodeSensor.cc-getLane) NodeId 10
+(SumoNodeSensor.cc-getLane) NodeId 10's current lane is 0-2to1-2
+(forwarding.cc-packetFromDirection) interest's size 5
+(forwarding.cc-packetFromDirection) route size 5
+(forwarding.cc-OnInterest) 该兴趣包从后方得到
+(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线：
+%00
+0-2to1-2
+1-2to1-1
+1-1to2-1
+2-1to3-1
+(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 0-2to1-2
+(ndn-nr-pit-impl.cc-UpdatePit) 兴趣的名字: /0-2to1-2 add Neighbor 12
+(pit-impl.cc-showPit)显示pit内容：
+(pit-entry.cc-listPitEntry) interest_name：/0-2to1-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:12 
+(pit-entry.cc-listPitEntry) interest_name：/1-2to2-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/2-2to3-2
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
+(pit-entry.cc-listPitEntry) interest_name：/3-2to3-1
+(pit-entry.cc-listPitEntry)incomingnbs's NodeId:
 
 
