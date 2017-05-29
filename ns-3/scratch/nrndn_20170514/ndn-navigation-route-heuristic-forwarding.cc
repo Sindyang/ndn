@@ -855,12 +855,12 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 
   if (m_nrpit == 0)
   {
-	  cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
+	  //cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
 	  //getchar();
 	  Ptr<Pit> pit=GetObject<Pit>();
 	  if(pit)
 		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
-	  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+	  //cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 	  //getchar();
   }
   
