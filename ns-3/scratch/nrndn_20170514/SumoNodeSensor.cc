@@ -127,6 +127,15 @@ const std::string& SumoNodeSensor::getType()
 	return m_sumodata->GetTrace(m_id,pos).type;
 }
 
+//added by sy
+const std::uint32_t SumoNodeSensor::getNode()
+{
+	//NodeSensor::getLane();
+	Ptr<Node> node = this->GetObject<Node>();
+	uint32_t id = node->GetId();
+	cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
+}
+
 const std::string& SumoNodeSensor::getLane()
 {
 	NodeSensor::getLane();

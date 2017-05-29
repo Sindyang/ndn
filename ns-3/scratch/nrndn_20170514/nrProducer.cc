@@ -231,7 +231,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<endl;
+	//std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
 	//        when A sending traffic data, it's data name may be lane_1 because
@@ -275,14 +275,14 @@ void nrProducer::OnSendingTrafficData()
 						data->GetSignature(), m_prefix.get(0).toUri());
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
+	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
 	//getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
-	cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
+	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
 	//getchar();
 	m_face->ReceiveData(data);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
+	//cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
 	//getchar();
 	m_transmittedDatas(data, this, m_face);
 	cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
