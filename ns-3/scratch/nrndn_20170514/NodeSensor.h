@@ -84,7 +84,7 @@ public:
 	 **/
 	
 	//added by sy
-	virtual uint32_t getNode() = 0;
+	virtual const uint32_t getNode() = 0;
 	
 	virtual const std::string& getType()=0;
 
