@@ -134,7 +134,7 @@ const std::string& SumoNodeSensor::getLane()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t id = node->GetId();
-	//cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
+	cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
