@@ -82,6 +82,10 @@ public:
 	 * \return the type name of the node
 	 *
 	 **/
+	
+	//added by sy
+	virtual uint32_t getNode() = 0;
+	
 	virtual const std::string& getType()=0;
 
 	/*
