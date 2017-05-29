@@ -169,7 +169,7 @@ const std::string& SumoNodeSensor::getLane()
 		//cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
 	}
 	//cout <<"(SumoNodeSensor.cc-getLane) "<< "GetTraceid" << endl;
-	std::cout<<"(SumoNodeSensor.cc-getLane) NodeId "<<id<<"'s current lane is "<<m_lane<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-getLane) NodeId "<<id<<"'s current lane is "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
 	//cout <<"(SumoNodeSensor.cc-getLane) m_sumoLane " << m_sumoLane << endl;
     return m_sumoLane;
