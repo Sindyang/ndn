@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
+	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -94,7 +94,7 @@ void nrConsumer::ScheduleNextPacket()
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) 兴趣 "<<prefix<<std::endl;
 	if(prefix=="")
 	{//兴趣为空，直接返回
-		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
+		//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
 		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
@@ -102,7 +102,7 @@ void nrConsumer::ScheduleNextPacket()
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
+	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
 	//getchar();
 	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
 	//3. Schedule next packet
@@ -112,7 +112,7 @@ void nrConsumer::ScheduleNextPacket()
 
 std::vector<std::string> nrConsumer::GetCurrentInterest()
 {
-	std::cout<<"进入(nrConsumer.cc-GetCurrentInterest)"<<endl;
+	//std::cout<<"进入(nrConsumer.cc-GetCurrentInterest)"<<endl;
 	std::string prefix = "/";
 	std::string str;
 	std::vector<std::string> result;
@@ -136,12 +136,12 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 		result.push_back(str);
 	//	++routeSum;
 	}
-	cout<<"(nrConsumer.cc-GetCurrentInterest) CurrentInterest :"<<" ";
+	//cout<<"(nrConsumer.cc-GetCurrentInterest) CurrentInterest :"<<" ";
 	for(it = result.begin();it != result.end();it++)
 	{
-		std::cout<<*it<<" ";
+		//std::cout<<*it<<" ";
 	}
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 	return result;
 }
 
@@ -205,9 +205,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经sentPacket\n";
+	  //std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经sentPacket\n";
 	  ScheduleNextPacket ();
-	  std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经ScheduleNextPacket\n\n";
+	  //std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经ScheduleNextPacket\n\n";
 }
 
 
@@ -246,8 +246,8 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
-	getchar();
+	//std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
+	//getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();

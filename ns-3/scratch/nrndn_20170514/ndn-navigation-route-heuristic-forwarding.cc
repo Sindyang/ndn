@@ -112,7 +112,7 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-Start)"<<endl;
+	//cout<<"进入(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -273,7 +273,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
 		return;
 	}
 
@@ -284,7 +284,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//added by sy
 		//只想知道节点当前所在路线
 		const string& localLane=m_sensor->getLane();
-		cout<<"localLane "<<localLane<<endl;
+		//cout<<"localLane "<<localLane<<endl;
 		ProcessHello(interest);
 		return;
 	}
@@ -349,7 +349,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到"<<endl;
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
-
+							
+		//added by sy
+		//只想知道节点当前所在路线
+		const string& localLane=m_sensor->getLane();					
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -411,11 +414,14 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		//added by sy
+		//只想知道节点当前所在路线和节点Id
+		const string& localLane=m_sensor->getLane();
+		//added by sy
 	    ndn::nrndn::nrHeader nrheader;
 	    data->GetPayload()->PeekHeader(nrheader);
 	    uint32_t nodeId = nrheader.getSourceId();
 		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
-		getchar();
+		//getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//added by sy
 		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;

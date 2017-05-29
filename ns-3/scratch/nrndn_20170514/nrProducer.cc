@@ -162,7 +162,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl<<endl;
+	//std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
@@ -188,7 +188,7 @@ void nrProducer::StopApplication()
 
 	if(m_DistanceForwarding)
 		m_DistanceForwarding->Stop();
-	std::cout<<"(nrProducer.cc-StopApplication) "<<"Stop: Node: " << GetNode ()->GetId ()<<endl;
+	//std::cout<<"(nrProducer.cc-StopApplication) "<<"Stop: Node: " << GetNode ()->GetId ()<<endl;
 
 	App::StopApplication();
 }
@@ -349,7 +349,7 @@ void nrProducer::addAccident(double iType)
 
 	}*/
 
-	std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	//std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 

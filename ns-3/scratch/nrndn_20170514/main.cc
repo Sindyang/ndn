@@ -277,7 +277,7 @@ nrndnExample::Configure (int argc, char **argv)
   cmd.AddValue("interestFreq","Interest Packet Sending Frequency(Hz)",interestFrequency);
   cmd.AddValue("virtualPayloadSize","Virtual payload size for traffic Content packets",virtualPayloadSize);
   cmd.Parse (argc, argv);
-  std::cout<<"(main.cc)兴趣包发送频率: "<<interestFrequency<<std::endl;
+  //std::cout<<"(main.cc)兴趣包发送频率: "<<interestFrequency<<std::endl;
  // getchar();
   return true;
 }
@@ -307,25 +307,25 @@ nrndnExample::RunNrndnSim ()
 {
 	name = "NR-NDN-Simulation";
 
-	std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
+	//std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
 	LoadTraffic();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
 	CreateNodes();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
 	CreateDevices();
 	//InstallInternetStack();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
 	InstallMobility();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
 	InstallSensor();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
 
 	//InstallTestMobility();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
 	//InstallTestApplications();
-	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
+	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 
@@ -344,21 +344,21 @@ nrndnExample::RunNrndnSim ()
 void nrndnExample::RunDistSim()
 {
 	name = "Dist-Simulation";
-	std::cout<<"(main.cc)读取交通数据"<<std::endl;
+	//std::cout<<"(main.cc)读取交通数据"<<std::endl;
 	LoadTraffic();
-	std::cout<<"(main.cc)创造节点"<<std::endl;
+	//std::cout<<"(main.cc)创造节点"<<std::endl;
 	CreateNodes();
-	std::cout<<"(main.cc)创造设备"<<std::endl;
+	//std::cout<<"(main.cc)创造设备"<<std::endl;
 	CreateDevices();
-	std::cout<<"(main.cc)初始化Mobility"<<std::endl;
+	//std::cout<<"(main.cc)初始化Mobility"<<std::endl;
 	InstallMobility();
-	std::cout<<"(main.cc)安装传感器"<<std::endl;
+	//std::cout<<"(main.cc)安装传感器"<<std::endl;
 	InstallSensor();
-	std::cout<<"(main.cc)初始化DistNdnStack"<<std::endl;
+	//std::cout<<"(main.cc)初始化DistNdnStack"<<std::endl;
 	InstallDistNdnStack();
-	std::cout<<"(main.cc)安装Dist应用程序"<<std::endl;
+	//std::cout<<"(main.cc)安装Dist应用程序"<<std::endl;
 	InstallDistApplications();
-	std::cout<<"(main.cc)安装交通状况"<<std::endl;
+	//std::cout<<"(main.cc)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
@@ -566,7 +566,7 @@ nrndnExample::Report ()
 void
 nrndnExample::LoadTraffic()
 {
-	cout<<endl<<"(main.cc-LoadTraffic)Method: "<<name<<endl;
+	//cout<<endl<<"(main.cc-LoadTraffic)Method: "<<name<<endl;
 	DIR* dir=NULL;
 	DIR* subdir=NULL;
 	//打开数据源
@@ -585,16 +585,16 @@ nrndnExample::LoadTraffic()
 
 	string outfile      = outputDir + "/result.txt";
 
-	std::cout<<"(main.cc-LoadTraffic)输出文件路径："<<outfile<<std::endl;
+	//std::cout<<"(main.cc-LoadTraffic)输出文件路径："<<outfile<<std::endl;
 	os.open(outfile.data(),ios::out);
-	std::cout<<"(main.cc-LoadTraffic)文件打开成功"<<std::endl;
+	//std::cout<<"(main.cc-LoadTraffic)文件打开成功"<<std::endl;
 
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
-	std::cout<<"(main.cc-LoadTraffic)读取完毕！"<<std::endl;
+	//std::cout<<"(main.cc-LoadTraffic)读取完毕！"<<std::endl;
     //获取结点size
 	size = mobility->GetNodeSize();
-	std::cout<<"(main.cc-LoadTraffic)节点size："<<size<<std::endl;
+	//std::cout<<"(main.cc-LoadTraffic)节点size："<<size<<std::endl;
 
 	if(accidentNum == 0 || accidentNum == 999)
 	{
@@ -608,7 +608,7 @@ nrndnExample::LoadTraffic()
 		accidentNum = size * 1;
 	}
 	//Question 4倍？
-	std::cout<<"(main.cc-LoadTraffic)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
+	//std::cout<<"(main.cc-LoadTraffic)修改accidentNum为size的4倍 "<<accidentNum<<std::endl;
 
 }
 
@@ -703,17 +703,17 @@ nrndnExample::InstallNrNdnStack()
 	uint32_t pitCleanInterval = 1.0 / interestFrequency;
 	//uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
 	pitCleanIntervalStr<<pitCleanInterval;
-	cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
-	cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
 	ndnHelper.SetContentStore ("ns3::ndn::cs::Lru", "MaxSize", "1000");
-	cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
 	ndnHelper.SetPit("ns3::ndn::pit::nrndn::NrPitImpl","CleanInterval",pitCleanIntervalStr.str());
-	cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
 	ndnHelper.SetDefaultRoutes (true);
-	cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl<<endl;
 	ndnHelper.Install (nodes);
-	cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
+	//cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
 }
 
 void nrndnExample::InstallDistNdnStack()
@@ -753,12 +753,12 @@ void
 nrndnExample::InstallMobility()
 {
 	//double maxTime = 0;
-	std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
+	//std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
 	mobility->Install();
-	std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
+	//std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
 	readTotalTime = mobility->GetReadTotalTime();
 	totalTime = readTotalTime < totalTime ? readTotalTime : totalTime;
-	std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
+	//std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
 }
 
 

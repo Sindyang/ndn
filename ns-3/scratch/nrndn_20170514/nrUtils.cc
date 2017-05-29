@@ -73,8 +73,8 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		idx++;
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
 	}
-	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) utils:统计结束"<<endl;
-	getchar();
+	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) utils:统计结束"<<endl;
+	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
 void nrUtils::SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize)
@@ -224,9 +224,9 @@ double nrUtils::GetAverageHitRate()
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
 				
-				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
-				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
-				getchar();
+				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
+				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
+				//getchar();
 			}
 
 		}
@@ -330,8 +330,8 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	DataByteSent+= size;
-	cout << "(nrUtils.cc-AggrateDataPacketSize) data size" << size << endl;
-	getchar();
+	//cout << "(nrUtils.cc-AggrateDataPacketSize) data size" << size << endl;
+	//getchar();
 	
 }
 
@@ -343,13 +343,13 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	if(2==interest->GetScope())//Hello message
 	{
 		HelloByteSent += size;
-		cout << "(nrUtils.cc-AggrateInterestPacketSize)Hello size " << size << endl;
+		//cout << "(nrUtils.cc-AggrateInterestPacketSize)Hello size " << size << endl;
 	}	
 	else
 	{
 		InterestByteSent += size;
-		cout << "(nrUtils.cc-AggrateInterestPacketSize)Interest size " << size << endl;
-		getchar();
+		//cout << "(nrUtils.cc-AggrateInterestPacketSize)Interest size " << size << endl;
+		//getchar();
 	}
 }
 
