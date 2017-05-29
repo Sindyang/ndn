@@ -249,8 +249,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-	getchar();
-	cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
+	//getchar();
+	//cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
@@ -941,7 +941,7 @@ void
 NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
+	//cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
 
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
