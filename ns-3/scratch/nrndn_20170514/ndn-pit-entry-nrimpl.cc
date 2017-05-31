@@ -89,7 +89,7 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<endl;
+		std::cout<<"(ndn-pit-entry-nrimpl-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
 	}
 		
 }
@@ -103,7 +103,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl-CleanPITNeighbors)删除邻居 "<<id<<endl;
+		std::cout<<"(ndn-pit-entry-nrimpl-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
 	}
 		
 }
@@ -127,7 +127,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl<<endl;
+	std::cout<<std::endl<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
