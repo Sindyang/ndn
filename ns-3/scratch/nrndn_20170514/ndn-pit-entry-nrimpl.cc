@@ -90,8 +90,8 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 	{
 		m_incomingnbs.erase(incomingnb);
 		std::cout<<"(ndn-pit-entry-nrimpl-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
-	}
-		
+	}	
+	listPitEntry();
 }
 
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
@@ -127,7 +127,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl<<std::endl;
+	std::cout<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()

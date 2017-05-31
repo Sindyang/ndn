@@ -151,6 +151,7 @@ NrPitImpl::showPit()
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);
 		pitEntry_siu->listPitEntry();
 	}
+	std::cout<<std::endl;
 }
 
 void
