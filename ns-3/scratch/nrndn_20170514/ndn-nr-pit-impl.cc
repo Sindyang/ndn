@@ -112,7 +112,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			std::find(route.begin(),route.end(),head->toUri());
 			
 	//当前路段为：uriConvertToString(head->toUri())
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
 	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	//找不到

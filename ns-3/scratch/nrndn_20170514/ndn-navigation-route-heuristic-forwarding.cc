@@ -279,7 +279,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	//只想知道节点id
 	uint32_t id = m_sensor->getNode();	
-	cout<<"当前车辆Id为 "<<id<<endl;
+	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<id<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
@@ -1052,7 +1052,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
 	//added by sy
+	
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the pit of this node is: "<<endl;
 	m_nrpit->showPit();
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource)the name of this data is "<<dataName.toUri())<<endl;
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)

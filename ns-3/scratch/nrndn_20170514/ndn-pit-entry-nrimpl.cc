@@ -87,7 +87,11 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
 
 	if (incomingnb != m_incomingnbs.end())
+	{
 		m_incomingnbs.erase(incomingnb);
+		std::cout<<"(ndn-pit-entry-nrimpl-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<endl;
+	}
+		
 }
 
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
@@ -97,7 +101,11 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
 	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
 	if (incomingnb != m_incomingnbs.end())
+	{
 		m_incomingnbs.erase(incomingnb);
+		std::cout<<"(ndn-pit-entry-nrimpl-CleanPITNeighbors)删除邻居 "<<id<<endl;
+	}
+		
 }
 
 void EntryNrImpl::CleanAllNodes()
@@ -119,7 +127,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl;
+	std::cout<<std::endl<<endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()

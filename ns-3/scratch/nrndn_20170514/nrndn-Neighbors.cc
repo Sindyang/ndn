@@ -62,7 +62,7 @@ bool Neighbors::IsNeighbor(uint32_t id)
 void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const Time& expire)
 {
 	//std::cout<<"进入(Neighbors.cc-Update)"<<std::endl;
-	std::cout<<"(Neighbors.cc-Update)发送该心跳包的NodeId为: "<<id<<std::endl;
+	//std::cout<<"(Neighbors.cc-Update)发送该心跳包的NodeId为: "<<id<<std::endl;
 	
 	std::unordered_map<uint32_t,Neighbor>::iterator it = m_nb.find(id);
 	if (it != m_nb.end())
