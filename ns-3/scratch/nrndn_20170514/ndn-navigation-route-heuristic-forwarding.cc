@@ -1055,7 +1055,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the pit of this node is: "<<endl;
 	m_nrpit->showPit();
-	cout<<"(forwarding.cc-GetPriorityListOfDataSource)the name of this data is "<<dataName.toUri())<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource)the name of this data is "<<dataName.toUri()<<endl;
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)
