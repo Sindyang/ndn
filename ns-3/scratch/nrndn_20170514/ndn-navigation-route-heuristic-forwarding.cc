@@ -277,15 +277,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	//只想知道节点id
+	uint32_t id = m_sensor->getNode();	
+	cout<<"当前车辆Id为 "<<id<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		//added by sy
-		//只想知道节点id
-		uint32_t id = m_sensor->getNode();		
-        cout<<"Node "<<id<<endl;	
-		
+		//added by sy	
 		ProcessHello(interest);
 		return;
 	}
@@ -312,7 +311,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	seq=interest->GetNonce();
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
+	//cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	//Deal with the stop message first
@@ -353,7 +352,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							
 		//added by sy
 		uint32_t id = m_sensor->getNode();		
-        cout<<"Node "<<id<<endl;		
+        cout<<"(forwarding.cc-OnInterest)Node "<<id<<endl;		
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -417,7 +416,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		//added by sy
 		//只想知道节点当前所在路线和节点Id
 		uint32_t id = m_sensor->getNode();		
-        cout<<"Node "<<id<<endl;	
+        cout<<"(forwarding.cc-OnData) Node "<<id<<endl;	
 		
 		
 		//added by sy
@@ -912,7 +911,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
@@ -1008,7 +1007,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	//added by sy
-	cout<<"(forwarding.cc-GetNrPayload)nrPayload's size "<<nrPayload->GetSize()<<endl;
+	//cout<<"(forwarding.cc-GetNrPayload)nrPayload's size "<<nrPayload->GetSize()<<endl;
 	
 	std::vector<uint32_t> priorityList;
 	switch (type)
@@ -1052,6 +1051,9 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
 	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
+	//added by sy
+	m_nrpit->showPit();
+	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)
 	{

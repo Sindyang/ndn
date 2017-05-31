@@ -37,6 +37,7 @@ EntryNrImpl::~EntryNrImpl ()
   
 }
 
+//添加邻居信息
 std::unordered_set< uint32_t >::iterator
 EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 {
@@ -103,6 +104,7 @@ void EntryNrImpl::CleanAllNodes()
 {
 	m_incomingnbs.clear();
 }
+
 //cout表项内容
 void EntryNrImpl::listPitEntry()
 {

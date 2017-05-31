@@ -339,7 +339,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 	std::vector<Ptr<Entry> >::iterator it;
 	it =m_pitContainer.begin();
 	if(it == m_pitContainer.end())
-	{//pit表为空
+	{   //pit表为空
 		return;
 	}
 
