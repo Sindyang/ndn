@@ -285,8 +285,8 @@ void nrProducer::OnSendingTrafficData()
 	//cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
 	//getchar();
 	m_transmittedDatas(data, this, m_face);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
-	getchar();
+	//cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
+	//getchar();
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)
