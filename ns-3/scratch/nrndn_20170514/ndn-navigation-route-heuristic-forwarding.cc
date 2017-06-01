@@ -515,7 +515,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		if(isDuplicatedData(nodeId,signature))
 		{
 			cout<<"(forwarding.cc-OnData)重复丢弃"<<endl;
-			getchar();
+			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
 			{
@@ -532,7 +532,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		else
 		{
 			cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
-			getchar();
+			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
@@ -1062,7 +1062,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	{
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
 			<<" Current dataName:"<<dataName.toUri();
-		getchar();
+		//getchar();
 		return priorityList;
 	}
 	//NS_ASSERT_MSG(entry!=0," entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
@@ -1201,13 +1201,13 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
 	cout << "(forward.cc-ForwardDataPacket) 转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
-	getchar();
+	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
 	cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
-	getchar();
+	//getchar();
 	
 	nrheader.setPriorityList(newPriorityList);
 	nrPayload->AddHeader(nrheader);
