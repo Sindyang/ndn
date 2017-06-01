@@ -64,6 +64,7 @@ void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 		Simulator::Remove (m_nbTimeoutEvent[id]); // slower, but better for memory
 	}
 	//Schedule a new cleaning event
+	std::cout<<"(ndn-pit-entry-nrimpl.cc )m_infaceTimeout "<<m_infaceTimeout<<endl;
 	m_nbTimeoutEvent[id]
 	                   = Simulator::Schedule(m_infaceTimeout,
 	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);
