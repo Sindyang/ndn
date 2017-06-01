@@ -428,7 +428,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
 		//added by sy
 		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
-		getchar();
+		//getchar();
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -442,7 +442,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
 
 		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功"<<endl;
-		getchar();
+		//getchar();
 		
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
@@ -561,7 +561,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					if (isTTLReachMax)
 					{
 						cout << "(forwarding.cc-OnData) isTTLReachMax:" <<  hopCountTag.Get() << endl;
-						getchar();
+						//getchar();
 						DropDataPacket(data);
 						return;
 					}
@@ -1071,7 +1071,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	const vector<string>& route  = m_sensor->getNavigationRoute();
 	//added by sy
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the size of interestNodes: "<<interestNodes.size()<<endl;
-	getchar();
+	//getchar();
 	
 	if(!interestNodes.empty())// There is interested nodes behind
 	{
@@ -1122,7 +1122,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		if(priorityList.empty())
 		{
 			cout<<"(GetPriorityListOfDataSource) "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
-			getchar();
+			//getchar();
 		}
 	}
 	return priorityList;
