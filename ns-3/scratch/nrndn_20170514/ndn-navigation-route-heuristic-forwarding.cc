@@ -1076,7 +1076,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	if(!interestNodes.empty())// There is interested nodes behind
 	{
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 数据包所在的位置有兴趣节点"<<endl;
-		getchar();
+		//getchar();
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 		for(nb=m_nb.getNb().begin();nb!=m_nb.getNb().end();++nb)//O(n) complexity
 		{
