@@ -279,7 +279,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	//added by sy	
 	uint32_t id = m_sensor->getNode();	
-	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<id<<endl;
+	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<id<<" "<<m_node->GetId()<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
@@ -416,15 +416,10 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		uint32_t id = m_sensor->getNode();		
         cout<<"(forwarding.cc-OnData) 数据包来自应用层，产生该数据包的Node为 "<<id<<endl;	
 		
-		//added by sy
-	    Ptr<const Packet> nrPayload	= data->GetPayload();
-	    ndn::nrndn::nrHeader nrheader;
-	    nrPayload->PeekHeader(nrheader);
-	    uint32_t nodeId=nrheader.getSourceId();
-		//cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
+		//cout<<"(forwarding.cc-OnData) data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
 		//getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
-		//cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
+		//cout<<"(forwarding.cc-OnData) data size after GetNrPayload: "<<payload->GetSize()<<endl;
 		//getchar();
 		if(!payload->GetSize())
 			return;
@@ -941,7 +936,7 @@ void
 NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	//cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
+	cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
 
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
@@ -951,15 +946,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
-	
-	//added by sy
-	std::cout<<"Node "<<m_node->GetId()<<" "<<m_sensor->getNode()<<"的邻居为："<<std::endl;
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb.end();++nb)
-	{
-		std::cout<<nb->first<<" ";
-	}
-	std::cout<<std::endl;
 	
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
