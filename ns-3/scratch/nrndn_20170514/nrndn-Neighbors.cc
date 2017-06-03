@@ -91,14 +91,6 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 			value_type(id,Neighbor(x, y,expire + Simulator::Now ())));
 
 	Purge ();
-	
-	//added by sy
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-    for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
-	{
-		std::cout<<nb->first<<" ";
-	}
-	std::cout<<std::endl;
 }
 
 struct CloseNeighbor
