@@ -25,6 +25,8 @@ EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header,Ptr<fib::Ent
 	:Entry(container,header,fibEntry),
 	 m_infaceTimeout(cleanInterval)
 {
+	std::cout<<"(ndn-pit-entry-nrimpl-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
+	std::cout<<"(ndn-pit-entry-nrimpl-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	NS_ASSERT_MSG(header->GetName().size()<2,"In EntryNrImpl, "
 			"each name of interest should be only one component, "
 			"for example: /routeSegment, do not use more than one slash, "
@@ -58,16 +60,16 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 
 void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 {
-	/*if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
+	if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
 	{
 		m_nbTimeoutEvent[id].Cancel();
 		Simulator::Remove (m_nbTimeoutEvent[id]); // slower, but better for memory
 	}
 	//Schedule a new cleaning event
-	std::cout<<"(ndn-pit-entry-nrimpl.cc )m_infaceTimeout "<<m_infaceTimeout<<std::endl;
+	std::cout<<"(ndn-pit-entry-nrimpl.cc)m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	m_nbTimeoutEvent[id]
 	                   = Simulator::Schedule(m_infaceTimeout,
-	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);*/
+	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);
 }
 
 void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
