@@ -25,8 +25,8 @@ EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header,Ptr<fib::Ent
 	:Entry(container,header,fibEntry),
 	 m_infaceTimeout(cleanInterval)
 {
-	std::cout<<"(ndn-pit-entry-nrimpl-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
-	std::cout<<"(ndn-pit-entry-nrimpl-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
+	std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
+	std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	NS_ASSERT_MSG(header->GetName().size()<2,"In EntryNrImpl, "
 			"each name of interest should be only one component, "
 			"for example: /routeSegment, do not use more than one slash, "
@@ -92,7 +92,7 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
+		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
 	}	
 	listPitEntry();
 }
@@ -106,7 +106,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
+		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
 	}
 		
 }
