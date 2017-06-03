@@ -353,7 +353,6 @@ void nrProducer::addAccident(double iType)
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
-    //Question:这是在干啥
 	for(double dTime = start + 100; dTime < end - 50; dTime += iType)
 	{
 		ScheduleAccident(dTime);

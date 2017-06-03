@@ -104,7 +104,6 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
-	//Question: entry代表什么
 	Ptr<Entry> entry = *pit;
 	//获取兴趣
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();

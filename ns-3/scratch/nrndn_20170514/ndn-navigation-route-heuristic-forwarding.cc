@@ -277,14 +277,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//只想知道节点id
+	//added by sy	
 	uint32_t id = m_sensor->getNode();	
 	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<id<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		//added by sy	
 		ProcessHello(interest);
 		return;
 	}
@@ -410,23 +409,22 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(Face::APPLICATION & face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
-		cout<<"(forwarding.cc-OnData)数据包来自应用层"<<endl;
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		//added by sy
-		//只想知道节点当前所在路线和节点Id
+		//节点Id
 		uint32_t id = m_sensor->getNode();		
-        cout<<"(forwarding.cc-OnData) Node "<<id<<endl;	
+        cout<<"(forwarding.cc-OnData) 数据包来自应用层，产生该数据包的Node为 "<<id<<endl;	
 		
 		
 		//added by sy
+	    Ptr<const Packet> nrPayload	= data->GetPayload();
 	    ndn::nrndn::nrHeader nrheader;
-	    data->GetPayload()->PeekHeader(nrheader);
-	    uint32_t nodeId = nrheader.getSourceId();
+	    nrPayload->PeekHeader(nrheader);
+	    uint32_t nodeId=nrheader.getSourceId();
 		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
 		//getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
-		//added by sy
 		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
 		//getchar();
 		if(!payload->GetSize())
@@ -442,7 +440,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
 
 		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功"<<endl;
-		//getchar();
 		
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
@@ -467,7 +464,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
-	cout<<"(forwarding.cc-OnData)获得转发优先级列表"<<endl;
+	uint32_t id = m_sensor->getNode();		
+	cout<<"(forwarding.cc-OnData)Node "<<id<<"收到其他节点发送的数据包"<<endl;
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
@@ -481,7 +479,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			nrheader.getX(), nrheader.getY(),
 			m_sensor->getNavigationRoute());
 	std::vector<uint32_t>::const_iterator priorityListIt;
-	//找出当前节点是否在优先级列表中
+	//找出发送数据包的节点是否在优先级列表中
 	priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
 
 	if(msgdirection.first
@@ -1006,7 +1004,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
-	//added by sy
 	//cout<<"(forwarding.cc-GetNrPayload)nrPayload's size "<<nrPayload->GetSize()<<endl;
 	
 	std::vector<uint32_t> priorityList;
@@ -1051,8 +1048,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
 	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
-	//added by sy
 	
+	//added by sy
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the pit of this node is: "<<endl;
 	m_nrpit->showPit();
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource)the name of this data is "<<dataName.toUri()<<endl;

@@ -130,7 +130,6 @@ const std::string& SumoNodeSensor::getType()
 //added by sy
 const uint32_t SumoNodeSensor::getNode()
 {
-	//NodeSensor::getLane();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t id = node->GetId();
 	return id;
