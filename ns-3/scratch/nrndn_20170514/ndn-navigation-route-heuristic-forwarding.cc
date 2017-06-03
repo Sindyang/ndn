@@ -416,16 +416,15 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		uint32_t id = m_sensor->getNode();		
         cout<<"(forwarding.cc-OnData) 数据包来自应用层，产生该数据包的Node为 "<<id<<endl;	
 		
-		
 		//added by sy
 	    Ptr<const Packet> nrPayload	= data->GetPayload();
 	    ndn::nrndn::nrHeader nrheader;
 	    nrPayload->PeekHeader(nrheader);
 	    uint32_t nodeId=nrheader.getSourceId();
-		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
+		//cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
 		//getchar();
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
-		cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
+		//cout<<"(forwarding.cc-OnData)from NodeId "<<nodeId<<",data size after GetNrPayload: "<<payload->GetSize()<<endl;
 		//getchar();
 		if(!payload->GetSize())
 			return;
@@ -465,7 +464,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	uint32_t id = m_sensor->getNode();		
-	cout<<"(forwarding.cc-OnData)Node "<<id<<"收到其他节点发送的数据包"<<endl;
+	cout<<"(forwarding.cc-OnData)Node "<<id<<" 收到其他节点发送的数据包"<<endl;
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
@@ -1004,7 +1003,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
-	//cout<<"(forwarding.cc-GetNrPayload)nrPayload's size "<<nrPayload->GetSize()<<endl;
 	
 	std::vector<uint32_t> priorityList;
 	switch (type)
@@ -1012,6 +1010,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
 			priorityList = GetPriorityList();
+			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			break;
 		}
 		case HeaderHelper::CONTENT_OBJECT_NDNSIM:
@@ -1021,7 +1020,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 优先级列表为空"<<endl;
+				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
 			}	
 			break;

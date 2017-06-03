@@ -25,8 +25,8 @@ EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header,Ptr<fib::Ent
 	:Entry(container,header,fibEntry),
 	 m_infaceTimeout(cleanInterval)
 {
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	NS_ASSERT_MSG(header->GetName().size()<2,"In EntryNrImpl, "
 			"each name of interest should be only one component, "
 			"for example: /routeSegment, do not use more than one slash, "
@@ -72,6 +72,7 @@ void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);*/
 }
 
+//删除超时的邻居
 void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 {
 	std::unordered_set< uint32_t >::iterator it;
@@ -111,6 +112,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		
 }
 
+//删除所有节点
 void EntryNrImpl::CleanAllNodes()
 {
 	m_incomingnbs.clear();
@@ -120,12 +122,6 @@ void EntryNrImpl::CleanAllNodes()
 void EntryNrImpl::listPitEntry()
 {
 	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<":";
-	//std::cout<<"(pit-entry.cc-listPitEntry)id及耗时:"<<std::endl;
-	/*for(std::unordered_map< uint32_t,EventId>::iterator ite = m_nbTimeoutEvent.begin();ite!=m_nbTimeoutEvent.end();ite++)
-	{
-		std::cout<<ite->first<<"("<<ite->second<<") ";
-	}*/
-	//std::cout<<"(pit-entry.cc-listPitEntry)"<<"incomingnbs's NodeId:";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
 		std::cout<<*ite<<" ";

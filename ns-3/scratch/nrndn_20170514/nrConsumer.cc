@@ -52,7 +52,6 @@ nrConsumer::nrConsumer():
 		m_virtualPayloadSize(1024)
 {
 	// TODO Auto-generated constructor stub
-
 }
 
 nrConsumer::~nrConsumer()

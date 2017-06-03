@@ -80,7 +80,7 @@ NrPitImpl::NotifyNewAggregate ()
 			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
 			//std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl;
-			//getchar();
+			
 			InitializeNrPitEntry();
 		}
 	}
@@ -105,7 +105,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
-	//获取兴趣
+	//head->toUri()为车辆当前所在的路段
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=

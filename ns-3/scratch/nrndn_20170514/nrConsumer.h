@@ -83,8 +83,7 @@ protected:
 private:
 	  typedef ConsumerCbr super;
 	  Ptr<NodeSensor> m_sensor;
-	  Ptr<fw::nrndn::NavigationRouteHeuristic>		m_forwardingStrategy;
-
+	  Ptr<fw::nrndn::NavigationRouteHeuristic> m_forwardingStrategy;
 	  uint32_t m_virtualPayloadSize;
 	  //Ptr<ForwardingStrategy>		m_forwardingStrategy;
 };

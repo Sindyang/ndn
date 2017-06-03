@@ -99,6 +99,7 @@ public:
 
   virtual Ptr<Entry>
   Next (Ptr<Entry>);
+  
   //获取车辆当前所在的路段
   //added by siukwan
   std::string getCurrentLane();
