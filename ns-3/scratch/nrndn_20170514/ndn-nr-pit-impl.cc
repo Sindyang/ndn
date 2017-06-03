@@ -230,7 +230,7 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
 
 		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) m_cleanInterval"<<m_cleanInterval<<std::endl;
-		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
+		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
