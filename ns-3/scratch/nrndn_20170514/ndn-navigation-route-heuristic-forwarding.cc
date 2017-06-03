@@ -951,7 +951,16 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
-
+	
+	//added by sy
+	std::cout<<"Node "<<m_node->GetId()<<" "<<m_sensor->getNode()<<"的邻居为："<<std::endl;
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb.end();++nb)
+	{
+		std::cout<<nb->first<<" ";
+	}
+	std::cout<<std::endl;
+	
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
