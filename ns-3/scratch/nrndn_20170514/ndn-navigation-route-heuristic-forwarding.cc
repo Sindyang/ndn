@@ -277,9 +277,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//added by sy	
-	uint32_t id = m_sensor->getNode();	
-	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<id<<" "<<m_node->GetId()<<endl;
+	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<m_node->GetId()<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
@@ -351,7 +349,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							
 		//added by sy
 		uint32_t id = m_sensor->getNode();		
-        cout<<"(forwarding.cc-OnInterest)Node "<<id<<endl;		
+        cout<<"(forwarding.cc-OnInterest)Node "<<m_node->GetId()<<endl;		
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -936,7 +934,7 @@ void
 NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
+	//cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
 
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
@@ -947,13 +945,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
-	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
+	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
+	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包

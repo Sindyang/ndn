@@ -147,10 +147,10 @@ const std::string& SumoNodeSensor::getLane()
 	//Question
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
-		cout << "(SumoNodeSensor.cc-getLane) " << "m_sumodata == NULL" <<endl;
+		//cout << "(SumoNodeSensor.cc-getLane) " << "m_sumodata == NULL" <<endl;
 		m_lane.Set(emptyLane);
 		m_sumoLane = m_lane.Get();
-		cout << "(SumoNodeSensor.cc-getLane) " << "m_sumoLane" << endl;
+		//cout << "(SumoNodeSensor.cc-getLane) " << "m_sumoLane" << endl;
 		return m_sumoLane;
 	}
         
