@@ -219,7 +219,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 
 	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	cout<<"(forwarding.cc-GetPriorityList) 邻居数目为 "m_nb.getNb().size()<<endl;
+	cout<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
 	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
 	{
 		cout<<"(forwarding.cc-GetPriorityList) 邻居数目不为空"<<endl;
