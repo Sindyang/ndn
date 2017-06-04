@@ -92,10 +92,12 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 
 	Purge ();
 	
+	std::cout<<"(nrndn-Neighbors.cc-Update) 输出邻居内容 ";
 	for(it = m_nb.begin();it != m_nb.end();it++)
 	{
-		cout<<it->first<<" ";
+		std::cout<<it->first<<" ";
 	}
+	std::cout<<std::endl;
 	
 }
 
