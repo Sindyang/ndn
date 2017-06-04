@@ -371,7 +371,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			while(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())!=(oldLane)
 					&&it!=m_pitContainer.end())
 			{
-				//std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				a++;
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				m_pitContainer.erase(it);
@@ -379,15 +379,15 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			}
 			if(it<=m_pitContainer.end())
 			{
-				//std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				//2. erase it
 				m_pitContainer.erase(it);
-				//std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"删除完毕\n";
+				std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"删除完毕\n";
 			}
 			else
-				//std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"删除完毕：迭代器为空\n";
+				std::cout<<"(ndn-nr-pit-impl.cc-laneChange)"<<"删除完毕：迭代器为空\n";
 
 		}
 		else

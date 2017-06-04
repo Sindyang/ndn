@@ -263,9 +263,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
         
         //added by sy
-        ndn::nrndn::nrHeader nrheader;
+        /*ndn::nrndn::nrHeader nrheader;
         interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t nodeId = nrheader.getSourceId();
+        uint32_t nodeId = nrheader.getSourceId();*/
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -411,7 +411,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// 1.Set the payload
 		//added by sy
 		//节点Id
-		uint32_t id = m_sensor->getNode();		
+		//uint32_t id = m_sensor->getNode();		
         //cout<<"(forwarding.cc-OnData) 数据包来自应用层，产生该数据包的Node为 "<<id<<endl;	
 		
 		//cout<<"(forwarding.cc-OnData) data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
@@ -456,7 +456,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
-	uint32_t id = m_sensor->getNode();		
+	//uint32_t id = m_sensor->getNode();		
 	//cout<<"(forwarding.cc-OnData)Node "<<id<<" 收到其他节点发送的数据包"<<endl;
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
@@ -821,7 +821,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	//added by sy
     ndn::nrndn::nrHeader nrheader;
     interest->GetPayload()->PeekHeader(nrheader);
-    uint32_t nodeId = nrheader.getSourceId();
+    //uint32_t nodeId = nrheader.getSourceId();
 
 	//cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
 
