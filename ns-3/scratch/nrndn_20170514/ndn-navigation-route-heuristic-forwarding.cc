@@ -240,7 +240,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	}
 	NS_LOG_DEBUG(str.str());
 	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
-	getchar();
+	//getchar();
 	return PriorityList;
 }
 
@@ -1014,6 +1014,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		{
 			priorityList = GetPriorityList();
 			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
+			getchar();
 			break;
 		}
 		case HeaderHelper::CONTENT_OBJECT_NDNSIM:
