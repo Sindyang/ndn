@@ -312,6 +312,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取优先列表
 	//cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	cout<<"(forwarding.cc-OnInterest) pri的大小为："<<pri.size()<<endl;
 
 	//Deal with the stop message first
 	//避免回环
@@ -345,13 +346,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到"<<endl;
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，发送兴趣包的节点为："<<nodeId<<endl;
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
-							
-		//added by sy
-		uint32_t id = m_sensor->getNode();		
-        cout<<"(forwarding.cc-OnInterest)Node "<<m_node->GetId()<<endl;		
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -367,6 +364,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		if (idIsInPriorityList)
 		{
+			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
@@ -393,6 +391,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		else
 		{
+			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
@@ -811,6 +810,7 @@ void NavigationRouteHeuristic::DropDataPacket(Ptr<Data> data)
 
 void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 {
+	cout<<"(forward.cc-DropInterestePacket)"<<endl;
 	NS_LOG_DEBUG ("Drop interest Packet");
 	DropPacket();
 }
@@ -1014,7 +1014,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		{
 			priorityList = GetPriorityList();
 			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
-			getchar();
+			//getchar();
 			break;
 		}
 		case HeaderHelper::CONTENT_OBJECT_NDNSIM:
