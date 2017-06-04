@@ -228,7 +228,7 @@ NrPitImpl::InitializeNrPitEntry()
 		//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
 		Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
 
-		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) m_cleanInterval"<<m_cleanInterval<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) m_cleanInterval"<<m_cleanInterval<<std::endl;
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
