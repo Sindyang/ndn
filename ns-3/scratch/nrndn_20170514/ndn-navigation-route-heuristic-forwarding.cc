@@ -240,6 +240,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	}
 	NS_LOG_DEBUG(str.str());
 	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
+	getchar();
 	return PriorityList;
 }
 
