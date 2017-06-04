@@ -944,6 +944,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	cout<<"(forwarding.cc-ProcessHello) 节点的邻居个数为： "<<m_nb.getNb().size()<<endl;
 	
 	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
 	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
