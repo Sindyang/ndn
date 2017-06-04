@@ -219,7 +219,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 
 	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	cout<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
+	
 	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
 	{
 		cout<<"(forwarding.cc-GetPriorityList) 邻居数目不为空"<<endl;
@@ -239,7 +239,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		cout<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	cout<<endl;
+	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
 	return PriorityList;
 }
 
@@ -269,7 +269,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
-		cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
 
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
@@ -945,7 +945,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
-	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居个数为： "<<m_nb.getNb().size()<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 节点的邻居个数为："<<m_nb.getNb().size()<<endl;
 	
 	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
 	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;

@@ -91,6 +91,12 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 			value_type(id,Neighbor(x, y,expire + Simulator::Now ())));
 
 	Purge ();
+	
+	for(it = m_nb.begin();it != m_nb.end();it++)
+	{
+		cout<<it->first<<" ";
+	}
+	
 }
 
 struct CloseNeighbor
