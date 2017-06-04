@@ -49,7 +49,7 @@ NrPitImpl::GetTypeId ()
 NrPitImpl::NrPitImpl ():
 		m_cleanInterval(Seconds(10.0))
 {
-	//std::cout<<"(ndn-nr-pit-impl.cc-NrPitImpl)m_cleanInterval "<<m_cleanInterval<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-NrPitImpl)m_cleanInterval "<<m_cleanInterval<<std::endl;
 }
 
 NrPitImpl::~NrPitImpl ()
