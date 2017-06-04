@@ -93,7 +93,7 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
 	}	
 	listPitEntry();
 }
@@ -107,7 +107,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
 	}
 		
 }
@@ -121,12 +121,12 @@ void EntryNrImpl::CleanAllNodes()
 //cout表项内容
 void EntryNrImpl::listPitEntry()
 {
-	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<":";
+	//std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<":";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
-		std::cout<<*ite<<" ";
+		//std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()

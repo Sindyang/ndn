@@ -292,7 +292,7 @@ void nrProducer::OnSendingTrafficData()
 void nrProducer::OnData(Ptr<const Data> contentObject)
 {
 	NS_LOG_FUNCTION ("None its business");
-	std::cout<<"(nrProducer.cc-OnData)"<<"None its business"<<endl;
+	//std::cout<<"(nrProducer.cc-OnData)"<<"None its business"<<endl;
 	App::OnData(contentObject);
 }
 
@@ -311,7 +311,7 @@ void nrProducer::setContentStore(std::string prefix)
 
 void nrProducer::addAccident()
 {
-	std::cout<<"(nrProducer.cc-addAccident()) NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
+	//std::cout<<"(nrProducer.cc-addAccident()) NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 	double mean=start+(end-start)/2;
@@ -331,7 +331,7 @@ void nrProducer::addAccident()
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
-	std::cout<<"(nrProducer.cc-addAccident()) m_node->GetId(): "<<m_node->GetId()<<" add accident at "<<t<<endl;
+	//std::cout<<"(nrProducer.cc-addAccident()) m_node->GetId(): "<<m_node->GetId()<<" add accident at "<<t<<endl;
 	return;
 }
 

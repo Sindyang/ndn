@@ -156,14 +156,14 @@ const std::string& SumoNodeSensor::getLane()
         
     if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
-		cout << "(SumoNodeSensor.cc-getLane) " << "id " <<id << " pos x " << pos.x <<" pos y " << pos.y <<" pos z " << pos.z << endl;
-		cout << "(SumoNodeSensor.cc-getLane) " << "m_lane.Set(emptyLane);" <<endl;
-		cout << "(SumoNodeSensor.cc-getLane) " << "Time now: "<<Simulator::Now().GetSeconds()<<endl;
+		//cout << "(SumoNodeSensor.cc-getLane) " << "id " <<id << " pos x " << pos.x <<" pos y " << pos.y <<" pos z " << pos.z << endl;
+		//cout << "(SumoNodeSensor.cc-getLane) " << "m_lane.Set(emptyLane);" <<endl;
+		//cout << "(SumoNodeSensor.cc-getLane) " << "Time now: "<<Simulator::Now().GetSeconds()<<endl;
 		if(int(pos.x) == 10000 || int(pos.x) == -10000)
 		{
-			cout << "(SumoNodeSensor.cc-getLane) " << "10000 or -10000" << endl;
+			//cout << "(SumoNodeSensor.cc-getLane) " << "10000 or -10000" << endl;
 			m_sumoLane = emptyLane; //NodeSensor.cc const std::string NodeSensor::emptyLane("UNKNOWN_LANE");
-			cout <<"(SumoNodeSensor.cc-getLane) m_sumoLane "<< m_sumoLane << endl;
+		//	cout <<"(SumoNodeSensor.cc-getLane) m_sumoLane "<< m_sumoLane << endl;
 			return emptyLane;
 		}
 
