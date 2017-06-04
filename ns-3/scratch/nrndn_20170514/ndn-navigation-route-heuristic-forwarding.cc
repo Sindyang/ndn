@@ -824,7 +824,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 
-	cout<<endl<<"进入(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
+	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);

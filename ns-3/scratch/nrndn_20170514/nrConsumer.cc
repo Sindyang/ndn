@@ -97,7 +97,6 @@ void nrConsumer::ScheduleNextPacket()
 		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
-	// if (m_firstTime)
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
@@ -148,17 +147,13 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
 	  if (m_firstTime)
-	    {//第一次发送兴趣包
-	      m_sendEvent = Simulator::Schedule (Seconds (0.0), &nrConsumer::SendPacket, this);
+	    {
+	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
+	                                         &nrConsumer::SendPacket, this);
 	      m_firstTime = false;
 	    }
-		/*
 	  else if (!m_sendEvent.IsRunning ())
-	  {
-		 // m_sendEvent = Simulator::Schedule (Seconds (0.0), &nrConsumer::SendPacket, this);
-	    //m_sendEvent = Simulator::Schedule ((m_random == 0) ? Seconds(1.0 / m_frequency) : Seconds(m_random->GetValue ()), &nrConsumer::SendPacket, this);
-  		  m_sendEvent = Simulator::Schedule (Seconds(1.0 / m_frequency), &nrConsumer::SendPacket, this);
-	  }*/
+	    m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
 }
 
 
@@ -166,12 +161,7 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
-	/*  if(!m_firstTime&&*m_nbChange_mode==0)
-	  {
-	     m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
-		  //ScheduleNextPacket ();
-		  return;
-	  }*/
+	
 	  NS_LOG_FUNCTION_NOARGS ();
 
 	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
