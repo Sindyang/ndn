@@ -844,22 +844,22 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 
   if (m_sensor == 0)
   {
+	  cout<<"(forwarding.cc-NotifyNewAggregate)新建NodeSensor"<<endl;
 	  m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
   }
 
   if (m_nrpit == 0)
   {
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
-	  //getchar();
+	  cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
 	  Ptr<Pit> pit=GetObject<Pit>();
 	  if(pit)
 		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
-	  //getchar();
+	  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
   }
   
   if(m_node==0)
   {
+	  cout<<"(forwarding.cc-NotifyNewAggregate)新建Node"<<endl;
 	  m_node=GetObject<Node>();
   }
 

@@ -196,6 +196,7 @@ const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()
 	}
 	return m_navigationRoute;
 }
+
 std::string SumoNodeSensor::uriConvertToString(std::string str)
 {
 	//因为获取兴趣时使用toUri，避免出现类似[]的符号，进行编码转换

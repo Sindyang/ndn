@@ -62,6 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
+	std::cout<<"进入(nrConsumer.cc-StartApplication)"<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -78,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -146,6 +147,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket)"<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
@@ -161,6 +163,8 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
+	 
+	 std::cout<<"进入(nrConsumer.cc-SendPacket)"<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -235,7 +239,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	//std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
+	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
 	//getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
@@ -250,6 +254,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 void nrConsumer::NotifyNewAggregate()
 {
+  std::cout<<"进入(nrConsumer.cc-NotifyNewAggregate)"<<endl;
   super::NotifyNewAggregate ();
 }
 

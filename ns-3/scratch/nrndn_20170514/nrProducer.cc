@@ -162,7 +162,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	//std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl<<endl;
+	std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);

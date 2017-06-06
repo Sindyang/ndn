@@ -79,8 +79,7 @@ NrPitImpl::NotifyNewAggregate ()
 					MakeCallback(&NrPitImpl::laneChange, this));
 			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
-			//std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl;
-			
+			std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)初始化PIT"<<std::endl;
 			InitializeNrPitEntry();
 		}
 	}
@@ -228,13 +227,15 @@ NrPitImpl::InitializeNrPitEntry()
 		//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
 		Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
 
-		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) m_cleanInterval"<<m_cleanInterval<<std::endl;
-		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
+		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) m_cleanInterval"<<m_cleanInterval<<std::endl;
+		//sy:m_cleanInterval在构造函数中已经被赋值，但这里仍然是0，并不知道为什么
+		//Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
+		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		m_pitContainer.push_back(entry);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
-		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
-	//std::cout<<std::endl;
+	std::cout<<std::endl;
 	return true;
 }
   
