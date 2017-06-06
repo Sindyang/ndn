@@ -49,7 +49,7 @@ NrPitImpl::GetTypeId ()
 NrPitImpl::NrPitImpl ():
 		m_cleanInterval(Seconds(10.0))
 {
-	std::cout<<"(ndn-nr-pit-impl.cc-NrPitImpl)m_cleanInterval "<<m_cleanInterval<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-NrPitImpl)m_cleanInterval "<<m_cleanInterval<<std::endl;
 }
 
 NrPitImpl::~NrPitImpl ()
@@ -60,7 +60,7 @@ NrPitImpl::~NrPitImpl ()
 void
 NrPitImpl::NotifyNewAggregate ()
 {
-	std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)m_cleanInterval "<<m_cleanInterval<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-NotifyNewAggregate)m_cleanInterval "<<m_cleanInterval<<std::endl;
 	if (m_fib == 0)
 	{
 		m_fib = GetObject<Fib>();
