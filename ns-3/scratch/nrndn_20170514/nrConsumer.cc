@@ -62,7 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"进入(nrConsumer.cc-StartApplication)"<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<m_sensor->getNode()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket)"<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<m_sensor->getNode()<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -147,7 +147,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket)"<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<m_sensor->getNode()<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
@@ -164,7 +164,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 std::cout<<"进入(nrConsumer.cc-SendPacket)"<<endl;
+	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<m_sensor->getNode()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -254,12 +254,13 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 void nrConsumer::NotifyNewAggregate()
 {
-  std::cout<<"进入(nrConsumer.cc-NotifyNewAggregate)"<<endl;
+  std::cout<<"进入(nrConsumer.cc-NotifyNewAggregate) "<<m_sensor->getNode()<<endl;
   super::NotifyNewAggregate ();
 }
 
 void nrConsumer::DoInitialize(void)
 {
+	std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<m_sensor->getNode()<<endl;
 	if (m_forwardingStrategy == 0)
 	{
 		//m_forwardingStrategy = GetObject<fw::nrndn::NavigationRouteHeuristic>();
