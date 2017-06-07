@@ -60,7 +60,7 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 
 void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 {
-	if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
+	/*if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
 	{
 		m_nbTimeoutEvent[id].Cancel();
 		Simulator::Remove (m_nbTimeoutEvent[id]); // slower, but better for memory
@@ -69,7 +69,7 @@ void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 	//std::cout<<"(ndn-pit-entry-nrimpl.cc)m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	m_nbTimeoutEvent[id]
 	                   = Simulator::Schedule(m_infaceTimeout,
-	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);
+	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);*/
 }
 
 //删除超时的邻居
