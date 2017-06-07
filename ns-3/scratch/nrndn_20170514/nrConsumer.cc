@@ -62,7 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
+	//std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
+	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -99,7 +99,7 @@ void nrConsumer::ScheduleNextPacket()
 	}
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
+	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
 	//3. Schedule next packet
 	doConsumerCbrScheduleNextPacket();
 }
@@ -142,7 +142,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
+	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
@@ -159,7 +159,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -264,7 +264,7 @@ void nrConsumer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
-		std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<GetNode()->GetId()<<endl;
+		//std::cout<<"(nrConsumer.cc-DoInitialize) "<<GetNode()->GetId()<<endl;
 		NS_ASSERT_MSG(m_sensor,"nrConsumer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 	}
 	super::DoInitialize();

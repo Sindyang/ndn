@@ -112,7 +112,7 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-Start)"<<endl;
+	//cout<<"进入(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -859,7 +859,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   
   if(m_node==0)
   {
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)新建Node"<<endl;
+	 // cout<<"(forwarding.cc-NotifyNewAggregate)新建Node"<<endl;
 	  m_node=GetObject<Node>();
   }
 

@@ -277,7 +277,7 @@ nrndnExample::Configure (int argc, char **argv)
   cmd.AddValue("interestFreq","Interest Packet Sending Frequency(Hz)",interestFrequency);
   cmd.AddValue("virtualPayloadSize","Virtual payload size for traffic Content packets",virtualPayloadSize);
   cmd.Parse (argc, argv);
-  //std::cout<<"(main.cc)兴趣包发送频率: "<<interestFrequency<<std::endl;
+  std::cout<<"(main.cc)兴趣包发送频率: "<<interestFrequency<<std::endl;
  // getchar();
   return true;
 }
