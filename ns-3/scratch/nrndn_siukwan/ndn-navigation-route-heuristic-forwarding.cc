@@ -113,6 +113,7 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
+	cout<<"进入(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -127,6 +128,7 @@ void NavigationRouteHeuristic::Start()
 void NavigationRouteHeuristic::Stop()
 {
 	NS_LOG_FUNCTION (this);
+	cout<<"(forwarding.cc-Stop)"<<endl;
 	if(m_runningCounter)
 		m_runningCounter--;
 	else
