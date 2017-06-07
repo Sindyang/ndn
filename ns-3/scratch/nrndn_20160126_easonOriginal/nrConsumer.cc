@@ -91,7 +91,7 @@ void nrConsumer::ScheduleNextPacket()
 	 //2. set the Interest (reverse of  the residual navigation route)
 	//std::cout<<prefix<<std::endl;
 	if(prefix=="")
-	{//兴趣为空，直接返回
+	{   //兴趣为空，直接返回
 		std::cout<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
 		return;
 	}

@@ -62,7 +62,9 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<std::endl;
+	//added by sy
+	uint32_t id = m_sensor->getNode();
+	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<id<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -88,24 +90,19 @@ void nrConsumer::ScheduleNextPacket()
 	 {
 		 prefix+=*it;
 	 }
-	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test1"<<endl;
 
 	 //2. set the Interest (reverse of  the residual navigation route)
 	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) 兴趣 "<<prefix<<std::endl;
 	if(prefix=="")
-	{//兴趣为空，直接返回
-		//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
+	{   //兴趣为空，直接返回
+		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
 		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
-	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) test2"<<endl;
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
-	//getchar();
-	//cout<<"(nrConsumer.cc-ScheduleNextPacket)test3\n\n";
+	std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
 	//3. Schedule next packet
-	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();
 }
 
@@ -164,7 +161,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<endl;
+	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -198,9 +195,7 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  //std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经sentPacket\n";
 	  ScheduleNextPacket ();
-	  //std::cout<<"(nrConsumer.cc-SendPacket)"<<"已经ScheduleNextPacket\n\n";
 }
 
 
@@ -260,7 +255,7 @@ void nrConsumer::NotifyNewAggregate()
 
 void nrConsumer::DoInitialize(void)
 {
-	std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<endl;
+	
 	if (m_forwardingStrategy == 0)
 	{
 		//m_forwardingStrategy = GetObject<fw::nrndn::NavigationRouteHeuristic>();
@@ -271,6 +266,9 @@ void nrConsumer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
+		//added by sy
+		uint32_t id = m_sensor->getNode();
+		std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<id<<endl;
 		NS_ASSERT_MSG(m_sensor,"nrConsumer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 	}
 	super::DoInitialize();
