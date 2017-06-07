@@ -212,6 +212,7 @@ void nrProducer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor = m_node->GetObject<NodeSensor>();
+		std::cout<<"(nrProducer.cc-DoInitialize) "<<GetNode()->GetId()<<std::endl;
 
 		NS_ASSERT_MSG(m_sensor,"nrProducer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 		// Setup Lane change action
@@ -226,6 +227,7 @@ void nrProducer::DoInitialize(void)
 
 void nrProducer::NotifyNewAggregate()
 {
+	std::cout<<"(nrProducer.cc-NotifyNewAggregate)"<<std::endl;
 	super::NotifyNewAggregate();
 }
 
@@ -298,7 +300,7 @@ void nrProducer::OnData(Ptr<const Data> contentObject)
 
 void nrProducer::ScheduleAccident(double t)
 {
-	//std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
+	std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData,this);
 }

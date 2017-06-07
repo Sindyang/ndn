@@ -62,9 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	//added by sy
-	uint32_t id = m_sensor->getNode();
-	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<id<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -266,9 +264,7 @@ void nrConsumer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
-		//added by sy
-		uint32_t id = m_sensor->getNode();
-		std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<id<<endl;
+		std::cout<<"进入(nrConsumer.cc-DoInitialize) "<<GetNode()->GetId()<<endl;
 		NS_ASSERT_MSG(m_sensor,"nrConsumer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 	}
 	super::DoInitialize();
