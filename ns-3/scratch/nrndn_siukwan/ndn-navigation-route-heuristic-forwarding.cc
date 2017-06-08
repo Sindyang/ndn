@@ -1241,15 +1241,15 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_nbChange_mode=0;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
-	{//发送兴趣包
-		//cout<<"邻居增加，重发"<<endl;
-		//getchar();
+	{   //发送兴趣包
+		cout<<"邻居增加，重发"<<endl;
+		getchar();
 		m_nbChange_mode=2;//邻居增加
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())//数量不等，邻居发生变化
 	{
-		/*cout<<"邻居减少，重发"<<endl;
-		getchar();*/
+		cout<<"邻居减少，重发"<<endl;
+		getchar();
 		m_nbChange_mode=1;//邻居减少
 	}
 	else
@@ -1268,9 +1268,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(nbChange)
 		{//邻居变化，发送兴趣包
-
 			m_nbChange_mode=3;//邻居变化
-			/*
 			cout<<"邻居变化，重发"<<endl;
 			prenb=m_preNB.getNb().begin();
 			nb=m_nb.getNb().begin();
@@ -1284,15 +1282,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				cout<<nb->first<<" ";
 			}
-
 			getchar();
-			*/
 		}
 	}
-
-
-
-
 
 	bool lostForwardNeighbor = false;
 	//检测转发邻居map中的邻居是否还在
@@ -1309,11 +1301,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		//cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
-		//getchar();
+		cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
+		getchar();
 	}
-
-
 
 	//判断兴趣包的方向
 		pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1322,14 +1312,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(msgdirection.second > 0 && m_nbChange_mode>1) //m_nbChange_mode>1  lostForwardNeighbor
 		{//
 			m_nbChange_mode=0;
-			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
+			printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			notifyUpperOnInterest(m_node->GetId());
 			
 		}
-
-
 	m_preNB=m_nb;//更新把上一次的邻居表
 }
+
 //利用face通知上层应用调用OnInterest
 void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 {//把type存放到interest中，以此来区分不同的notify类型
@@ -1338,12 +1327,12 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
 	if( interval >= 1)
 	{
-		//cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
 
-		//cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
