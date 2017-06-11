@@ -294,7 +294,7 @@ void nrConsumer::OnInterest(Ptr<const Interest> interest)
 	int type =  interest->GetNonce();
 	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<type<<endl;
 	SendPacket();
-	//getchar();
+	getchar();
 	//NS_ASSERT_MSG(false,"nrConsumer should not be supposed to ""receive Interest Packet!!");
 }
 

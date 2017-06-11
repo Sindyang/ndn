@@ -1335,6 +1335,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
+	cout<<"(forwarding.cc-notifyUpperOnInterest)"<<endl;
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
 	interest->SetNonce(type);
