@@ -62,7 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	//std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
+	std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -142,7 +142,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
@@ -159,7 +159,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -195,29 +195,6 @@ void nrConsumer::SendPacket()
 	  m_face->ReceiveInterest (interest);
 	  ScheduleNextPacket ();
 }
-
-
-/*
-Ptr<Packet> nrConsumer::GetNrPayload()
-{
-	Ptr<Packet> nrPayload	= Create<Packet> ();
-	Ptr<Node> node			= GetNode();
-	Ptr<NodeSensor> sensor	= node->GetObject<NodeSensor>();
-	Ptr<ns3::ndn::fw::nrndn::NavigationRouteHeuristic> fwStrategy
-							= node->GetObject<ns3::ndn::fw::nrndn::NavigationRouteHeuristic>();
-     NS_ASSERT_MSG (fwStrategy!=0,"nrConsumer::GetNrPayload: "
-    		 "ns3::ndn::fw::NavigationRouteHeuristic should be installed to a node "
-    		 "while using ns3::ndn::nrndn::nrConsumer");
-
-	double position			= sensor->getPos();
-	std::string lane 		= sensor->getLane();
-	std::vector<uint32_t> priorityList=fwStrategy->GetPriorityList();
-
-	nrHeader nrheader(node->GetId(),position,lane,priorityList);
-	nrPayload->AddHeader(nrheader);
-	return nrPayload;
-}
-*/
 
 void nrConsumer::OnData(Ptr<const Data> data)
 {
@@ -278,6 +255,7 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 //Question:什么时候执行这个函数
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
+	std::cout<<"(nrConsumer.cc-OnInterest) nrConsumer should not be supposed to receive Interest Packet!!"<<std::endl;
 	NS_ASSERT_MSG(false,"nrConsumer should not be supposed to "
 			"receive Interest Packet!!");
 }
