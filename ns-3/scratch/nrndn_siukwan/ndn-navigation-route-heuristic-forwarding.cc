@@ -251,7 +251,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	uint32_t nodeId;
+	//uint32_t nodeId;
 	//uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
@@ -521,7 +521,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<uint32_t>::const_iterator idit;
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
 		bool idIsInPriorityList = (idit != pri.end());
-		double index;
+		//double index;
 		//在优先级列表中,则设置响应的等待时间
 		if(idIsInPriorityList)
 			index = distance(pri.begin(), idit);
@@ -661,8 +661,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 
 		ndn::nrndn::nrHeader nrheader;
 		payload->PeekHeader(nrheader);
-		uint32_t nodeId=nrheader.getSourceId();
-		uint32_t signature=data->GetSignature();
+		//uint32_t nodeId=nrheader.getSourceId();
+		//uint32_t signature=data->GetSignature();
 		
 		//ofstream ofile;
 		//ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
