@@ -521,7 +521,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<uint32_t>::const_iterator idit;
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
 		bool idIsInPriorityList = (idit != pri.end());
-		//double index;
+		double index;
 		//在优先级列表中,则设置响应的等待时间
 		if(idIsInPriorityList)
 			index = distance(pri.begin(), idit);
