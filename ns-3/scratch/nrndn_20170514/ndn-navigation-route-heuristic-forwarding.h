@@ -479,6 +479,8 @@ private:
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
 	
 	double m_resendInterestTime;//added by siukwan
+	
+	uint32_t forwardNode; // added by wsy
 };
 } /* namespace nrndn */
 } /* namespace fw */

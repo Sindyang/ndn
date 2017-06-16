@@ -282,7 +282,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
-		cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
+		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		ProcessHello(interest);
 		return;
 	}
@@ -297,12 +297,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
-	uint32_t forwardId = nrheader.getForwardId();
+	forwardNode = nrheader.getForwardId();
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
 	{
-		cout<<"(forwarding.cc-OnInterest)"<<nodeId <<"收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
+		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNode<<endl;
 		getchar();
 	}
 	
@@ -833,7 +833,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 
-	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的NodeId为 "<<nodeId<<endl;
+	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -944,8 +944,8 @@ NavigationRouteHeuristic::SendHello()
 void
 NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
-	if(!m_running) return;
-	//cout<<"进入(forwarding.cc-ProcessHello)"<<endl;
+	if(!m_running) 
+		return;
 
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
@@ -953,10 +953,22 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
-	//update neighbor list
+	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
-	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居个数为："<<m_nb.getNb().size()<<endl;
 	
+	bool lostForwardNeighbor = true;
+	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
+	{
+		cout<<nb->first<<" ";
+		if(nb->first == forwardNode)
+		{
+			lostForwardNeighbor = false;
+			cout<<"(forwarding.cc-ProcessHello) 转发节点没有丢失"<<endl;
+		}
+	}
+	getchar();
 	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
 	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb().end();++nb)
