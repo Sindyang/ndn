@@ -981,7 +981,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	cout<<endl;*/
 	//进行邻居变化的检测
-	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
+	/*if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
 			//cout<<"邻居数量变化，重发"<<endl;
 	}
@@ -1003,7 +1003,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//	cout<<"邻居变化，重发"<<endl;
 		}
 	}
-	m_preNB=m_nb;//更新把上一次的邻居表
+	m_preNB=m_nb;//更新把上一次的邻居表*/
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
