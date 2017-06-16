@@ -829,11 +829,11 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	if(!m_running) return;
 
 	//added by sy
-    ndn::nrndn::nrHeader nrheader;
-    interest->GetPayload()->PeekHeader(nrheader);
-    uint32_t nodeId = nrheader.getSourceId();
+    //ndn::nrndn::nrHeader nrheader;
+    //interest->GetPayload()->PeekHeader(nrheader);
+    //uint32_t nodeId = nrheader.getSourceId();
 
-	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<endl;
+	//cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -969,7 +969,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	if(!lostForwardNeighbor)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
+		cout<<endl<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
 		getchar();
 	}
 	
