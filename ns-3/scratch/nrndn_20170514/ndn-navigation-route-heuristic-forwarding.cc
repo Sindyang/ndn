@@ -969,7 +969,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	if(!lostForwardNeighbor)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardId<<",且仍在邻居列表中"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
 		getchar();
 	}
 	
