@@ -1216,6 +1216,8 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
+	nrheader.setForwardId(m_node->GetId());
+	nrheader.setLane(m_sensor->getLane());
 	//cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
 	//getchar();
 	
