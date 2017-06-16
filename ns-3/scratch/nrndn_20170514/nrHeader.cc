@@ -28,7 +28,8 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_forwardId(9999999),
 		m_x(x),
 		m_y(y),
-		m_priorityList(priorityList)
+		m_priorityList(priorityList),
+		m_lane("no")
 {
 	// TODO Auto-generated constructor stub
 
@@ -64,9 +65,11 @@ uint32_t nrHeader::GetSerializedSize() const
 
 	//m_priorityList.size():
 	size += sizeof(uint32_t);
-
 	//each element of m_priorityList
 	size += sizeof(uint32_t) * m_priorityList.size();
+	
+	size += sizeof(uint32_t);
+	size += m_lane.size();
 
 	return size;
 }
@@ -107,7 +110,7 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 	uint32_t lanesize  = i.ReadNtohU32();
 	m_lane="";
 	for(uint32_t j = 0;j<lanesize;++j)
-	{//还原树
+	{
 		uint8_t a;
 		i.Read((uint8_t*)&a,sizeof(a));
 		m_lane+=(char)a;
