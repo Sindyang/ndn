@@ -965,10 +965,14 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nb->first == forwardNode)
 		{
 			lostForwardNeighbor = false;
-			cout<<"(forwarding.cc-ProcessHello) 转发节点没有丢失"<<endl;
 		}
 	}
-	getchar();
+	if(!lostForwardNeighbor)
+	{
+		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardId<<",且仍在邻居列表中"<<endl;
+		getchar();
+	}
+	
 	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
 	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb().end();++nb)
