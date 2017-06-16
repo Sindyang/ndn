@@ -297,7 +297,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
-	uint32_t forwardId = nrhearer.getForwardId();
+	uint32_t forwardId = nrheader.getForwardId();
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
@@ -1048,7 +1048,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
-	nrheader.setForwardId(forwardId)；
+	nrheader.setForwardId(forwardId);
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
