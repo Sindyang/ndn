@@ -260,7 +260,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
-		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
         
         //added by sy
         /*ndn::nrndn::nrHeader nrheader;
@@ -286,6 +286,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
+	
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取兴趣的随机编码
+	uint32_t seq = interest->GetNonce();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	//获取兴趣包的转发节点id
+	uint32_t forwardId = nrhearer.getForwardId();
+	
+	//2017.6.16 
+	if(nodeId == myNodeId)
+	{
+		cout<<"(forwarding.cc-OnInterest)"<<nodeId <<"收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
+		getchar();
+	}
+	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -295,18 +315,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
-
-	//cout << "(forwarding.cc-OnInterest) GetPayload" <<endl;
-	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	uint32_t nodeId;
-	uint32_t seq;
-	ndn::nrndn::nrHeader nrheader;
-	//cout<<"(forwarding.cc-OnInterest) PeekHeader"<<endl;
-	nrPayload->PeekHeader( nrheader);
-	//获取发送兴趣包节点的ID
-	nodeId=nrheader.getSourceId();
-	//获取兴趣的随机编码
-	seq=interest->GetNonce();
 	
 	//获取优先列表
 	//cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
@@ -345,7 +353,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，发送兴趣包的节点为："<<nodeId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
@@ -416,7 +424,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		
 		//cout<<"(forwarding.cc-OnData) data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
 		//getchar();
-		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
+		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
 		//cout<<"(forwarding.cc-OnData) data size after GetNrPayload: "<<payload->GetSize()<<endl;
 		//getchar();
 		if(!payload->GetSize())
@@ -721,7 +729,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 2. prepare the interest
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader( nrheader);
+	nrPayload->PeekHeader(nrheader);
 	double x= m_sensor->getX();
 	double y= m_sensor->getY();
 	const vector<string> route	=
@@ -732,6 +740,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
+	//2017.6.16
+	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(priorityList);
 
 	Ptr<Packet> newPayload	= Create<Packet> ();
@@ -1001,12 +1011,12 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, uint32_t forwardId, const Name& dataName /*= *((Name*)NULL) */)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
-	
 	std::vector<uint32_t> priorityList;
+	
 	switch (type)
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
@@ -1023,7 +1033,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				//cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
+				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
 			}	
 			break;
@@ -1038,6 +1048,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
+	nrheader.setForwardId(forwardId)；
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
