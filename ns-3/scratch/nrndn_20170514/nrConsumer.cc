@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
+	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -142,7 +142,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
+	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
@@ -159,7 +159,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
