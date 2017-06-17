@@ -964,57 +964,30 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
+	cout<<endl;
+	
 	std::map<uint32_t,uint32_t>::iterator it;
+	//判断该节点是否有转发节点
 	it = forwardNode.find(m_node->GetId());
 	if(it != forwardNode.end())
 	{
 		cout<<" 转发节点为: "<<it->second<<endl;
+		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
 			if(nb->first == it->second)
 			{
 				lostForwardNeighbor = false;
-			}
-		}
-	}
-	if(!lostForwardNeighbor)
-	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
-	}
-	getchar();
-	cout<<endl;
-	
-	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
-	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
-	for(nb = m_nb.getNb().begin(); nb != m_nb.getNb().end();++nb)
-	{
-		cout<<nb->first<<" ";
-	}
-	cout<<endl;*/
-	//进行邻居变化的检测
-	/*if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
-	{//发送兴趣包
-			//cout<<"邻居数量变化，重发"<<endl;
-	}
-	else
-	{
-		bool nbChange=false;//邻居表变化
-		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb=m_preNB.getNb().begin();
-		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb=m_nb.getNb().begin();
-		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end()  ;  ++prenb  , ++nb)//O(n) complexity
-		{
-			if(nb->first!=prenb->first)
-			{
-				nbChange=true;
 				break;
 			}
 		}
-		if(nbChange)
-		{//邻居变化，发送兴趣包
-		//	cout<<"邻居变化，重发"<<endl;
+		if(!lostForwardNeighbor)
+		{
+			cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
 		}
+		else
+			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 	}
-	m_preNB=m_nb;//更新把上一次的邻居表*/
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
