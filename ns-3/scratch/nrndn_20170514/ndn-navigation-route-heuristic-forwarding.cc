@@ -883,7 +883,7 @@ NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
 	//getchar();
-	cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
+	//cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
@@ -913,7 +913,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
@@ -963,12 +963,21 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
-		if(nb->first == forwardNode[m_node->GetId()])
-		{
-			lostForwardNeighbor = false;
-		}
 	}
 	cout<<endl;
+	std::map<uint32_t,uint32_t>::iterator it;
+	it = forwardNode.find(m_node->GetId());
+	if(it != forwardNode.end())
+	{
+		cout<<"转发节点为: "<<it->second<<endl;
+		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
+		{
+			if(nb->first == it->second)
+			{
+				lostForwardNeighbor = false;
+			}
+		}
+	}
 	if(!lostForwardNeighbor)
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
