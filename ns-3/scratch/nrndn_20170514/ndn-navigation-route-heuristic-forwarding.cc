@@ -964,7 +964,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<endl;
 	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
@@ -984,10 +983,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(!lostForwardNeighbor)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
+			getchar();
 		}
 		else
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 	}
+	cout<<endl;
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
