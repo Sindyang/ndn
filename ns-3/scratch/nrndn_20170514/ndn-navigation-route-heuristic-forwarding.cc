@@ -967,9 +967,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			lostForwardNeighbor = false;
 		}
 	}
+	cout<<endl;
 	if(!lostForwardNeighbor)
 	{
-		cout<<endl<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
 		getchar();
 	}
 	
