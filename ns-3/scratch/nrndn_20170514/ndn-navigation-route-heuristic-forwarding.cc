@@ -297,12 +297,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
-	forwardNode = nrheader.getForwardId();
+	uint32_t forwardId = nrheader.getForwardId();
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
 	{
-		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNode<<endl;
+		forwardNode[nodeId] = forwardId;
+		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
 		getchar();
 	}
 	
@@ -962,7 +963,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
-		if(nb->first == forwardNode)
+		if(nb->first == forwardNode[m_node->GetId()])
 		{
 			lostForwardNeighbor = false;
 		}
@@ -970,7 +971,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<endl;
 	if(!lostForwardNeighbor)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode<<",且仍在邻居列表中"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
 		getchar();
 	}
 	
