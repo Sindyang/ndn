@@ -964,12 +964,11 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<endl;
 	std::map<uint32_t,uint32_t>::iterator it;
 	it = forwardNode.find(m_node->GetId());
 	if(it != forwardNode.end())
 	{
-		cout<<"转发节点为: "<<it->second<<endl;
+		cout<<" 转发节点为: "<<it->second<<endl;
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
 			if(nb->first == it->second)
@@ -981,8 +980,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(!lostForwardNeighbor)
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
-		getchar();
 	}
+	getchar();
+	cout<<endl;
 	
 	//cout<<"(forwarding.cc-ProcessHello) 节点的邻居为:"<<endl;
 	/*std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
