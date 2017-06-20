@@ -965,6 +965,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<nb->first<<" ";
 	}
 	
+	//判断心跳包的来源方向
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	if(msgdirection.second > 0)
+	{
+		cout<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
+	}
+	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
 	it = forwardNode.find(m_node->GetId());
