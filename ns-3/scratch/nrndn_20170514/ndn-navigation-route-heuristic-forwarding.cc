@@ -828,15 +828,13 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	
-	
 
 	//added by sy
-    ndn::nrndn::nrHeader nrheader;
+    /*ndn::nrndn::nrHeader nrheader;
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 	uint32_t myNodeId = m_node->GetId();
-	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
+	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;*/
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -959,23 +957,23 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
+	//判断心跳包的来源方向
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	if(msgdirection.second > 0)
+	{
+		cout<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
+	}
+	else
+	{
+		cout<<"(forwarding.cc-ProcessHello)该心跳包来自于后方或其他路段"<<endl;
+	}
+	
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
-	}
-	
-	//判断心跳包的来源方向
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if(msgdirection.second > 0)
-	{
-		cout<<endl<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
-	}
-	else
-	{
-		cout<<endl<<"(forwarding.cc-ProcessHello)该心跳包来自于后方或其他路段"<<endl;
 	}
 	
 	std::map<uint32_t,uint32_t>::iterator it;
@@ -1001,6 +999,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 	}
+	cout<<endl;
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
