@@ -96,6 +96,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false)
+	m_resendInterestTime(-1)
 {
     m_firstSendInterest=true; //added by siukwan
 	m_nbChange_mode=0; //added by siukwan
@@ -997,9 +998,45 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			getchar();
 		}
 		else
+		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+			notifyUpperOnInterest(m_node->GetId());
+		}
 	}
 	cout<<endl;
+}
+
+void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
+{
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	m_resendInterestTime =  Simulator::Now().GetSeconds();
+	if( interval >= 1)
+	{
+		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+	}
+	else
+	{
+		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		return;
+	}
+	cout<<"(forwarding.cc-notifyUpperOnInterest)"<<endl;
+	vector<Ptr<Face> >::iterator fit;
+	Ptr<Interest> interest = Create<Interest> ();
+	interest->SetNonce(type);
+	int count=0;
+	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
+	{   //只有一个Face？有两个，一个是consumer，一个是producer
+		//App::OnInterest() will be executed,
+		//including nrProducer::OnInterest.
+		count++;
+		(*fit)->SendInterest(interest);
+	}
+	if(count>2)
+	{
+		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
+		getchar();
+	}
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
