@@ -971,11 +971,11 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
+	/*cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
-	}
+	}*/
 	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
@@ -994,7 +994,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(!lostForwardNeighbor)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 转发节点仍在邻居列表中"<<endl;
 			//getchar();
 		}
 		else
