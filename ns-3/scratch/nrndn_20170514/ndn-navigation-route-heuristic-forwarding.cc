@@ -965,6 +965,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
+	cout<<endl;
 	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
