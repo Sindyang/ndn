@@ -305,7 +305,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode[nodeId] = forwardId;
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		//getchar();
+		getchar();
 	}
 	
 
@@ -993,7 +993,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			getchar();
 		}
 	}
-	cout<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()

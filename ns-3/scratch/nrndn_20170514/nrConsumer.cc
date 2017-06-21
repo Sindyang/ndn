@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -142,7 +142,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	if (m_firstTime)
 	{
 		m_sendEvent = Simulator::Schedule (Seconds (0.0),&nrConsumer::SendPacket, this);
@@ -192,7 +192,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  ScheduleNextPacket ();
+	  cout<<"离开(nrConsumer.cc-SendPacket)"<<endl;
+	  getchar();
+	  //ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)
