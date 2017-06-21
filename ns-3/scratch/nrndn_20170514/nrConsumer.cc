@@ -148,8 +148,8 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 		m_sendEvent = Simulator::Schedule (Seconds (0.0),&nrConsumer::SendPacket, this);
 		m_firstTime = false;
 	}
-	else if (!m_sendEvent.IsRunning ())
-	    m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
+	//else if (!m_sendEvent.IsRunning ())
+	    //m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
 }
 
 
@@ -158,7 +158,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -192,7 +192,7 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  ScheduleNextPacket ();
+	  //ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)
@@ -254,8 +254,7 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
 	//std::cout<<"(nrConsumer.cc-OnInterest) nrConsumer should not be supposed to receive Interest Packet!!"<<std::endl;
-	int type =  interest->GetNonce();
-	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<type<<endl;
+	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<endl;
 	SendPacket();
 	getchar();
 }

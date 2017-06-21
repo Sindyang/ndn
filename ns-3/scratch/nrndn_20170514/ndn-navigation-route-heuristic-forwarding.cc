@@ -983,7 +983,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(!lostForwardNeighbor)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点仍在邻居列表中"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 转发节点仍在邻居列表中"<<endl;
 			//getchar();
 		}
 		else
@@ -996,25 +996,22 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<endl;
 }
 
-void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
+void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
-	cout<<"(forwarding.cc-notifyUpperOnInterest) 时间间隔为 "<<interval<<endl;
 	if( interval >= 1)
 	{
-		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
-		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
-	cout<<"(forwarding.cc-notifyUpperOnInterest)"<<endl;
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
-	interest->SetNonce(nodeId);
 	int count=0;
 	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
 	{   //只有一个Face？有两个，一个是consumer，一个是producer
