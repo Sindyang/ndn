@@ -1001,6 +1001,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 			notifyUpperOnInterest(m_node->GetId());
+			getchar();
 		}
 	}
 	cout<<endl;
@@ -1011,7 +1012,8 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
-	if( interval >= 1)
+	cout<<"(forwarding.cc-notifyUpperOnInterest) 时间间隔为 "<<interval<<endl;
+	/*if( interval >= 1)
 	{
 		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
@@ -1036,7 +1038,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
 	{
 		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
 		getchar();
-	}
+	}*/
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
