@@ -958,17 +958,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	//判断心跳包的来源方向
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if(msgdirection.second > 0)
-	{
-		//cout<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
-	}
-	else
-	{
-		//cout<<"(forwarding.cc-ProcessHello)该心跳包来自于后方或其他路段"<<endl;
-	}
-	
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
@@ -1013,7 +1002,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
 	cout<<"(forwarding.cc-notifyUpperOnInterest) 时间间隔为 "<<interval<<endl;
-	/*if( interval >= 1)
+	if( interval >= 1)
 	{
 		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
