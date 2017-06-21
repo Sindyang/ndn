@@ -962,11 +962,11 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if(msgdirection.second > 0)
 	{
-		cout<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello)该心跳包来自于前方"<<endl;
 	}
 	else
 	{
-		cout<<"(forwarding.cc-ProcessHello)该心跳包来自于后方或其他路段"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello)该心跳包来自于后方或其他路段"<<endl;
 	}
 	
 	bool lostForwardNeighbor = true;
@@ -995,7 +995,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(!lostForwardNeighbor)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点为 "<<forwardNode[m_node->GetId()]<<",且仍在邻居列表中"<<endl;
-			getchar();
+			//getchar();
 		}
 		else
 		{
