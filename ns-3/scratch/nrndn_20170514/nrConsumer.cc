@@ -192,7 +192,7 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  //ScheduleNextPacket ();
+	  ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)
