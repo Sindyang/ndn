@@ -989,7 +989,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-			notifyUpperOnInterest(m_node->GetId());
+			notifyUpperOnInterest();
 			getchar();
 		}
 	}
