@@ -1027,7 +1027,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
 	{
 		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
 		getchar();
-	}*/
+	}
 }
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
