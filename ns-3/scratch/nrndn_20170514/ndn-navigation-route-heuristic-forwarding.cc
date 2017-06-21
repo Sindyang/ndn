@@ -355,7 +355,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
