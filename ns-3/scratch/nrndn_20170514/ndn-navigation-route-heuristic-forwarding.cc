@@ -95,7 +95,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_HelloLogEnable(true),
 	m_gap(20),
 	m_TTLMax(3),
-	NoFwStop(false)
+	NoFwStop(false),
 	m_resendInterestTime(-1)
 {
     m_firstSendInterest=true; //added by siukwan
@@ -1023,7 +1023,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t nodeId)
 	cout<<"(forwarding.cc-notifyUpperOnInterest)"<<endl;
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
-	interest->SetNonce(type);
+	interest->SetNonce(nodeId);
 	int count=0;
 	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
 	{   //只有一个Face？有两个，一个是consumer，一个是producer
