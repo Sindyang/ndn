@@ -257,7 +257,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
-		//cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
+		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -275,11 +275,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		//cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
+		getchar();
 		return;
 	}
-
-	//cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<m_node->GetId()<<endl;
 	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
@@ -299,6 +298,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
+	
+	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<","<<endl;
+	getchar();
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
