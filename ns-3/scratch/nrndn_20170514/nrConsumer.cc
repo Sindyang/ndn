@@ -194,7 +194,7 @@ void nrConsumer::SendPacket()
 	  m_face->ReceiveInterest (interest);
 	  cout<<"离开(nrConsumer.cc-SendPacket)"<<endl;
 	  //getchar();
-	  //ScheduleNextPacket ();
+	  ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)
