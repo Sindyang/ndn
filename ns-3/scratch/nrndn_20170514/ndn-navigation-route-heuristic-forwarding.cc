@@ -306,15 +306,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode[nodeId] = forwardId;
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		//getchar();
+		getchar();
 	}
 	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		//cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<endl;
-		//getchar();
+		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<endl;
+		getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -345,14 +345,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
-			//getchar();
+			getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
-			//getchar();
+			getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
@@ -360,7 +360,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
-		//getchar();
+		getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
@@ -410,7 +410,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		//getchar();
+		getchar();
 	}
 
 }
