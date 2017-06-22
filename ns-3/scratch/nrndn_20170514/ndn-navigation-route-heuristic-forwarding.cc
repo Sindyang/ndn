@@ -320,9 +320,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	//cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
+	cout << "(forwarding.cc-OnInterest) 获取优先级列表" << endl;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-	//cout<<"(forwarding.cc-OnInterest) pri的大小为："<<pri.size()<<endl;
+    cout<<"(forwarding.cc-OnInterest) pri的大小为："<<pri.size()<<endl;
+	getchar();
 
 	//Deal with the stop message first
 	//避免回环
@@ -343,20 +344,23 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
@@ -374,7 +378,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		if (idIsInPriorityList)
 		{
-			//cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
@@ -398,16 +402,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
 				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-				getchar();
 			}
 		}
 		else
 		{
-			//cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
+			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-
+		getchar();
 	}
 
 }
