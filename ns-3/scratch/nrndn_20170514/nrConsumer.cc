@@ -158,7 +158,7 @@ void nrConsumer::SendPacket()
 {
 	 if (!m_active) return;
 	 
-	 std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	  NS_LOG_FUNCTION_NOARGS ();
 
@@ -192,9 +192,9 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  cout<<"离开(nrConsumer.cc-SendPacket)"<<endl;
+	  //cout<<"离开(nrConsumer.cc-SendPacket)"<<endl;
 	  //getchar();
-	  //ScheduleNextPacket ();
+	  ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)

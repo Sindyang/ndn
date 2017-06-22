@@ -329,7 +329,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//避免回环
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
-		//cout<<"(forwarding.cc-OnInterest) 该兴趣包为NACK_LOOP。发送兴趣包的节点为： "<<nodeId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包为NACK_LOOP。发送兴趣包的节点为： "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
