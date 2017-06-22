@@ -762,6 +762,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",转发该兴趣包的节点为"<<m_node->GetId()<<endl;
+	getchar();
 
 	// 记录转发次数
 	// 4. record the forward times
