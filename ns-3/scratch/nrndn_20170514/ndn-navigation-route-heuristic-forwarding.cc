@@ -721,7 +721,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -757,7 +757,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	//直接转发
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
-	//cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",nonce为"<<nonce<<endl;
+	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",转发该兴趣包的节点为"<<m_node->GetId()<<endl;
 
 	// 记录转发次数
 	// 4. record the forward times
@@ -833,11 +833,11 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	if(!m_running) return;
 
 	//added by sy
-    /*ndn::nrndn::nrHeader nrheader;
+    ndn::nrndn::nrHeader nrheader;
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 	uint32_t myNodeId = m_node->GetId();
-	cout<<endl<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;*/
+	cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
