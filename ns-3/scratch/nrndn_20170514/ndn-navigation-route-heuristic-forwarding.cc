@@ -300,7 +300,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	uint32_t forwardId = nrheader.getForwardId();
 	
 	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
-	getchar();
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
@@ -398,6 +397,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
+				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
+				getchar();
 			}
 		}
 		else
