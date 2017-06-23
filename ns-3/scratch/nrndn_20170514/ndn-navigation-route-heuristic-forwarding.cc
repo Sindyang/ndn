@@ -310,7 +310,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 		{
 			forwardNode.insert({nodeId, forwardId});
-			forwardNode.insert({-nodeId, -forwardId});
 		}
 		
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
@@ -980,7 +979,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	
-	cout<<"(forwarding.cc-ProcessHello)转发节点列表为：";
+	cout<<"(forwarding.cc-ProcessHello)转发节点列表为"<<endl;
     for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 	{
 		cout<<itmap->first<<" "<<itmap->second<<endl;
