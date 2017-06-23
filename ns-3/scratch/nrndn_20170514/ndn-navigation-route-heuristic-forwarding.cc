@@ -298,7 +298,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
@@ -946,7 +946,8 @@ NavigationRouteHeuristic::SendHello()
 
 	//4. send the hello message
 	SendInterestPacket(interest);
-
+	
+	cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
 }
 
 void
