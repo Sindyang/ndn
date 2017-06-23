@@ -319,9 +319,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
+	//cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-    cout<<"pri的大小为："<<pri.size()<<endl;
+    //cout<<"pri的大小为："<<pri.size()<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -358,7 +358,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
 		//getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
@@ -724,7 +724,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -837,10 +837,10 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	if(!m_running) return;
 
 	//added by sy
-    ndn::nrndn::nrHeader nrheader;
-    interest->GetPayload()->PeekHeader(nrheader);
-    uint32_t nodeId = nrheader.getSourceId();
-	uint32_t myNodeId = m_node->GetId();
+    //ndn::nrndn::nrHeader nrheader;
+    //interest->GetPayload()->PeekHeader(nrheader);
+    //uint32_t nodeId = nrheader.getSourceId();
+	//uint32_t myNodeId = m_node->GetId();
 	//cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
@@ -1000,6 +1000,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 			//getchar();
 		}
+	}
+	else{
+		cout<<" 还未收到自己发送的兴趣包"<<endl;
 	}
 }
 
