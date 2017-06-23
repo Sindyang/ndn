@@ -979,13 +979,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	
-	cout<<"(forwarding.cc-ProcessHello)转发节点列表为"<<endl;
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点列表为"<<endl;
     for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 	{
 		cout<<itmap->first<<" "<<itmap->second<<endl;
 	}
 		
-	cout<<endl<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的邻居为：";
+	cout<<endl<<"邻居为：";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
