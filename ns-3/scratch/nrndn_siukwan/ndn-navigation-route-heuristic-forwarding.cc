@@ -512,6 +512,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId() != 999999999)
 		{
 			forwardNeighbors[nodeId]=true;
+			cout<<"转发节点列表为"<<endl;
+			for(auto ite = forwardNeighbors.begin();ite != forwardNeighbors.end();)
+			{
+				cout<<ite->first<<" "<<ite->second<<endl;
+			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 		}
 		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;

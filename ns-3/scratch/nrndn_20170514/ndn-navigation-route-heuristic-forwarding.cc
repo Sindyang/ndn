@@ -275,7 +275,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		//cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl;
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl;
 		return;
 	}
 	
@@ -303,7 +303,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//2017.6.16 
 	if(nodeId == myNodeId)
 	{
-		forwardNode.insert(make_pair(nodeId,forwardId));
+		forwardNode[nodeId] = forwardId;
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
 		map<uint32_t,uint32_t>::iterator itmap;
 		for(itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
