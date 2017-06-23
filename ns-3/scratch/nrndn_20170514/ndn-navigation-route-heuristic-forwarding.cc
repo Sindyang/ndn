@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
+	//cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -236,10 +236,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<" "<<it->second;
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
+	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
 	//getchar();
 	return PriorityList;
 }
@@ -257,7 +257,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
-		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
+		//cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -298,7 +298,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
@@ -319,7 +319,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 获取优先级列表:";
+	cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     cout<<"pri的大小为："<<pri.size()<<endl;
 	//getchar();
@@ -377,7 +377,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		if (idIsInPriorityList)
 		{
-			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			//cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
@@ -400,7 +400,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
-				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
+				//cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
 			}
 		}
 		else
@@ -967,19 +967,19 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的当前邻居列表为: ";
-	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId();
+	/*for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
 	it = forwardNode.find(m_node->GetId());
 	if(it != forwardNode.end())
 	{
-		cout<<" 转发节点为: "<<it->second<<endl;
+		cout<<" 的转发节点为: "<<it->second<<endl;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
@@ -1015,7 +1015,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	else
 	{
 		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
-		return;
+		//return;
 	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
