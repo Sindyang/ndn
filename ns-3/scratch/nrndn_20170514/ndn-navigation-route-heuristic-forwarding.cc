@@ -305,6 +305,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode[nodeId] = forwardId;
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
+		map<uint32_t,uint32_t>::iterator itmap;
+		for(itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+		{
+			cout<<itmap->first<<" "<<itmap->second<<endl;
+		}
 		//getchar();
 	}
 	
@@ -312,16 +317,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<endl;
+		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<",源节点为 "<<nodeId<<",当前节点为 "<<myNodeId<<endl;
 		//getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 	
 	//获取优先列表
-	//cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
+	cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-    //cout<<"pri的大小为："<<pri.size()<<endl;
+    cout<<"pri的大小为："<<pri.size()<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -343,14 +348,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -967,19 +972,26 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId();
-	/*for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
+	
+	cout<<"(forwarding.cc-ProcessHello)转发节点列表为："<<endl;
+	map<uint32_t,uint32_t>::iterator itmap;
+    for(itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+	{
+		cout<<itmap->first<<" "<<itmap->second<<endl;
+	}
+		
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的邻居为：";
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<endl;*/
 	
 	std::map<uint32_t,uint32_t>::iterator it;
 	//判断该节点是否有转发节点
 	it = forwardNode.find(m_node->GetId());
 	if(it != forwardNode.end())
 	{
-		cout<<" 的转发节点为: "<<it->second<<endl;
+		cout<<",转发节点为: "<<it->second<<endl;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
@@ -1069,7 +1081,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
 			priorityList = GetPriorityList();
-			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
+			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
 			break;
 		}
