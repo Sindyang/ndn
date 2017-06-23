@@ -979,13 +979,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点列表为"<<endl;
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点列表为：";
     for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 	{
-		cout<<itmap->first<<" "<<itmap->second<<endl;
+		cout<<"("<<itmap->first<<" "<<itmap->second<<")";
 	}
 		
-	cout<<endl<<"邻居为：";
+	cout<<endl<<",邻居为：";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
@@ -996,7 +996,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	it = forwardNode.find(m_node->GetId());
 	if(it != forwardNode.end())
 	{
-		cout<<",转发节点为: "<<it->second<<endl;
+		cout<<",转发节点为: "<<it->second;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
@@ -1013,13 +1013,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+			cout<<",转发节点丢失"<<endl;
 			notifyUpperOnInterest();
 			//getchar();
 		}
 	}
 	else{
-		cout<<" 还未收到自己发送的兴趣包"<<endl;
+		cout<<",还未收到自己发送的兴趣包"<<endl;
 	}
 	getchar();
 }
