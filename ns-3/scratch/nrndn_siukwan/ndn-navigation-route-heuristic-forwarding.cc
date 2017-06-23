@@ -305,7 +305,7 @@ void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 			{
 				NS_LOG_DEBUG("Get ack packet from front or other direction and it is old packet");
 				cout<<"forwarding.cc收到同样的ACK包,不再发送!"<<endl;
-				getchar();
+				//getchar();
 				ExpireInterestPacketTimer(nodeId,seq);
 			}
 			cout<<"如果重复,完成"<<endl;
@@ -357,7 +357,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-		getchar();
+		//getchar();
 	}
 	if(forwardId != 999999999)
 	{
@@ -518,6 +518,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<ite->first<<" "<<ite->second<<endl;
 			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
+			getchar();
 		}
 		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
@@ -817,7 +818,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 						cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() 
 							<< " nodeId:" << nodeId << " sig:" << signature << " fwdID:" << forwardId << endl;
 						cout << "isTTLReachMax:" <<  hopCountTag.Get() << endl;
-						getchar();
+						//getchar();
 						DropDataPacket(data);
 						return;
 					}
@@ -1248,13 +1249,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{   //发送兴趣包
 		cout<<"邻居增加，重发"<<endl;
-		getchar();
+		//getchar();
 		m_nbChange_mode=2;//邻居增加
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())//数量不等，邻居发生变化
 	{
 		cout<<"邻居减少，重发"<<endl;
-		getchar();
+		//getchar();
 		m_nbChange_mode=1;//邻居减少
 	}
 	else
