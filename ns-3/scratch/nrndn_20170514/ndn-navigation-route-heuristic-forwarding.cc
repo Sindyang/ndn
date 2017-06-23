@@ -985,7 +985,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<"("<<itmap->first<<" "<<itmap->second<<")";
 	}
 		
-	cout<<endl<<",邻居为：";
+	cout<<",邻居为：";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
