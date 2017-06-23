@@ -264,9 +264,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
         
         //added by sy
-        /*ndn::nrndn::nrHeader nrheader;
+        ndn::nrndn::nrHeader nrheader;
         interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t nodeId = nrheader.getSourceId();*/
+        uint32_t nodeId = nrheader.getSourceId();
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -275,7 +275,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl;
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕,node为 "<<nodeId<<endl;
 		return;
 	}
 	
@@ -298,7 +298,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	//cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
 	
 	//2017.6.16 
 	if(nodeId == myNodeId)
@@ -310,6 +310,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 		{
 			forwardNode.insert({nodeId, forwardId});
+			forwardNode.insert({-nodeId, -forwardId});
 		}
 		
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
@@ -317,9 +318,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			cout<<itmap->first<<" "<<itmap->second<<endl;
 		}
-		getchar();
+		//getchar();
 	}
-	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -355,14 +355,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
 		//getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
@@ -772,7 +772,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	//直接转发
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
-	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",转发该兴趣包的节点为"<<m_node->GetId()<<endl;
+	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",当前节点为"<<m_node->GetId()<<endl;
 	//getchar();
 
 	// 记录转发次数
