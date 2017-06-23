@@ -259,7 +259,7 @@ void nrConsumer::OnInterest(Ptr<const Interest> interest)
 	//std::cout<<"(nrConsumer.cc-OnInterest) nrConsumer should not be supposed to receive Interest Packet!!"<<std::endl;
 	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<endl;
 	SendPacket();
-	getchar();
+	//getchar();
 }
 
 bool nrConsumer::IsInterestData(const Name& name)

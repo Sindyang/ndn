@@ -890,7 +890,7 @@ NavigationRouteHeuristic::HelloTimerExpire ()
 {
 	if(!m_running) return;
 	//getchar();
-	cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
+	//cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
@@ -947,7 +947,7 @@ NavigationRouteHeuristic::SendHello()
 	//4. send the hello message
 	SendInterestPacket(interest);
 	
-	cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
+	//cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
 }
 
 void
