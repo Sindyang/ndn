@@ -986,7 +986,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<itmap->first<<" "<<itmap->second<<endl;
 	}
 		
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的邻居为：";
+	cout<<endl<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的邻居为：";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
