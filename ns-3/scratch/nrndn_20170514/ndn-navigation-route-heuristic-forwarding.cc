@@ -235,8 +235,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	{
 		PriorityList.push_back(it->second);
 
-		str<<'\t'<<it->second;
-		cout<<'\t'<<it->second;
+		str<<" "<<it->second;
+		cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
 	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
@@ -305,7 +305,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode[nodeId] = forwardId;
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		getchar();
+		//getchar();
 	}
 	
 
@@ -313,7 +313,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<endl;
-		getchar();
+		//getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -409,7 +409,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		getchar();
+		//getchar();
 	}
 
 }
@@ -761,7 +761,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",转发该兴趣包的节点为"<<m_node->GetId()<<endl;
-	getchar();
+	//getchar();
 
 	// 记录转发次数
 	// 4. record the forward times
@@ -998,7 +998,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 			notifyUpperOnInterest();
-			getchar();
+			//getchar();
 		}
 	}
 }

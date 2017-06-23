@@ -194,7 +194,7 @@ void nrConsumer::SendPacket()
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
 	  std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl<<endl;
-	  getchar();
+	  //getchar();
 	  //ScheduleNextPacket ();
 }
 
