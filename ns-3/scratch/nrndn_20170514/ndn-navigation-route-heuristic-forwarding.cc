@@ -303,14 +303,21 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//2017.6.16 
 	if(nodeId == myNodeId)
 	{
-		forwardNode[nodeId] = forwardId;
+		if(forwardNode.find(nodeId) != forwardNode.end())
+		{
+			forwardNode[nodeId] = forwardId;
+		}
+		else
+		{
+			forwardNode.insert({nodeId, forwardId});
+		}
+		
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		map<uint32_t,uint32_t>::iterator itmap;
-		for(itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+		for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 		{
 			cout<<itmap->first<<" "<<itmap->second<<endl;
 		}
-		//getchar();
+		getchar();
 	}
 	
 
@@ -974,8 +981,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	
 	cout<<"(forwarding.cc-ProcessHello)转发节点列表为：";
-	map<uint32_t,uint32_t>::iterator itmap;
-    for(itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+    for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 	{
 		cout<<itmap->first<<" "<<itmap->second<<endl;
 	}
@@ -1016,6 +1022,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else{
 		cout<<" 还未收到自己发送的兴趣包"<<endl;
 	}
+	getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
