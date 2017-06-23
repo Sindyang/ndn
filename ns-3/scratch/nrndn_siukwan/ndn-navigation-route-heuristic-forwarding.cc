@@ -513,7 +513,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			forwardNeighbors[nodeId]=true;
 			cout<<"转发节点列表为"<<endl;
-			for(auto ite = forwardNeighbors.begin();ite != forwardNeighbors.end();)
+			for(auto ite = forwardNeighbors.begin();ite != forwardNeighbors.end();ite++)
 			{
 				cout<<ite->first<<" "<<ite->second<<endl;
 			}
