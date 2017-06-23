@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
+	cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -236,10 +236,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<'\t'<<it->second;
-		//cout<<'\t'<<it->second;
+		cout<<'\t'<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
+	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
 	//getchar();
 	return PriorityList;
 }
@@ -275,8 +275,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		//cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
-		//getchar();
+		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕"<<endl<<endl;
+		getchar();
 		return;
 	}
 	
@@ -1066,7 +1066,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
 			priorityList = GetPriorityList();
-			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
+			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
 			break;
 		}
