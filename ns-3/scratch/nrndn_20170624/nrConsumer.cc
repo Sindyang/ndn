@@ -52,6 +52,7 @@ nrConsumer::nrConsumer():
 		m_virtualPayloadSize(1024)
 {
 	// TODO Auto-generated constructor stub
+
 }
 
 nrConsumer::~nrConsumer()
@@ -62,7 +63,6 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -76,10 +76,8 @@ void nrConsumer::StopApplication()
 	super::StopApplication();
 }
 
-//计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -88,25 +86,27 @@ void nrConsumer::ScheduleNextPacket()
 	 {
 		 prefix+=*it;
 	 }
+	//	std::cout<<"test\n";
 
 	 //2. set the Interest (reverse of  the residual navigation route)
-	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) 兴趣 "<<prefix<<std::endl;
+	//std::cout<<prefix<<std::endl;
 	if(prefix=="")
 	{   //兴趣为空，直接返回
-		std::cout<<"(nrConsumer.cc-ScheduleNextPacket) "<<"ID:"<<GetNode()->GetId()<<" 兴趣为空"<<std::endl;
-		doConsumerCbrScheduleNextPacket();//added by siukwan
+		std::cout<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
 		return;
 	}
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
+	//std::cout<<"test2\n";
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	//std::cout<<"(nrConsumer.cc-ScheduleNextPacket) NodeId "<<GetNode()->GetId()<<" now is interested on "<<prefix.data()<<std::endl;
+	std::cout<<GetNode()->GetId()<<" ";
+	//std::cout<<"test3\n";
 	//3. Schedule next packet
+	//ConsumerCbr::ScheduleNextPacket();
 	doConsumerCbrScheduleNextPacket();
 }
 
 std::vector<std::string> nrConsumer::GetCurrentInterest()
 {
-	//std::cout<<"进入(nrConsumer.cc-GetCurrentInterest)"<<endl;
 	std::string prefix = "/";
 	std::string str;
 	std::vector<std::string> result;
@@ -119,7 +119,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
 	{
-		//std::cout<<"(nrConsumer.cc-GetCurrentInterest) NodeId "<<this->GetNode()->GetId()<<" "<<"route "<<*it <<"\t"<<"currentLane "<<currentLane.data() <<std::endl;
+		//std::cout<<this->GetNode()->GetId()<<" "<<*it <<"\t"<<currentLane.data() <<std::endl;
 		if(*it==currentLane)//一直遍历寻找到当前道路，然后把后面的压紧容器返回
 			break;
 	}
@@ -130,37 +130,33 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 		result.push_back(str);
 	//	++routeSum;
 	}
-	//cout<<"(nrConsumer.cc-GetCurrentInterest) CurrentInterest :"<<" ";
-	for(it = result.begin();it != result.end();it++)
-	{
-		//std::cout<<*it<<" ";
-	}
-	//std::cout<<std::endl;
 	return result;
 }
 
-//changed by siukwan
+
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
-	if (m_firstTime)
-	{
-		//changed by sy Seconds(0.0)->Seconds(1.0)
-		m_sendEvent = Simulator::Schedule (Seconds (0.0),&nrConsumer::SendPacket, this);
-		m_firstTime = false;
-	}
-	else if (!m_sendEvent.IsRunning ())
-	    m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
+	  if (m_firstTime)
+	    {
+	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
+	                                         &nrConsumer::SendPacket, this);
+	      m_firstTime = false;
+	    }
+	  else if (!m_sendEvent.IsRunning ())
+	    m_sendEvent = Simulator::Schedule (
+	                                       (m_random == 0) ?
+	                                         Seconds(1.0 / m_frequency)
+	                                       :
+	                                         Seconds(m_random->GetValue ()),
+	                                       &nrConsumer::SendPacket, this);
 }
 
 
-//changed by siukwan
+
 void nrConsumer::SendPacket()
 {
-	 if (!m_active) return;
-	 
-	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
-	
+	  if (!m_active) return;
+
 	  NS_LOG_FUNCTION_NOARGS ();
 
 	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
@@ -179,9 +175,9 @@ void nrConsumer::SendPacket()
 	  nameWithSequence->appendSeqNum (seq);
 
 	  Ptr<Interest> interest = Create<Interest> ();
-	  interest->SetNonce(m_rand.GetValue ());
-	  interest->SetName(nameWithSequence);
-	  interest->SetInterestLifetime(m_interestLifeTime);
+	  interest->SetNonce               (m_rand.GetValue ());
+	  interest->SetName                (nameWithSequence);
+	  interest->SetInterestLifetime    (m_interestLifeTime);
 
 	  // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
 	  NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
@@ -193,10 +189,35 @@ void nrConsumer::SendPacket()
 
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
-	  //std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl<<endl;
-	  //getchar();
-	  //ScheduleNextPacket ();
+	  //std::cout<<"准备出错\n";
+	  ScheduleNextPacket ();
+	//  std::cout<<"已经出错\n";
+
+	  //std::cout<<"ScheduleNextPacket \n";
 }
+
+
+/*
+Ptr<Packet> nrConsumer::GetNrPayload()
+{
+	Ptr<Packet> nrPayload	= Create<Packet> ();
+	Ptr<Node> node			= GetNode();
+	Ptr<NodeSensor> sensor	= node->GetObject<NodeSensor>();
+	Ptr<ns3::ndn::fw::nrndn::NavigationRouteHeuristic> fwStrategy
+							= node->GetObject<ns3::ndn::fw::nrndn::NavigationRouteHeuristic>();
+     NS_ASSERT_MSG (fwStrategy!=0,"nrConsumer::GetNrPayload: "
+    		 "ns3::ndn::fw::NavigationRouteHeuristic should be installed to a node "
+    		 "while using ns3::ndn::nrndn::nrConsumer");
+
+	double position			= sensor->getPos();
+	std::string lane 		= sensor->getLane();
+	std::vector<uint32_t> priorityList=fwStrategy->GetPriorityList();
+
+	nrHeader nrheader(node->GetId(),position,lane,priorityList);
+	nrPayload->AddHeader(nrheader);
+	return nrPayload;
+}
+*/
 
 void nrConsumer::OnData(Ptr<const Data> data)
 {
@@ -211,8 +232,8 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
-	//getchar();
+	std::cout<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
+	getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
@@ -226,13 +247,11 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 void nrConsumer::NotifyNewAggregate()
 {
-  std::cout<<"进入(nrConsumer.cc-NotifyNewAggregate) "<<endl;
   super::NotifyNewAggregate ();
 }
 
 void nrConsumer::DoInitialize(void)
 {
-	
 	if (m_forwardingStrategy == 0)
 	{
 		//m_forwardingStrategy = GetObject<fw::nrndn::NavigationRouteHeuristic>();
@@ -243,7 +262,6 @@ void nrConsumer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
-		//std::cout<<"(nrConsumer.cc-DoInitialize) "<<GetNode()->GetId()<<endl;
 		NS_ASSERT_MSG(m_sensor,"nrConsumer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 	}
 	super::DoInitialize();
@@ -256,10 +274,8 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
-	//std::cout<<"(nrConsumer.cc-OnInterest) nrConsumer should not be supposed to receive Interest Packet!!"<<std::endl;
-	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<endl;
-	SendPacket();
-	//getchar();
+	NS_ASSERT_MSG(false,"nrConsumer should not be supposed to "
+			"receive Interest Packet!!");
 }
 
 bool nrConsumer::IsInterestData(const Name& name)
