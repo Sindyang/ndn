@@ -1011,7 +1011,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(!lostForwardNeighbor)
 		{
-			//cout<<"(forwarding.cc-ProcessHello) 转发节点仍在邻居列表中"<<endl;
+			cout<<endl;
 			//getchar();
 		}
 		else
