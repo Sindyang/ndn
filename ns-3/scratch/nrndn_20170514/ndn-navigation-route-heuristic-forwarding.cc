@@ -309,7 +309,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
  			forwardNode.insert({nodeId, forwardId});
  		}
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNode[nodeId]<<endl;
-		//getchar();
+		getchar();
 	}
 
 	//If the interest packet has already been sent, do not proceed the packet
@@ -989,7 +989,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
-			if(nb->first == forwardNodeId)
+			if(nb->first == it->second)
 			{
 				lostForwardNeighbor = false;
 				break;
