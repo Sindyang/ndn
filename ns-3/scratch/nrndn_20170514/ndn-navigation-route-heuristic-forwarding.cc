@@ -999,7 +999,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(it != forwardNode.end())
 	{
 		cout<<",转发节点为: "<<it->second;
-		cout<<",转发节点为"<<forwardNodeId;
+		cout<<",转发节点为 "<<forwardNodeId;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
@@ -1023,8 +1023,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else{
 		cout<<",还未收到自己发送的兴趣包"<<endl;
+		notifyUpperOnInterest();
 	}
-	getchar();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
