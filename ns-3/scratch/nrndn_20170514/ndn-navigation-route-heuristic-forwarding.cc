@@ -315,10 +315,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		forwardNodeId = forwardId;
 		
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+		/*for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
 		{
 			cout<<itmap->first<<" "<<itmap->second<<endl;
-		}
+		}*/
 		//getchar();
 	}
 
@@ -356,14 +356,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
