@@ -979,7 +979,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<",";
 	
 	bool lostForwardNeighbor = true;
 	auto it = forwardNode.find(m_node->GetId());
@@ -1016,11 +1015,10 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
-	m_resendInterestTime =  Simulator::Now().GetSeconds();
     if(interval >= 1)
 	{
+		m_resendInterestTime =  Simulator::Now().GetSeconds();	
 		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
-			
 	}
 	else
 	{
