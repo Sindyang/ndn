@@ -906,6 +906,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
+	uint32_t nodeId = m_node->GetId();
 	cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的邻居为 ";
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
