@@ -287,6 +287,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	seq=interest->GetNonce();
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
+	if(nodeId == 18)
+	{
+		cout<<"转发优先级列表为"<<endl;
+		for(auto it = pri.begin();it != pri.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+	}
+	
 	
 
 	//If the interest packet has already been sent, do not proceed the packet
@@ -320,6 +329,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			if(nodeId == 18)
 			{
+				cout<<msgdirection.second<<endl;
 				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
 			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
@@ -342,6 +352,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(nodeId == 18)
 		{
 			cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+			cout<<msgdirection.second<<endl;
 		}
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
