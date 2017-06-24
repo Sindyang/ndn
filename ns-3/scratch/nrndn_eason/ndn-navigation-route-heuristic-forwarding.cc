@@ -294,6 +294,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			cout<<*it<<" ";
 		}
+		cout<<endl;
 	}
 	
 	
