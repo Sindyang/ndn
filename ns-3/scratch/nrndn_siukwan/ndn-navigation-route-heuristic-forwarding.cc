@@ -407,11 +407,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -421,7 +429,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	//兴趣包来自后方
 	// it is from nodes behind
-
+	if(nodeId == 18)
+	{
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+	}
 	//如果重复
 	if(isDuplicatedInterest(nodeId,seq))
 	{

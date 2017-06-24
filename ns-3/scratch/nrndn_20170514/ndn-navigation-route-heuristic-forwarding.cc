@@ -273,7 +273,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		
+		
+	    cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		
 		return;
 	}
 	
