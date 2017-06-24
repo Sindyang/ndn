@@ -277,14 +277,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 	
-	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader(nrheader);
-	//获取发送兴趣包节点的ID
-	uint32_t nodeId = nrheader.getSourceId();
-	//获取兴趣的随机编码
-	uint32_t seq = interest->GetNonce();
-	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
 	
 
