@@ -361,7 +361,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if (idIsInPriorityList)
 		{
 			NS_LOG_DEBUG("Node id is in PriorityList");
-			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			}
+			
 			
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
 
@@ -387,7 +391,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		else
 		{
-			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
+			}
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
