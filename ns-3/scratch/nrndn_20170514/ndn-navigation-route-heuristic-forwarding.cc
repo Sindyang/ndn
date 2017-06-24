@@ -1023,6 +1023,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else{
 		cout<<",还未收到自己发送的兴趣包"<<endl;
+		
 		notifyUpperOnInterest();
 	}
 	//getchar();
@@ -1040,7 +1041,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	else
 	{
 		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
-		//return;
+		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
