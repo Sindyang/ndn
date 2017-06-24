@@ -96,8 +96,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_resendInterestTime(0),
-	forwardNodeId(9999999)
+	m_resendInterestTime(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -247,8 +246,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
-	NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
-	NS_LOG_FUNCTION (this);
+	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
+	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	//getchar();
 	//cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
@@ -301,8 +300,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(nodeId == myNodeId)
 	{
-		forwardNodeId = forwardId;
-		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNodeId<<endl;
+		if(forwardNode.find(nodeId) != forwardNode.end())
+ 		{
+			forwardNode[nodeId] = forwardId;
+ 		}
+ 		else
+ 		{
+ 			forwardNode.insert({nodeId, forwardId});
+ 		}
+		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNode[nodeId]<<endl;
 		//getchar();
 	}
 
@@ -959,10 +965,16 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
+	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点为："<<forwardNodeId;
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的转发节点列表为：";
+    for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
+ 	{
+ 		cout<<"("<<itmap->first<<" "<<itmap->second<<")";
+ 	}
+	
 	cout<<",邻居为：";
+	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
@@ -970,9 +982,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<",";
 	
 	bool lostForwardNeighbor = true;
-	//判断该节点是否有转发节点
-	if(forwardNodeId != 9999999)
+	auto it = forwardNode.find(m_node->GetId());
+	if(it != forwardNode.end())
 	{
+		cout<<",转发节点为: "<<it->second;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
@@ -986,31 +999,34 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<",转发节点丢失"<<endl;
 			notifyUpperOnInterest();
-			//getchar();
+		}
+		else
+		{
+			cout<<endl;
 		}
 	}
 	else
 	{
 		cout<<",还未收到自己发送的兴趣包"<<endl;
-		//增加一个时间限制，超过1s才进行转发
-	    double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
-	    m_resendInterestTime =  Simulator::Now().GetSeconds();
-		if( interval >= 1)
-	    {
-		    cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
-			notifyUpperOnInterest();
-	    }
-	    else
-	    {
-		    cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
-		    return;
-	    }
+		notifyUpperOnInterest();
 	}
-	//getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	m_resendInterestTime =  Simulator::Now().GetSeconds();
+    if(interval >= 1)
+	{
+		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+			
+	}
+	else
+	{
+		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		return;
+	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
 	int count=0;
