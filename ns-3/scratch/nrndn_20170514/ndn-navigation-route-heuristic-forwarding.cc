@@ -96,7 +96,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_resendInterestTime(-1)
+	m_resendInterestTime(0)
 {
     m_firstSendInterest=true; //added by siukwan
 	m_nbChange_mode=0; //added by siukwan
@@ -1016,6 +1016,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
+			lostForwardNeighbor = true;
 			cout<<",转发节点丢失"<<endl;
 			notifyUpperOnInterest();
 			//getchar();
@@ -1023,7 +1024,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else{
 		cout<<",还未收到自己发送的兴趣包"<<endl;
-		
 		notifyUpperOnInterest();
 	}
 	//getchar();
