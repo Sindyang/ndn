@@ -207,7 +207,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-
+	cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
+	
 	// The default order of multimap is ascending order,
 	// but I need a descending order
 	std::multimap<double,uint32_t,std::greater<double> > sortlist;
@@ -229,9 +230,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<'\t'<<it->second;
+		cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-
+	cout<<endl;
 	return PriorityList;
 }
 
@@ -904,6 +906,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的邻居为 ";
+	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
+	{
+		cout<<nb->first<<" ";
+	}
+	cout<<endl;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
@@ -956,6 +965,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	case HeaderHelper::INTEREST_NDNSIM:
 	{
 		priorityList = GetPriorityList();
+		cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 		break;
 	}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
