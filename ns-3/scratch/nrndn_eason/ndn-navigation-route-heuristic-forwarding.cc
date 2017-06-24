@@ -330,8 +330,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			if(nodeId == 18)
 			{
-				cout<<msgdirection.second<<endl;
 				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+				cout<<msgdirection.second<<endl;
 			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			DropInterestePacket(interest);
