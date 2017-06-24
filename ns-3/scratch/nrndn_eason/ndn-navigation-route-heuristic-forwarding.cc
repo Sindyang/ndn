@@ -277,7 +277,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 	
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	uint32_t nodeId;
+	uint32_t seq;
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader( nrheader);
+	nodeId=nrheader.getSourceId();
 	uint32_t myNodeId = m_node->GetId();
+	seq=interest->GetNonce();
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
 	
 
 	//If the interest packet has already been sent, do not proceed the packet
@@ -291,14 +300,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	uint32_t nodeId;
-	uint32_t seq;
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader( nrheader);
-	nodeId=nrheader.getSourceId();
-	seq=interest->GetNonce();
-	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
 
 	//Deal with the stop message first
 	if(Interest::NACK_LOOP==interest->GetNack())
