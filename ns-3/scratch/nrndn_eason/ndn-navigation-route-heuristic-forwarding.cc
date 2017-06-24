@@ -269,12 +269,24 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		return;
 	}
+	
 
 	if(HELLO_MESSAGE==interest->GetScope())
 	{
 		ProcessHello(interest);
 		return;
 	}
+	
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取兴趣的随机编码
+	uint32_t seq = interest->GetNonce();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -698,7 +710,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	
-	if(node == 18)
+	if(sourceId == 18)
 	{
 		cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
 	}
