@@ -296,7 +296,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
 	
 	if(nodeId == myNodeId)
 	{
@@ -309,7 +309,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
  			forwardNode.insert({nodeId, forwardId});
  		}
 		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNode[nodeId]<<endl;
-		getchar();
+		//getchar();
 	}
 
 	//If the interest packet has already been sent, do not proceed the packet
@@ -345,14 +345,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。兴趣包源节点为 "<<nodeId<<",当前节点为 "<<myNodeId<<",转发节点为 "<<forwardId<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。发送兴趣包的节点为： "<<nodeId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。兴趣包源节点为 "<<nodeId<<",当前节点为 "<<myNodeId<<",转发节点为 "<<forwardId<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -360,7 +360,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到，兴趣包的源节点为："<<nodeId<<",当前节点为: "<<myNodeId<<",转发节点为 "<<forwardId<<endl;
 		//getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
