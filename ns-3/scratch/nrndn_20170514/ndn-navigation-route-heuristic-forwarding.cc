@@ -96,10 +96,9 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_resendInterestTime(0)
+	m_resendInterestTime(0),
+	forwardNodeId(9999999)
 {
-    m_firstSendInterest=true; //added by siukwan
-	m_nbChange_mode=0; //added by siukwan
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -248,8 +247,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
-	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
-	//NS_LOG_FUNCTION (this);
+	NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
+	NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	//getchar();
 	//cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
@@ -300,25 +299,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)当前车辆Id为 "<<myNodeId<<",兴趣包源节点为 "<<nodeId<<",转发节点为："<<forwardId<<endl;
 	
-	//2017.6.16 
 	if(nodeId == myNodeId)
 	{
-		if(forwardNode.find(nodeId) != forwardNode.end())
-		{
-			forwardNode[nodeId] = forwardId;
-		}
-		else
-		{
-			forwardNode.insert({nodeId, forwardId});
-		}
-		
 		forwardNodeId = forwardId;
-		
-		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardId<<endl;
-		/*for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
-		{
-			cout<<itmap->first<<" "<<itmap->second<<endl;
-		}*/
+		cout<<"(forwarding.cc-OnInterest)节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点为："<<forwardNodeId<<endl;
 		//getchar();
 	}
 
@@ -326,7 +310,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, 不再传输该兴趣包，nonce为 "<<interest->GetNonce()<<",源节点为 "<<nodeId<<",当前节点为 "<<myNodeId<<endl;
-		//getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -770,13 +753,11 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	Ptr<Interest> interest = Create<Interest> (*src);
 	interest->SetPayload(newPayload);
 
-	//直接转发
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	cout<<"(forwarding.cc-ForwardInterestPacket) 兴趣包的NodeId为"<<sourceId<<",当前节点为"<<m_node->GetId()<<endl;
 	//getchar();
-
-	// 记录转发次数
+	
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 }
@@ -978,71 +959,58 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	bool lostForwardNeighbor = true;
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点列表为：";
-    for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
-	{
-		cout<<"("<<itmap->first<<" "<<itmap->second<<")";
-	}
-		
+	cout<<"(forwarding.cc-ProcessHello)节点 "<<m_node->GetId()<<"的转发节点为："<<forwardNodeId;
 	cout<<",邻居为：";
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
 		cout<<nb->first<<" ";
 	}
+	cout<<",";
 	
-	std::map<uint32_t,uint32_t>::iterator it;
+	bool lostForwardNeighbor = true;
 	//判断该节点是否有转发节点
-	it = forwardNode.find(m_node->GetId());
-	if(it != forwardNode.end())
+	if(forwardNodeId != 9999999)
 	{
-		cout<<",转发节点为: "<<it->second;
-		cout<<",转发节点为 "<<forwardNodeId;
 		//判断转发节点是否存在于邻居列表中
 		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 		{
-			if(nb->first == it->second)
+			if(nb->first == forwardNodeId)
 			{
 				lostForwardNeighbor = false;
 				break;
 			}
 		}
-		if(!lostForwardNeighbor)
+		if(lostForwardNeighbor)
 		{
-			cout<<endl;
-			//getchar();
-		}
-		else
-		{
-			lostForwardNeighbor = true;
 			cout<<",转发节点丢失"<<endl;
 			notifyUpperOnInterest();
 			//getchar();
 		}
 	}
-	else{
+	else
+	{
 		cout<<",还未收到自己发送的兴趣包"<<endl;
-		notifyUpperOnInterest();
+		//增加一个时间限制，超过1s才进行转发
+	    double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	    m_resendInterestTime =  Simulator::Now().GetSeconds();
+		if( interval >= 1)
+	    {
+		    cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+			notifyUpperOnInterest();
+	    }
+	    else
+	    {
+		    cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		    return;
+	    }
 	}
 	//getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
-	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
-	m_resendInterestTime =  Simulator::Now().GetSeconds();
-	if( interval >= 1)
-	{
-		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId() << " 允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
-	}
-	else
-	{
-		cout<<"(forwarding.cc-notifyUpperOnInterest)"<<m_node->GetId()<< " 禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
-		return;
-	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
 	int count=0;

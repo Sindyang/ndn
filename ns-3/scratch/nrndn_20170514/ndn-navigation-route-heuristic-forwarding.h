@@ -44,7 +44,6 @@ namespace nrndn
 class NavigationRouteHeuristic: public GreenYellowRed
 {
 public: 
-    int m_nbChange_mode; //added by siukwan
 	static TypeId
 	GetTypeId(void);
 
@@ -449,7 +448,6 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 
-	bool m_firstSendInterest;
 	uint32_t				m_CacheSize;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
@@ -482,8 +480,6 @@ private:
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
 	
 	double m_resendInterestTime;//added by siukwan
-	
-	map<uint32_t,uint32_t> forwardNode;//addded by sy
 	
 	uint32_t forwardNodeId;//added by sy
 };
