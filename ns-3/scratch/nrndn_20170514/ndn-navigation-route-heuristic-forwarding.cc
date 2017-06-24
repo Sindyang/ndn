@@ -1023,7 +1023,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	else
 	{
 		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
-		return;
+		//return;
 	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
