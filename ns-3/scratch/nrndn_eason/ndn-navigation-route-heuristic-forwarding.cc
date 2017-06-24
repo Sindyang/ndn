@@ -262,7 +262,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
-		cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		//added by sy
+		if(nodeId == 18)
+		{
+			cout<<"(forwarding.cc-OnInterest) 来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		}
 		return;
 	}
 
@@ -275,6 +279,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
+		if(nodeId == 18)
+		{
+			cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<",源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+		}
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -304,11 +312,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
+			if(nodeId == 18)
+			{
+				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -316,6 +332,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
+		
+		if(nodeId == 18)
+		{
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+		}
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
@@ -334,7 +355,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if (idIsInPriorityList)
 		{
 			NS_LOG_DEBUG("Node id is in PriorityList");
-
+			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
 
 			NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
@@ -359,6 +381,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		else
 		{
+			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
@@ -675,7 +698,11 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	
-	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
+	if(node == 18)
+	{
+		cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
+	}
+	
 
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
