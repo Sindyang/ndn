@@ -145,8 +145,8 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	if (m_firstTime)
 	{
-		//changed by sy Seconds(0.0)->Seconds(1.0)
-		m_sendEvent = Simulator::Schedule (Seconds (0.0),&nrConsumer::SendPacket, this);
+		//changed by sy Seconds(0.0)->Seconds(0.1)
+		m_sendEvent = Simulator::Schedule (Seconds (0.1),&nrConsumer::SendPacket, this);
 		m_firstTime = false;
 	}
 	else if (!m_sendEvent.IsRunning ())

@@ -1013,12 +1013,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<nb->first<<" ";
 	}
 	
-	cout<<"转发节点为 "<<forwardNode;
+	cout<<"\n转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
 	if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
-		cout<<"转发节点丢失"<<endl;
+		cout<<" 转发节点丢失"<<endl;
 	}
 	else
 	{
