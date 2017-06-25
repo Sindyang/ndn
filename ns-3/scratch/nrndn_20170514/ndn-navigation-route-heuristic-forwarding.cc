@@ -966,7 +966,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	
 	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId;
+	
 	m_nbChange_mode=0;
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	
 	//邻居数目减少
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
@@ -982,8 +985,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else
 	{
 		bool nbChange=false;
-		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
-		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
 		{
 			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
