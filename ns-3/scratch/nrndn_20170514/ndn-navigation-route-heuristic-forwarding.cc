@@ -1031,13 +1031,16 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if((msgdirection.second>=0) && (m_nbChange_mode >= 1))
+	if((msgdirection.second>=0))
 	{
-		notifyUpperOnInterest();
+		if(m_nbChange_mode>2 || lostForwardNeighbor)
+		{
+			notifyUpperOnInterest();
+		}
+		
 	}
 	//更新邻居列表
 	m_preNB = m_nb;
-	
 	getchar();
 }
 
