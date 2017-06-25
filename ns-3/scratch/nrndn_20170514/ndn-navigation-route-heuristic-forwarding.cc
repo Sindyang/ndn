@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"源节点 "<<m_node->GetId()<<"的转发优先级列表为 ";
+	cout<<"源节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -318,13 +318,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		cout<<"(forwarding.cc-OnInterest)该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<",源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 获取优先级列表: ";
+	cout << "当前节点 "<<myNodeId<<" 的优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
@@ -418,7 +418,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		getchar();
+		//getchar();
 	}
 
 }
@@ -773,7 +773,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
 	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
-	getchar();
+	//getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
@@ -1051,7 +1051,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	//更新邻居列表
 	m_preNB = m_nb;
-	getchar();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
