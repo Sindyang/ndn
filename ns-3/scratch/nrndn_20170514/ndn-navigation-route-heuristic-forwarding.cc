@@ -1002,12 +1002,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	prenb=m_preNB.getNb().begin();
 	nb=m_nb.getNb().begin();
-	cout<<"原来的邻居："<<endl;
+	cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
 	}
-	cout<<"\n现在的邻居："<<endl;
+	cout<<"\n现在的邻居：";
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
@@ -1015,7 +1015,11 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	cout<<"\n转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
-	if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
+	if(forwardNode == 6666666)
+	{
+		cout<<"还没有转发节点"<<endl;
+	}
+	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
 		cout<<" 转发节点丢失"<<endl;
