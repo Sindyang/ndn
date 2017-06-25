@@ -319,9 +319,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	//cout << "(forwarding.cc-OnInterest) 获取优先级列表,";
+	cout << "(forwarding.cc-OnInterest) 获取优先级列表: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-   // cout<<"pri的大小为："<<pri.size()<<endl;
+    for(auto it = pri.begin();it != pri.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -409,7 +413,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		//getchar();
+		getchar();
 	}
 
 }
@@ -759,11 +763,12 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
-	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
-	//getchar();
 	
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
+	
+	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
+	getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
