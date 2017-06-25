@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
+	cout<<"(forwarding.cc-GetPriorityList)转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -227,7 +227,11 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
 		// Be careful with the order, increasing or descending?
 		if(result.first && result.second >= 0)
+		{
 			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
+			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+		}
+			
 	}
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
@@ -970,7 +974,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId;
+	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
