@@ -96,7 +96,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_resendInterestTime(0)
+	m_resendInterestTime(0),
+	forwardNode(6666666)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -303,15 +304,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(nodeId == myNodeId)
 	{
-		if(forwardNode.find(nodeId) != forwardNode.end())
- 		{
-			forwardNode[nodeId] = forwardId;
- 		}
- 		else
- 		{
- 			forwardNode.insert({nodeId, forwardId});
- 		}
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode[nodeId]<<endl;
+		forwardNode = forwardId;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
 		//getchar();
 	}
 
@@ -970,48 +964,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的转发节点列表 ";
-    for(auto itmap = forwardNode.begin();itmap != forwardNode.end();itmap++)
- 	{
- 		cout<<"("<<itmap->first<<" "<<itmap->second<<")";
- 	}
 	
-	cout<<",邻居为 ";
-	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
-	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
-	{
-		cout<<nb->first<<" ";
-	}
 	
-	bool lostForwardNeighbor = true;
-	auto it = forwardNode.find(m_node->GetId());
-	if(it != forwardNode.end())
-	{
-		cout<<",转发节点为: "<<it->second;
-		//判断转发节点是否存在于邻居列表中
-		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
-		{
-			if(nb->first == it->second)
-			{
-				lostForwardNeighbor = false;
-				break;
-			}
-		}
-		if(lostForwardNeighbor)
-		{
-			cout<<",丢失"<<endl;
-			notifyUpperOnInterest();
-		}
-		else
-		{
-			cout<<endl;
-		}
-	}
-	else
-	{
-		cout<<",未收到自己发送的兴趣包"<<endl;
-		notifyUpperOnInterest();
-	}
+	m_preNB = m_nb;
+	
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()

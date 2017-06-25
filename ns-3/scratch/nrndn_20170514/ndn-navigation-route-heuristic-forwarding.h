@@ -481,7 +481,7 @@ private:
 	
 	double m_resendInterestTime;//added by siukwan
 	
-	map<uint32_t,uint32_t> forwardNode;//addded by sy
+	uint32_t forwardNode;//addded by sy
 };
 } /* namespace nrndn */
 } /* namespace fw */
