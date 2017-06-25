@@ -99,6 +99,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_resendInterestTime(0),
 	forwardNode(6666666)
 {
+	m_nbChange_mode=0;
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -964,10 +965,75 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	
+	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId;
+	m_nbChange_mode=0;
 	
+	//邻居数目减少
+	if(m_preNB.getNb().size()<m_nb.getNb().size())
+	{   
+		m_nbChange_mode=2;
+		cout<<" 邻居增加，重发"<<endl;
+	}
+	else if(m_preNB.getNb().size()>m_nb.getNb().size())
+	{
+		m_nbChange_mode=1;
+		cout<<" 邻居减少，重发"<<endl;
+	}
+	else
+	{
+		bool nbChange=false;
+		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
+		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
+		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
+		{
+			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
+			{   //寻找上次的邻居，看看能不能找到，找不到证明变化了
+				nbChange=true;
+				break;
+			}
+		}
+		if(nbChange)
+		{   //邻居变化，发送兴趣包
+			m_nbChange_mode=3;
+			cout<<" 邻居变化，重发"<<endl;
+		}
+	}
 	
+	prenb=m_preNB.getNb().begin();
+	nb=m_nb.getNb().begin();
+	cout<<"原来的邻居："<<endl;
+	for(; prenb!=m_preNB.getNb().end();++prenb)
+	{
+		cout<<prenb->first<<" ";
+	}
+	cout<<"\n现在的邻居："<<endl;
+	for(;nb != m_nb.getNb().end();++nb)
+	{
+		cout<<nb->first<<" ";
+	}
+	
+	cout<<"转发节点为 "<<forwardNode;
+	bool lostForwardNeighbor = false;
+	if(nb.getNb().find(forwardNode) == nb.getNb().end())
+	{
+		lostForwardNeighbor = true;
+		cout<<"转发节点丢失"<<endl;
+	}
+	else
+	{
+		cout<<endl;
+	}
+	
+	//判断心跳包的来源方向
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	if((msgdirection.second>=0) && (m_nbChange_mode >= 1))
+	{
+		notifyUpperOnInterest();
+	}
+	//更新邻居列表
 	m_preNB = m_nb;
 	
+	getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
