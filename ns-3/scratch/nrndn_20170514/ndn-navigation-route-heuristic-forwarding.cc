@@ -1015,7 +1015,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	cout<<"转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
-	if(nb.getNb().find(forwardNode) == nb.getNb().end())
+	if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
 		cout<<"转发节点丢失"<<endl;
