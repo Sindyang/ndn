@@ -984,12 +984,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode=2;
-		cout<<" 邻居增加，重发"<<endl;
+		cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode=1;
-		cout<<" 邻居减少，重发"<<endl;
+		cout<<"邻居减少"<<endl;
 	}
 	else
 	{
