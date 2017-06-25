@@ -1017,7 +1017,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		cout<<"还没有转发节点"<<endl;
+		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
@@ -1033,7 +1033,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if((msgdirection.second>=0))
 	{
-		if(m_nbChange_mode>2 || lostForwardNeighbor)
+		if(m_nbChange_mode>1 || lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
