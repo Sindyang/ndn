@@ -122,7 +122,6 @@ void NavigationRouteHeuristic::Start()
 		m_nb.ScheduleTimer();
 	}
 	m_runningCounter++;
-
 }
 
 void NavigationRouteHeuristic::Stop()
@@ -984,12 +983,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//邻居数目减少
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
-		m_nbChange_mode=2;
+		m_nbChange_mode = 2;
 		cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
-		m_nbChange_mode=1;
+		m_nbChange_mode = 1;
 		cout<<"邻居减少"<<endl;
 	}
 	else
@@ -1005,7 +1004,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
-			m_nbChange_mode=3;
+			m_nbChange_mode = 3;
 			cout<<"邻居变化，重发"<<endl;
 		}
 	}
@@ -1027,7 +1026,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		m_nbChange_mode = 4;
 		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
@@ -1042,7 +1040,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if((msgdirection.second>=0))
+	if((msgdirection.second >= 0))
 	{
 		if(m_nbChange_mode > 1 || lostForwardNeighbor)
 		{
