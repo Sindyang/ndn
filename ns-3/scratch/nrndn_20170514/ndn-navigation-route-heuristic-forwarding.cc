@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"源节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -324,7 +324,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	cout << "当前节点 "<<myNodeId<<" 的优先级列表为: ";
+	cout << "(forwarding.cc-OnInterest)兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
@@ -352,14 +352,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -419,8 +419,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			DropInterestePacket(interest);
 		}
 		//getchar();
+		cout<<endl;
 	}
-
 }
 
 
@@ -772,7 +772,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
-	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl;
+	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	//getchar();
 }
 
@@ -1006,7 +1006,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode=3;
-			cout<<" 邻居变化，重发"<<endl;
+			cout<<"邻居变化，重发"<<endl;
 		}
 	}
 	
