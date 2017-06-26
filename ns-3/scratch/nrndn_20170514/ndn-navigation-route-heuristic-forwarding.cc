@@ -324,7 +324,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest)兴趣包的转发优先级列表为: ";
+	cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
@@ -1027,6 +1027,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
+		m_nbChange_mode = 4;
 		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
@@ -1043,7 +1044,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if((msgdirection.second>=0))
 	{
-		if(m_nbChange_mode>1 || lostForwardNeighbor)
+		if(m_nbChange_mode == 4 || lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
