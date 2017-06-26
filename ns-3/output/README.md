@@ -7,5 +7,5 @@ output_20170626.txt 发送兴趣包的条件为：m_nbChange_mode > 1 || lostFor
 (当邻居数目增加或邻居发生变化或转发节点丢失，此时还未设置m_nbChange_mode == 4)
 output_20170626_2.txt 发送兴趣包的条件为: m_nbChange_mode == 4 || lostForwardNeighbor
 (还不存在转发节点或转发节点丢失)
-output_20170626_2.txt 发送兴趣包的条件为: m_nbChange_mode > 1 || lostForwardNeighbor
+output_20170626_3.txt 发送兴趣包的条件为: m_nbChange_mode > 1 || lostForwardNeighbor
 (当邻居数目增加或邻居发生变化或转发节点丢失，此时已经设置m_nbChange_mode == 4)
