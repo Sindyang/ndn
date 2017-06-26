@@ -1044,7 +1044,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if((msgdirection.second>=0))
 	{
-		if(m_nbChange_mode == 4 || lostForwardNeighbor)
+		if(m_nbChange_mode > 1 || lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
