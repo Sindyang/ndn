@@ -211,7 +211,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -228,11 +228,11 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		if(result.first && result.second >= 0)
 		{
 			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
 		}
 			
 	}
-	cout<<endl;
+	//cout<<endl;
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
 	for(it=sortlist.begin();it!=sortlist.end();++it)
@@ -310,26 +310,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		forwardNode = forwardId;
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
 		//getchar();
 	}
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
+	//cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		cout<<*it<<" ";
+		//cout<<*it<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -351,14 +351,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -366,13 +366,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
 		//getchar();
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
+		//modified by sy:这里需要判断节点为RSU还是普通车辆
 		// Update the PIT here
-		m_nrpit->UpdatePit(remoteRoute, nodeId);
+		m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -413,12 +414,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		else
 		{
-			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
+			//cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
 		//getchar();
-		cout<<endl;
+		//cout<<endl;
 	}
 }
 
@@ -429,21 +430,17 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
 	{
-		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		// This is the source data from the upper node application (eg, nrProducer) of itself
-		// 1.Set the payload
-		//added by sy
-		//节点Id
-		//uint32_t id = m_sensor->getNode();		
-        //cout<<"(forwarding.cc-OnData) 数据包来自应用层，产生该数据包的Node为 "<<id<<endl;	
+		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		
-		//cout<<"(forwarding.cc-OnData) data size before GetNrPayload is "<<data->GetPayload()->GetSize()<<endl;
-		//getchar();
+		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
-		//cout<<"(forwarding.cc-OnData) data size after GetNrPayload: "<<payload->GetSize()<<endl;
-		//getchar();
+		
 		if(!payload->GetSize())
+		{
 			return;
+		}
+		
 		data->SetPayload(payload);
 
 		// 2. record the Data Packet(only record the forwarded packet)
@@ -453,8 +450,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		Simulator::Schedule(
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
-
-		//cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功"<<endl;
+				
+		uint32_t myNodeId = m_node->GetId();
+		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl;
 		
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
@@ -462,25 +460,28 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		return;
 	}
 
-	//If the data packet has already been sent, do not proceed the packet
-	if(m_dataSignatureSeen.Get(data->GetSignature()))
-	{
-		//cout<<"(forwarding.cc-OnData)该数据包已经被发送，不再发送数据包 "<<data->GetSignature()<<endl;
-		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
-		return;
-	}
 
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
+	//获取数据包源节点
 	uint32_t nodeId=nrheader.getSourceId();
+	//获取数据包的随机编码
 	uint32_t signature=data->GetSignature();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
+	//If the data packet has already been sent, do not proceed the packet
+	if(m_dataSignatureSeen.Get(data->GetSignature()))
+	{
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该数据包已经被发送, signature为 "<<data->GetSignature()<<endl;
+		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
+		return;
+	}
 
-	//uint32_t id = m_sensor->getNode();		
-	//cout<<"(forwarding.cc-OnData)Node "<<id<<" 收到其他节点发送的数据包"<<endl;
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
@@ -490,15 +491,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	}
 
 	//If it is not a stop message, prepare to forward:
-	pair<bool, double> msgdirection = m_sensor->getDistanceWith(
-			nrheader.getX(), nrheader.getY(),
-			m_sensor->getNavigationRoute());
+	pair<bool, double> msgdirection = m_sensor->getDistanceWith(nrheader.getX(), nrheader.getY(),m_sensor->getNavigationRoute());
 	std::vector<uint32_t>::const_iterator priorityListIt;
+	
 	//找出发送数据包的节点是否在优先级列表中
 	priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
 
-	if(msgdirection.first
-			&&msgdirection.second<0)// This data packet is on the navigation route of the local node, and it is from behind
+	if(msgdirection.first&&msgdirection.second<0)// This data packet is on the navigation route of the local node, and it is from behind
 	{
 		if(!isDuplicatedData(nodeId,signature))
 		{
@@ -604,10 +603,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				// 2. Notify upper layer
 				NotifyUpperLayer(data);
 				// 3. Is there any interested nodes behind?
-				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<
-						pit::nrndn::EntryNrImpl>(Will);
-				const std::unordered_set<uint32_t>& interestNodes =
-						entry->getIncomingnbs();
+				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
+				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 				if (interestNodes.empty())
 				{
 					BroadcastStopMessage(data);
@@ -655,7 +652,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 	}
-
 }
 
 
@@ -673,11 +669,6 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//getchar();
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
-	//added by sy
-	//Question:determine real size
-	//cout<<"(forwarding.cc-packetFromDirection) interest's size " <<interest->GetName().size()<<endl;
-	//cout << "(forwarding.cc-packetFromDirection) route size " << route.size() <<endl;
-	//getchar();
 	return result;
 }
 
@@ -808,7 +799,6 @@ void NavigationRouteHeuristic::DoInitialize(void)
 {
 	//cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化"<<m_node->GetId()<<std::endl;
 	//getchar();
-	//Question:super
 	super::DoInitialize();
 	//cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
 	//getchar();
@@ -891,7 +881,6 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   super::NotifyNewAggregate ();
 }
 
-//Question:这个函数的作用
 void
 NavigationRouteHeuristic::HelloTimerExpire ()
 {
@@ -974,7 +963,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -984,12 +973,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
-		cout<<"邻居增加"<<endl;
+		//cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		cout<<"邻居减少"<<endl;
+		//cout<<"邻居减少"<<endl;
 	}
 	else
 	{
@@ -1005,33 +994,33 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			cout<<"邻居变化，重发"<<endl;
+			//cout<<"邻居变化，重发"<<endl;
 		}
 	}
 	
 	prenb=m_preNB.getNb().begin();
 	nb=m_nb.getNb().begin();
-	cout<<"原来的邻居：";
+	//cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
-		cout<<prenb->first<<" ";
+		//cout<<prenb->first<<" ";
 	}
-	cout<<"\n现在的邻居：";
+	//cout<<"\n现在的邻居：";
 	for(;nb != m_nb.getNb().end();++nb)
 	{
-		cout<<nb->first<<" ";
+		//cout<<nb->first<<" ";
 	}
 	
-	cout<<"\n转发节点为 "<<forwardNode;
+	//cout<<"\n转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		cout<<" 还没有转发节点"<<endl;
+		//cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
-		cout<<" 转发节点丢失"<<endl;
+		//cout<<" 转发节点丢失"<<endl;
 	}
 	else
 	{
@@ -1060,11 +1049,11 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
     if(interval >= 1)
 	{
 		m_resendInterestTime =  Simulator::Now().GetSeconds();	
-		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
+		//cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
-		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
@@ -1157,47 +1146,55 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
 	
 	//added by sy
-	//cout<<"(forwarding.cc-GetPriorityListOfDataSource) the pit of this node is: "<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()<<" Current dataName:"<<dataName.toUri()<<endl;
+	
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the PIT of this node is: "<<endl;
 	m_nrpit->showPit();
-	//cout<<"(forwarding.cc-GetPriorityListOfDataSource)the name of this data is "<<dataName.toUri()<<endl;
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	if(entry == 0)
 	{
-		//cout<<"(forwarding.cc-GetPriorityListOfDataSource) entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
-		//	<<" Current dataName:"<<dataName.toUri();
-		//getchar();
+		cout<<"该数据包并不在PIT中"<<endl;
+		getchar();
 		return priorityList;
 	}
-	//NS_ASSERT_MSG(entry!=0," entry not find, NodeID:"<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()
-	//		<<" Current dataName:"<<dataName.toUri());
+	
 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
-	const vector<string>& route  = m_sensor->getNavigationRoute();
+	const vector<string>& route = m_sensor->getNavigationRoute();
+	
 	//added by sy
 	//cout<<"(forwarding.cc-GetPriorityListOfDataSource) the size of interestNodes: "<<interestNodes.size()<<endl;
 	//getchar();
 	
-	if(!interestNodes.empty())// There is interested nodes behind
+	// There is interested nodes behind
+	if(!interestNodes.empty())
 	{
-		//cout<<"(forwarding.cc-GetPriorityListOfDataSource) 数据包所在的位置有兴趣节点"<<endl;
+		//cout<<"(forwarding.cc-GetPriorityListOfDataSource) 存在对该数据包感兴趣的节点"<<endl;
 		//getchar();
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-		for(nb=m_nb.getNb().begin();nb!=m_nb.getNb().end();++nb)//O(n) complexity
+		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)//O(n) complexity
 		{
+			//判断邻居节点与当前节点的位置关系
 			std::pair<bool, double> result = m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-			if(interestNodes.count(nb->first))//O(1) complexity
+			//O(1) complexity
+			if(interestNodes.count(nb->first))
 			{
-				if(!result.first)//from other direction, maybe from other lane behind
+				//from other direction, maybe from other lane behind
+				if(!result.first)
 				{
 					NS_LOG_DEBUG("At "<<Simulator::Now().GetSeconds()<<", "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" do not on its route, but in its interest list.Check!!");
+					cout<<"At "<<Simulator::Now().GetSeconds()<<", 源节点 "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" does not on it's route, but in its interest list.Check!!"<<endl;
 					sortInterest.insert(std::pair<double,uint32_t>(result.second,nb->first));
 				}
-				else{// from local route behind
-					if(result.second < 0)
+				// from local route behind
+				else{
+					//Question 当result.second == 0时，是否需要加入sortInterest中
+					//modified by sy:result.second < 0 => result.second <= 0
+					if(result.second <= 0)
 						sortInterest.insert(std::pair<double,uint32_t> ( -result.second , nb->first ) );
 					else
 					{
-						// otherwise it is in front of route.No need to forward, simply do nothing
+						//otherwise it is in front of route.No need to forward, simply do nothing
 					}
 				}
 			}
@@ -1207,11 +1204,13 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 					sortNotInterest.insert(std::pair<double,uint32_t>(result.second,nb->first));
 				else
 				{
-					if(result.second<0)
+					if(result.second <= 0)
 						sortNotInterest.insert(std::pair<double,uint32_t> ( -result.second , nb->first ) );
 				}
 			}
 		}
+		
+		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 感兴趣的邻居个数为 "<<sortInterest.size()<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
 
 		std::multimap<double,uint32_t,std::greater<double> >::iterator it;
 		//setp 1. push the interested nodes
@@ -1225,8 +1224,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		//added by sy
 		if(priorityList.empty())
 		{
-			//cout<<"(GetPriorityListOfDataSource) "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
-			//getchar();
+			cout<<"(GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
+			getchar();
 		}
 	}
 	return priorityList;
@@ -1297,7 +1296,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 
 	// 2. prepare the data
 	Ptr<Packet> nrPayload=src->GetPayload()->Copy();
-	//Ptr<Packet> newPayload	= Create<Packet> ();
+	//Ptr<Packet> newPayload = Create<Packet> ();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->RemoveHeader(nrheader);
 	double x= m_sensor->getX();
@@ -1322,7 +1321,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	//FwHopCountTag hopCountTag;
 	//if (!IsClearhopCountTag)
 	//	nrPayload->PeekPacketTag( hopCountTag);
-//	newPayload->AddPacketTag(hopCountTag);
+    //	newPayload->AddPacketTag(hopCountTag);
 
 	// 	2.3 copy the data packet, and install new payload to data
 	Ptr<Data> data = Create<Data> (*src);
@@ -1339,51 +1338,57 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		const std::unordered_set<uint32_t>& interestNodes,
 		const std::vector<uint32_t>& recPri)
 {
-	//cout<<"进入(forwarding.cc-GetPriorityListOfDataForwarderInterestd)"<<endl;
+	NS_LOG_INFO("GetPriorityListOfDataForwarderInterestd");
 	std::vector<uint32_t> priorityList;
 	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);
 
 	std::multimap<double,uint32_t,std::greater<double> > sortInterestFront;
 	std::multimap<double,uint32_t,std::greater<double> > sortInterestBack;
 	std::multimap<double,uint32_t,std::greater<double> > sortDisinterest;
-	const vector<string>& route  = m_sensor->getNavigationRoute();
+	const vector<string>& route = m_sensor->getNavigationRoute();
 
 	NS_ASSERT (!interestNodes.empty());	// There must be interested nodes behind
+	
+	//added by sy
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()<<endl;
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for (nb = m_nb.getNb().begin(); nb != m_nb.getNb().end(); ++nb)	//O(n) complexity
 	{
-		std::pair<bool, double> result = m_sensor->getDistanceWith(
-				nb->second.m_x, nb->second.m_y, route);
+		//获取邻居节点与当前节点的位置关系
+		std::pair<bool, double> result = m_sensor->getDistanceWith(nb->second.m_x, nb->second.m_y, route);
+		//邻居是感兴趣的节点
 		if (interestNodes.count(nb->first))	//O(1) complexity
 		{
-			if (!result.first)//from other direction, maybe from other lane behind
+			//from other direction, maybe from other lane behind
+			if (!result.first)
 			{
-				sortInterestBack.insert(
-						std::pair<double, uint32_t>(result.second, nb->first));
+				sortInterestBack.insert(std::pair<double, uint32_t>(result.second, nb->first));
 			}
 			else
-			{	if (result.second < 0)
-				{	// from local route behind
+			{	//邻居节点位于后方
+		        if(result.second < 0)
+				{	
+					//不在之前的优先级列表中
 					if(!LookupPri.count(nb->first))
-						sortInterestBack.insert(
-							std::pair<double, uint32_t>(-result.second,
-									nb->first));
+					{
+						sortInterestBack.insert(std::pair<double, uint32_t>(-result.second,nb->first));
+					}
 				}
 				else
 				{
 					// otherwise it is in front of route, add to sortInterestFront
-					sortInterestFront.insert(
-							std::pair<double, uint32_t>(-result.second,
-									nb->first));
+					sortInterestFront.insert(std::pair<double, uint32_t>(-result.second,nb->first));
 				}
 			}
 		}
 		else
 		{
-			if (!result.first)//from other direction, maybe from other lane behind
-				sortDisinterest.insert(
-						std::pair<double, uint32_t>(result.second, nb->first));
+			//from other direction, maybe from other lane behind
+			if (!result.first)
+			{
+				sortDisinterest.insert(std::pair<double, uint32_t>(result.second, nb->first));
+			}
 			else
 			{
 				if(result.second>0// nodes in front
@@ -1393,6 +1398,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 			}
 		}
 	}
+	
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
+	<<" 后方感兴趣邻居个数 "<<sortInterestBack.size()<<" 前方感兴趣邻居个数 "<<sortInterestFront.size()
+	<<" 不感兴趣邻居个数 "<<sortDisinterest<<endl;
 
 	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
 	//setp 1. push the interested nodes from behind
@@ -1412,7 +1421,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri)
 {
-	//cout<<"进入(forwarding.cc-GetPriorityListOfDataForwarderDisinterestd)"<<endl;
+	NS_LOG_INFO("GetPriorityListOfDataForwarderDisinterestd");
 	std::vector<uint32_t> priorityList;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);

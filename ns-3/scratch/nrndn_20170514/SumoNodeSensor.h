@@ -36,7 +36,6 @@ public:
 	virtual double getSlope();
 	virtual double getSpeed();
 	virtual const std::string& getType() ;
-	virtual const uint32_t getNode();
 	virtual const std::string& getLane();
 	virtual const std::vector<std::string>& getNavigationRoute();
 

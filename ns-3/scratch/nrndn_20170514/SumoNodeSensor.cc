@@ -127,14 +127,6 @@ const std::string& SumoNodeSensor::getType()
 	return m_sumodata->GetTrace(m_id,pos).type;
 }
 
-//added by sy
-const uint32_t SumoNodeSensor::getNode()
-{
-	Ptr<Node> node = this->GetObject<Node>();
-	uint32_t id = node->GetId();
-	return id;
-}
-
 const std::string& SumoNodeSensor::getLane()
 {
 	NodeSensor::getLane();
@@ -144,7 +136,6 @@ const std::string& SumoNodeSensor::getLane()
 	uint32_t id = node->GetId();
 	//cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
-	//Question
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
 		//cout << "(SumoNodeSensor.cc-getLane) " << "m_sumodata == NULL" <<endl;
@@ -153,7 +144,7 @@ const std::string& SumoNodeSensor::getLane()
 		//cout << "(SumoNodeSensor.cc-getLane) " << "m_sumoLane" << endl;
 		return m_sumoLane;
 	}
-        
+     
     if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
 		//cout << "(SumoNodeSensor.cc-getLane) " << "id " <<id << " pos x " << pos.x <<" pos y " << pos.y <<" pos z " << pos.z << endl;

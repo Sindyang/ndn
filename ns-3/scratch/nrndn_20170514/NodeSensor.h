@@ -83,13 +83,6 @@ public:
 	 *
 	 **/
 	
-	//added by sy
-	/*
-	 *@brief get the id of the node.
-	 *\return the id of the node 
-	 **/
-	virtual const uint32_t getNode() = 0;
-	
 	virtual const std::string& getType()=0;
 
 	/*

@@ -70,7 +70,6 @@ nrProducer::nrProducer():
 		m_signature(0)
 {
 	//NS_LOG_FUNCTION(this);
-
 }
 
 nrProducer::~nrProducer()
@@ -162,7 +161,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	//std::cout<<"(nrProducer.cc-StartApplication) NodeId: " << GetNode ()->GetId ()<<endl<<endl;
+	std::cout<<"(nrProducer.cc-StartApplication) 源节点 "<<GetNode()->GetId()<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
@@ -245,7 +244,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId:"<<GetNode()->GetId()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 

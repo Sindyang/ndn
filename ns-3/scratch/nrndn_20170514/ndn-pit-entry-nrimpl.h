@@ -64,8 +64,6 @@ public:
 
 private:
 	void AddNeighborTimeoutEvent(uint32_t id);
-
-	//when the time expire, the incoming neighbor id will be removed automatically
 	//当时间超时，自动清除邻居
 	void CleanExpiredIncomingNeighbors(uint32_t id);
 private:
@@ -73,7 +71,6 @@ private:
 	std::unordered_set< uint32_t > 		  m_incomingnbs;///< @brief container for incoming neighbors
 	std::string m_interest_name;	
 	Time m_infaceTimeout;
-
 };
 
 

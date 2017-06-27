@@ -108,7 +108,10 @@ public:
    * not simply add the name into the pit
    * multi entry of pit will be operated
    */
-  bool UpdatePit(const std::vector<std::string>& route,const uint32_t& id);
+  bool UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id);
+  
+  //added by sy
+  bool UpdateRSUPit(const std::vector<std::string>& route,const uint32_t& id);
 
   void showPit();
   void laneChange(std::string oldLane, std::string newLane);

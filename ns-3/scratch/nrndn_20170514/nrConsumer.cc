@@ -157,7 +157,10 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 //changed by siukwan
 void nrConsumer::SendPacket()
 {
-	 if (!m_active) return;
+	 if(!m_active)
+	 {
+		 return;
+	 }		 
 	 
 	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
