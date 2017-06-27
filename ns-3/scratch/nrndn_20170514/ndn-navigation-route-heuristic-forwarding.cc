@@ -762,7 +762,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
-	cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+    //cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	//getchar();
 }
 
