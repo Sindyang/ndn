@@ -261,23 +261,20 @@ void nrProducer::OnSendingTrafficData()
 		data->SetKeyLocator(Create<Name>(m_keyLocator));
 	}
 
-	NS_LOG_DEBUG(
-			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
+	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
 	cout<<"(nrProducer.cc-OnSendingTrafficData) at time "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	//getchar();
+	getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
-	//getchar();
+	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
+	getchar();
 	//找出当前时刻，感兴趣节点的总数
-	std::pair<uint32_t, uint32_t> size_InterestSize =
-				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
-						data->GetSignature(), m_prefix.get(0).toUri());
+	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),data->GetSignature(), m_prefix.get(0).toUri());
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
-	//getchar();
+	cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
+	getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
 	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
@@ -313,10 +310,10 @@ void nrProducer::setContentStore(std::string prefix)
 void nrProducer::addAccident()
 {
 	//std::cout<<"(nrProducer.cc-addAccident()) NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
-	double start= m_startTime.GetSeconds();
+	double start = m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
-	double mean=start+(end-start)/2;
-	double varience=(end-start)/4;
+	double mean = start+(end-start)/2;
+	double varience = (end-start)/4;
 
 	//Use normal distribution
 	SeedManager::SetSeed(15);
@@ -381,7 +378,7 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	//getchar();
 	//找出当前路段在导航路线中的位置
 	it =std::find(route.begin(),route.end(),currentLane);
-
+	//判断lane是否对未来路段感兴趣
 	it2=std::find(it,route.end(),lane);
 	//cout << "(nrProducer.cc-IsInterestLane)" << endl;
 
