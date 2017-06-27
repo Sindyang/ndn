@@ -449,13 +449,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		Simulator::Schedule(
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
-				
-		uint32_t myNodeId = m_node->GetId();
-		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl;
-		
+						
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
 
+		uint32_t myNodeId = m_node->GetId();
+		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl;
+		getchar();
 		return;
 	}
 
@@ -651,6 +651,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 	}
+	getchar();
 }
 
 
