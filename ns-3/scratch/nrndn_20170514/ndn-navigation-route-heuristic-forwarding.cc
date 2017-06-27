@@ -281,8 +281,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl<<endl;
-		
+	    cout<<"来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		return;
 	}
 	
@@ -1024,7 +1023,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else
 	{
-		cout<<endl;
+		//cout<<endl;
 	}
 	
 	//判断心跳包的来源方向
