@@ -281,7 +281,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    //cout<<"来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		return;
 	}
 	
