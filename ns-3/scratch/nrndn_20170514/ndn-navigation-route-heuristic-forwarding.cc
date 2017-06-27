@@ -961,7 +961,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	uint32_t nodeId = m_node->GetId();
+	//uint32_t nodeId = m_node->GetId();
 	
 	//cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
@@ -1399,9 +1399,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		}
 	}
 	
-	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
-	<<" 后方感兴趣邻居个数 "<<sortInterestBack.size()<<" 前方感兴趣邻居个数 "<<sortInterestFront.size()
-	<<" 不感兴趣邻居个数 "<<sortDisinterest<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()<<" 后方感兴趣邻居个数 "<<sortInterestBack.size()<<" 前方感兴趣邻居个数 "<<sortInterestFront.size()<<" 不感兴趣邻居个数 "<<sortDisinterest<<endl;
 
 	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
 	//setp 1. push the interested nodes from behind
