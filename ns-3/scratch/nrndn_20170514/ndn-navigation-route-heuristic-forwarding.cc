@@ -477,6 +477,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该数据包已经被发送, signature为 "<<data->GetSignature()<<endl;
+		getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
