@@ -81,7 +81,7 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 
 	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
 	
-	cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors) 源节点 "<<m_sensor->getNodeId()<<" ";
+	cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors) 源节点 "<<m_node->GetId()<<" ";
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
