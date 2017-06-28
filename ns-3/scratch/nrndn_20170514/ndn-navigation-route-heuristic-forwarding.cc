@@ -966,7 +966,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//uint32_t nodeId = m_node->GetId();
 	
-	//cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -976,12 +976,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
-		//cout<<"邻居增加"<<endl;
+		cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		//cout<<"邻居减少"<<endl;
+		cout<<"邻居减少"<<endl;
 	}
 	else
 	{
@@ -997,37 +997,37 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			//cout<<"邻居变化，重发"<<endl;
+			cout<<"邻居变化，重发"<<endl;
 		}
 	}
 	
 	prenb=m_preNB.getNb().begin();
 	nb=m_nb.getNb().begin();
-	//cout<<"原来的邻居：";
+	cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
-		//cout<<prenb->first<<" ";
+		cout<<prenb->first<<" ";
 	}
-	//cout<<"\n现在的邻居：";
+	cout<<"\n现在的邻居：";
 	for(;nb != m_nb.getNb().end();++nb)
 	{
-		//cout<<nb->first<<" ";
+		cout<<nb->first<<" ";
 	}
 	
-	//cout<<"\n转发节点为 "<<forwardNode;
+	cout<<"\n转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		//cout<<" 还没有转发节点"<<endl;
+		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
-		//cout<<" 转发节点丢失"<<endl;
+		cout<<" 转发节点丢失"<<endl;
 	}
 	else
 	{
-		//cout<<endl;
+		cout<<endl;
 	}
 	
 	//判断心跳包的来源方向
@@ -1043,6 +1043,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
+	cout<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
