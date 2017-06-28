@@ -1053,11 +1053,11 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
     if(interval >= 1)
 	{
 		m_resendInterestTime =  Simulator::Now().GetSeconds();	
-		//cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
+		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
-		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
