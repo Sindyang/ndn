@@ -964,7 +964,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	//uint32_t nodeId = m_node->GetId();
+	uint32_t nodeId = m_node->GetId();
 	
 	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
