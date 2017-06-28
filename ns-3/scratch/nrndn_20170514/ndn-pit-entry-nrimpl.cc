@@ -122,7 +122,7 @@ void EntryNrImpl::listPitEntry()
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
 {
-	cout<<"(forwarding.cc-RemoveAllTimeoutEvent)"<<endl;
+	std::cout<<"(forwarding.cc-RemoveAllTimeoutEvent)"<<std::endl;
 	std::unordered_map< uint32_t,EventId>::iterator it;
 	for(it=m_nbTimeoutEvent.begin();it!=m_nbTimeoutEvent.end();++it)
 	{
