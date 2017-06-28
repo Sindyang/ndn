@@ -193,7 +193,6 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 void 
 NrPitImpl::showPit()
 {
-	std::cout<<"(pit-impl.cc-showPit)显示pit内容。当前节点 "<<GetNode()->GetId()<<std::endl;
 	for(uint32_t i=0;i<m_pitContainer.size();++i)
 	{
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);

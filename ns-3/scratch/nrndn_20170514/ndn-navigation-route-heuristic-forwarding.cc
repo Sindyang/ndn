@@ -372,6 +372,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//modified by sy:这里需要判断节点为RSU还是普通车辆
 		// Update the PIT here
+		cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		// Update finish
 
