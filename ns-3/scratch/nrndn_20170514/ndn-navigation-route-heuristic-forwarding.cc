@@ -1403,9 +1403,9 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	}
 	
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
-	<<" 后方感兴趣邻居个数 "<<sortInterestBack.size()
-	<<" 前方感兴趣邻居个数 "<<sortInterestFront.size()
-	<<" 不感兴趣邻居个数 "<<sortDisinterest.size()<<endl;
+	<<" 后方感兴趣的邻居个数 "<<sortInterestBack.size()
+	<<" 前方感兴趣的邻居个数 "<<sortInterestFront.size()
+	<<" 不感兴趣的邻居个数 "<<sortDisinterest.size()<<endl;
 
 	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
 	//setp 1. push the interested nodes from behind
