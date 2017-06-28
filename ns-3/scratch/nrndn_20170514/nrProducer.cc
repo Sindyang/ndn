@@ -274,7 +274,7 @@ void nrProducer::OnSendingTrafficData()
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
 	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
-	getchar();
+	//getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
 	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
