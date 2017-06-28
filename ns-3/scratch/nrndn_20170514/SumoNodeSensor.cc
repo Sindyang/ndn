@@ -66,6 +66,7 @@ double SumoNodeSensor::getY()
 	return m_sumodata->GetTrace(m_id,pos).y;
 }
 
+
 double SumoNodeSensor::getPos()
 {
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
@@ -172,6 +173,13 @@ const std::string& SumoNodeSensor::getLane()
 	m_sumoLane = m_lane.Get();
 	//cout <<"(SumoNodeSensor.cc-getLane) m_sumoLane " << m_sumoLane << endl;
     return m_sumoLane;
+}
+
+const std::uint32_t SumoNodeSensor::getNodeId()
+{
+	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
+	Ptr<Node> node = this->GetObject<Node>();
+	uint32_t id = node->GetId();
 }
 
 const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()

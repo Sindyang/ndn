@@ -77,23 +77,15 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 {
 	std::unordered_set< uint32_t >::iterator it;
 
-	//std::ostringstream os;
-	//os<<"At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id;
-	/*
-	os<<"To delete neighbor:"<<id<<"\tList is\t";
-	for(it=m_incomingnbs.begin();it!=m_incomingnbs.end();++it)
-	{
-		os<<*it<<"\t";
-	}
-	*/
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
 
 	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
-
+	
+	cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors) 源节点 "<<m_sensor->getNodeId()<<" ";
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanExpiredIncomingNeighbors)删除邻居 "<<id<<std::endl;
+		std::cout<<"删除邻居 "<<id<<std::endl;
 	}	
 	listPitEntry();
 }

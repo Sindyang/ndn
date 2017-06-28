@@ -42,6 +42,7 @@ public:
  	 *
 	 * */
 	virtual double getY()		=0;
+	
 
 	/*
 	 * @brief get the simulation time
@@ -91,6 +92,13 @@ public:
 	 *
 	 **/
 	virtual const std::string& getLane();
+	
+	/*
+	 * @brief get the id of the node
+     * \return the id of the node 	 
+	 **/
+	
+	virtual const std::uint32_t getNodeId();
 
 	/*
 	 * @brief get the navigation route of the node.
