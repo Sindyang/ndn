@@ -264,10 +264,10 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
 	//cout<<"(nrProducer.cc-OnSendingTrafficData) at time "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	getchar();
+	//getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl<<std::endl;
+	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
 	getchar();
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),data->GetSignature(), m_prefix.get(0).toUri());
