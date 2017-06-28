@@ -98,7 +98,7 @@ public:
      * \return the id of the node 	 
 	 **/
 	
-	virtual const std::uint32_t getNodeId();
+	virtual const std::uint32_t getNodeId() = 0;
 
 	/*
 	 * @brief get the navigation route of the node.
