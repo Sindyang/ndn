@@ -455,8 +455,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		NotifyUpperLayer(data);
 
 		uint32_t myNodeId = m_node->GetId();
-		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl;
-		getchar();
+		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		//getchar();
 		return;
 	}
 
@@ -477,8 +477,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//If the data packet has already been sent, do not proceed the packet
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该数据包已经被发送, signature为 "<<data->GetSignature()<<endl;
-		getchar();
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该数据包已经被发送, signature为 "<<data->GetSignature()<<endl<<endl;
+		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
@@ -653,7 +653,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 	}
-	getchar();
+	cout<<endl;
+	//getchar();
 }
 
 
@@ -1227,7 +1228,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		if(priorityList.empty())
 		{
 			cout<<"(GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
-			getchar();
+			//getchar();
 		}
 	}
 	return priorityList;

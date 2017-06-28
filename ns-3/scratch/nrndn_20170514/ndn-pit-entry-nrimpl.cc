@@ -47,7 +47,7 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 	std::unordered_set< uint32_t >::iterator incomingnb = m_incomingnbs.find(id);
 
 	if(incomingnb==m_incomingnbs.end())
-	{//Not found
+	{   //Not found
 		std::pair<std::unordered_set< uint32_t >::iterator,bool> ret =
 				m_incomingnbs.insert (id);
 		return ret.first;
@@ -126,7 +126,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl;
+	std::cout<<std::endl<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
