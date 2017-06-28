@@ -126,7 +126,7 @@ void EntryNrImpl::listPitEntry()
 	{
 		std::cout<<*ite<<" ";
 	}
-	std::cout<<std::endl<<std::endl;
+	//std::cout<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
