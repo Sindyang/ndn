@@ -1151,7 +1151,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	//added by sy
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()<<" Current dataName:"<<dataName.toUri()<<endl;
 	
-	cout<<"(forwarding.cc-GetPriorityListOfDataSource) the PIT of this node is: "<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 当前节点 "<<m_node->GetId()<<" 的PIT为："<<endl;
 	m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));

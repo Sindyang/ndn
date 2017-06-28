@@ -244,7 +244,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<"at time "<<Simulator::Now().GetSeconds()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 
