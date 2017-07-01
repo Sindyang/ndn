@@ -474,7 +474,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	//判断收到的数据包是否需要增加延迟
-	bool Isaddgap = nrheader.getDelay();
+	bool Isaddgap = nrheader.getGap();
 	
 	if(Isaddgap)
 		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 收到的数据包需要被延迟"<<endl;
@@ -776,7 +776,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	//2017.6.16
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(priorityList);
-	nrheader.setDelay(true);
+	nrheader.setGap(true);
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(nrheader);
 
@@ -1171,7 +1171,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
 	//added by sy
-	nrheader.setDelay(IsAddGap);
+	nrheader.setGap(IsAddGap);
 	nrPayload->AddHeader(nrheader);
 	
 	return nrPayload;
@@ -1365,7 +1365,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
-	nrheader.setDelay(isaddgap);
+	nrheader.setGap(isaddgap);
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setLane(m_sensor->getLane());
 	//cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
