@@ -1351,9 +1351,9 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	//getchar();
 	
 	if(Delay)
-		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 发送的数据包需要被延迟"<<endl;
 	else
-		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 发送的数据包不需要被延迟"<<endl;
 	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
