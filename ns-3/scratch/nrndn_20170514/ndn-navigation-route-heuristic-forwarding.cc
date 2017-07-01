@@ -622,7 +622,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			if(newPriorityList.empty())
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
 			
-			if(Delay)
+			if(IsDelay)
 				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟"<<endl;
 			else
 				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟"<<endl;
