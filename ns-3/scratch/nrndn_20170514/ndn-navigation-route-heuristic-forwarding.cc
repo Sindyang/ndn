@@ -672,7 +672,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 	}
 	cout<<endl;
-	getchar();
+	//getchar();
 }
 
 
@@ -1150,7 +1150,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			{
 				cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
 			}
-	        getchar();			
+	        //getchar();			
 			break;
 		}
 		default:
@@ -1270,7 +1270,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
 		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
 		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
-		getchar();
+		//getchar();
 	}
 	return priorityList;
 }
@@ -1354,7 +1354,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包需要被延迟"<<endl;
 	else
 		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包不需要被延迟"<<endl;
-	getchar();
+	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
@@ -1475,7 +1475,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) Delay "<<Delay<<endl;
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
-	getchar();
+	//getchar();
 	
 	return priorityList;
 }
