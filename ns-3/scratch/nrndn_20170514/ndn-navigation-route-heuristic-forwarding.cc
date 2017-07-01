@@ -476,7 +476,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	bool Isaddgap = nrheader.getGap();
 	
-	cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
@@ -529,7 +529,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else // duplicated data
 		{
-			cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl;
+			cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl<<endl;
 			ExpireDataPacketTimer(nodeId,signature);
 			return;
 		}
@@ -1174,6 +1174,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	nrheader.setGap(IsAddGap);
 	nrPayload->AddHeader(nrheader);
 	
+	cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
 }
 
