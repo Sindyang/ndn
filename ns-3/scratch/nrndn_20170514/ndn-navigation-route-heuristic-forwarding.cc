@@ -269,9 +269,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
         
         //added by sy
-        ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t nodeId = nrheader.getSourceId();
+        //ndn::nrndn::nrHeader nrheader;
+        //interest->GetPayload()->PeekHeader(nrheader);
+        //uint32_t nodeId = nrheader.getSourceId();
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -1156,7 +1156,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
 	//added by sy
-	nrhearder.setDelay(Delay);
+	nrheader.setDelay(Delay);
 	nrPayload->AddHeader(nrheader);
 	
 	if(Delay)
@@ -1461,7 +1461,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	
 	uint32_t BackSize = sortInterestBack.size();
 	uint32_t FrontSize = sortInterestFront.size();
-	uint32_t DisInterestSize = sortDisinterest.size(;
+	uint32_t DisInterestSize = sortDisinterest.size();
 	
 	Delay = true;
 	if(BackSize == 0 && FrontSize == 0)
