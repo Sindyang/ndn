@@ -672,15 +672,18 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + index * m_timeSlot);
 					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣,不用增加m_gap"<<endl;
 				}
-				else if(!Will && !Isaddgap)
-				{  
-			        sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
-				}
-			    else if(!Will && Isaddgap)
+				else
 				{
-					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
+					if(Isaddgap)
+					{
+						sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
+					    cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
+					}
+					else
+					{
+						sendInterval = (MilliSeconds(random) + index * m_timeSlot);
+					    cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
+					}
 				}
 			}
 			m_sendingDataEvent[nodeId][signature]=
@@ -1203,7 +1206,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	//added by sy
 	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" At time:"<<Simulator::Now().GetSeconds()<<" Current dataName:"<<dataName.toUri()<<endl;
 	
-	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 当前节点 "<<m_node->GetId()<<" 的PIT为："<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 的PIT为："<<endl;
 	m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));

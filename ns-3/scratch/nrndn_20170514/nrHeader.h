@@ -110,12 +110,12 @@ public:
 		m_lane = lane;
 	}
 	//added by sy
-	bool getGap() const
+	bool getGapMode() const
 	{
 		return IsAddGap;
 	}
 	//added by sy
-    void setGap(bool isaddgap)
+    void setGapMode(bool isaddgap)
 	{
 		IsAddGap = isaddgap;
 	}
