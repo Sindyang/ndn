@@ -113,7 +113,6 @@ NavigationRouteHeuristic::~NavigationRouteHeuristic ()
 void NavigationRouteHeuristic::Start()
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-Start)"<<endl;
 	if(!m_runningCounter)
 	{
 		m_running = true;
@@ -128,7 +127,6 @@ void NavigationRouteHeuristic::Start()
 void NavigationRouteHeuristic::Stop()
 {
 	NS_LOG_FUNCTION (this);
-	cout<<"(forwarding.cc-Stop)"<<endl;
 	if(m_runningCounter)
 		m_runningCounter--;
 	else
@@ -251,7 +249,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	//uint32_t nodeId;
+	uint32_t nodeId;
 	//uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
@@ -407,19 +405,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
-			if(nodeId == 18)
-			{
-				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
-			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is new packet");
 			DropInterestePacket(interest);
 		}
 		else // Is old packet
 		{
-			if(nodeId == 18)
-			{
-				cout<<"(forwarding.cc-OnInterest) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
-			}
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
@@ -429,10 +419,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	//兴趣包来自后方
 	// it is from nodes behind
-	if(nodeId == 18)
-	{
-		cout<<"(forwarding.cc-OnInterest) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<endl;
-	}
+
 	//如果重复
 	if(isDuplicatedInterest(nodeId,seq))
 	{
@@ -523,13 +510,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId() != 999999999)
 		{
 			forwardNeighbors[nodeId]=true;
-			cout<<"转发节点列表为"<<endl;
-			for(auto ite = forwardNeighbors.begin();ite != forwardNeighbors.end();ite++)
-			{
-				cout<<ite->first<<" "<<ite->second<<endl;
-			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
-			//getchar();
 		}
 		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
@@ -614,7 +595,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				return;
 			}
 
-			if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
+			//if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
 				//getchar();
 			//Start a timer and wait
 			double index = distance(pri.begin(), idit);
@@ -656,8 +637,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	
-	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	//cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
 	//getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
@@ -678,8 +659,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 
 		ndn::nrndn::nrHeader nrheader;
 		payload->PeekHeader(nrheader);
-		//uint32_t nodeId=nrheader.getSourceId();
-		//uint32_t signature=data->GetSignature();
+		uint32_t nodeId=nrheader.getSourceId();
+		uint32_t signature=data->GetSignature();
 		
 		//ofstream ofile;
 		//ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
@@ -1258,15 +1239,15 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_nbChange_mode=0;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
-	{   //发送兴趣包
-		cout<<"邻居增加，重发"<<endl;
+	{//发送兴趣包
+		//cout<<"邻居增加，重发"<<endl;
 		//getchar();
 		m_nbChange_mode=2;//邻居增加
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())//数量不等，邻居发生变化
 	{
-		cout<<"邻居减少，重发"<<endl;
-		//getchar();
+		/*cout<<"邻居减少，重发"<<endl;
+		getchar();*/
 		m_nbChange_mode=1;//邻居减少
 	}
 	else
@@ -1285,7 +1266,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		if(nbChange)
 		{//邻居变化，发送兴趣包
+
 			m_nbChange_mode=3;//邻居变化
+			/*
 			cout<<"邻居变化，重发"<<endl;
 			prenb=m_preNB.getNb().begin();
 			nb=m_nb.getNb().begin();
@@ -1299,9 +1282,15 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				cout<<nb->first<<" ";
 			}
-			//getchar();
+
+			getchar();
+			*/
 		}
 	}
+
+
+
+
 
 	bool lostForwardNeighbor = false;
 	//检测转发邻居map中的邻居是否还在
@@ -1318,9 +1307,11 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
+		//cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
 		//getchar();
 	}
+
+
 
 	//判断兴趣包的方向
 		pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1329,13 +1320,14 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(msgdirection.second > 0 && m_nbChange_mode>1) //m_nbChange_mode>1  lostForwardNeighbor
 		{//
 			m_nbChange_mode=0;
-			printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
+			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			notifyUpperOnInterest(m_node->GetId());
 			
 		}
+
+
 	m_preNB=m_nb;//更新把上一次的邻居表
 }
-
 //利用face通知上层应用调用OnInterest
 void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 {//把type存放到interest中，以此来区分不同的notify类型
@@ -1344,15 +1336,14 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
 	if( interval >= 1)
 	{
-		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+		//cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
 
-		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		//cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
-	cout<<"(forwarding.cc-notifyUpperOnInterest)"<<endl;
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
 	interest->SetNonce(type);
