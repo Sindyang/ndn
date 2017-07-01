@@ -604,6 +604,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			}
 			else
 			{
+				if(IsDelay)
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟"<<endl;
+			    else
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟"<<endl;
+			
+			
 				// 1.Buffer the data in ContentStore
 				ToContentStore(data);
 				// 2. Notify upper layer
@@ -622,11 +628,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			if(newPriorityList.empty())
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
 			
-			if(IsDelay)
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟"<<endl;
-			else
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟"<<endl;
-
 			/*
 			 * 	Schedule a data forwarding event and wait
 			 *  This action can correct the priority list created by disinterested nodes.
@@ -982,9 +983,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	uint32_t nodeId = m_node->GetId();
+	//uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
 	
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -994,12 +995,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
-		cout<<"邻居增加"<<endl;
+		//cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		cout<<"邻居减少"<<endl;
+		//cout<<"邻居减少"<<endl;
 	}
 	else
 	{
@@ -1015,13 +1016,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			cout<<"邻居变化，重发"<<endl;
+			//cout<<"邻居变化，重发"<<endl;
 		}
 	}
 	
 	prenb=m_preNB.getNb().begin();
 	nb=m_nb.getNb().begin();
-	cout<<"原来的邻居：";
+	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1032,17 +1033,17 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<nb->first<<" ";
 	}
 	
-	cout<<"\n转发节点为 "<<forwardNode;
+	cout<<"\n转发节点为 "<<forwardNode;*/
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
 		m_nbChange_mode = 4;
-		cout<<" 还没有转发节点"<<endl;
+		//cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
-		cout<<" 转发节点丢失"<<endl;
+		//cout<<" 转发节点丢失"<<endl;
 	}
 	else
 	{
@@ -1072,11 +1073,11 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
     if(interval >= 1)
 	{
 		m_resendInterestTime =  Simulator::Now().GetSeconds();	
-		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
+		//cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
-		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
@@ -1347,7 +1348,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	double y= m_sensor->getY();
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
-	cout << "(forward.cc-ForwardDataPacket) 转发数据包。当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId << " " << signature << endl;
+	cout << "(forwarding.cc-ForwardDataPacket) 转发数据包。当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId << " " << signature << endl;
 	//getchar();
 	
 	if(Delay)
