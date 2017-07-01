@@ -529,7 +529,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<ite->first<<" "<<ite->second<<endl;
 			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
-			getchar();
+			//getchar();
 		}
 		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
@@ -615,7 +615,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 
 			if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
-				getchar();
+				//getchar();
 			//Start a timer and wait
 			double index = distance(pri.begin(), idit);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -656,8 +656,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	
-	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	//cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
 	//getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
@@ -1299,7 +1299,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				cout<<nb->first<<" ";
 			}
-			getchar();
+			//getchar();
 		}
 	}
 
@@ -1319,7 +1319,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(lostForwardNeighbor)
 	{
 		cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
-		getchar();
+		//getchar();
 	}
 
 	//判断兴趣包的方向

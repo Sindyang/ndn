@@ -477,9 +477,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	if(Isaddgap)
-		cout<<"true"<<endl;
+		cout<<"在转发该数据包时，需要加m_gap"<<endl;
 	else
-		cout<<"false"<<endl;
+		cout<<"在转发该数据包时，不需要加m_gap"<<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
