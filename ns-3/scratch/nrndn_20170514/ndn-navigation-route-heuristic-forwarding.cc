@@ -461,7 +461,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		return;
 	}
 
-
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
@@ -496,7 +495,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(!WillInterestedData(data))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
-		cout<<"(forwarding.cc-OnData) 该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
+		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		return;
 	}
 
@@ -504,7 +503,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	pair<bool, double> msgdirection = m_sensor->getDistanceWith(nrheader.getX(), nrheader.getY(),m_sensor->getNavigationRoute());
 	std::vector<uint32_t>::const_iterator priorityListIt;
 	
-	//找出发送数据包的节点是否在优先级列表中
+	//找出当前节点是否在优先级列表中
 	priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
 
 	if(msgdirection.first&&msgdirection.second<0)// This data packet is on the navigation route of the local node, and it is from behind
@@ -517,12 +516,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				ToContentStore(data);
 				// 2. Notify upper layer
 				NotifyUpperLayer(data);
-				cout<<"(forwarding.cc-OnData) 该数据包从后方得到且当前节点对该数据包感兴趣"<<endl;
+				cout<<"该数据包第一次从后方得到且当前节点对该数据包感兴趣"<<endl;
 				return;
 			}
 			else
 			{
-				cout<<"(forwarding.cc-OnData) 该数据包从后方得到且当前节点对该数据包不感兴趣"<<endl;
+				cout<<"该数据包第一次从后方得到且当前节点对该数据包不感兴趣"<<endl;
 				DropDataPacket(data);
 				return;
 			}
@@ -539,7 +538,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
-			cout<<"(forwarding.cc-OnData)重复丢弃"<<endl;
+			cout<<"(forwarding.cc-OnData) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
 			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
@@ -556,7 +555,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else
 		{
-			cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
+			//cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
 			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
@@ -568,7 +567,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					return;
 				}
 				else
-				{
+				{  
+			        cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣，但位于其优先级列表中"<<endl;
 					bool isTTLReachMax;
 					/*
 					 * 		When a data is received by disinterested node,
@@ -621,6 +621,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 				if (interestNodes.empty())
 				{
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;
 					BroadcastStopMessage(data);
 					return;
 				}
@@ -628,7 +629,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			}
 
 			if(newPriorityList.empty())
+			{
+				cout<<"当前节点构造出的新优先级列表为空"<<endl;
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
+			}
+				
 			
 			/*
 			 * 	Schedule a data forwarding event and wait
@@ -656,19 +661,18 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				if(Will)
 				{
 					sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包感兴趣"<<endl;
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣,不用增加m_gap"<<endl;
 				}
 				else if(!Will && !Isaddgap)
 				{  
 			        sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包不感兴趣且不需要被延迟。"<<endl;
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
 				}
 			    else if(!Will && Isaddgap)
 				{
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包不感兴趣且不需要被延迟。"<<endl;
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
 				}
-					
 			}
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
@@ -1358,9 +1362,9 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	//getchar();
 	
 	if(isaddgap)
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包需要加m_gap"<<endl;
 	else
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包不需要加m_gap"<<endl;
 	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
