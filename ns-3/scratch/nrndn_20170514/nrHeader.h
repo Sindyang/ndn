@@ -110,14 +110,14 @@ public:
 		m_lane = lane;
 	}
 	//added by sy
-	bool getDelay() const
+	bool getGap() const
 	{
-		return IsDelay;
+		return IsAddGap;
 	}
 	//added by sy
-    void setDelay(bool delay)
+    void setGap(bool isaddgap)
 	{
-		IsDelay = delay;
+		IsAddGap = isaddgap;
 	}
 
 	//\}
@@ -127,7 +127,7 @@ private:
 	uint32_t		m_forwardId;//\ (source)	id of forward node (source)
 	double			m_x;		//\ (forwarder)	forwarder x coordinate, not source node position!!!!
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
-	bool            IsDelay;    //\ added by sy
+	bool            IsAddGap;    //\ added by sy
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
 	std::string m_lane;

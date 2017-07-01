@@ -98,7 +98,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	NoFwStop(false),
 	m_resendInterestTime(0),
 	forwardNode(6666666),
-	Delay(true)
+	IsAddGap(true)
 {
 	m_nbChange_mode=0;
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
@@ -474,12 +474,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	//判断收到的数据包是否需要增加延迟
-	bool IsDelay = nrheader.getDelay();
+	bool Isaddgap = nrheader.getDelay();
 	
-	if(IsDelay)
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 发送的数据包需要被延迟。当前节点 "<<myNodeId<<endl;
+	if(Isaddgap)
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 收到的数据包需要被延迟"<<endl;
 	else
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 发送的数据包不需要被延迟。当前节点 "<<myNodeId<<endl;
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 收到的数据包不需要被延迟"<<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
@@ -606,7 +606,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 						IsClearhopCountTag=false;
 					}
 				}
-				Delay = true;
+				IsAddGap = true;
 				newPriorityList=GetPriorityListOfDataForwarderDisinterestd(pri);
 				
 			}
@@ -656,24 +656,24 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				if(Will)
 				{
 					sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<"感兴趣"<<endl;
+					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包感兴趣"<<endl;
 				}
-				else if(!Will && !IsDelay)
+				else if(!Will && !Isaddgap)
 				{  
 			        sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<"不感兴趣且数据包不需要被延迟。"<<endl;
+					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包不感兴趣且不需要被延迟。"<<endl;
 				}
-			    else if(!Will && IsDelay)
+			    else if(!Will && Isaddgap)
 				{
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<"不感兴趣且数据包需要被延迟。"<<endl;
+					cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 对该数据包不感兴趣且不需要被延迟。"<<endl;
 				}
 					
 			}
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList,Delay,IsClearhopCountTag);
+					newPriorityList,IsAddGap,IsClearhopCountTag);
 			return;
 		}
 	}
@@ -1148,7 +1148,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
 			}		
-            if(Delay)
+            if(IsAddGap)
             {
 		        cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
 	        }
@@ -1171,7 +1171,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
 	//added by sy
-	nrheader.setDelay(Delay);
+	nrheader.setDelay(IsAddGap);
 	nrPayload->AddHeader(nrheader);
 	
 	return nrPayload;
@@ -1267,12 +1267,12 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 			//getchar();
 		}
 		
-		Delay = true;
+		IsAddGap = true;
 		if(sortInterest.size() == 0)
 		{
-			Delay = false;
+			IsAddGap = false;
 		}
-		cout<<"(forwarding.cc-GetPriorityListOfDataSource) Delay "<<Delay<<endl;
+		cout<<"(forwarding.cc-GetPriorityListOfDataSource) IsAddGap "<<IsAddGap<<endl;
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
 		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
 		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
@@ -1334,7 +1334,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool isdelay,bool IsClearhopCountTag)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool isaddgap,bool IsClearhopCountTag)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");
@@ -1356,16 +1356,16 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	cout << "(forwarding.cc-ForwardDataPacket) 当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId << " Signature " << signature << endl;
 	//getchar();
 	
-	if(isdelay)
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<"当前节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
+	if(isaddgap)
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
 	else
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<"当前节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
 	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
-	nrheader.setDelay(isdelay);
+	nrheader.setDelay(isaddgap);
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setLane(m_sensor->getLane());
 	//cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
@@ -1470,12 +1470,12 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	uint32_t FrontSize = sortInterestFront.size();
 	uint32_t DisInterestSize = sortDisinterest.size();
 	
-	Delay = true;
+	IsAddGap = true;
 	if(BackSize == 0 && FrontSize == 0)
 	{
-		Delay = false;
+		IsAddGap = false;
 	}
-	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) Delay "<<Delay<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) IsAddGap "<<IsAddGap<<endl;
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
 	//getchar();

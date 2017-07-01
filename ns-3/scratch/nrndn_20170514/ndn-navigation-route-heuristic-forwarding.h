@@ -484,7 +484,7 @@ private:
 	
 	uint32_t forwardNode;//added by sy
 	
-	bool Delay;//added by sy
+	bool IsAddGap;//added by sy
 };
 } /* namespace nrndn */
 } /* namespace fw */
