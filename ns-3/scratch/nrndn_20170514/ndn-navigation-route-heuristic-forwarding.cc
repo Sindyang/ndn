@@ -637,7 +637,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				cout<<"当前节点构造出的新优先级列表为空"<<endl;
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
 			}
-				
+			
+			
+		    if(Isaddgap)
+		        cout<<"在转发该数据包时，需要加m_gap"<<endl;
+	        else
+		        cout<<"在转发该数据包时，不需要加m_gap"<<endl;
 			
 			/*
 			 * 	Schedule a data forwarding event and wait
