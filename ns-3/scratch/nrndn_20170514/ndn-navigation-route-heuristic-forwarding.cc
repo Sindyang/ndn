@@ -97,7 +97,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false),
 	m_resendInterestTime(0),
-	forwardNode(6666666)
+	forwardNode(6666666),
+	Delay(true)
 {
 	m_nbChange_mode=0;
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
@@ -470,6 +471,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t signature=data->GetSignature();
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
+	//判断收到的数据包是否需要增加延迟
+	bool IsDelay = nrheader.getDelay();
+	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
@@ -596,6 +600,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					}
 				}
 				newPriorityList=GetPriorityListOfDataForwarderDisinterestd(pri);
+				
 			}
 			else
 			{
@@ -616,6 +621,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 
 			if(newPriorityList.empty())
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
+			
+			if(Delay)
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<"发送的数据包需要被延迟"<<endl;
+			else
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<"发送的数据包不需要被延迟"<<endl;
 
 			/*
 			 * 	Schedule a data forwarding event and wait
@@ -641,20 +651,28 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			{
 				double index = distance(pri.begin(),priorityListIt);
 				if(Will)
+				{
 					sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-				else
+				}
+				else if(!Will && !IsDelay)
+				{  
+			        sendInterval = (MilliSeconds(random) + index * m_timeSlot);
+				}
+			    else
+				{
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
+				}
+					
 			}
-
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList,IsClearhopCountTag);
+					newPriorityList,Delay,IsClearhopCountTag);
 			return;
 		}
 	}
 	cout<<endl;
-	//getchar();
+	getchar();
 }
 
 
@@ -752,7 +770,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	//2017.6.16
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(priorityList);
-
+	nrheader.setDelay(true);
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(nrheader);
 
@@ -1123,7 +1141,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 				//added by sy
 				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
-			}	
+			}				
 			break;
 		}
 		default:
@@ -1137,7 +1155,17 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
+	//added by sy
+	nrhearder.setDelay(Delay);
 	nrPayload->AddHeader(nrheader);
+	
+	if(Delay)
+    {
+		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<"发送的数据包需要被延迟"<<endl;
+	}
+	else
+		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<"发送的数据包不需要被延迟"<<endl;
+	getchar();
 	return nrPayload;
 }
 
@@ -1215,8 +1243,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 			}
 		}
 		
-		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 感兴趣的邻居个数为 "<<sortInterest.size()<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
-
 		std::multimap<double,uint32_t,std::greater<double> >::iterator it;
 		//setp 1. push the interested nodes
 		for(it = sortInterest.begin();it!=sortInterest.end();++it)
@@ -1232,6 +1258,15 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 			cout<<"(GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
 			//getchar();
 		}
+		
+		Delay = true;
+		if(sortInterest.size() == 0)
+		{
+			Delay = false;
+		}
+		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
+		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
+		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
 	}
 	return priorityList;
 }
@@ -1289,7 +1324,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool isdelay,bool IsClearhopCountTag)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");
@@ -1311,9 +1346,16 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	//cout << "(forward.cc-ForwardDataPacket) 转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
 	//getchar();
 	
+	if(Delay)
+		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<"发送的数据包需要被延迟"<<endl;
+	else
+		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<"发送的数据包不需要被延迟"<<endl;
+	getchar();
+	
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
+	nrheader.setDelay(isdelay);
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setLane(m_sensor->getLane());
 	//cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
@@ -1404,11 +1446,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		}
 	}
 	
-	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
-	<<" 后方感兴趣的邻居个数 "<<sortInterestBack.size()
-	<<" 前方感兴趣的邻居个数 "<<sortInterestFront.size()
-	<<" 不感兴趣的邻居个数 "<<sortDisinterest.size()<<endl;
-
 	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
 	//setp 1. push the interested nodes from behind
 	for (it = sortInterestBack.begin(); it != sortInterestBack.end(); ++it)
@@ -1421,7 +1458,19 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	//step 3. push the interested nodes from front
 	for (it = sortInterestFront.begin(); it != sortInterestFront.end(); ++it)
 		priorityList.push_back(it->second);
-
+	
+	uint32_t BackSize = sortInterestBack.size();
+	uint32_t FrontSize = sortInterestFront.size();
+	uint32_t DisInterestSize = sortDisinterest.size(;
+	
+	Delay = true;
+	if(BackSize == 0 && FrontSize == 0)
+	{
+		Delay = false;
+	}
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
+	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
+	
 	return priorityList;
 }
 
@@ -1455,6 +1504,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderDi
 	//step 1. push the unknown interest nodes
 	for (it = sortDisinterest.begin(); it != sortDisinterest.end(); ++it)
 		priorityList.push_back(it->second);
+	
 
 	return priorityList;
 }

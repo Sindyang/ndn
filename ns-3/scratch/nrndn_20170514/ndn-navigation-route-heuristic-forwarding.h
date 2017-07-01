@@ -384,7 +384,7 @@ private:
 	 * @param	IsClearhopCountTag  indicating that whether to reset the hop count tag to 0
 	 *                              True means needs to reset to 0;
 	 */
-	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag);
+	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool isdelay,bool IsClearhopCountTag);
 
 	/**
 	 * \brief	Send the interest packet immediately,
@@ -482,7 +482,9 @@ private:
 	
 	double m_resendInterestTime;//added by siukwan
 	
-	uint32_t forwardNode;//addded by sy
+	uint32_t forwardNode;//added by sy
+	
+	bool Delay;//added by sy
 };
 } /* namespace nrndn */
 } /* namespace fw */
