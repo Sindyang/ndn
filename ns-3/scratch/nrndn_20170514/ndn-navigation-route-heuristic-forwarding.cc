@@ -476,10 +476,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	bool Isaddgap = nrheader.getGap();
 	
-	if(Isaddgap)
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 收到的数据包需要被延迟"<<endl;
-	else
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" 收到的数据包不需要被延迟"<<endl;
+	cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
@@ -488,7 +485,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//If the data packet has already been sent, do not proceed the packet
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该数据包已经被发送, signature为 "<<data->GetSignature()<<endl<<endl;
+		cout<<"该数据包已经被发送"<<endl<<endl;
 		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
@@ -499,6 +496,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(!WillInterestedData(data))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
+		cout<<"(forwarding.cc-OnData) 该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		return;
 	}
 
@@ -519,16 +517,19 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				ToContentStore(data);
 				// 2. Notify upper layer
 				NotifyUpperLayer(data);
+				cout<<"(forwarding.cc-OnData) 该数据包从后方得到且当前节点对该数据包感兴趣"<<endl;
 				return;
 			}
 			else
 			{
+				cout<<"(forwarding.cc-OnData) 该数据包从后方得到且当前节点对该数据包不感兴趣"<<endl;
 				DropDataPacket(data);
 				return;
 			}
 		}
 		else // duplicated data
 		{
+			cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl;
 			ExpireDataPacketTimer(nodeId,signature);
 			return;
 		}
@@ -538,7 +539,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
-			//cout<<"(forwarding.cc-OnData)重复丢弃"<<endl;
+			cout<<"(forwarding.cc-OnData)重复丢弃"<<endl;
 			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
@@ -555,7 +556,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else
 		{
-			//cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
+			cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
 			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
@@ -584,7 +585,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
 					if (isTTLReachMax)
 					{
-						//cout << "(forwarding.cc-OnData) isTTLReachMax:" <<  hopCountTag.Get() << endl;
+						cout << "(forwarding.cc-OnData) isTTLReachMax:" <<  hopCountTag.Get() << endl;
 						//getchar();
 						DropDataPacket(data);
 						return;
@@ -608,7 +609,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				}
 				IsAddGap = true;
 				newPriorityList=GetPriorityListOfDataForwarderDisinterestd(pri);
-				
 			}
 			else
 			{
