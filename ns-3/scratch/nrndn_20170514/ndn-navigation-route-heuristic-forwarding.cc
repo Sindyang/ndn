@@ -1047,7 +1047,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else
 	{
-		cout<<endl;
+		//cout<<endl;
 	}
 	
 	//判断心跳包的来源方向
@@ -1063,7 +1063,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
-	cout<<endl;
+	//cout<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
