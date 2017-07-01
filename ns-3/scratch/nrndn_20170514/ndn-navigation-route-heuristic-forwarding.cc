@@ -1141,7 +1141,16 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 				//added by sy
 				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
-			}				
+			}		
+            if(Delay)
+            {
+		        cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
+	        }
+	        else
+			{
+				cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
+			}
+	        getchar();			
 			break;
 		}
 		default:
@@ -1159,13 +1168,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	nrheader.setDelay(Delay);
 	nrPayload->AddHeader(nrheader);
 	
-	if(Delay)
-    {
-		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
-	}
-	else
-		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
-	getchar();
 	return nrPayload;
 }
 
