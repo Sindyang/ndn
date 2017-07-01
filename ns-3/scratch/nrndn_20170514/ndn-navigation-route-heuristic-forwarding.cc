@@ -1266,6 +1266,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		{
 			Delay = false;
 		}
+		cout<<"(forwarding.cc-GetPriorityListOfDataSource) Delay "<<Delay<<endl;
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
 		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
 		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
@@ -1471,6 +1472,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	{
 		Delay = false;
 	}
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) Delay "<<Delay<<endl;
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
 	getchar();
