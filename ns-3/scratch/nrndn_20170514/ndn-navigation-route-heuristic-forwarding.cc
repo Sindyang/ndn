@@ -1347,13 +1347,13 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	double y= m_sensor->getY();
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
-	//cout << "(forward.cc-ForwardDataPacket) 转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
+	cout << "(forward.cc-ForwardDataPacket) 转发数据包。当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId << " " << signature << endl;
 	//getchar();
 	
 	if(Delay)
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 发送的数据包需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 当前节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
 	else
-		cout<<"(forwarding.cc-ForwardDataPacket) 源节点 "<<sourceId<<" 发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-ForwardDataPacket) 当前节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
 	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
@@ -1473,7 +1473,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		Delay = false;
 	}
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) Delay "<<Delay<<endl;
-	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 当前节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
 	//getchar();
 	
