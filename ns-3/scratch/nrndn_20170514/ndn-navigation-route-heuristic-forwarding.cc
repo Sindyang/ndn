@@ -476,6 +476,10 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	bool Isaddgap = nrheader.getGap();
 	
 	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	if(Isaddgap)
+		cout<<"true"<<endl;
+	else
+		cout<<"false"<<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
@@ -1154,11 +1158,11 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			}		
             if(IsAddGap)
             {
-		        cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
+		        cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要加m_gap"<<endl;
 	        }
 	        else
 			{
-				cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
+				cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要加m_gap"<<endl;
 			}
 	        //getchar();			
 			break;
