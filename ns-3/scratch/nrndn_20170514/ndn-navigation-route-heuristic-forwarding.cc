@@ -623,9 +623,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				NS_LOG_DEBUG("priority list of data packet is empty. Is its neighbor list empty?");
 			
 			if(Delay)
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<"发送的数据包需要被延迟"<<endl;
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟"<<endl;
 			else
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<"发送的数据包不需要被延迟"<<endl;
+				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟"<<endl;
 
 			/*
 			 * 	Schedule a data forwarding event and wait
@@ -1161,10 +1161,10 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	
 	if(Delay)
     {
-		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<"发送的数据包需要被延迟"<<endl;
+		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包需要被延迟"<<endl;
 	}
 	else
-		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<"发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包不需要被延迟"<<endl;
 	getchar();
 	return nrPayload;
 }
@@ -1267,6 +1267,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
 		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
 		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
+		getchar();
 	}
 	return priorityList;
 }
@@ -1347,9 +1348,9 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	//getchar();
 	
 	if(Delay)
-		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<"发送的数据包需要被延迟"<<endl;
+		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包需要被延迟"<<endl;
 	else
-		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<"发送的数据包不需要被延迟"<<endl;
+		cout<<"(forwarding.cc-OnData) 源节点 "<<sourceId<<" 发送的数据包不需要被延迟"<<endl;
 	getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
@@ -1470,6 +1471,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	}
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) 源节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
+	getchar();
 	
 	return priorityList;
 }
