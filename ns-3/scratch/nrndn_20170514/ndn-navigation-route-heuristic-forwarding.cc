@@ -476,7 +476,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	bool Isaddgap = nrheader.getGap();
 	
-	cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<endl;
+	cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
