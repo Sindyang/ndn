@@ -474,6 +474,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	bool IsDelay = nrheader.getDelay();
 	
+	if(IsDelay)
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟。当前节点 "<<myNodeId<<endl;
+	else
+		cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟。当前节点 "<<myNodeId<<endl;
+	
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
@@ -604,12 +609,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			}
 			else
 			{
-				if(IsDelay)
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包需要被延迟"<<endl;
-			    else
-				cout<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 发送的数据包不需要被延迟"<<endl;
-			
-			
 				// 1.Buffer the data in ContentStore
 				ToContentStore(data);
 				// 2. Notify upper layer
