@@ -28,7 +28,8 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_forwardId(9999999),
 		m_x(x),
 		m_y(y),
-		IsAddGap(true),
+		//added by sy
+		gap_mode(0),
 		m_priorityList(priorityList),
 		m_lane("no")
 {
