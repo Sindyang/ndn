@@ -629,6 +629,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);
 			}
 
+			cout<<"(forwarding.cc-OnData) 当前节点 "<<m_node->GetId()<<"的gap_mode为 "<<gap_mode<<endl;
 			if(newPriorityList.empty())
 			{
 				cout<<"当前节点构造出的新优先级列表为空"<<endl;
