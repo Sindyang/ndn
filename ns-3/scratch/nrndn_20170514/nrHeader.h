@@ -115,7 +115,7 @@ public:
 		return gap_mode;
 	}
 	//added by sy
-    void setGapMode(int mode)
+    void setGapMode(uint32_t mode)
 	{
 		gap_mode = mode;
 	}
@@ -127,7 +127,7 @@ private:
 	uint32_t		m_forwardId;//\ (source)	id of forward node (source)
 	double			m_x;		//\ (forwarder)	forwarder x coordinate, not source node position!!!!
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
-	int             gap_mode;    //\ added by sy
+	uint32_t        gap_mode;    //\ added by sy
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
 	std::string m_lane;

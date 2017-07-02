@@ -473,7 +473,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	//判断收到的数据包是否需要增加延迟
-	int received_gap_mode = nrheader.getGapMode();
+	uint32_t received_gap_mode = nrheader.getGapMode();
 	
 	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
 	
@@ -1334,7 +1334,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,int mode,bool IsClearhopCountTag)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,uint32_t mode,bool IsClearhopCountTag)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");

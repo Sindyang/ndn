@@ -29,7 +29,7 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_x(x),
 		m_y(y),
 		//added by sy
-		gap_mode(0),
+		gap_mode(99999),
 		m_priorityList(priorityList),
 		m_lane("no")
 {
@@ -64,6 +64,7 @@ uint32_t nrHeader::GetSerializedSize() const
 	size += sizeof(m_forwardId);
 	size += sizeof(m_x);
 	size += sizeof(m_y);
+	size += sizeof(gap_mode);
 
 	//m_priorityList.size():
 	size += sizeof(uint32_t);
@@ -81,6 +82,7 @@ void nrHeader::Serialize(Buffer::Iterator start) const
 	Buffer::Iterator& i = start;
 	i.WriteHtonU32(m_sourceId);
 	i.WriteHtonU32(m_forwardId);
+	i.WriteHtonU32(gap_mode);
 	i.Write((uint8_t*)&m_x,sizeof(m_x));
 	i.Write((uint8_t*)&m_y,sizeof(m_y));
 	
@@ -106,6 +108,7 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 	Buffer::Iterator i = start;
 	m_sourceId	=	i.ReadNtohU32();
 	m_forwardId	=	i.ReadNtohU32();
+	gap_mode    =   i.ReadNtohU32();
 	i.Read((uint8_t*)&m_x,sizeof(m_x));
 	i.Read((uint8_t*)&m_y,sizeof(m_y));
 	

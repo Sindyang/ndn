@@ -384,7 +384,7 @@ private:
 	 * @param	IsClearhopCountTag  indicating that whether to reset the hop count tag to 0
 	 *                              True means needs to reset to 0;
 	 */
-	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,int mode,bool IsClearhopCountTag);
+	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,uint32_t mode,bool IsClearhopCountTag);
 
 	/**
 	 * \brief	Send the interest packet immediately,
@@ -489,7 +489,7 @@ private:
 	* gap_mode = 1 若该数据包从应用层发出，且优先级列表仅由不感兴趣邻居组成
 	* gap_mode = 2 若该数据包由感兴趣节点转发，且优先级列表仅由不感兴趣邻居组成
 	**/
-	int gap_mode;//added by sy 
+	uint32_t gap_mode;//added by sy 
 };
 } /* namespace nrndn */
 } /* namespace fw */
