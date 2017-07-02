@@ -1467,7 +1467,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	gap_mode = 0;
 	if(BackSize == 0 && FrontSize == 0)
 	{
-		gap_mode = 2
+		gap_mode = 2;
 	}
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) gap_mode "<<gap_mode<<endl;
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
