@@ -1,6 +1,3 @@
-F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-number=5 --grid-length=1000 -L 5  --output-file=input_net.net.xml --no-internal-links true -j traffic_light -S 20
-
-F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-x-number=10 --grid-y-number=10 --grid-y-length=500 --grid-x-length=500 -L 4 -S 12 --output-file=input_net.net.xml  ³¤¿í²»Í¬
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid --grid.x-number=6 --grid.y-number=6 --grid.y-length=800 --grid.x-length=800 -L 4 -S 12 --output-file=input_net.net.xml
 
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --rand -o input_net.net.xml --rand.iterations=200
