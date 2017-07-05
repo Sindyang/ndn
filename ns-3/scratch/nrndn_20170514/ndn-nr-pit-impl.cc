@@ -155,7 +155,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	//找不到
 	if(it == route.end())
 	{
-		cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) 不该收到该兴趣包"<<endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) 不该收到该兴趣包"<<std::endl;
 		return false;
 	}
 	
