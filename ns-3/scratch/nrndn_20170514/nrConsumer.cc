@@ -79,7 +79,7 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
+	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
 	 std::string prefix="";
@@ -142,63 +142,73 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 //changed by siukwan
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	//std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	if (m_firstTime)
 	{
 		//changed by sy Seconds(0.0)->Seconds(0.1)
 		m_sendEvent = Simulator::Schedule (Seconds (0.1),&nrConsumer::SendPacket, this);
 		m_firstTime = false;
 	}
-	else if (!m_sendEvent.IsRunning ())
-	    m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
+	//else if (!m_sendEvent.IsRunning ())
+	  //  m_sendEvent = Simulator::Schedule ((m_random == 0) ?Seconds(1.0 / m_frequency):Seconds(m_random->GetValue ()),&nrConsumer::SendPacket, this);
 }
 
 
 //changed by siukwan
 void nrConsumer::SendPacket()
 {
-	 if(!m_active)
-	 {
-		 return;
-	 }		 
-	 
-	 //std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	//added by sy
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentType = sensor->getType();
 	
-	  NS_LOG_FUNCTION_NOARGS ();
+	//RSU的Type为”BUS" RSU不发送兴趣包
+	if(currentType == "BUS")
+	{
+		return;
+	}
+	
+	if(!m_active)
+	{
+		return;
+	}		 
+	
+	std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	
+	 NS_LOG_FUNCTION_NOARGS ();
 
-	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
+	 uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
 
-	  if (m_seqMax != std::numeric_limits<uint32_t>::max())
-	  {
+	 if (m_seqMax != std::numeric_limits<uint32_t>::max())
+	 {
 		if (m_seq >= m_seqMax)
 		{
 			return; // we are totally done
 		}
-	  }
+	 }
 
-	  seq = m_seq++;
+	 seq = m_seq++;
+	 
+	 Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
+	 nameWithSequence->appendSeqNum (seq);
 
-	  Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
-	  nameWithSequence->appendSeqNum (seq);
+	 Ptr<Interest> interest = Create<Interest> ();
+	 interest->SetNonce(m_rand.GetValue ());
+	 interest->SetName(nameWithSequence);
+	 interest->SetInterestLifetime(m_interestLifeTime);
 
-	  Ptr<Interest> interest = Create<Interest> ();
-	  interest->SetNonce(m_rand.GetValue ());
-	  interest->SetName(nameWithSequence);
-	  interest->SetInterestLifetime(m_interestLifeTime);
+	 // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
+	 NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
 
-	  // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
-	  NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
+	 //WillSendOutInterest (seq);
 
-	  //WillSendOutInterest (seq);
+	 FwHopCountTag hopCountTag;
+	 interest->GetPayload ()->AddPacketTag (hopCountTag);
 
-	  FwHopCountTag hopCountTag;
-	  interest->GetPayload ()->AddPacketTag (hopCountTag);
-
-	  m_transmittedInterests (interest, this, m_face);
-	  m_face->ReceiveInterest (interest);
-	  //std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl<<endl;
-	  //getchar();
-	  //ScheduleNextPacket ();
+	 m_transmittedInterests (interest, this, m_face);
+	 m_face->ReceiveInterest (interest);
+	 std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl<<endl;
+	 getchar();
+	 //ScheduleNextPacket ();
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)
@@ -257,6 +267,7 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 	return;
 }
 
+//changed by sy
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
 	//std::cout<<"(nrConsumer.cc-OnInterest) nrConsumer should not be supposed to receive Interest Packet!!"<<std::endl;
