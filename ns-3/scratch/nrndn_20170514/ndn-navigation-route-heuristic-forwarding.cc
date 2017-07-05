@@ -437,7 +437,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		getchar();
+		//getchar();
 		cout<<endl;
 	}
 }
