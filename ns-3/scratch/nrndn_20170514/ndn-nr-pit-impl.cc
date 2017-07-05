@@ -149,6 +149,8 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	std::vector<Ptr<Entry>>::iterator pit;
 	//获取RSU当前所在路线
 	const std::string& CurrentRoute = m_sensor->getLane();
+	cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) CurrentRoute "<<CurrentRoute<<endl;
+	
 	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	std::vector<std::string>::const_iterator it = std::find(route.begin(),route.end(),CurrentRoute);
 	
@@ -162,6 +164,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	//将剩余的路线及节点加入PIT中
 	for(;it != route.end();++it)
 	{
+		cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) 兴趣包的兴趣路段为 "<<*it<<endl;
 		//寻找PIT中是否有该路段
 		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
 		{
@@ -169,6 +172,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 			//PIT中已经有该路段
 			if(pitName.toUri() == *it)
 			{
+				cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) PIT中有该路段"<<endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 				pitEntry->AddIncomingNeighbors(id);
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
@@ -176,7 +180,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 			}
 		}
 		//route不在PIT中
-		if(pit == m_pitContainer.end())
+		/*if(pit == m_pitContainer.end())
 		{
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
@@ -193,7 +197,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 		    std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			getchar();
-		}
+		}*/
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
