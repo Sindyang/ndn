@@ -1175,7 +1175,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	nrheader.setGapMode(gap_mode);
 	nrPayload->AddHeader(nrheader);
 	
-	cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
+	//cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
 }
 
