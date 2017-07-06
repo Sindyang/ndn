@@ -222,7 +222,7 @@ void NrPitImpl::DeleteFrontNode(uint32_t& id)
 	    {
 			const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 			std::string pitname = pitName.toUri();
-			cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
 		}
 	}
 	getchar();
