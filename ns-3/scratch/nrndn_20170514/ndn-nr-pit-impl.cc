@@ -182,7 +182,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 		//route不在PIT中
 		if(pit == m_pitContainer.end())
 		{
-			cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) route "<<*it<<"不在PIT中"<<endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) route "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
 			Ptr<Interest> interest = ns3::Create<Interest>();
