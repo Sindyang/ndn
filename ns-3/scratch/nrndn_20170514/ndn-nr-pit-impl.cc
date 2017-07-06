@@ -194,10 +194,10 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 			
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		    m_pitContainer.push_back(entry);
-			/*Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
 			pitEntry->AddIncomingNeighbors(id);
-			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-		    std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;*/
+			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+		    std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			getchar();
 		}
 	}
