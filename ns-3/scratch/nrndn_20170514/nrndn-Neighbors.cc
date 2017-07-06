@@ -101,6 +101,13 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	
 }
 
+//added by sy
+//判断车辆是否从后方超车至前方
+bool Neighbors::IsOverTake(uint32_t id)
+{
+	
+}
+
 struct CloseNeighbor
 {
   bool operator() (const Neighbors::Neighbor & nb) const

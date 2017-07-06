@@ -37,36 +37,59 @@ public:
 	    {
 	    }
 	};
-	  /// Get 1hop Neighbor list
-	  const std::unordered_map<uint32_t, Neighbor>& getNb() const { return m_nb;	}
+	
+	// Get 1hop Neighbor list
+	const std::unordered_map<uint32_t, Neighbor>& getNb() const 
+	{
+		return m_nb;	
+	}
+	  
+	//added by sy
+	const std::unordered_map<uint32_t> getNb_Behind() const 
+	{
+		return m_nb_behind;
+	}
 
-	  /// Return expire time for neighbor node with identifier id, if exists, else return 0.
-	  Time GetExpireTime (uint32_t id);
-	  /// Check that node with identifier id  is neighbor
-	  bool IsNeighbor (uint32_t id);
-	  /// Update expire time for entry with identifier id, if it exists, else add new entry
-	  void Update(const uint32_t& id, const double& x,const double& y,const Time& expire);
-	  /// Remove all expired entries
-	  void Purge ();
-	  /// Schedule m_ntimer.
-	  void ScheduleTimer ();
-	  /// Remove all entries
-	  void Clear () { m_nb.clear (); }
-	  /// Cancle m_ntimer.
-	  void CancelTimer();
+	// Return expire time for neighbor node with identifier id, if exists, else return 0.
+	Time GetExpireTime (uint32_t id);
+	// Check that node with identifier id  is neighbor
+	bool IsNeighbor (uint32_t id);
+	// Update expire time for entry with identifier id, if it exists, else add new entry
+	void Update(const uint32_t& id, const double& x,const double& y,const Time& expire);
+	//added by sy
+	// 判断车辆是否从后方超车到前方
+	bool IsOverTake(const uint32_t id);
+	// Remove all expired entries
+	void Purge ();
+	// Schedule m_ntimer.
+	void ScheduleTimer ();
+	// Remove all entries
+	void Clear () { m_nb.clear (); }
+	// Cancle m_ntimer.
+	void CancelTimer();
 
-	  ///\name Handle link failure callback
-	  //\{
-	  void SetCallback (Callback<void, uint32_t> cb) { m_handleLinkFailure = cb; }
-	  Callback<void, uint32_t> GetCallback () const { return m_handleLinkFailure; }
+	///\name Handle link failure callback
+	//\{
+	void SetCallback (Callback<void, uint32_t> cb) 
+	{
+		m_handleLinkFailure = cb; 
+	}
+	Callback<void, uint32_t> GetCallback () const 
+	{
+		return m_handleLinkFailure;
+	}
 	  //\}
-	private:
-	  /// link failure callback
-	  Callback<void, uint32_t> m_handleLinkFailure;
-	  /// Timer for neighbor's list. Schedule Purge().
-	  Timer m_ntimer;
-	  /// hashset of entries, use node id as keys
-	  std::unordered_map<uint32_t,Neighbor> m_nb;
+	  
+private:
+	// link failure callback
+	Callback<void, uint32_t> m_handleLinkFailure;
+	// Timer for neighbor's list. Schedule Purge().
+	Timer m_ntimer;
+	// hashset of entries, use node id as keys
+	std::unordered_map<uint32_t,Neighbor> m_nb;
+	//added by sy 
+	//存储位于后方的邻居
+	std::vector<uint32_t> m_nb_behind;
 };
 
 } /* namespace nrndn */
