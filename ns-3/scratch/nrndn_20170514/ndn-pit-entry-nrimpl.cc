@@ -92,13 +92,16 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 {
-	std::unordered_set< uint32_t >::iterator it;
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
 	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
+		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
+	}
+	else
+	{
+		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT中"<<std::endl;
 	}
 		
 }

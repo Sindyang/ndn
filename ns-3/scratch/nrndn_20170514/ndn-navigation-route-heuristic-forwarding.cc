@@ -1014,10 +1014,18 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	//uint32_t nodeId = m_node->GetId();
+	uint32_t nodeId = m_node->GetId();
+	uint32_t sourceId = nrheader.getSourceId();
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<"发送心跳包的节点 "<<sourceId<<endl;
 	
-	//cout<<"(forwarding.cc-ProcessHello) 源节点 "<<nodeId<<endl;
+	//若RSU收到前方发来的心跳包，需要在PIT中删除该节点
+	if(m_sensor->getType() == "BUS")
+	{
+		m_nrpit->DeleteFrontNode(sourceId);
+		return;
+	}
 	
+	//这部分内容为普通节点判断是否需要重新发送兴趣包以维持链路
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -1089,7 +1097,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			notifyUpperOnInterest();
 		}
-		
 	}
 	//更新邻居列表
 	m_preNB = m_nb;

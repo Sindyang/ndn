@@ -172,7 +172,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 			//PIT中已经有该路段
 			if(pitName.toUri() == *it)
 			{
-				std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) PIT中有该路段"<<std::endl<<std::endl;
+				std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 				pitEntry->AddIncomingNeighbors(id);
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
@@ -206,6 +206,26 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	getchar();
 	NS_LOG_DEBUG("update RSUpit:"<<os.str());
 	return true;
+}
+
+//added by sy
+void NrPitImpl::DeleteFrontNode(uint32_t& id)
+{
+	std::vector<Ptr<Entry> >::iterator pit;
+	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
+	{
+		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+		pitEntry->CleanPITNeighbors(id);
+	}
+	//要是有很多空的PIT 可以加一个删除PIT的操作
+	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
+	if(interestNodes.empty())
+	{
+		const name::Component &pitName=entry->GetInterest()->GetName().get(0);
+		std::string pitname = pitName.toUri();
+		cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<endl;
+		getchar();
+	}
 }
 
 void 
@@ -265,7 +285,7 @@ NrPitImpl::Find (const Name &prefix)
 
 Ptr<Entry>
 NrPitImpl::Create (Ptr<const Interest> header)
- {
+{
 
 	NS_LOG_DEBUG (header->GetName ());
 	NS_ASSERT_MSG(false,"In NrPitImpl,NrPitImpl::Create (Ptr<const Interest> header) "
