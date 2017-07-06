@@ -1016,8 +1016,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<"发送心跳包的节点 "<<sourceId<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
 	
+	//这部分可能需要修改！！！！！！！！！
 	//若RSU收到前方发来的心跳包，需要在PIT中删除该节点
 	if(m_sensor->getType() == "BUS")
 	{
