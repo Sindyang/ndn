@@ -142,7 +142,6 @@ double nrUtils::GetAverageArrivalRate()
 
 		}
 	}
-
 	return GetAverage(result);
 }
 
@@ -223,9 +222,8 @@ double nrUtils::GetAverageHitRate()
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
-				
-				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
-				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
+				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
+				cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
 				//getchar();
 			}
 
