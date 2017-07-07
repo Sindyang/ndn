@@ -164,8 +164,8 @@ void nrConsumer::SendPacket()
 	//RSU的Type为”BUS" RSU不发送兴趣包
 	if(currentType == "BUS")
 	{
-		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<endl<<endl;
-		return;
+		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<endl<<endl;
+		//return;
 	}
 	
 	if(!m_active)
