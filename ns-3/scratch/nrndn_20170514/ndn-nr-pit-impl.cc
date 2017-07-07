@@ -219,6 +219,7 @@ void NrPitImpl::DeleteFrontNode(uint32_t& id)
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		pitEntry->CleanPITNeighbors(id);
 	}
+	showPit();
 	getchar();
 }
 
