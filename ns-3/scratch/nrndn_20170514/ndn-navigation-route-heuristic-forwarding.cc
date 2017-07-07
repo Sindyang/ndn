@@ -1018,14 +1018,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
 	
-	//这部分可能需要修改！！！！！！！！！
-	//若RSU收到前方发来的心跳包，需要在PIT中删除该节点
-	if(m_sensor->getType() == "BUS")
-	{
-		m_nrpit->DeleteFrontNode(sourceId);
-		return;
-	}
-	
 	//这部分内容为普通节点判断是否需要重新发送兴趣包以维持链路
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -1091,12 +1083,38 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断心跳包的来源方向
+	bool isovertake = false;
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if((msgdirection.second >= 0))
+	//心跳包位于前方
+	if(msgdirection.second >= 0)
 	{
+		isovertake = m_nb.IsOverTake(sourceId);
+		if(isovertake)
+		{
+			m_nrpit->DeleteFrontNode(sourceId);
+			cout<<"节点 "<<sourceId<<" 从后方超车到前方"<<endl;
+			getchar();
+		}
+		
 		if(m_nbChange_mode ==  4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
+		}
+	}
+	//心跳包位于后方
+	else if(msgdirection.first && msgdirection.second <= 0)
+	{
+		m_nb.AddNeighborsBehind(sourceId);
+	}
+	//心跳包位于其他方向
+	else if(!msgdirection.first)
+	{
+		isovertake = m_nb.IsOverTake(sourceId);
+		if(isovertake)
+		{
+			m_nrpit->DeleteFrontNode(sourceId);
+			cout<<"节点 "<<sourceId<<" 从后方超车到其他路段"<<endl;
+			getchar();
 		}
 	}
 	//更新邻居列表

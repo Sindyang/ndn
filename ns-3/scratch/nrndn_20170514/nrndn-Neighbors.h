@@ -13,7 +13,7 @@
 #include "ns3/callback.h"
 
 #include <unordered_map>
-#include <vector>
+#include <set>
 #include <string>
 
 
@@ -45,7 +45,7 @@ public:
 	}
 	  
 	//added by sy
-	const std::unordered_map<uint32_t> getNb_Behind() const 
+	const std::set<uint32_t> getNb_Behind() const 
 	{
 		return m_nb_behind;
 	}
@@ -57,7 +57,10 @@ public:
 	// Update expire time for entry with identifier id, if it exists, else add new entry
 	void Update(const uint32_t& id, const double& x,const double& y,const Time& expire);
 	//added by sy
-	// 判断车辆是否从后方超车到前方
+	// 添加位于后方的邻居节点
+	void AddNeighborsBehind(const uint32_t id);
+	//added by sy
+	// 判断车辆是否超车
 	bool IsOverTake(const uint32_t id);
 	// Remove all expired entries
 	void Purge ();
@@ -89,7 +92,7 @@ private:
 	std::unordered_map<uint32_t,Neighbor> m_nb;
 	//added by sy 
 	//存储位于后方的邻居
-	std::vector<uint32_t> m_nb_behind;
+	std::set<uint32_t> m_nb_behind;
 };
 
 } /* namespace nrndn */

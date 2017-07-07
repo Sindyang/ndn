@@ -102,12 +102,38 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 }
 
 //added by sy
-//判断车辆是否从后方超车至前方
-bool Neighbors::IsOverTake(uint32_t id)
+// 添加位于后方的邻居节点
+void Neighbors::AddNeighborsBehind(uint32_t id)
 {
-	
+	m_nb_behind.insert(id);
+	std::set<uint32_t&>::iterator it = m_nb_behind.begin();
+	cout<<"当前车辆的后方节点为：";
+	for(; it != m_nb_behind.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
 }
 
+//added by sy
+// 判断车辆是否超车
+bool Neighbors::IsOverTake(const uint32_t id)
+{
+	set<uint32_t>::iterator it = m_nb_behind.find(id);
+	//车辆从后方超车到前方
+	if(it != m_nb_behind.end())
+	{
+		cout<<"(nrndn-Neighbor.cc-IsOverTake) 节点 "<<id<<" 从后方超车至前方"<<endl;
+		m_nb_behind.erase(it);
+		return true;
+	}
+	else
+	{
+		cout<<"(nrndn-Neighbors.cc-IsOverTake) 节点 "<<id<<" 一直位于车辆前方"<<endl;
+		return false;
+	}
+}
+	
 struct CloseNeighbor
 {
   bool operator() (const Neighbors::Neighbor & nb) const
