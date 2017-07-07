@@ -129,7 +129,7 @@ bool Neighbors::IsOverTake(const uint32_t id)
 	}
 	else
 	{
-		std::cout<<"(nrndn-Neighbors.cc-IsOverTake) 节点 "<<id<<" 一直位于车辆前方"<<std::endl;
+		std::cout<<"(nrndn-Neighbors.cc-IsOverTake) 节点 "<<id<<" 一直位于车辆前方"<<std::endl<<std::endl;
 	}
 	return false;
 }

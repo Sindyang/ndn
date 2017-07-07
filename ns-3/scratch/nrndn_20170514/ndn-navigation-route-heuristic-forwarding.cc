@@ -1092,7 +1092,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(isovertake)
 		{
 			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"节点 "<<sourceId<<" 从后方超车到前方"<<endl;
+			cout<<"(forwarding.cc-ProcessHello)At time "<<Simulator::Now().GetSeconds()<<"节点 "<<sourceId<<" 从后方超车到前方"<<endl;
 			getchar();
 		}
 		
@@ -1113,7 +1113,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(isovertake)
 		{
 			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"节点 "<<sourceId<<" 从后方超车到其他路段"<<endl;
+			cout<<"(forwarding.cc-ProcessHello)节点 "<<sourceId<<" 从后方超车到其他路段"<<endl;
 			getchar();
 		}
 	}

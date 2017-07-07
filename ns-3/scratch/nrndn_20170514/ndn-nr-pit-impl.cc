@@ -214,16 +214,10 @@ void NrPitImpl::DeleteFrontNode(uint32_t& id)
 	std::vector<Ptr<Entry> >::iterator pit;
 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
 	{
+		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+		cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 当前PIT表项为 "<<pitName.toUri()<<endl;
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		pitEntry->CleanPITNeighbors(id);
-		//要是有很多空的PIT 可以加一个删除PIT的操作
-		const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
-	    if(interestNodes.empty())
-	    {
-			const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
-			std::string pitname = pitName.toUri();
-			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
-		}
 	}
 	getchar();
 }
