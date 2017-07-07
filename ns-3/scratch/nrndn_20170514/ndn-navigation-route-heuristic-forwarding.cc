@@ -1048,7 +1048,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			cout<<"邻居变化，重发"<<endl;
+			cout<<"邻居变化"<<endl;
 		}
 	}
 	
