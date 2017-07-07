@@ -106,13 +106,13 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 void Neighbors::AddNeighborsBehind(uint32_t id)
 {
 	m_nb_behind.insert(id);
-	std::set<uint32_t&>::iterator it = m_nb_behind.begin();
-	cout<<"当前车辆的后方节点为：";
+	std::set<uint32_t>::iterator it = m_nb_behind.begin();
+	std::cout<<"当前车辆的后方节点为：";
 	for(; it != m_nb_behind.end();it++)
 	{
-		cout<<*it<<" ";
+		std::cout<<*it<<" ";
 	}
-	cout<<endl;
+	std::cout<<endl;
 }
 
 //added by sy
@@ -123,13 +123,13 @@ bool Neighbors::IsOverTake(const uint32_t id)
 	//车辆从后方超车到前方
 	if(it != m_nb_behind.end())
 	{
-		cout<<"(nrndn-Neighbor.cc-IsOverTake) 节点 "<<id<<" 从后方超车至前方"<<endl;
+		std::cout<<"(nrndn-Neighbor.cc-IsOverTake) 节点 "<<id<<" 从后方超车至前方"<<std::endl;
 		m_nb_behind.erase(it);
 		return true;
 	}
 	else
 	{
-		cout<<"(nrndn-Neighbors.cc-IsOverTake) 节点 "<<id<<" 一直位于车辆前方"<<endl;
+		std::cout<<"(nrndn-Neighbors.cc-IsOverTake) 节点 "<<id<<" 一直位于车辆前方"<<endl;
 		return false;
 	}
 }
