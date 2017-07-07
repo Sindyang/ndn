@@ -249,7 +249,7 @@ NrPitImpl::Lookup (const Data &header)
 {
 	NS_ASSERT_MSG(false,"In NrPitImpl,NrPitImpl::Lookup (const Data &header) should not be invoked");
 	return 0;
- }
+}
   
 Ptr<Entry>
 NrPitImpl::Lookup (const Interest &header)

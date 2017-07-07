@@ -1083,18 +1083,18 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断心跳包的来源方向
-	bool isovertake = false;
+	//bool isovertake = false;
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	//心跳包位于前方
 	if(msgdirection.second >= 0)
 	{
-		isovertake = m_nb.IsOverTake(sourceId);
-		if(isovertake)
+		//isovertake = m_nb.IsOverTake(sourceId);
+		/*if(isovertake)
 		{
 			m_nrpit->DeleteFrontNode(sourceId);
 			cout<<"(forwarding.cc-ProcessHello)At time "<<Simulator::Now().GetSeconds()<<"节点 "<<sourceId<<" 从后方超车到前方"<<endl;
 			getchar();
-		}
+		}*/
 		
 		if(m_nbChange_mode ==  4|| lostForwardNeighbor)
 		{
@@ -1102,7 +1102,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	//心跳包位于后方
-	else if(msgdirection.first && msgdirection.second <= 0)
+	/*else if(msgdirection.first && msgdirection.second <= 0)
 	{
 		m_nb.AddNeighborsBehind(sourceId);
 	}
@@ -1116,7 +1116,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello)节点 "<<sourceId<<" 从后方超车到其他路段"<<endl;
 			getchar();
 		}
-	}
+	}*/
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
