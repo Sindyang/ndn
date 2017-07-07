@@ -112,7 +112,7 @@ void Neighbors::AddNeighborsBehind(uint32_t id)
 	{
 		std::cout<<*it<<" ";
 	}
-	std::cout<<endl;
+	std::cout<<std::endl;
 }
 
 //added by sy
