@@ -79,6 +79,16 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
+	//added by sy
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentType = sensor->getType();
+	//RSU的Type为”BUS" RSU不发送兴趣包
+	if(currentType == "BUS")
+	{
+		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
+		return;
+	}
+	
 	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
@@ -145,7 +155,6 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	if (m_firstTime)
 	{
-		//changed by sy Seconds(0.0)->Seconds(0.1)
 		m_sendEvent = Simulator::Schedule (Seconds (0.0),&nrConsumer::SendPacket, this);
 		m_firstTime = false;
 	}
@@ -156,18 +165,7 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 
 //changed by siukwan
 void nrConsumer::SendPacket()
-{
-	//added by sy
-	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
-	const std::string& currentType = sensor->getType();
-	
-	//RSU的Type为”BUS" RSU不发送兴趣包
-	if(currentType == "BUS")
-	{
-		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<endl<<endl;
-		//return;
-	}
-	
+{	
 	if(!m_active)
 	{
 		return;
