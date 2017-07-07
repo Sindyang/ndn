@@ -79,16 +79,6 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	//added by sy
-	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
-	const std::string& currentType = sensor->getType();
-	//RSU的Type为”BUS" RSU不发送兴趣包
-	if(currentType == "BUS")
-	{
-		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
-		return;
-	}
-	
 	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<endl;
 	//1. refresh the Interest
 	 std::vector<std::string> interest=GetCurrentInterest();
@@ -171,7 +161,17 @@ void nrConsumer::SendPacket()
 		return;
 	}		 
 	
-	//std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
+	//added by sy
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentType = sensor->getType();
+	//RSU的Type为”BUS" RSU不发送兴趣包
+	if(currentType == "BUS")
+	{
+		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
+		return;
+	}
+	
+	std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
 	 NS_LOG_FUNCTION_NOARGS ();
 
