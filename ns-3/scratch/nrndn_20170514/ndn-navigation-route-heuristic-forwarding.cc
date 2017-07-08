@@ -1595,6 +1595,12 @@ void NavigationRouteHeuristic::ToContentStore(Ptr<Data> data)
 void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 {
 	if(!m_running) return;
+	
+	if(m_sensor->getType() == "BUS")
+	{
+		return;
+	}
+	
 	//cout<<"进入(forwarding.cc-NotifyUpperLayer)"<<endl;
 	// 1. record the Data Packet received
 	m_dataSignatureSeen.Put(data->GetSignature(),true);
