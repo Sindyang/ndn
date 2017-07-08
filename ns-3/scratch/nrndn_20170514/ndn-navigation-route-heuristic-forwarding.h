@@ -220,6 +220,9 @@ private:
 	  * \brief	Process hello message
 	  */
 	void ProcessHello (Ptr<Interest> interest);
+	
+	//added by sy
+	void ProcessHelloToUpdatePIT(Ptr<Interest> interest);
 
 	/**
 	 * \brief	Tell the direction of the Packet from

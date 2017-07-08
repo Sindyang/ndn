@@ -335,10 +335,7 @@ nrndnExample::RunNrndnSim ()
 
 	Simulator::Stop(Seconds(totalTime));
 	std::cout << "(main.cc-RunNrndnSim)开始运行：\n";
-	while(Simulator::Now().GetSeconds() > 1.2)
-	{
-		Simulator::Run();
-	}
+	Simulator::Run();
 	Simulator::Destroy();
 }
 

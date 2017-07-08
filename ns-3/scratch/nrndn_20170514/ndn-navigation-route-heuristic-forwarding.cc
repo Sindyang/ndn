@@ -298,6 +298,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		ProcessHello(interest);
+		if(m_sensor->getType() == "BUS")
+		{
+			ProcessHelloToUpdatePIT(interest);
+		}
 		return;
 	}
 	
@@ -1088,46 +1092,53 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断心跳包的来源方向
-	//bool isovertake = false;
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	//心跳包位于前方
 	if(msgdirection.second > 0)
 	{
-		//isovertake = m_nb.IsOverTake(sourceId);
-		/*if(isovertake)
-		{
-			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"(forwarding.cc-ProcessHello)At time "<<Simulator::Now().GetSeconds()<<"节点 "<<sourceId<<" 从后方超车到前方"<<endl;
-			getchar();
-		}*/
-		
 		if(m_nbChange_mode == 4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
 	}
-	//心跳包位于后方
-	/*else if(msgdirection.first && msgdirection.second <= 0)
-	{
-		m_nb.AddNeighborsBehind(sourceId);
-	}
-	//心跳包位于其他方向
-	else if(!msgdirection.first)
-	{
-		isovertake = m_nb.IsOverTake(sourceId);
-		if(isovertake)
-		{
-			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"(forwarding.cc-ProcessHello)节点 "<<sourceId<<" 从后方超车到其他路段"<<endl;
-			getchar();
-		}
-	}*/
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
 	cout<<endl;
 }
 
+//added by sy
+void NavigationRouteHeuristic::ProcessHelloToUpdatePIT(Ptr<Interest> interest)
+{
+	if(!m_running)
+		return;
+	if(m_HelloLogEnable)
+		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
+	
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	uint32_t nodeId = m_node->GetId();
+	uint32_t sourceId = nrheader.getSourceId();
+	cout<<"(forwarding.cc-ProcessHelloToUpdatePIT)At time "<<Simulator::Now().GetSeconds()<<"当前节点 "<<nodeId<<" 发送心跳包的节点为 "<<sourceId<<endl;
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	bool isovertake = false;
+	if(!msgdirection.first || msgdirection.second > 0)
+	{
+		isovertake = m_nb.IsOverTake(sourceId);
+		if(isovertake)
+		{
+			m_nrpit->DeleteFrontNode(sourceId);
+			cout<<"从后方超车到前方"<<endl;
+		}
+	}
+	else if(msgdirection.first && msgdirection.second <= 0)
+	{
+		m_nb.AddNeighborsBehind(sourceId);
+		cout<<"位于当前节点后方"<<endl;
+	}
+	cout<<endl;
+}
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
