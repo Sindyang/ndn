@@ -1101,7 +1101,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			getchar();
 		}*/
 		
-		if(m_nbChange_mode ==  4|| lostForwardNeighbor)
+		if(m_nbChange_mode > 1|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
