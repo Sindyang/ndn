@@ -1091,7 +1091,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//bool isovertake = false;
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	//心跳包位于前方
-	if(msgdirection.second >= 0)
+	if(msgdirection.second > 0)
 	{
 		//isovertake = m_nb.IsOverTake(sourceId);
 		/*if(isovertake)
