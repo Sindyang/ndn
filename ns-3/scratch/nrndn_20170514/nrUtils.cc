@@ -49,19 +49,19 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
+	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
-		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
+		cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
 		else
 		{//非活跃节点直接跳过，避免段错误
 	        idx++;
-			//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
+			cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
 			continue;
 		}
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) IsInterestLane " << endl;
@@ -77,6 +77,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
+
 void nrUtils::SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize)
 {
 	msgArrivalCounter[id][signature].NodeSize=nodesize;
@@ -126,8 +127,10 @@ double nrUtils::GetAverageArrivalRate()
 	vector<double>::iterator rit;
 	vector<double> result;
 
+	//每一个Producer
 	for (it1 = msgArrivalCounter.begin(); it1 != msgArrivalCounter.end(); ++it1)
 	{
+		//Producer的每个Signature
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
 		{
 

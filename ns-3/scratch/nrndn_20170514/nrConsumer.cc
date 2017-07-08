@@ -213,7 +213,7 @@ void nrConsumer::SendPacket()
 void nrConsumer::OnData(Ptr<const Data> data)
 {
 	NS_LOG_FUNCTION (this);
-	Ptr<Packet> nrPayload	= data->GetPayload()->Copy();
+	Ptr<Packet> nrPayload = data->GetPayload()->Copy();
 	const Name& name = data->GetName();
 	nrHeader nrheader;
 	nrPayload->RemoveHeader(nrheader);
@@ -227,6 +227,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	//getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
+	//延迟为从数据包发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
@@ -279,13 +280,18 @@ bool nrConsumer::IsInterestData(const Name& name)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	//获取当前路段
 	const std::string& currentLane = sensor->getLane();
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
+	//获取导航路线
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
 
+	//当前路段在导航路线中的位置
 	it =std::find(route.begin(),route.end(),currentLane);
 
+	//name是否会出现在未来的导航路线中
+	//如是，则证明该节点对该数据感兴趣；否则不感兴趣
 	it2=std::find(it,route.end(),name.get(0).toUri());
 
 	return (it2!=route.end());

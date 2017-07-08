@@ -1096,7 +1096,8 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//心跳包位于前方
 	if(msgdirection.second > 0)
 	{
-		if(m_nbChange_mode == 4|| lostForwardNeighbor)
+		//判断条件还有进一步讨论的必要
+		if(m_nbChange_mode > 1|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
@@ -1120,7 +1121,7 @@ void NavigationRouteHeuristic::ProcessHelloToUpdatePIT(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHelloToUpdatePIT)At time "<<Simulator::Now().GetSeconds()<<"当前节点 "<<nodeId<<" 发送心跳包的节点为 "<<sourceId<<endl;
+	cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 当前节点 "<<nodeId<<" 发送心跳包的节点为 "<<sourceId<<"At time "<<Simulator::Now().GetSeconds()<<endl;
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	bool isovertake = false;
 	if(!msgdirection.first || msgdirection.second > 0)
@@ -1129,13 +1130,13 @@ void NavigationRouteHeuristic::ProcessHelloToUpdatePIT(Ptr<Interest> interest)
 		if(isovertake)
 		{
 			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"从后方超车到前方"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 从后方超车到前方"<<endl;
 		}
 	}
 	else if(msgdirection.first && msgdirection.second <= 0)
 	{
 		m_nb.AddNeighborsBehind(sourceId);
-		cout<<"位于当前节点后方"<<endl;
+		cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 位于当前节点后方"<<endl;
 	}
 	cout<<endl;
 }

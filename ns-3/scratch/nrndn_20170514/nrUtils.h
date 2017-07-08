@@ -51,8 +51,8 @@ struct MsgAttribute
 		DisinterestedNodeReceiveCounter(0){}
 	uint32_t NodeSize;
 	uint32_t InterestedNodeSize;
-	uint32_t InterestedNodeReceiveCounter;
-	uint32_t DisinterestedNodeReceiveCounter;
+	uint32_t InterestedNodeReceiveCounter;//节点收到感兴趣数据的数量
+	uint32_t DisinterestedNodeReceiveCounter; //节点收到不感兴趣数据的数量 ？？？？节点为什么会收到不感兴趣的数据
 };
 
 class nrUtils
@@ -68,20 +68,26 @@ public:
 
 	//1. Arrival Condition
 	static MessageArrivalMap msgArrivalCounter;
+	//producer在发送数据包时，需要记录当前活跃节点个数和对该数据包感兴趣的节点个数
 	static std::pair<uint32_t, uint32_t> GetNodeSizeAndInterestNodeSize(uint32_t id,uint32_t signature, const std::string& lane);
+	//设置节点个数
 	static void SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize);
+	//设置感兴趣节点个数
 	static void SetInterestedNodeSize(uint32_t id,uint32_t signature,uint32_t InterestedNodeSize);
+	//consumer对该数据包感兴趣的个数
 	static void IncreaseInterestedNodeCounter(uint32_t id,uint32_t signature);
+	//consumer对该数据包不感兴趣的个数
 	static void IncreaseDisinterestedNodeCounter(uint32_t id,uint32_t signature);
 
 	//2. forward times
-	static ForwardCounterMap forwardCounter;
+	static ForwardCounterMap forwardCounter; //数据包被转发的次数
 	static void IncreaseForwardCounter(uint32_t id,uint32_t signature);
-	static ForwardCounterMap interestForwardCounter;
+	static ForwardCounterMap interestForwardCounter;//兴趣包被转发的次数
 	static void IncreaseInterestForwardCounter(uint32_t id,uint32_t nonce);
 
 	//3. Delay Record
 	static TransmissionDelayMap TransmissionDelayRecord;  //\brief TransmissionDelayRecord[nodeid][signature]=Delay time;
+	//consumer在收到data后，记录传输时间
 	static void InsertTransmissionDelayItem(uint32_t id,uint32_t signature,double delay);
 	static double GetAverageTransmissionDelay();
 
