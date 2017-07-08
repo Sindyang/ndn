@@ -57,7 +57,7 @@ def get_rsu(roads,in_file):
 			roads.remove(road)
 			count1 += 1
 		else:
-			each_part[2] = 'depart="0.00"'
+			#each_part[2] = 'depart="0.00"'
 			line = '\t'+each_part[0]+' '+each_part[1]+' '+each_part[2]+' '+each_part[3]+' '+each_part[4]+' '+each_part[5]+'\n'
 			fw_trip.writelines(line)
 			count2 += 1
