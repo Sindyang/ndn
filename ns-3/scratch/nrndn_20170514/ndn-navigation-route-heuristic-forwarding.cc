@@ -390,8 +390,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else if(currentType == "BUS")
 		{
 			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
-			m_nrpit->UpdateCarPit(remoteRoute, nodeId);
-			//m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
+			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
 		}
 		
 		// Update finish
