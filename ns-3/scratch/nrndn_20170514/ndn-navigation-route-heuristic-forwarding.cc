@@ -331,13 +331,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	
 	//获取优先列表
-	//cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
+	cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		//cout<<*it<<" ";
+		cout<<*it<<" ";
 	}
-	//cout<<endl;
+	cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first

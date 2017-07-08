@@ -243,8 +243,9 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			convertCoordinateToLanePos(x,y);
 	//cout << "(SuNodeSensor.cc-getDistanceWith) convertCoordinateToLanePos" <<endl;
 	const string& remoteLane = remoteInfo.first;
-	const double& remotePos  = remoteInfo.second;//另一节点的位置
+	const double& remotePos  = remoteInfo.second;
 
+	//当前节点所在路段在route中的位置
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
     //cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "localLane " << localLane << endl;
