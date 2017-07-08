@@ -1096,7 +1096,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//心跳包位于前方
 	if(msgdirection.second > 0)
 	{
-		if(m_nbChange_mode > 1|| lostForwardNeighbor)
+		if(m_nbChange_mode == 4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
