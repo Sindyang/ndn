@@ -1012,7 +1012,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//更新邻居列表
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (/*AllowedHelloLoss*/1.1 * HelloInterval));
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
@@ -1101,7 +1101,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			getchar();
 		}*/
 		
-		if(m_nbChange_mode > 1|| lostForwardNeighbor)
+		if(m_nbChange_mode == 4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
