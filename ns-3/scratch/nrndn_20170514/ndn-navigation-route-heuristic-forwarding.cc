@@ -212,7 +212,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -229,11 +229,11 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		if(result.first && result.second >= 0)
 		{
 			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-			//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
 		}
 			
 	}
-	//cout<<endl;
+	cout<<endl;
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
 	for(it=sortlist.begin();it!=sortlist.end();++it)
@@ -241,10 +241,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<" "<<it->second;
-		//cout<<" "<<it->second;
+		cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
+	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<endl;
 	//getchar();
 	return PriorityList;
 }
