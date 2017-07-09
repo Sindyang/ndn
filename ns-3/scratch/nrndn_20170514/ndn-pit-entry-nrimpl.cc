@@ -97,11 +97,11 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 	{
 		m_incomingnbs.erase(incomingnb);
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<std::endl;
 	}
 	else
 	{
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT中"<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT中"<<std::endl;
 	}
 		
 }
