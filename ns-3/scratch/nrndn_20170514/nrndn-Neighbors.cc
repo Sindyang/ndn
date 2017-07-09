@@ -126,7 +126,6 @@ void Neighbors::Purge()
 			if (pred(j->second))
 			{
 				//断开连接
-				setDeleteNeighbor(j->first);
 				NS_LOG_LOGIC("Close link to " << j->first);
 				m_handleLinkFailure(j->first);
 				m_nb.erase(j++);//Remember to postincrement the iterator
@@ -143,17 +142,6 @@ void Neighbors::Purge()
 	m_ntimer.Schedule();
 }
 
-//added by sy
-void Neighbors::setDeleteNeighbor(const uint32_t id)
-{
-	deletenode = id;
-}
-
-//added by sy
-const uint32_t Neighbors::getDeleteNeighbor()
-{
-	return deletenode;
-}
 
 void Neighbors::ScheduleTimer()
 {

@@ -58,10 +58,6 @@ public:
 	void Clear () { m_nb.clear (); }
 	// Cancle m_ntimer.
 	void CancelTimer();
-	//added by sy
-	void setDeleteNeighbor(const uint32_t id);
-	//added by sy
-	const uint32_t getDeleteNeighbor();
 
 	///\name Handle link failure callback
 	//\{
@@ -82,8 +78,6 @@ private:
 	Timer m_ntimer;
 	// hashset of entries, use node id as keys
 	std::unordered_map<uint32_t,Neighbor> m_nb;
-	//added by sy
-	uint32_t deletenode;
 };
 
 } /* namespace nrndn */
