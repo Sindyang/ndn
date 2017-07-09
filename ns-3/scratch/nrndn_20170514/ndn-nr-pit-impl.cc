@@ -203,7 +203,7 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
 	showPit();
-	getchar();
+	//getchar();
 	NS_LOG_DEBUG("update RSUpit:"<<os.str());
 	return true;
 }
