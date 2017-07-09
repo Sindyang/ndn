@@ -1020,6 +1020,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	if(m_sensor->getType() == "BUS")
 	{
+		uint32_t deletenode = m_nb.getDeleteNeighbor();
+		cout<<"(forwarding.cc-ProcessHello) deletenode "<<deletenode<<endl;
+		getchar();
 		return;
 	}
 	

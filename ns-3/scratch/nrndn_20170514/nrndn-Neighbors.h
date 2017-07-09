@@ -58,6 +58,10 @@ public:
 	void Clear () { m_nb.clear (); }
 	// Cancle m_ntimer.
 	void CancelTimer();
+	//added by sy
+	void setDeleteNeighbor(const uint32_t id);
+	//added by sy
+	const uint32_t getDeleteNeighbor();
 
 	///\name Handle link failure callback
 	//\{
@@ -72,6 +76,8 @@ public:
 	  //\}
 	  
 private:
+	//added by sy
+	uint32_t deletenode;
 	// link failure callback
 	Callback<void, uint32_t> m_handleLinkFailure;
 	// Timer for neighbor's list. Schedule Purge().

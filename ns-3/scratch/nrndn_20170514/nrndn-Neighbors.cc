@@ -21,7 +21,8 @@ namespace nrndn
 {
 
 Neighbors::Neighbors(Time delay) :
-		  m_ntimer (Timer::CANCEL_ON_DESTROY)
+		  m_ntimer (Timer::CANCEL_ON_DESTROY),
+		  deletenode(11111)
 {
 	 m_ntimer.SetDelay (delay);
 	 m_ntimer.SetFunction (&Neighbors::Purge, this);
@@ -125,6 +126,7 @@ void Neighbors::Purge()
 			if (pred(j->second))
 			{
 				//断开连接
+				setDeleteNeighbor(j);
 				NS_LOG_LOGIC("Close link to " << j->first);
 				m_handleLinkFailure(j->first);
 				m_nb.erase(j++);//Remember to postincrement the iterator
@@ -139,6 +141,18 @@ void Neighbors::Purge()
 	//Here, See the difference in ns3::AODV::Neighbors
 	m_ntimer.Cancel();
 	m_ntimer.Schedule();
+}
+
+//added by sy
+void Neighbors::setDeleteNeighbor(const uint32_t id)
+{
+	deletenode = id;
+}
+
+//added by sy
+const uint32_t Neighbors::getDeleteNeighbor()
+{
+	return deletenode;
 }
 
 void Neighbors::ScheduleTimer()
