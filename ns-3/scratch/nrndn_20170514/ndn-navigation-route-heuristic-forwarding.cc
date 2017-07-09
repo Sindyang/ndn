@@ -442,7 +442,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			DropInterestePacket(interest);
 		}
 		//getchar();
-		cout<<endl;
+		//cout<<endl;
 	}
 }
 
@@ -819,7 +819,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
-    //cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	//getchar();
 }
 
@@ -1105,7 +1105,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
-	cout<<endl;
+	//cout<<endl;
 }
 
 //added by sy
