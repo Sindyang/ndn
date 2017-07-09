@@ -82,7 +82,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
-	AllowedHelloLoss (1),
+	AllowedHelloLoss (2),
 	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
@@ -300,7 +300,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		if(m_sensor->getType() == "BUS")
 		{
-			//ProcessHelloToUpdatePIT(interest);
+			ProcessHelloToUpdatePIT(interest);
 		}
 		return;
 	}
