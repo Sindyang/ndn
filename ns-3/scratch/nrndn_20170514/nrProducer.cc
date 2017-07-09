@@ -367,7 +367,7 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	//判断lane是否对未来路段感兴趣
 	it2=std::find(it,route.end(),lane);
 	//cout << "(nrProducer.cc-IsInterestLane)" << endl;
-	cout<<"(nrProducer.cc-IsInterestLane) 当前节点为 "<<GetNode()->GetId()<<" "<<it2!=route.end()<<endl;
+	std::cout<<"(nrProducer.cc-IsInterestLane) 当前节点为 "<<GetNode()->GetId()<<" "<<it2!=route.end()<<std::endl;
 	return (it2!=route.end());
 }
 
