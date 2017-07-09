@@ -76,14 +76,14 @@ public:
 	  //\}
 	  
 private:
-	//added by sy
-	uint32_t deletenode;
 	// link failure callback
 	Callback<void, uint32_t> m_handleLinkFailure;
 	// Timer for neighbor's list. Schedule Purge().
 	Timer m_ntimer;
 	// hashset of entries, use node id as keys
 	std::unordered_map<uint32_t,Neighbor> m_nb;
+	//added by sy
+	uint32_t deletenode;
 };
 
 } /* namespace nrndn */
