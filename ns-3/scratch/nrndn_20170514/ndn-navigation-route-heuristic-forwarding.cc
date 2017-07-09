@@ -1020,7 +1020,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
 	
 	if(m_sensor->getType() == "BUS")
 	{
@@ -1036,12 +1036,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
-		//cout<<"邻居增加"<<endl;
+		cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		//cout<<"邻居减少"<<endl;
+		cout<<"邻居减少"<<endl;
 	}
 	else
 	{
@@ -1057,13 +1057,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			//cout<<"邻居变化"<<endl;
+			cout<<"邻居变化"<<endl;
 		}
 	}
 	
 	prenb=m_preNB.getNb().begin();
 	nb=m_nb.getNb().begin();
-	/*cout<<"原来的邻居：";
+	cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1074,21 +1074,21 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<nb->first<<" ";
 	}
 	
-	cout<<"\n转发节点为 "<<forwardNode;*/
+	cout<<"\n转发节点为 "<<forwardNode;
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
 		m_nbChange_mode = 4;
-		//cout<<" 还没有转发节点"<<endl;
+		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
 	{
 		lostForwardNeighbor = true;
-		//cout<<" 转发节点丢失"<<endl;
+		cout<<" 转发节点丢失"<<endl;
 	}
 	else
 	{
-		//cout<<endl;
+		cout<<endl;
 	}
 	
 	//判断心跳包的来源方向
@@ -1105,7 +1105,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
-	//cout<<endl;
+	cout<<endl;
 }
 
 //added by sy
@@ -1148,11 +1148,11 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
     if(interval >= 1)
 	{
 		m_resendInterestTime =  Simulator::Now().GetSeconds();	
-		//cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
+		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
-		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
