@@ -298,10 +298,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		ProcessHello(interest);
-		if(m_sensor->getType() == "BUS")
-		{
-			ProcessHelloToUpdatePIT(interest);
-		}
 		return;
 	}
 	
@@ -1105,39 +1101,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//更新邻居列表
 	m_preNB = m_nb;
 	//getchar();
-	cout<<endl;
-}
-
-//added by sy
-void NavigationRouteHeuristic::ProcessHelloToUpdatePIT(Ptr<Interest> interest)
-{
-	if(!m_running)
-		return;
-	if(m_HelloLogEnable)
-		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
-	
-	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader(nrheader);
-	uint32_t nodeId = m_node->GetId();
-	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 当前节点 "<<nodeId<<" 发送心跳包的节点为 "<<sourceId<<"At time "<<Simulator::Now().GetSeconds()<<endl;
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	bool isovertake = false;
-	if(!msgdirection.first || msgdirection.second > 0)
-	{
-		isovertake = m_nb.IsOverTake(sourceId);
-		if(isovertake)
-		{
-			m_nrpit->DeleteFrontNode(sourceId);
-			cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 从后方超车到前方"<<endl;
-		}
-	}
-	else if(msgdirection.first && msgdirection.second <= 0)
-	{
-		m_nb.AddNeighborsBehind(sourceId);
-		cout<<"(forwarding.cc-ProcessHelloToUpdatePIT) 位于当前节点后方"<<endl;
-	}
 	cout<<endl;
 }
 

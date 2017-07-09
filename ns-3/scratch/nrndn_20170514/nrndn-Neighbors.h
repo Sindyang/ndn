@@ -43,12 +43,6 @@ public:
 	{
 		return m_nb;	
 	}
-	  
-	//added by sy
-	const std::set<uint32_t> getNb_Behind() const 
-	{
-		return m_nb_behind;
-	}
 
 	// Return expire time for neighbor node with identifier id, if exists, else return 0.
 	Time GetExpireTime (uint32_t id);
@@ -56,12 +50,6 @@ public:
 	bool IsNeighbor (uint32_t id);
 	// Update expire time for entry with identifier id, if it exists, else add new entry
 	void Update(const uint32_t& id, const double& x,const double& y,const Time& expire);
-	//added by sy
-	// 添加位于后方的邻居节点
-	void AddNeighborsBehind(const uint32_t id);
-	//added by sy
-	// 判断车辆是否超车
-	bool IsOverTake(const uint32_t id);
 	// Remove all expired entries
 	void Purge ();
 	// Schedule m_ntimer.
@@ -90,9 +78,6 @@ private:
 	Timer m_ntimer;
 	// hashset of entries, use node id as keys
 	std::unordered_map<uint32_t,Neighbor> m_nb;
-	//added by sy 
-	//存储位于后方的邻居
-	std::set<uint32_t> m_nb_behind;
 };
 
 } /* namespace nrndn */
