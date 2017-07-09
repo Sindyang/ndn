@@ -1025,8 +1025,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHello) deletenode "<<deletenode<<endl;
 		}
-	
-		return;
 	}
 	
 	//这部分内容为普通节点判断是否需要重新发送兴趣包以维持链路
