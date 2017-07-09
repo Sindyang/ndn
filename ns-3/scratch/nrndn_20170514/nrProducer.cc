@@ -243,8 +243,7 @@ void nrProducer::OnSendingTrafficData()
 	m_sensor->getLane();
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
-	//siukwan add 2015.8.28
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()<<" Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()<<" 发送数据包:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 
@@ -262,29 +261,17 @@ void nrProducer::OnSendingTrafficData()
 	}
 
 	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
-	//siukwan add 2016.6.28
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) at time "<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	//getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	cout<<"(nrProducer.cc-OnSendingTrafficData) m_prefix.get(0).toUri() "<< m_prefix.get(0).toUri()<<std::endl;
-	//getchar();
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),data->GetSignature(), m_prefix.get(0).toUri());
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetNodeSize"<<std::endl;
-	//getchar();
+	cout<<"(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 "<<size_InterestSize.first<<" 感兴趣的节点总数为 "<<size_InterestSize.second<<std::endl;
+	getchar();
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
-
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) SetInterestedNodeSize"<<std::endl;
-	//getchar();
 	m_face->ReceiveData(data);
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) ReceiveData"<<std::endl;
-	//getchar();
 	m_transmittedDatas(data, this, m_face);
-	//cout<<"(nrProducer.cc-OnSendingTrafficData) m_transmittedDatas"<<std::endl;
-	//getchar();
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)
@@ -367,7 +354,6 @@ bool nrProducer::IsActive()
 
 bool nrProducer::IsInterestLane(const std::string& lane)
 {
-	//cout<<"(nrProducer.cc-IsInterestLane)"<<endl;
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	const std::string& currentLane = sensor->getLane();
@@ -381,7 +367,7 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	//判断lane是否对未来路段感兴趣
 	it2=std::find(it,route.end(),lane);
 	//cout << "(nrProducer.cc-IsInterestLane)" << endl;
-
+	cout<<"(nrProducer.cc-IsInterestLane) 当前节点为 "<<GetNode()->GetId()<<" "<<it2!=route.end()<<endl;
 	return (it2!=route.end());
 }
 
