@@ -240,7 +240,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
 		std::cout<<"(nrConsumer.cc-OnData) 当前节点对该数据包不感兴趣"<<std::endl;
 	}
-		
+	std::cout<<std::endl;
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
 }
 
