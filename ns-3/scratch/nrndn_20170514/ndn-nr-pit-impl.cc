@@ -208,21 +208,6 @@ bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32
 	return true;
 }
 
-//added by sy
-void NrPitImpl::DeleteFrontNode(uint32_t& id)
-{
-	std::vector<Ptr<Entry> >::iterator pit;
-	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
-	{
-		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
-		//std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 当前PIT表项为 "<<pitName.toUri()<<std::endl;
-		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-		pitEntry->CleanPITNeighbors(id);
-	}
-	showPit();
-	getchar();
-}
-
 void 
 NrPitImpl::showPit()
 {
