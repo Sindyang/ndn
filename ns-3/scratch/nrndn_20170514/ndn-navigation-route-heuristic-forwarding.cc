@@ -1024,7 +1024,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(deletenode != 11111)
 		{
 			cout<<"(forwarding.cc-ProcessHello) deletenode "<<deletenode<<endl;
-		    getchar();
 		}
 	
 		return;
@@ -1107,7 +1106,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	//更新邻居列表
 	m_preNB = m_nb;
-	//getchar();
+	getchar();
 	cout<<endl;
 }
 
