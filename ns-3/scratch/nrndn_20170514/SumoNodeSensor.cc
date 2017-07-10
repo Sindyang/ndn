@@ -255,6 +255,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		Vector 	localPos = GetObject<MobilityModel>()->GetPosition();
 		localPos.z=0;//Just in case
 		Vector remotePos(x,y,0);
+		
 		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
 	}
 
