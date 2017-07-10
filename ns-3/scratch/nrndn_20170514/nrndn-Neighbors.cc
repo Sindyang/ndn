@@ -21,8 +21,7 @@ namespace nrndn
 {
 
 Neighbors::Neighbors(Time delay) :
-		  m_ntimer (Timer::CANCEL_ON_DESTROY),
-		  deletenode(11111)
+		  m_ntimer (Timer::CANCEL_ON_DESTROY)
 {
 	 m_ntimer.SetDelay (delay);
 	 m_ntimer.SetFunction (&Neighbors::Purge, this);
@@ -64,7 +63,7 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 {
 	//std::cout<<"进入(Neighbors.cc-Update)"<<std::endl;
 	//std::cout<<"(Neighbors.cc-Update)发送该心跳包的NodeId为: "<<id<<std::endl;
-	
+	std::cout<<"(nrndn-Neighbors.cc-Update) expire "<<expire<<std::endl;
 	std::unordered_map<uint32_t,Neighbor>::iterator it = m_nb.find(id);
 	if (it != m_nb.end())
 	{
@@ -100,6 +99,29 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	}
 	//std::cout<<std::endl;
 	
+}
+
+//added by sy
+//该节点位于当前节点前方
+void Neighbors::AddRSUFrontNeighbors(uint32_t id)
+{
+	m_nb_front.insert(id);
+}
+
+//added by sy
+//该节点已经不在前方邻居中，删除该节点
+void Neighbors::DeleteRSUFrontNeighbors(uint32_t id)
+{
+	std::set<uint32_t>::iterator it = m_nb_front.find(id);
+	if(it != m_nb_front.end())
+	{
+		m_nb_front.erase(it);
+		std::cout<<"(nrndn-Neighbors.cc-DeleteFrontNeighbors) 节点 "<<*it<<"已删除"<<std::endl;
+	}
+	else
+	{
+		std::cout<<"(nrndn-Neighbor.cc-DeleteFrontNeighbors) 节点 "<<id<<"不在当前节点前方"<<std::endl;
+	}
 }
 
 

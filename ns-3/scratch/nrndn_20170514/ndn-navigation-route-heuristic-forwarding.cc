@@ -1012,13 +1012,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//更新邻居列表
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	                                                                         //changed by sy
+	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (/*AllowedHelloLoss*/3 * HelloInterval));
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
-	//这部分内容为普通节点判断是否需要重新发送兴趣包以维持链路
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -1034,16 +1034,39 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		m_nbChange_mode = 1;
 		cout<<"邻居减少"<<endl;
+		//删除已经不在RSU前方的邻居
+		if(m_sensor->getType() == "BUS")
+		{
+			for(;prenb != m_preNB.getNb().end();prenb++)
+			{
+				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					m_nb.DeleteRSUFrontNeighbors(prenb->first);
+				}
+			}
+		}
 	}
 	else
 	{
 		bool nbChange=false;
-		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
+		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
 		{
+			 //寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
-			{   //寻找上次的邻居，看看能不能找到，找不到证明变化了
-				nbChange=true;
-				break;
+			{  
+				//删除已经不在RSU前方的邻居
+				if(m_sensor->getType() == "BUS")
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					m_nb.DeleteRSUFrontNeighbors(prenb->first);
+				}
+				else
+				{
+					nbChange=true;
+				    break;
+				}
+				
 			}
 		}
 		if(nbChange)
@@ -1085,11 +1108,19 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"(forwarding.cc-ProcessHello) 心跳包的来源方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	//心跳包位于前方
+	//之前的条件为msgdirection.second > 0 ，现在又添加了msgdirection.first，保证了绝对位于前方
 	if(msgdirection.second > 0)
 	{
+		//添加位于RSU前方的邻居节点
+		if(m_sensor->getType() == "BUS")
+		{
+			m_nb.AddRSUFrontNeighbors(sourceId);
+		}
+		
 		//判断条件还有进一步讨论的必要
-		if(m_nbChange_mode > 1|| lostForwardNeighbor)
+		if(m_nbChange_mode == 4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
@@ -1102,6 +1133,12 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
+	//RSU不用发送兴趣包
+	if(m_sensor->getType() == "BUS")
+	{
+		return;
+	}
+	
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
     if(interval >= 1)
