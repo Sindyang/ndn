@@ -44,12 +44,6 @@ public:
 		return m_nb;	
 	}
 	
-	//added by sy
-	const std::set<uint32_t> getRSUNbFront() const
-	{
-		return m_nb_front;
-	}
-
 	// Return expire time for neighbor node with identifier id, if exists, else return 0.
 	Time GetExpireTime (uint32_t id);
 	// Check that node with identifier id  is neighbor
@@ -90,7 +84,7 @@ private:
 	std::unordered_map<uint32_t,Neighbor> m_nb;
 	//added by sy
 	//位于RSU前方的邻居节点
-	set<uint32_t> m_nb_front;
+	std::set<uint32_t> m_nb_front;
 };
 
 } /* namespace nrndn */
