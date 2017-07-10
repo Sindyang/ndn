@@ -1018,7 +1018,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
 	
-	//这部分内容为普通节点判断是否需要重新发送兴趣包以维持链路
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -1033,16 +1032,35 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		m_nbChange_mode = 1;
 		cout<<"邻居减少"<<endl;
+		if(m_sensor->getType() == "BUS")
+		{
+			for(;prenb != m_preNB.getNb().end();prenb++)
+			{
+				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+				}
+			}
+		}
 	}
 	else
 	{
 		bool nbChange=false;
-		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
+		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
 		{
+			 //寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
-			{   //寻找上次的邻居，看看能不能找到，找不到证明变化了
-				nbChange=true;
-				break;
+			{  
+				if(m_sensor->getType() == "BUS")
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+				}
+				else
+				{
+					nbChange=true;
+				    break;
+				}
+				
 			}
 		}
 		if(nbChange)
