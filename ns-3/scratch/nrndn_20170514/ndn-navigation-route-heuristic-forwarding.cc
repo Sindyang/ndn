@@ -1016,7 +1016,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	m_nbChange_mode=0;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -1038,7 +1038,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<"At time "<<Simulator::Now().GetSeconds()<<endl;
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
 				}
 			}
 		}
@@ -1053,7 +1053,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{  
 				if(m_sensor->getType() == "BUS")
 				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<"At time "<<Simulator::Now().GetSeconds()<<endl;
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
 				}
 				else
 				{
