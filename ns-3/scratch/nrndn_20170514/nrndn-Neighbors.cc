@@ -103,14 +103,14 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 
 //added by sy
 //该节点位于当前节点前方
-void Neighbors::AddFrontNeighbors(uint32_t id)
+void Neighbors::AddRSUFrontNeighbors(uint32_t id)
 {
 	m_nb_front.insert(id);
 }
 
 //added by sy
 //该节点已经不在前方邻居中，删除该节点
-void Neighbors::DeleteFrontNeighbors(uint32_t id)
+void Neighbors::DeleteRSUFrontNeighbors(uint32_t id)
 {
 	std::set<uint32_t>::iterator it = m_nb_front.find(id);
 	if(it != m_nb_front.end())
