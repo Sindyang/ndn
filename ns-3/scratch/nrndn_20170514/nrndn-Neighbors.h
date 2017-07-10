@@ -43,6 +43,12 @@ public:
 	{
 		return m_nb;	
 	}
+	
+	//added by sy
+	const std::set<uint32_t> getRSUNbFront() const
+	{
+		return m_nb_front;
+	}
 
 	// Return expire time for neighbor node with identifier id, if exists, else return 0.
 	Time GetExpireTime (uint32_t id);
@@ -58,6 +64,10 @@ public:
 	void Clear () { m_nb.clear (); }
 	// Cancle m_ntimer.
 	void CancelTimer();
+	//added by sy
+	void AddRSUFrontNeighbors(uint32_t id);
+	//added by sy
+	void DeleteRSUFrontNeighbors(uint32_t id);
 
 	///\name Handle link failure callback
 	//\{
@@ -78,6 +88,9 @@ private:
 	Timer m_ntimer;
 	// hashset of entries, use node id as keys
 	std::unordered_map<uint32_t,Neighbor> m_nb;
+	//added by sy
+	//位于RSU前方的邻居节点
+	set<uint32_t> m_nb_front;
 };
 
 } /* namespace nrndn */
