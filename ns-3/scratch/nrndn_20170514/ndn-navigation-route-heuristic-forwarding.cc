@@ -47,7 +47,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (2),
+	            UintegerValue (3),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 
@@ -82,7 +82,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
-	AllowedHelloLoss (2),
+	AllowedHelloLoss (3),
 	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
@@ -1013,7 +1013,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	//更新邻居列表
 	                                                                         //changed by sy
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (/*AllowedHelloLoss*/3 * HelloInterval));
+	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
