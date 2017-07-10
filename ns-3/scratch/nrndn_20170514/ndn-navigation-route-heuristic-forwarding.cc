@@ -1111,7 +1111,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) 心跳包的来源方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	//心跳包位于前方
 	//之前的条件为msgdirection.second > 0 ，现在又添加了msgdirection.first，保证了绝对位于前方
-	if(msgdirection.second > 0)
+	if(msgdirection.first && msgdirection.second > 0)
 	{
 		//添加位于RSU前方的邻居节点
 		if(m_sensor->getType() == "BUS")
