@@ -1038,7 +1038,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<"At time "<<Simulator::Now().GetSeconds()<<endl;
 				}
 			}
 		}
@@ -1053,7 +1053,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{  
 				if(m_sensor->getType() == "BUS")
 				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<"At time "<<Simulator::Now().GetSeconds()<<endl;
 				}
 				else
 				{
