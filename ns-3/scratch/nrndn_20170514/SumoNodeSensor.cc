@@ -250,8 +250,16 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	//当前节点所在路段在route中的位置
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
-    cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "localLane " << localLane << endl;
-	cout << "(SumoNodeSensor.cc-getDistanceWith)"<< "remoteLane " << remoteLane << endl;
+
+	if(localLaneIterator == route.end())
+	{
+		cout<<"(SumoNodeSensor.cc-getDistanceWith) localLane位于其他路段"<<endl;
+	}
+	if(remoteLaneIterator == route.end())
+	{
+		cout<<"(SumoNodeSensor.cc-getDistanceWith) remoteLane位于其他路段"<<endl;
+	}
+	
 
 	if(remoteLaneIterator==route.end()||
 			localLaneIterator==route.end())
@@ -259,7 +267,6 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		Vector 	localPos = GetObject<MobilityModel>()->GetPosition();
 		localPos.z=0;//Just in case
 		Vector remotePos(x,y,0);
-		//cout <<"(SumoNodeSensor.cc-getDistanceWith) "<< "CalculateDistance " << endl;
 		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
 	}
 
