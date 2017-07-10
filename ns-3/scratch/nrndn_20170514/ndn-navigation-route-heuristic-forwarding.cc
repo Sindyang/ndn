@@ -1102,6 +1102,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
+	if(sourceId == 78 && nodeId == 19)
+	{
+		cout<<"(forwarding.cc-ProcessHello) 心跳包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	}
 	//心跳包位于前方
 	if(msgdirection.second > 0)
 	{
