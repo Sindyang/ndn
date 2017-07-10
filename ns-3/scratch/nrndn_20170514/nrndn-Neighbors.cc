@@ -120,7 +120,7 @@ void Neighbors::DeleteRSUFrontNeighbors(uint32_t id)
 	}
 	else
 	{
-		std::cout<<"(nrndn-Neighbor.cc-DeleteFrontNeighbors) 节点 "<<id<<"不在当前节点前方"<<endl;
+		std::cout<<"(nrndn-Neighbor.cc-DeleteFrontNeighbors) 节点 "<<id<<"不在当前节点前方"<<std::endl;
 	}
 }
 
