@@ -1035,7 +1035,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		m_nbChange_mode = 1;
 		cout<<"邻居减少"<<endl;
 		//删除已经不在RSU前方的邻居
-		if(m_sensor->getType() == "BUS")
+		/*if(m_sensor->getType() == "BUS")
 		{
 			for(;prenb != m_preNB.getNb().end();prenb++)
 			{
@@ -1045,7 +1045,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				}
 			}
-		}
+		}*/
 	}
 	else
 	{
@@ -1059,7 +1059,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				if(m_sensor->getType() == "BUS")
 				{
 					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
-					m_nb.DeleteRSUFrontNeighbors(prenb->first);
+					//m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				}
 				else
 				{
@@ -1093,7 +1093,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		m_nbChange_mode = 4;
+		//m_nbChange_mode = 4;
 		cout<<" 还没有转发节点"<<endl;
 	}
 	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
@@ -1116,7 +1116,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//添加位于RSU前方的邻居节点
 		if(m_sensor->getType() == "BUS")
 		{
-			m_nb.AddRSUFrontNeighbors(sourceId);
+			//m_nb.AddRSUFrontNeighbors(sourceId);
 		}
 		
 		//判断条件还有进一步讨论的必要
