@@ -1119,7 +1119,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		
 		//判断条件还有进一步讨论的必要
-		if(m_nbChange_mode > 1|| lostForwardNeighbor)
+		if(m_nbChange_mode == 4|| lostForwardNeighbor)
 		{
 			notifyUpperOnInterest();
 		}
