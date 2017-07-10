@@ -22,7 +22,6 @@ namespace nrndn
 
 Neighbors::Neighbors(Time delay) :
 		  m_ntimer (Timer::CANCEL_ON_DESTROY),
-		  deletenode(11111)
 {
 	 m_ntimer.SetDelay (delay);
 	 m_ntimer.SetFunction (&Neighbors::Purge, this);
