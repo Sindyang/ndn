@@ -245,7 +245,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<"At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
 }
@@ -1104,8 +1104,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-		forwardNode = 6666666;
-		notifyUpperOnInterest();
+		if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+		{
+			notifyUpperOnInterest();
+			forwardNode = 6666666;
+		}
 	}
 	m_preNB = m_nb;
 	cout<<endl;
