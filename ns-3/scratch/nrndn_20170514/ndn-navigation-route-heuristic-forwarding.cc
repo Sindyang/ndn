@@ -318,7 +318,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode = forwardId;
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
-		//getchar();
+		const vector<string> route	= ExtractRouteFromName(interest->GetName());
+		vector<string> ::iterator it;
+		for(it = route.begin(); it != route.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<endl;
+		getchar();
 	}
 
 	//If the interest packet has already been sent, do not proceed the packet
