@@ -1096,6 +1096,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(m_sensor->getType() == "BUS")
 		{
+			cout<<"(forwarding.cc-ProcessHello) 添加位于RSU前方的邻居节点"<<endl;
 			m_nb.AddRSUFrontNeighbors(sourceId);
 		}
 	}
