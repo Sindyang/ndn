@@ -90,14 +90,6 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 			value_type(id,Neighbor(x, y,expire + Simulator::Now ())));
 
 	Purge ();
-	
-	std::cout<<"(nrndn-Neighbors.cc-Update) 输出邻居内容 ";
-	for(it = m_nb.begin();it != m_nb.end();it++)
-	{
-		std::cout<<it->first<<" ("<<it->second.m_x<<" "<<it->second.m_y<<") ";
-	}
-	std::cout<<std::endl;
-	
 }
 
 //added by sy
