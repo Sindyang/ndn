@@ -1152,6 +1152,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<endl;
 }
 
+void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
+{
+	
+}
+
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
 	//RSU不用发送兴趣包
