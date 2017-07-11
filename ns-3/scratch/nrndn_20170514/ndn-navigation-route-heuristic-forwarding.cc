@@ -1055,7 +1055,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{  
-				cout<<"111111111111111111111111111111111111111111111111111111111"<<endl;
+				cout<<"3333333333333333333333333333333333333333333333333333333"<<endl;
 				//删除已经不在RSU前方的邻居
 				if(m_sensor->getType() == "BUS")
 				{

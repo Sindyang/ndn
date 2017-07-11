@@ -125,6 +125,7 @@ const std::string& SumoNodeSensor::getType()
 	uint32_t m_id = node->GetId();
 	if(&m_sumodata->GetTrace(m_id,pos)==NULL)
 		return emptyType;
+	cout<<m_sumodata->GetTrace(m_id,pos).type<<endl;
 	return m_sumodata->GetTrace(m_id,pos).type;
 }
 
