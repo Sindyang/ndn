@@ -374,7 +374,7 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	}
 	else
 	{
-		std::cout<<" 对该路段不感兴趣"<<std::endl;
+		//std::cout<<" 对该路段不感兴趣"<<std::endl;
 	}
 	return (it2!=route.end());
 }
