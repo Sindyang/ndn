@@ -44,7 +44,6 @@ namespace nrndn
 class NavigationRouteHeuristic: public GreenYellowRed
 {
 public: 
-    int m_nbChange_mode;
 	static TypeId
 	GetTypeId(void);
 

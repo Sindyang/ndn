@@ -1051,40 +1051,46 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	if(msgdirection.first && msgdirection.second)
+	
+	//还没有转发节点
+	if(forwardNode == 6666666)
 	{
-		if(forwardNode == 6666666)
+		cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
+		if(m_nbChange_mode > 1)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
 			notifyUpperOnInterest();
-			return;
 		}
-		if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+		return;
+	}
+	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	{
+		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+		//判断转发节点所在路段和方向
+		if(sourceId == forwardNode)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
-			//判断转发节点所在路段和方向
-			if(sourceId == forwardNode)
+			pair<bool, double> msg = packetFromDirection(interest);
+			if(msg.first && msg.second >= 0)
 			{
-				pair<bool, double> msgdirection = packetFromDirection(interest);
-				if(msgdirection.first && msgdirection.second)
-				{
 					cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
-				}
-				else if(!msgdirection.first)
+			}
+			else if(!msg.first)
+			{
+				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
+				if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 				{
-					cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 					notifyUpperOnInterest();
 				}
 			}
 		}
-		else
+	}
+	else
+	{
+		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+		if(m_nbChange_mode > 1)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 			notifyUpperOnInterest();
 		}
 	}
-	
-	
 	m_preNB = m_nb;
 }
 
