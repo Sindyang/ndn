@@ -224,7 +224,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	{
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		cout<<nb->first<<" ("<<result->first<<" "<<result->second<<") ";
+		cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 		
 		// Be careful with the order, increasing or descending?
 		if(result.first && result.second >= 0)
