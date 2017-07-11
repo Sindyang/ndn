@@ -1033,14 +1033,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(sourceId == forwardNode)
 		{
 			pair<bool, double> msgdirection = packetFromDirection(interest);
-			if(msgdirection.first && msgdirection.second)
+			if(msgdirection.first && msgdirection.second >= 0)
 			{
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
 			}
-			else
+			else if(!msgdirection.first)
 			{
-				cout<<"(forwarding.cc-ProcessHello)"<<msgdirection.first<<" "<<msgdirection.second<<endl;
-				cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点其他路段或后方"<<endl;
+				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 				notifyUpperOnInterest();
 			}
 		}
