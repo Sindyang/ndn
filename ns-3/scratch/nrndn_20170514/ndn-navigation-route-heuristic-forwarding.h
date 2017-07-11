@@ -226,7 +226,7 @@ private:
 	 *          the front and behind is Only base on the moving direction of received Packet
 	 * \return	(true,+value) if it is from the front
 	 * 			(true,-value) if it is from behind
-	 * 			(false,-1)    if it is not on the route of the packet 
+	 * 			(false,-1)    if it is not on the route of the packet //sy: 并不为-1，而是正数 
 	 *
 	*/
 	pair<bool, double>
