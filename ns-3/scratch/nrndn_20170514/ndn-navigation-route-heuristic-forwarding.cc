@@ -1076,10 +1076,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			else if(!msg.first)
 			{
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-				if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
-				{
+				//if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+				//{
 					notifyUpperOnInterest();
-				}
+				//}
 			}
 		}
 	}
