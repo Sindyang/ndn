@@ -1049,9 +1049,24 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
+	prenb=m_preNB.getNb().begin();
+	nb=m_nb.getNb().begin();
+	cout<<"原来的邻居：";
+	for(; prenb!=m_preNB.getNb().end();++prenb)
+	{
+		cout<<prenb->first<<" ";
+	}
+	cout<<"\n现在的邻居：";
+	for(;nb != m_nb.getNb().end();++nb)
+	{
+		cout<<nb->first<<" ";
+	}
+	
+	cout<<"\n转发节点为 "<<forwardNode;
+	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	
+	cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	//还没有转发节点
 	if(forwardNode == 6666666)
 	{
@@ -1069,6 +1084,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(sourceId == forwardNode)
 		{
 			pair<bool, double> msg = packetFromDirection(interest);
+			cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
 			if(msg.first && msg.second >= 0)
 			{
 					cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
