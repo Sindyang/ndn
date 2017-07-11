@@ -1090,6 +1090,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			if(msg.first && msg.second >= 0)
 			{
 					cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
+					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+					{
+						notifyUpperOnInterest();
+					}
 			}
 			else if(!msg.first)
 			{
@@ -1104,7 +1108,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0)
+		if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 		{
 			notifyUpperOnInterest();
 			forwardNode = 6666666;
