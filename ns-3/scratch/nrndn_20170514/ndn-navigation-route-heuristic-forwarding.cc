@@ -1031,17 +1031,39 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		m_nbChange_mode = 1;
 		cout<<"邻居减少"<<endl;
+		
+		//删除已经不在RSU前方的邻居
+		if(m_sensor->getType() == "BUS")
+		{
+			for(;prenb != m_preNB.getNb().end();prenb++)
+			{
+				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					m_nb.DeleteRSUFrontNeighbors(prenb->first);
+				}
+			}
+		}
 	}
 	else
 	{
 		bool nbChange=false;
 		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
 		{
-			 //寻找上次的邻居，看看能不能找到，找不到证明变化了
-			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
+			//寻找上次的邻居，看看能不能找到，找不到证明变化了
+			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{  
-				nbChange=true;
-				break;
+				//删除已经不在RSU前方的邻居
+				if(m_sensor->getType() == "BUS")
+				{
+					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+					m_nb.DeleteRSUFrontNeighbors(prenb->first);
+				}
+				else
+				{
+					nbChange=true;
+				    break;
+				}
 			}
 		}
 		if(nbChange)
@@ -1051,8 +1073,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	prenb=m_preNB.getNb().begin();
-	nb=m_nb.getNb().begin();
+	prenb = m_preNB.getNb().begin();
+	nb = m_nb.getNb().begin();
 	cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
@@ -1063,12 +1085,21 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	
 	cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
+	//添加位于RSU前方的邻居节点
+	if(msgdirection.first && msgdirection.second > 0)
+	{
+		if(m_sensor->getType() == "BUS")
+		{
+			m_nb.AddRSUFrontNeighbors(sourceId);
+		}
+	}
+	
 	//还没有转发节点
 	if(forwardNode == 6666666)
 	{
@@ -1079,6 +1110,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		return;
 	}
+	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
