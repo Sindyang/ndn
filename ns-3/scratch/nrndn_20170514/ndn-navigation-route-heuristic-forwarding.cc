@@ -318,13 +318,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode = forwardId;
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
-		const vector<string> route	= ExtractRouteFromName(interest->GetName());
-		vector<string> ::const_iterator it;
-		for(it = route.begin(); it != route.end();it++)
-		{
-			cout<<*it<<" ";
-		}
-		cout<<endl;
 		getchar();
 	}
 
@@ -1083,10 +1076,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			else if(!msg.first)
 			{
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-				if(m_nbChange_mode > 1)
-				{
+				//if(m_nbChange_mode > 1)
+				//{
 					notifyUpperOnInterest();
-				}
+				//}
 			}
 		}
 	}
