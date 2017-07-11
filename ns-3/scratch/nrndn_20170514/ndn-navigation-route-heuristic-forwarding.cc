@@ -82,7 +82,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
-	AllowedHelloLoss (3),
+	AllowedHelloLoss (3),//changed by sy 车辆会在2s<间隔<3s的时间内接收到同一车辆发送的心跳包
 	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
@@ -999,136 +999,42 @@ NavigationRouteHeuristic::SendHello()
 	//cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
 }
 
-void
-NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
+void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
-	if(!m_running) 
+	if(!m_running){
 		return;
-
+	}
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
-
+	
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
-	//更新邻居列表
-	                                                                         //changed by sy
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
 	uint32_t nodeId = m_node->GetId();
 	uint32_t sourceId = nrheader.getSourceId();
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	
-	m_nbChange_mode=0;
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
-	//邻居数目减少
-	if(m_preNB.getNb().size()<m_nb.getNb().size())
-	{   
-		m_nbChange_mode = 2;
-		cout<<"邻居增加"<<endl;
-	}
-	else if(m_preNB.getNb().size()>m_nb.getNb().size())
-	{
-		m_nbChange_mode = 1;
-		cout<<"邻居减少"<<endl;
-		//删除已经不在RSU前方的邻居
-		/*if(m_sensor->getType() == "BUS")
-		{
-			for(;prenb != m_preNB.getNb().end();prenb++)
-			{
-				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
-				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
-					m_nb.DeleteRSUFrontNeighbors(prenb->first);
-				}
-			}
-		}*/
-	}
-	else
-	{
-		bool nbChange=false;
-		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
-		{
-			 //寻找上次的邻居，看看能不能找到，找不到证明变化了
-			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
-			{  
-				//删除已经不在RSU前方的邻居
-				if(m_sensor->getType() == "BUS")
-				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
-					//m_nb.DeleteRSUFrontNeighbors(prenb->first);
-				}
-				else
-				{
-					nbChange=true;
-				    break;
-				}
-				
-			}
-		}
-		if(nbChange)
-		{   //邻居变化，发送兴趣包
-			m_nbChange_mode = 3;
-			cout<<"邻居变化"<<endl;
-		}
-	}
+	//更新邻居列表
+	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
-	prenb=m_preNB.getNb().begin();
-	nb=m_nb.getNb().begin();
-	cout<<"原来的邻居：";
-	for(; prenb!=m_preNB.getNb().end();++prenb)
-	{
-		cout<<prenb->first<<" ";
-	}
-	cout<<"\n现在的邻居：";
-	for(;nb != m_nb.getNb().end();++nb)
-	{
-		cout<<nb->first<<" ";
-	}
-	
-	cout<<"\n转发节点为 "<<forwardNode;
-	bool lostForwardNeighbor = false;
 	if(forwardNode == 6666666)
 	{
-		//m_nbChange_mode = 4;
-		cout<<" 还没有转发节点"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
+		notifyUpperOnInterest();
+		return;
 	}
-	else if(m_nb.getNb().find(forwardNode) == m_nb.getNb().end())
+	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
-		lostForwardNeighbor = true;
-		cout<<" 转发节点丢失"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 	}
 	else
 	{
-		cout<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+		notifyUpperOnInterest();
 	}
-	
-	//判断心跳包的来源方向
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-ProcessHello) 心跳包的来源方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-	//心跳包位于前方
-	//之前的条件为msgdirection.second > 0 ，现在又添加了msgdirection.first，保证了绝对位于前方
-	if(/*msgdirection.first && */msgdirection.second > 0)
-	{
-		//添加位于RSU前方的邻居节点
-		if(m_sensor->getType() == "BUS")
-		{
-			//m_nb.AddRSUFrontNeighbors(sourceId);
-		}
-		
-		//判断条件还有进一步讨论的必要
-		if(forwardNode == 6666666|| lostForwardNeighbor)
-		{
-			notifyUpperOnInterest();
-		}
-	}
-	//更新邻居列表
-	m_preNB = m_nb;
-	getchar();
-	cout<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
