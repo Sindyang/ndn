@@ -1016,6 +1016,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	const std::string& currentType = m_sensor->getType();
+	cout<<currentType<<endl;
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
@@ -1033,7 +1035,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<"邻居减少"<<endl;
 		
 		//删除已经不在RSU前方的邻居
-		if(m_sensor->getType() == "BUS")
+		if(currentType == "BUS")
 		{
 			cout<<"111111111111111111111111111111111111111111111111111111111"<<endl;
 			for(;prenb != m_preNB.getNb().end();prenb++)
@@ -1057,7 +1059,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{  
 				cout<<"3333333333333333333333333333333333333333333333333333333"<<endl;
 				//删除已经不在RSU前方的邻居
-				if(m_sensor->getType() == "BUS")
+				if(currentType == "BUS")
 				{
 					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
 					m_nb.DeleteRSUFrontNeighbors(prenb->first);
@@ -1097,7 +1099,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//添加位于RSU前方的邻居节点
 	if(msgdirection.first && msgdirection.second > 0)
 	{
-		if(m_sensor->getType() == "BUS")
+		if(currentType == "BUS")
 		{
 			cout<<"(forwarding.cc-ProcessHello) 添加位于RSU前方的邻居节点"<<endl;
 			m_nb.AddRSUFrontNeighbors(sourceId);
