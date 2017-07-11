@@ -1086,10 +1086,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-		if(m_nbChange_mode > 1)
-		{
-			notifyUpperOnInterest();
-		}
+		notifyUpperOnInterest();
 	}
 	m_preNB = m_nb;
 }
