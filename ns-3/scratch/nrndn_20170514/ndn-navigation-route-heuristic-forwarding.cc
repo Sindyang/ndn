@@ -1062,7 +1062,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<nb->first<<" ";
 	}
 	
-	cout<<"\n转发节点为 "<<forwardNode;
+	cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1092,10 +1092,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			else if(!msg.first)
 			{
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-				if(msgdirection.first && msgdirection.second >= 0)
-				{
+				//if(msgdirection.first && msgdirection.second >= 0)
+				//{
 					notifyUpperOnInterest();
-				}
+				//}
 			}
 		}
 	}
