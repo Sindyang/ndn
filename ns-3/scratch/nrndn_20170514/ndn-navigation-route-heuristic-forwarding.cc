@@ -1104,7 +1104,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-		if(msgdirection.second >= 0)
+		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
 			forwardNode = 6666666;
