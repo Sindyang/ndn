@@ -1015,12 +1015,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	int m_nbChange_mode = 0;
 	
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
-	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
@@ -1035,8 +1035,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//删除已经不在RSU前方的邻居
 		if(m_sensor->getType() == "BUS")
 		{
+			cout<<"111111111111111111111111111111111111111111111111111111111"<<endl;
 			for(;prenb != m_preNB.getNb().end();prenb++)
 			{
+				cout<<"22222222222222222222222222222222222222222222"<<endl;
 				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 				{
 					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
@@ -1053,6 +1055,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{  
+				cout<<"111111111111111111111111111111111111111111111111111111111"<<endl;
 				//删除已经不在RSU前方的邻居
 				if(m_sensor->getType() == "BUS")
 				{
