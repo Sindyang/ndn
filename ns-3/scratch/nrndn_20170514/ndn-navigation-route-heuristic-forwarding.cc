@@ -1029,6 +1029,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+		//判断转发节点所在路段和方向
 		if(sourceId == forwardNode)
 		{
 			pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1038,6 +1039,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 			else
 			{
+				cout<<"(forwarding.cc-ProcessHello)"<<msgdirection.first<<" "<<msgdirection.second<<endl;
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点其他路段或后方"<<endl;
 				notifyUpperOnInterest();
 			}
