@@ -298,7 +298,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		ProcessHello(interest);
+		if(m_sensor->getType() == "BUS")
+		{
+			ProcessHelloRSU(interest);
+		}
+		else
+		{
+			ProcessHello(interest);
+		}
 		return;
 	}
 	
@@ -1156,68 +1163,36 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
-	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	const std::string& currentType = m_sensor->getType();
-	cout<<currentType<<endl;
+	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
-		m_nbChange_mode = 2;
+		if(msgdirection.first && msgdirection.second)
+		{
+			cout<<"(forwarding.cc-ProcessHello) 添加位于RSU前方的邻居节点"<<endl;
+			m_nb.AddRSUFrontNeighbors(sourceId);
+		}
 		cout<<"邻居增加"<<endl;
 	}
-	else if(m_preNB.getNb().size()>m_nb.getNb().size())
+	else//邻居数目减少或不变
 	{
-		m_nbChange_mode = 1;
-		cout<<"邻居减少"<<endl;
-		
-		//删除已经不在RSU前方的邻居
-		if(currentType == "BUS")
+		for(;prenb != m_preNB.getNb().begin();prenb++)
 		{
-			cout<<"111111111111111111111111111111111111111111111111111111111"<<endl;
-			for(;prenb != m_preNB.getNb().end();prenb++)
-			{
-				cout<<"22222222222222222222222222222222222222222222"<<endl;
-				if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
-				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
-					m_nb.DeleteRSUFrontNeighbors(prenb->first);
-				}
-			}
-		}
-	}
-	else
-	{
-		bool nbChange=false;
-		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
-		{
-			//寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
-			{  
-				cout<<"3333333333333333333333333333333333333333333333333333333"<<endl;
-				//删除已经不在RSU前方的邻居
-				if(currentType == "BUS")
-				{
-					cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
-					m_nb.DeleteRSUFrontNeighbors(prenb->first);
-				}
-				else
-				{
-					nbChange=true;
-				    break;
-				}
+			{
+				cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 			}
-		}
-		if(nbChange)
-		{   //邻居变化，发送兴趣包
-			m_nbChange_mode = 3;
-			cout<<"邻居变化"<<endl;
 		}
 	}
 	
@@ -1233,76 +1208,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	cout<<"\n转发节点为 "<<forwardNode<<endl;
-	
-	//判断心跳包的来源方向
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-	
-	//添加位于RSU前方的邻居节点
-	if(msgdirection.first && msgdirection.second > 0)
-	{
-		if(currentType == "BUS")
-		{
-			cout<<"(forwarding.cc-ProcessHello) 添加位于RSU前方的邻居节点"<<endl;
-			m_nb.AddRSUFrontNeighbors(sourceId);
-		}
-	}
-	
-	//还没有转发节点
-	if(forwardNode == 6666666)
-	{
-		cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
-		{
-			notifyUpperOnInterest();
-		}
-		return;
-	}
-	//转发节点存在
-	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
-	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
-		//判断转发节点所在路段和方向
-		if(sourceId == forwardNode)
-		{
-			pair<bool, double> msg = packetFromDirection(interest);
-			cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
-			if(msg.first && msg.second >= 0)
-			{
-					cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
-			}
-			else if(!msg.first)
-			{
-				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-				if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
-				{
-					notifyUpperOnInterest();
-				}
-			}
-		}
-	}
-	else
-	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0)
-		{
-			notifyUpperOnInterest();
-			forwardNode = 6666666;
-		}
-	}
 	m_preNB = m_nb;
 	cout<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
-	//RSU不用发送兴趣包
-	if(m_sensor->getType() == "BUS")
-	{
-		return;
-	}
-	
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
     if(interval >= 1)
