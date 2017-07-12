@@ -1108,7 +1108,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		        //获取心跳包所在路段
 		        string remoteroute = remoteroutes.front();
-				cout<<"(forwarding.cc-ProcessHello) remoteRoute "<<remoteRoute<<endl;
+				cout<<"(forwarding.cc-ProcessHello) remoteroute "<<remoteroute<<endl;
 				idit = find(currentroute.begin(), currentroute.end(), remoteroute);
 				if(idit != currentroute.end())
 				{
