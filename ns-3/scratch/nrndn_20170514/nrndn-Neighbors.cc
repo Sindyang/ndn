@@ -108,11 +108,11 @@ void Neighbors::DeleteRSUFrontNeighbors(uint32_t id)
 	if(it != m_nb_front.end())
 	{
 		m_nb_front.erase(it);
-		std::cout<<"(nrndn-Neighbors.cc-DeleteFrontNeighbors) 节点 "<<*it<<"已删除"<<std::endl;
+		std::cout<<"(nrndn-Neighbors.cc-DeleteFrontNeighbors) 节点 "<<*it<<" 已删除"<<std::endl;
 	}
 	else
 	{
-		std::cout<<"(nrndn-Neighbor.cc-DeleteFrontNeighbors) 节点 "<<id<<"不在当前节点前方"<<std::endl;
+		std::cout<<"(nrndn-Neighbor.cc-DeleteFrontNeighbors) 节点 "<<id<<" 不在当前节点前方"<<std::endl;
 	}
 }
 
