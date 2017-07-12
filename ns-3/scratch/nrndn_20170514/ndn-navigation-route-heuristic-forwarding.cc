@@ -1101,7 +1101,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		        //获取心跳包所在路段
 		        string remoteroute = remoteroutes.front();
-				vector<string>&::const_iterator idit = find(currentroute.begin(), currentroute.end(), remoteroute);
+				vector<string>::const_iterator idit = find(currentroute.begin(), currentroute.end(), remoteroute);
 				if(idit != currentroute.end())
 				{
 					double index = distance(currentroute.begin(), idit);
