@@ -1098,10 +1098,18 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			else if(!msg.first)
 			{
 				const vector<string>& currentroute = m_sensor->getNavigationRoute();
+				vector<string>::const_iterator idit = currentroute.begin();
+				cout<<"(forwarding.cc-ProcessHello) 当前节点导航路线为 ";
+				for(;idit != currentroute.end();idit++)
+				{
+					cout<<*idit<<" ";
+				}
+				cout<<endl;
 				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		        //获取心跳包所在路段
 		        string remoteroute = remoteroutes.front();
-				vector<string>::const_iterator idit = find(currentroute.begin(), currentroute.end(), remoteroute);
+				cout<<"(forwarding.cc-ProcessHello) remoteRoute "<<remoteRoute<<endl;
+				idit = find(currentroute.begin(), currentroute.end(), remoteroute);
 				if(idit != currentroute.end())
 				{
 					double index = distance(currentroute.begin(), idit);
