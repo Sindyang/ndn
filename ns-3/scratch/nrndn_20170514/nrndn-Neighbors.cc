@@ -97,6 +97,7 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 void Neighbors::AddRSUFrontNeighbors(uint32_t id)
 {
 	m_nb_front.insert(id);
+	cout<<"(nrndn-Neighbors.cc-AddRSUFrontNeighbors) 添加前方邻居 "<<id<<endl;
 }
 
 //added by sy
