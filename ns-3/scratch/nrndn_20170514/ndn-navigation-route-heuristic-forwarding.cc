@@ -1099,27 +1099,33 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				const vector<string>& currentroute = m_sensor->getNavigationRoute();
 				vector<string>::const_iterator idit = currentroute.begin();
-				cout<<"(forwarding.cc-ProcessHello) 当前节点导航路线为 ";
-				for(;idit != currentroute.end();idit++)
-				{
-					cout<<*idit<<" ";
-				}
-				cout<<endl;
 				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		        //获取心跳包所在路段
 		        string remoteroute = remoteroutes.front();
-				cout<<"(forwarding.cc-ProcessHello) remoteroute "<<remoteroute<<endl;
 				idit = find(currentroute.begin(), currentroute.end(), remoteroute);
+				//转发节点位于当前节点导航路线上
 				if(idit != currentroute.end())
 				{
 					double index = distance(currentroute.begin(), idit);
-					cout<<"(forwarding.cc-ProcessHello) index "<<index<<endl;
+					if(index == 1)
+					{
+						cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
+					}
+					else
+					{
+						cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
+						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+						{
+							notifyUpperOnInterest();
+						}
+					}
 				}
-				
-				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-				if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+				else
 				{
-					notifyUpperOnInterest();
+					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+					{
+						notifyUpperOnInterest();
+					}
 				}
 			}
 		}
