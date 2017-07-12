@@ -1016,8 +1016,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	const std::string& currentType = m_sensor->getType();
-	cout<<currentType<<endl;
+	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
@@ -1098,6 +1097,17 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 			else if(!msg.first)
 			{
+				const vector<string>& currentroute = m_sensor->getNavigationRoute();
+				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
+		        //获取心跳包所在路段
+		        string remoteroute = remoteroutes.front();
+				vector<string>&::const_iterator idit = find(currentroute.begin(), currentroute.end(), remoteroute);
+				if(idit != currentroute.end())
+				{
+					double index = distance(currentroute.begin(), idit);
+					cout<<"(forwarding.cc-ProcessHello) index "<<index<<endl;
+				}
+				
 				cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 				if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 				{
