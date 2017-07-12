@@ -220,6 +220,8 @@ private:
 	  */
 	void ProcessHello (Ptr<Interest> interest);
 	
+	void ProcessHelloRSU (Ptr<Interest> interest);
+	
 
 	/**
 	 * \brief	Tell the direction of the Packet from
