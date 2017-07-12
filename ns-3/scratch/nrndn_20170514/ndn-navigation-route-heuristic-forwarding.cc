@@ -1186,7 +1186,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else//邻居数目减少或不变
 	{
-		for(;prenb != m_preNB.getNb().begin();prenb++)
+		for(;prenb != m_preNB.getNb().end();prenb++)
 		{
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{
