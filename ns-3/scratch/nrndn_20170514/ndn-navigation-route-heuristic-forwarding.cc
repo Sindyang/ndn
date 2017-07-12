@@ -1164,7 +1164,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1179,7 +1179,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{   
 		if(msgdirection.first && msgdirection.second)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 添加位于RSU前方的邻居节点"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 添加位于RSU前方的邻居节点"<<endl;
 			m_nb.AddRSUFrontNeighbors(sourceId);
 		}
 		cout<<"邻居增加"<<endl;
@@ -1190,7 +1190,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{
-				cout<<"(forwarding.cc-ProcessHello) 丢失的节点为 "<<prenb->first<<endl;
+				cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 			}
 		}
