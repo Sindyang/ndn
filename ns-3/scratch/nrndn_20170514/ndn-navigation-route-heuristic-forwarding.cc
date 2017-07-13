@@ -1219,6 +1219,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 void NavigationRouteHeuristic::DeleteRSUPIT(const std::string& lane,const uint32_t& id)
 {
 	m_nrpit->DeleteFrontNode(lane,id);
+	cout<<"(forwarding.cc-DeleteRSUPIT) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
