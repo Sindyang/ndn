@@ -911,6 +911,7 @@ void nrndnExample::InstallTestApplications()
 void nrndnExample::InstallTraffics()
 {
 	vector<int> RSU;
+	vector<int>::iterator it;
 	RSU.push_back(0);
 	RSU.push_back(1);
 	RSU.push_back(2);
@@ -968,7 +969,8 @@ void nrndnExample::InstallTraffics()
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
 			uint32_t index=rnd.GetValue();
-			if(RSU.find(index) == RSU.end())
+			it = find(RSU.begin(),RSU.end(),index);
+			if(it == RSU.end())
 			{
 				while(randomNode[index])
 				{
