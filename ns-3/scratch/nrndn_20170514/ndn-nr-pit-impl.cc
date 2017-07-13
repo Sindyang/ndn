@@ -223,7 +223,7 @@ NrPitImpl::showPit()
 
 //added by sy
 void 
-NrPitImpl::DeleteFrontNode(uint32_t id)
+NrPitImpl::DeleteFrontNode(const uint32_t& id)
 {
 	std::vector<Ptr<Entry> >::iterator pit;
 	Ptr<EntryNrImpl> pitEntry;

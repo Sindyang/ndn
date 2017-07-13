@@ -115,7 +115,7 @@ public:
   bool UpdateRSUPit(const std::vector<std::string>& route,const uint32_t& id);
   
   //added by sy
-  void DeleteFrontNode(uint32_t& id);
+  void DeleteFrontNode(const uint32_t& id);
 
   void showPit();
   void laneChange(std::string oldLane, std::string newLane);
