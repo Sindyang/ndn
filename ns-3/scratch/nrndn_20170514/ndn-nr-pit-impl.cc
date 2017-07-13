@@ -99,7 +99,8 @@ std::string NrPitImpl::getCurrentLane()
 }
 
 //更新普通车辆的PIT表
-bool NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
+bool 
+NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
@@ -143,7 +144,8 @@ bool NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_
 
 
 //added by sy
-bool NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& id)
+bool 
+NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& id)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
@@ -217,6 +219,28 @@ NrPitImpl::showPit()
 		pitEntry_siu->listPitEntry();
 	}
 	std::cout<<std::endl;
+}
+
+//added by sy
+void 
+NrPitImpl::DeleteFrontNode(uint32_t& id)
+{
+	std::vector<Ptr<Entry> >::iterator pit;
+ 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
+ 	{
+ 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+ 		pitEntry->CleanPITNeighbors(id);
+		cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"已删除。At time "<<Simulator::Now().GetSeconds()<<endl;
+ 	}
+ 	//要是有很多空的PIT 可以加一个删除PIT的操作
+ 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
+ 	if(interestNodes.empty())
+ 	{
+ 		const name::Component &pitName=entry->GetInterest()->GetName().get(0);
+ 		std::string pitname = pitName.toUri();
+ 		cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<endl;
+ 		getchar();
+ 	}
 }
 
 void

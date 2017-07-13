@@ -1192,6 +1192,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			{
 				cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
+				//在pit中删除该节点
+				Simulator::Schedule(Seconds(20.0), &NrPitImpl::DeleteFrontNode, this,prenb->first);
+				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
 	}
