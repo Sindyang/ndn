@@ -226,9 +226,10 @@ void
 NrPitImpl::DeleteFrontNode(uint32_t& id)
 {
 	std::vector<Ptr<Entry> >::iterator pit;
+	Ptr<EntryNrImpl> pitEntry;
  	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
  	{
- 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+ 		pitEntry = DynamicCast<EntryNrImpl>(*pit);
  		pitEntry->CleanPITNeighbors(id);
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"已删除。At time "<<Simulator::Now().GetSeconds()<<std::endl;
  	}
