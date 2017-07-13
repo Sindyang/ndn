@@ -1163,6 +1163,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
+	const std::string& lane = m_sensor->getLane();
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
@@ -1193,7 +1194,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
-				m_nrpit->DeleteFrontNode(prenb->first);
+				m_nrpit->DeleteFrontNode(lane,prenb->first);
 				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
