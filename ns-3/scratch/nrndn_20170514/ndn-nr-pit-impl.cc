@@ -233,10 +233,10 @@ NrPitImpl::DeleteFrontNode(uint32_t& id)
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"已删除。At time "<<Simulator::Now().GetSeconds()<<std::endl;
  	}
  	//要是有很多空的PIT 可以加一个删除PIT的操作
- 	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
+ 	const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
  	if(interestNodes.empty())
  	{
- 		const name::Component &pitName=entry->GetInterest()->GetName().get(0);
+ 		const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
  		std::string pitname = pitName.toUri();
  		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
  		getchar();
