@@ -910,24 +910,76 @@ void nrndnExample::InstallTestApplications()
 
 void nrndnExample::InstallTraffics()
 {
+	vector<int> RSU;
+	RSU.push_back(0);
+	RSU.push_back(1);
+	RSU.push_back(2);
+	RSU.push_back(3);
+	RSU.push_back(4);
+	RSU.push_back(5);
+	RSU.push_back(6);
+	RSU.push_back(9);
+	RSU.push_back(11);
+	RSU.push_back(13);
+	RSU.push_back(14);
+	RSU.push_back(15);
+	RSU.push_back(16);
+	RSU.push_back(18);
+	RSU.push_back(19);
+	RSU.push_back(21);
+	RSU.push_back(23);
+	RSU.push_back(24);
+	RSU.push_back(25);
+	RSU.push_back(26);
+	RSU.push_back(28);
+	RSU.push_back(32);
+	RSU.push_back(34);
+	RSU.push_back(35);
+	RSU.push_back(36);
+	RSU.push_back(41);
+	RSU.push_back(42);
+	RSU.push_back(43);
+	RSU.push_back(46);
+	RSU.push_back(48);
+	RSU.push_back(49);
+	RSU.push_back(52);
+	RSU.push_back(59);
+	RSU.push_back(62);
+	RSU.push_back(64);
+	RSU.push_back(73);
+	RSU.push_back(79);
+	RSU.push_back(80);
+	RSU.push_back(88);
+	RSU.push_back(91);
+	RSU.push_back(102);
+	RSU.push_back(104);
+	RSU.push_back(109);
+	RSU.push_back(120);
+	RSU.push_back(121);
+	RSU.push_back(122);
+	RSU.push_back(123);
+	RSU.push_back(124);
+	
 	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
 	if(random_accident)
 	{
-		
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
 			uint32_t index=rnd.GetValue();
-			while(randomNode[index])
+			if(RSU.find(index) == RSU.end())
 			{
-				index=rnd.GetValue();
+				while(randomNode[index])
+				{
+					index=rnd.GetValue();
+				}
+				randomNode[index] = true;
+				Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+						nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+				NS_ASSERT(producer);
+				producer->addAccident(certain_interval);
 			}
-			randomNode[index] = true;
-			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
-			NS_ASSERT(producer);
-			producer->addAccident(certain_interval);
 		}
 		/*
 		for(uint32_t i=0;i<accidentNum;++i)
