@@ -969,9 +969,9 @@ void nrndnExample::InstallTraffics()
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
 			uint32_t index=rnd.GetValue();
-			//it = find(RSU.begin(),RSU.end(),index);
-		//	if(it == RSU.end())
-		//	{
+			it = find(RSU.begin(),RSU.end(),index);
+			if(it == RSU.end())
+			{
 				while(randomNode[index])
 				{
 					index=rnd.GetValue();
@@ -981,11 +981,11 @@ void nrndnExample::InstallTraffics()
 						nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 				NS_ASSERT(producer);
 				producer->addAccident(certain_interval);
-		//	}
-		//	else
-		//	{
-		//		idx --;
-		//	}
+			}
+			else
+			{
+				idx --;
+			}
 		}
 		/*
 		for(uint32_t i=0;i<accidentNum;++i)
