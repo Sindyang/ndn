@@ -982,6 +982,10 @@ void nrndnExample::InstallTraffics()
 				NS_ASSERT(producer);
 				producer->addAccident(certain_interval);
 			}
+			else
+			{
+				idx --;
+			}
 		}
 		/*
 		for(uint32_t i=0;i<accidentNum;++i)
