@@ -1083,7 +1083,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(forwardNode == 6666666)
 	{
 		cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
+		if(msgdirection.first && msgdirection.second >= 0/*&& m_nbChange_mode > 1*/)
 		{
 			notifyUpperOnInterest();
 		}
@@ -1194,7 +1194,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
-				Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
+				//Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
 				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
