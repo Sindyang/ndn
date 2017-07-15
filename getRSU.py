@@ -35,11 +35,11 @@ def get_rsu(roads,in_file):
 
 	count1 = 0
 	count2 = 0
-	out_file_trip = 'E:/ndn_input_data/input_125_RSU_48/newtrips.trips.xml'
-	out_file_add = 'E:/ndn_input_data/input_125_RSU_48/newtype.add.xml'
+	out_file_trip = 'E:/ndn_input_data/input_448_RSU_48/newtrips.trips.xml'
+	out_file_add = 'E:/ndn_input_data/input_448_RSU_48/newtype.add.xml'
 	fw_trip = open(out_file_trip,'w')
 	fw_add = open(out_file_add,'w')
-	trip_head = '<?xml version="1.0"?>'+'\n'+'<!-- generated on '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) +' by $Id: randomTrips.py 18756 2015-08-31 19:16:33Z behrisch $'+'\n'+'  options: -n input_net.net.xml -e 1.2 -p 0.01 <doubleminus>trip-attributes=departLane="best"'+'\n'+'-->'+'\n'+'<trips>'+'\n'
+	trip_head = '<?xml version="1.0"?>'+'\n'+'<!-- generated on '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) +' by $Id: randomTrips.py 18756 2015-08-31 19:16:33Z behrisch $'+'\n'+'  options: -n input_net.net.xml -e 22.4 -p 0.05 <doubleminus>trip-attributes=departLane="best"'+'\n'+'-->'+'\n'+'<trips>'+'\n'
 	fw_trip.writelines(trip_head)
 
 	add_head = '<additional>'+'\n\t'+'<vType id="BUS" color="1,1,1" guiShape="bus"/>'+'\n\n'
@@ -52,7 +52,7 @@ def get_rsu(roads,in_file):
 		if road in roads:
 			vehicle_id = each_part[1]
 			#这里修改停止的位置和时间
-			add_line = '\t<vehicle '+vehicle_id+' type="BUS" depart="0" departPos="500" color="1,1,1">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+road+'_0" endPos="500" until="400"/>'+'\n\t</vehicle>\n'
+			add_line = '\t<vehicle '+vehicle_id+' type="BUS" depart="0" departPos="500" color="1,1,1">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+road+'_0" endPos="500" until="500"/>'+'\n\t</vehicle>\n'
 			fw_add.writelines(add_line)
 			roads.remove(road)
 			count1 += 1
@@ -72,9 +72,10 @@ def get_rsu(roads,in_file):
 	
 	#为没有RSU的道路添加RSU
 	total = count1+count2
+	print count1,count2,total
 	for new_vehicle_id in range(total,total+i+1):
 		#这里修改停止的位置和时间
-		add_line = '\t<vehicle id="'+ str(new_vehicle_id) +'" type="BUS" depart="0" departPos="500" color="1,1,1">'+'\n\t\t' +'<route edges="'+roads[0]+'"/>'+'\n\t\t'+'<stop lane="'+roads[0] +'_0" endPos="500" until="400"/>'+'\n\t</vehicle>\n'
+		add_line = '\t<vehicle id="'+ str(new_vehicle_id) +'" type="BUS" depart="0" departPos="500" color="1,1,1">'+'\n\t\t' +'<route edges="'+roads[0]+'"/>'+'\n\t\t'+'<stop lane="'+roads[0] +'_0" endPos="500" until="500"/>'+'\n\t</vehicle>\n'
 		fw_add.writelines(add_line)
 		roads.remove(roads[0])
 		
@@ -95,8 +96,8 @@ def get_rsu(roads,in_file):
 	
 	
 def main():
-	in_file1 = 'E:/ndn_input_data/input_125_RSU_48/input_net.net.xml'
-	in_file2 = 'E:/ndn_input_data/input_125_RSU_48/trips.trips.xml'
+	in_file1 = 'E:/ndn_input_data/input_448_RSU_48/input_net.net.xml'
+	in_file2 = 'E:/ndn_input_data/input_448_RSU_48/trips.trips.xml'
 	roads = get_road(in_file1) 
 	get_rsu(roads,in_file2)
 
