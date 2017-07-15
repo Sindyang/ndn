@@ -150,7 +150,6 @@ double nrUtils::GetAverageArrivalRate()
 				double arrivalRate = receiveNodesNum / size ;
 				result.push_back(arrivalRate);
 			}
-
 		}
 	}
 	return GetAverage(result);
