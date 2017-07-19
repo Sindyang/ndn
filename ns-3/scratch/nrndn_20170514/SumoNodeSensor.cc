@@ -232,6 +232,7 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
 	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
+	//当前节点所在路段和位置
 	const string& localLane = getLane();
 	const double& localPos  = getPos();
 	//cout << "(SumoNodeSensor.cc-getPos )" << endl;
@@ -242,11 +243,13 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	std::pair<std::string, double> remoteInfo =
 			convertCoordinateToLanePos(x,y);
 	//cout << "(SuNodeSensor.cc-getDistanceWith) convertCoordinateToLanePos" <<endl;
+	//另一节点所在路段和位置
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;
 
-	//当前节点所在路段在route中的位置
+	//当前节点所在路段在导航路线中的位置
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
+	//另一节点所在路段在导航路线中的位置
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
 
 	if(remoteLaneIterator==route.end()||
@@ -270,6 +273,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	distance = beginLen = middleLen = 0;
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	//当前节点位于另一节点前方
 	if(localIndex>remoteIndex)
 	{
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "localIndex>remoteIndex " << endl;
@@ -290,6 +294,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "(beginLen+middleLen+localPos)" << endl;
 		distance = -(beginLen+middleLen+localPos);
 	}
+	//当前节点位于另一节点后方
 	else
 	{
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "else" << endl;
