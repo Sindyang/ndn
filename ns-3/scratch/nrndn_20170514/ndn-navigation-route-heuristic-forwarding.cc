@@ -211,7 +211,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -224,7 +224,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	{
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+		//cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 		
 		// Be careful with the order, increasing or descending?
 		if(result.first && result.second >= 0)
@@ -242,10 +242,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<" "<<it->second;
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
 }
@@ -283,7 +283,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    //cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
@@ -1033,12 +1033,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
-		cout<<"邻居增加"<<endl;
+		//cout<<"邻居增加"<<endl;
 	}
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		cout<<"邻居减少"<<endl;
+		//cout<<"邻居减少"<<endl;
 	}
 	else
 	{
@@ -1057,7 +1057,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{   //邻居变化，发送兴趣包
 			m_nbChange_mode = 3;
-			cout<<"邻居变化"<<endl;
+			//cout<<"邻居变化"<<endl;
 		}
 	}
 	
@@ -1100,7 +1100,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
 			if(msg.first && msg.second >= 0)
 			{
-					cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
+					//cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
 			}
 			else if(!msg.first)
 			{
@@ -1116,11 +1116,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					double index = distance(currentroute.begin(), idit);
 					if(index == 1)
 					{
-						cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
+						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
 					}
 					else
 					{
-						cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
+						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 						{
 							notifyUpperOnInterest();
@@ -1180,7 +1180,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{   
 		if(msgdirection.first && msgdirection.second)
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 添加位于RSU前方的邻居节点"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 添加位于RSU前方的邻居节点"<<endl;
 			m_nb.AddRSUFrontNeighbors(sourceId);
 		}
 		cout<<"邻居增加"<<endl;
@@ -1191,11 +1191,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{
-				cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
+				//cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
 				Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
-				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
+				//cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
 	}
