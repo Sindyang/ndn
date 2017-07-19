@@ -1063,7 +1063,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	prenb = m_preNB.getNb().begin();
 	nb = m_nb.getNb().begin();
-	cout<<"原来的邻居：";
+	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1072,7 +1072,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
-	}
+	}*/
 	cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
@@ -1147,7 +1147,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	m_preNB = m_nb;
-	cout<<endl;
+	//cout<<endl;
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
@@ -1202,7 +1202,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	prenb = m_preNB.getNb().begin();
 	nb = m_nb.getNb().begin();
-	cout<<"原来的邻居：";
+	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1211,9 +1211,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
-	}
+	}*/
 	m_preNB = m_nb;
-	cout<<endl;
+	//cout<<endl;
 }
 
 void NavigationRouteHeuristic::DeleteRSUPIT(const std::string& lane,const uint32_t& id)
@@ -1233,7 +1233,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	}
 	else
 	{
-		cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
