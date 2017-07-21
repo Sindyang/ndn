@@ -232,6 +232,9 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
+	//调整到getLane前面，避免非活跃节点getLane();
+	if (!m_active)
+		return;
 	//std::cout<<"(nrProducer.cc-OnSendingTrafficData) NodeId: "<<GetNode()->GetId()<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
@@ -244,8 +247,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()<<" 发送数据包:"<<m_prefix.toUri()<<std::endl;
-	if (!m_active)
-		return;
+	
 
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
 	Ptr<Name> dataName = Create<Name>(m_prefix);
