@@ -1080,15 +1080,15 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
 	//还没有转发节点
-	if(forwardNode == 6666666)
-	{
-		cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0/*&& m_nbChange_mode > 1*/)
-		{
-			notifyUpperOnInterest();
-		}
-		return;
-	}
+	//if(forwardNode == 6666666)
+	//{
+	//	cout<<"(forwarding.cc-ProcessHello) 还没有转发节点"<<endl;
+	//	if(msgdirection.first && msgdirection.second >= 0/*&& m_nbChange_mode > 1*/)
+		//{
+			//notifyUpperOnInterest();
+		//}
+		//return;
+	//}
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
