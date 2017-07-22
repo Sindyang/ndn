@@ -239,14 +239,14 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 		}
  	}
  	//要是有很多空的PIT 可以加一个删除PIT的操作
- 	const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
+ 	/*const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
  	if(interestNodes.empty())
  	{
  		const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
  		std::string pitname = pitName.toUri();
  		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
  		getchar();
- 	}
+ 	}*/
 	showPit();
 }
 
