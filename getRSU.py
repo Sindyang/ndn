@@ -35,8 +35,8 @@ def get_rsu(roads,in_file):
 
 	count1 = 0
 	count2 = 0
-	out_file_trip = 'E:/ndn_input_data/input_448_RSU_48/newtrips.trips.xml'
-	out_file_add = 'E:/ndn_input_data/input_448_RSU_48/newtype.add.xml'
+	out_file_trip = 'E:/ndn_input_data/input_448_RSU_48_V2/newtrips.trips.xml'
+	out_file_add = 'E:/ndn_input_data/input_448_RSU_48_V2/newtype.add.xml'
 	fw_trip = open(out_file_trip,'w')
 	fw_add = open(out_file_add,'w')
 	trip_head = '<?xml version="1.0"?>'+'\n'+'<!-- generated on '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) +' by $Id: randomTrips.py 18756 2015-08-31 19:16:33Z behrisch $'+'\n'+'  options: -n input_net.net.xml -e 22.4 -p 0.05 <doubleminus>trip-attributes=departLane="best"'+'\n'+'-->'+'\n'+'<trips>'+'\n'
@@ -96,8 +96,8 @@ def get_rsu(roads,in_file):
 	
 	
 def main():
-	in_file1 = 'E:/ndn_input_data/input_448_RSU_48/input_net.net.xml'
-	in_file2 = 'E:/ndn_input_data/input_448_RSU_48/trips.trips.xml'
+	in_file1 = 'E:/ndn_input_data/input_448_RSU_48_V2/input_net.net.xml'
+	in_file2 = 'E:/ndn_input_data/input_448_RSU_48_V2/trips.trips.xml'
 	roads = get_road(in_file1) 
 	get_rsu(roads,in_file2)
 
