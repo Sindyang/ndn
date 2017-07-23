@@ -226,15 +226,14 @@ void
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	std::vector<Ptr<Entry> >::iterator pit;
-	Ptr<EntryNrImpl> pitEntry;
  	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
  	{
 		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
 		if(pitName.toUri() == lane)
 		{
-			pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->CleanPITNeighbors(id);
-			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"已删除。At time "<<Simulator::Now().GetSeconds()<<std::endl;
 			break;
 		}
  	}
