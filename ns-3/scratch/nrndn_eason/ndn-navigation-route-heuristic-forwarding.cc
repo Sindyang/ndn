@@ -966,7 +966,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	case HeaderHelper::INTEREST_NDNSIM:
 	{
 		priorityList = GetPriorityList();
-		cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
+		//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 		break;
 	}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
