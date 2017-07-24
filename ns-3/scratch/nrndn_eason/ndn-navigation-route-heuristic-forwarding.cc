@@ -907,13 +907,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
 	uint32_t nodeId = m_node->GetId();
-	cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的邻居为 ";
+	//cout<<"(forwarding.cc-ProcessHello)节点 "<<nodeId<<"的邻居为 ";
 	std::unordered_map<uint32_t,Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();nb++)
 	{
-		cout<<nb->first<<" ";
+		//cout<<nb->first<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
