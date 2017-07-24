@@ -303,7 +303,7 @@ void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 			{
 				NS_LOG_DEBUG("Get ack packet from front or other direction and it is old packet");
 				cout<<"forwarding.cc收到同样的ACK包,不再发送!"<<endl;
-				//getchar();
+				getchar();
 				ExpireInterestPacketTimer(nodeId,seq);
 			}
 			cout<<"如果重复,完成"<<endl;
@@ -355,7 +355,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-		//getchar();
+		getchar();
 	}
 	if(forwardId != 999999999)
 	{
@@ -595,8 +595,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				return;
 			}
 
-			//if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
-				//getchar();
+			if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
+				getchar();
 			//Start a timer and wait
 			double index = distance(pri.begin(), idit);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -638,7 +638,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 	
 	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	//cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
 	//getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
@@ -810,7 +810,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 						cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() 
 							<< " nodeId:" << nodeId << " sig:" << signature << " fwdID:" << forwardId << endl;
 						cout << "isTTLReachMax:" <<  hopCountTag.Get() << endl;
-						//getchar();
+						getchar();
 						DropDataPacket(data);
 						return;
 					}
@@ -1317,7 +1317,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		pair<bool, double> msgdirection = packetFromDirection(interest);
 
 		//hello信息来自前方，且邻居变化，即前面邻居变化
-		if(msgdirection.first && msgdirection.second > 0 && m_nbChange_mode>1) //m_nbChange_mode>1  lostForwardNeighbor
+		if(msgdirection.second > 0 && m_nbChange_mode>1) //m_nbChange_mode>1  lostForwardNeighbor
 		{//
 			m_nbChange_mode=0;
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);

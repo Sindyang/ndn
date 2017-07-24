@@ -63,7 +63,6 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
@@ -80,7 +79,6 @@ void nrConsumer::StopApplication()
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-ScheduleNextPacket) "<<std::endl;
 	//1. refresh the Interest
 	std::vector<std::string> interest=GetCurrentInterest();
 	std::string prefix="";
@@ -142,7 +140,6 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
-	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	  if (m_firstTime)
 	    {//第一次发送兴趣包
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0), &nrConsumer::SendPacket, this);
@@ -162,7 +159,6 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 void nrConsumer::SendPacket()
 {
 	  if (!m_active) return;
-	  std::cout<<"进入(nrConsumer.cc-SendPacket) "<<std::endl;
 	/*  if(!m_firstTime&&*m_nbChange_mode==0)
 	  {
 	     m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
@@ -259,7 +255,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 void nrConsumer::NotifyNewAggregate()
 {
-  std::cout<<"进入(nrConsumer.cc-NotifyNewAggregate) "<<endl;
+
   super::NotifyNewAggregate ();
 }
 
@@ -278,7 +274,6 @@ void nrConsumer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
-		std::cout<<"(nrConsumer.cc-DoInitialize) "<<GetNode()->GetId()<<endl;
 		NS_ASSERT_MSG(m_sensor,"nrConsumer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 	}
 	super::DoInitialize();
@@ -292,7 +287,7 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
 	int type =  interest->GetNonce();
-	cout<<"(nrConsumer.cc-OnInterest)consumer收到兴趣包，触发发送兴趣包"<<type<<endl;
+	//cout<<"(nrConsumer.cc)consumer收到兴趣包，触发发送兴趣包"<<type<<endl;
 	SendPacket();
 	//getchar();
 	//NS_ASSERT_MSG(false,"nrConsumer should not be supposed to ""receive Interest Packet!!");
