@@ -207,7 +207,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
+	//cout<<"(forwarding.cc-GetPriorityList)PriorityList is ";
 	
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -230,10 +230,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		PriorityList.push_back(it->second);
 
 		str<<'\t'<<it->second;
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}
 	NS_LOG_DEBUG(str.str());
-	cout<<endl;
+	//cout<<endl;
 	return PriorityList;
 }
 
