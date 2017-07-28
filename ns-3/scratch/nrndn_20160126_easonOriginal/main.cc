@@ -591,7 +591,7 @@ nrndnExample::LoadTraffic()
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
 	std::cout<<"读取完毕！"<<std::endl;
-    //获取结点size
+//获取结点size
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
