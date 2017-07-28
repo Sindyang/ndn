@@ -93,6 +93,7 @@ void nrConsumer::ScheduleNextPacket()
 	if(prefix=="")
 	{   //兴趣为空，直接返回
 		std::cout<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
+		doConsumerCbrScheduleNextPacket();//added by siukwan
 		return;
 	}
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
@@ -136,6 +137,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
+	std::cout<<"进入(nrConsumer.cc-doConsumerCbrScheduleNextPacket) "<<std::endl;
 	  if (m_firstTime)
 	    {
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
