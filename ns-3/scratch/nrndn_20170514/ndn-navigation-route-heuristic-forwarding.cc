@@ -251,6 +251,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 }
 
 
+
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {

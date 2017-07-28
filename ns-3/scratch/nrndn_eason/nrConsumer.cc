@@ -158,6 +158,8 @@ void nrConsumer::SendPacket()
 	  if (!m_active) return;
 
 	  NS_LOG_FUNCTION_NOARGS ();
+	  
+	  std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 
 	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
 
