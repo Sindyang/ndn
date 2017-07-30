@@ -202,8 +202,8 @@ int main (int argc, char **argv)
 //构造函数
 nrndnExample::nrndnExample () :
   random_seed(54321),
-  certain_count(38), //定点数量
-  certain_interval(10),//定点事件间隔
+  certain_count(30), //定点数量
+  certain_interval(8),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
