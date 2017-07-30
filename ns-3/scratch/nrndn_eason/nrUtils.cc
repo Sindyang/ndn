@@ -311,8 +311,8 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 {
 	Ptr<Packet> packet = Wire::FromData (data);
 	uint32_t size = packet->GetSize();
-	ByteSent += size;
-	DataByteSent+= size;
+	ByteSent += size * 6;
+	DataByteSent+= size * 6;
 }
 
 void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
