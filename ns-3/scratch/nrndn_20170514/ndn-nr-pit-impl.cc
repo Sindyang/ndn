@@ -222,6 +222,7 @@ NrPitImpl::showPit()
 }
 
 //added by sy
+//这部分代码有问题 应该删除每一个表项中存在的该节点，而不仅仅是当前路段的表项 2017.9.3
 void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
