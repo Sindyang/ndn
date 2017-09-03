@@ -1084,13 +1084,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//added by sy
 	//判断发送心跳包的节点是否位于PIT列表中
 	//若该节点位于前方，则存在超车的可能性
-	/*if(msgdirection.first && msgdirection.second > 0)
+	if(msgdirection.first && msgdirection.second > 0)
 	{
 		const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		//获取心跳包所在路段
 		string remoteroute = remoteroutes.front();
 		m_nrpit->DeleteFrontNode(remoteroute,sourceId);
-	}*/
+	}
 	
 	
 	//转发节点存在

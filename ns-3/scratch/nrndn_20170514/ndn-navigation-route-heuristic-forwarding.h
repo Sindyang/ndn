@@ -491,6 +491,8 @@ private:
 	* gap_mode = 2 若该数据包由感兴趣节点转发，且优先级列表仅由不感兴趣邻居组成
 	**/
 	uint32_t gap_mode;//added by sy 
+	
+	std::unordered_set<uint32_t> overtake;
 };
 } /* namespace nrndn */
 } /* namespace fw */
