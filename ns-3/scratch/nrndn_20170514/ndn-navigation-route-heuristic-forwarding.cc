@@ -1106,18 +1106,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	//added by sy
-	//判断发送心跳包的节点是否位于PIT列表中
-	//若该节点位于前方，则存在超车的可能性
-	/*if(msgdirection.first && msgdirection.second > 0)
-	{
-		const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
-		//获取心跳包所在路段
-		string remoteroute = remoteroutes.front();
-		m_nrpit->DeleteFrontNode(remoteroute,sourceId);
-	}*/
-	
-	
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
@@ -1216,6 +1204,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{
 				//在pit中删除该节点
+				//这部分也有必要修改一下，当车辆位于RSU所在路段的前方时，从PIT中删除该节点
 				m_nrpit->DeleteFrontNode(lane,prenb->first);
 				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
