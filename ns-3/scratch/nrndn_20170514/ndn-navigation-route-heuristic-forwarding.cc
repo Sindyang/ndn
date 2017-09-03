@@ -1182,11 +1182,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
-		if(msgdirection.first && msgdirection.second)
-		{
-			//cout<<"(forwarding.cc-ProcessHelloRSU) 添加位于RSU前方的邻居节点"<<endl;
-			//m_nb.AddRSUFrontNeighbors(sourceId);
-		}
 		cout<<"邻居增加"<<endl;
 	}
 	else//邻居数目减少或不变
@@ -1195,8 +1190,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
-				//m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
 				m_nrpit->DeleteFrontNode(lane,prenb->first);
 				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
