@@ -1079,18 +1079,43 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
+	//added by sy
+	//发送心跳包的节点位于当前节点后方
+	if(msgdirection.first && msgdirection.second <= 0)
+	{
+		overtake.insert(sourceId);
+	}
+	else if(msgdirection.first && msgdirection.second >0)
+	{
+		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
+		//该车辆超车
+		if(it != overtake.end())
+		{
+			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
+			//获取心跳包所在路段
+			string remoteroute = remoteroutes.front();
+			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			overtake.erase(it);
+			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
+		}
+		else
+		{
+			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+		}
+	}
 	
 	//added by sy
 	//判断发送心跳包的节点是否位于PIT列表中
 	//若该节点位于前方，则存在超车的可能性
-	if(msgdirection.first && msgdirection.second > 0)
+	/*if(msgdirection.first && msgdirection.second > 0)
 	{
 		const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 		//获取心跳包所在路段
 		string remoteroute = remoteroutes.front();
 		m_nrpit->DeleteFrontNode(remoteroute,sourceId);
-	}
+	}*/
 	
 	
 	//转发节点存在
