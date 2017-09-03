@@ -247,6 +247,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
  		getchar();
  	}*/
 	showPit();
+	//getchar();
 }
 
 void

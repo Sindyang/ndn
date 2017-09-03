@@ -1013,6 +1013,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(!m_running){
 		return;
 	}
+	
 	if(m_HelloLogEnable)
 		NS_LOG_DEBUG (this << interest << "\tReceived HELLO packet from "<<interest->GetNonce());
 	
@@ -1079,6 +1080,17 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
+	//added by sy
+	//判断发送心跳包的节点是否位于PIT列表中
+	//若该节点位于前方，则存在超车的可能性
+	/*if(msgdirection.first && msgdirection.second > 0)
+	{
+		const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
+		//获取心跳包所在路段
+		string remoteroute = remoteroutes.front();
+		m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+	}*/
 	
 	
 	//转发节点存在
@@ -1186,7 +1198,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 丢失的节点为 "<<prenb->first<<endl;
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
-				Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
+				m_nrpit->DeleteFrontNode(lane,id);
+				//Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
