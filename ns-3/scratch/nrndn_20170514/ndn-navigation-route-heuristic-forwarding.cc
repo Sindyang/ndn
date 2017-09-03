@@ -1199,8 +1199,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				m_nb.DeleteRSUFrontNeighbors(prenb->first);
 				//在pit中删除该节点
 				m_nrpit->DeleteFrontNode(lane,prenb->first);
-				//Simulator::Schedule(Seconds(20.0),&NavigationRouteHeuristic::DeleteRSUPIT,this,lane,prenb->first);
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
+				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
 	}
@@ -1219,12 +1218,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}*/
 	m_preNB = m_nb;
 	//cout<<endl;
-}
-
-void NavigationRouteHeuristic::DeleteRSUPIT(const std::string& lane,const uint32_t& id)
-{
-	cout<<"(forwarding.cc-DeleteRSUPIT) 删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
-	m_nrpit->DeleteFrontNode(lane,id);
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()

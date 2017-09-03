@@ -222,8 +222,6 @@ private:
 	
 	void ProcessHelloRSU (Ptr<Interest> interest);
 	
-	void DeleteRSUPIT(const std::string& lane,const uint32_t& id);
-
 	/**
 	 * \brief	Tell the direction of the Packet from
 	 *          the front and behind is Only base on the moving direction of received Packet
