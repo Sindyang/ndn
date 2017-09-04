@@ -62,7 +62,7 @@ nrConsumer::~nrConsumer()
 void nrConsumer::StartApplication()
 {
 	NS_LOG_FUNCTION_NOARGS ();
-	std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
+	//std::cout<<"(nrConsumer.cc-StartApplication) "<<GetNode()->GetId()<<std::endl;
 	m_forwardingStrategy->Start();
 	// retransmission timer expiration is not necessary here, just cancel the event
 	//m_retxEvent.Cancel ();
