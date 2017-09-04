@@ -101,7 +101,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	}
 	else
 	{
-		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT中"<<std::endl;
+		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT该表项中"<<std::endl;
 	}
 }
 
