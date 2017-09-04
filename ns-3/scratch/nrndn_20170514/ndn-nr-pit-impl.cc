@@ -239,7 +239,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	
 	if(pit != m_pitContainer.end())
 	{
-		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到"<<lane<<"在PIT表项中的位置"<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
 		for(;pit != m_pitContainer.end();pit++)
 		{
@@ -253,17 +253,6 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	}
 	
 	
- 	/*for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
- 	{
-		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
-		if(pitName.toUri() == lane)
-		{
-			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
-			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-			pitEntry->CleanPITNeighbors(id);
-			break;
-		}
- 	}*/
  	//要是有很多空的PIT 可以加一个删除PIT的操作
  	/*const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
  	if(interestNodes.empty())

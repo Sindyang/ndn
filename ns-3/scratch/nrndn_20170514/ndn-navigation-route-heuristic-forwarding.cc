@@ -1075,7 +1075,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}*/
-	cout<<"\n转发节点为 "<<forwardNode<<endl;
+	//cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1109,12 +1109,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
 		if(sourceId == forwardNode)
 		{
 			pair<bool, double> msg = packetFromDirection(interest);
-			cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
 			if(msg.first && msg.second >= 0)
 			{
 					//cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
@@ -1156,7 +1156,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else
 	{
-		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
@@ -1182,7 +1182,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	const std::string& lane = m_sensor->getLane();
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1195,7 +1195,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
-		cout<<"邻居增加"<<endl;
+		//cout<<"邻居增加"<<endl;
 	}
 	else//邻居数目减少或不变
 	{
