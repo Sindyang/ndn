@@ -1024,7 +1024,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	int m_nbChange_mode = 0;
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1079,7 +1079,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
 	//added by sy
 	//发送心跳包的节点位于当前节点后方
@@ -1090,6 +1090,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else if(msgdirection.first && msgdirection.second >0)
 	{
 		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
+		cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		//该车辆超车
 		if(it != overtake.end())
 		{
@@ -1105,7 +1107,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
-	getchar();
 	
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
@@ -1183,7 +1184,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	const std::string& lane = m_sensor->getLane();
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1192,7 +1193,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
 	//发送心跳包的节点位于当前节点后方
 	if(msgdirection.first && msgdirection.second < 0)
@@ -1202,6 +1203,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	else if(msgdirection.first && msgdirection.second > 0)
 	{
 		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
+		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		//该车辆超车
 		if(it != overtake.end())
 		{
@@ -1250,7 +1253,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}*/
 	m_preNB = m_nb;
 	//cout<<endl;
-	getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
