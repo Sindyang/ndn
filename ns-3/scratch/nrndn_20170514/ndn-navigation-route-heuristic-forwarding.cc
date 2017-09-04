@@ -1083,7 +1083,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//added by sy
 	//发送心跳包的节点位于当前节点后方
-	if(msgdirection.first && msgdirection.second <= 0)
+	if(msgdirection.first && msgdirection.second < 0)
 	{
 		overtake.insert(sourceId);
 	}
@@ -1105,6 +1105,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
+	getchar();
 	
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
@@ -1182,7 +1183,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	const std::string& lane = m_sensor->getLane();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1191,9 +1192,33 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
-	if(m_preNB.getNb().size()<m_nb.getNb().size())
+	//发送心跳包的节点位于当前节点后方
+	if(msgdirection.first && msgdirection.second < 0)
+	{
+		overtake.insert(sourceId);
+	}
+	else if(msgdirection.first && msgdirection.second > 0)
+	{
+		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
+		//该车辆超车
+		if(it != overtake.end())
+		{
+			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
+			//获取心跳包所在路段
+			string remoteroute = remoteroutes.front();
+			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			overtake.erase(it);
+			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
+		}
+		else
+		{
+			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+		}
+	}
+	
+	/*if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		//cout<<"邻居增加"<<endl;
 	}
@@ -1209,10 +1234,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				cout<<"(forwarding.cc-ProcessHelloRSU) 删除节点 "<<prenb->first<<"。At time "<<Simulator::Now().GetSeconds()<<endl;
 			}
 		}
-	}
+	}*/
 	
-	prenb = m_preNB.getNb().begin();
-	nb = m_nb.getNb().begin();
+	//prenb = m_preNB.getNb().begin();
+	//nb = m_nb.getNb().begin();
 	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
@@ -1225,6 +1250,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}*/
 	m_preNB = m_nb;
 	//cout<<endl;
+	getchar();
 }
 
 void NavigationRouteHeuristic::notifyUpperOnInterest()
