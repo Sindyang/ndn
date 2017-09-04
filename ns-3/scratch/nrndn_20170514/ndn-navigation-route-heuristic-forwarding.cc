@@ -344,9 +344,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		cout<<*it<<" ";
+		//cout<<*it<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -1209,11 +1209,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			string remoteroute = remoteroutes.front();
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
 	
