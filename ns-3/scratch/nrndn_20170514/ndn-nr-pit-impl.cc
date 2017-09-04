@@ -240,7 +240,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
-		for(;pit != m_pitContainer.end();pit++)
+		for(;pit != m_pitContainer.end();)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->CleanPITNeighbors(id);
@@ -249,10 +249,15 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
 			if(interestNodes.empty())
 			{
+				EntryIsEmpty = true;
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 				std::string pitname = pitName.toUri();
 				std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
 				pit = m_pitContainer.erase(pit);
+			}
+			else
+			{
+				pit++;
 			}
 		}
 	}
