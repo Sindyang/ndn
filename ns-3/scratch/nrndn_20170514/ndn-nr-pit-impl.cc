@@ -222,7 +222,6 @@ NrPitImpl::showPit()
 }
 
 //added by sy
-//这部分代码有问题 应该删除每一个表项中存在的该节点，而不仅仅是当前路段的表项 2017.9.3
 void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
@@ -245,25 +244,22 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->CleanPITNeighbors(id);
+			//若PIT的表项为空，可以删除该表项
+			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
+			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
+			if(interestNodes.empty())
+			{
+				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
+				std::string pitname = pitName.toUri();
+				std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
+			}
 		}
 	}
 	else
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 	}
-	
-	
- 	//要是有很多空的PIT 可以加一个删除PIT的操作
- 	/*const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
- 	if(interestNodes.empty())
- 	{
- 		const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
- 		std::string pitname = pitName.toUri();
- 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
- 		getchar();
- 	}*/
 	showPit();
-	//getchar();
 }
 
 void
