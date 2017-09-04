@@ -253,7 +253,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 				std::string pitname = pitName.toUri();
 				std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
 				std::vector<Ptr<Entry> >::iterator it = pit;
-				m_pitContainer.erase(it);
+				it = m_pitContainer.erase(it);
 			}
 		}
 	}
