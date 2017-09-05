@@ -23,6 +23,7 @@ void StringReplace(std::string& base,const std::string& src,const std::string& d
     std::string::size_type srcLen = src.size();
     std::string::size_type dstLen = dst.size();
     pos = base.find(src,pos);
+	//If no matches were found, the function returns string::npos
     while((pos!=std::string::npos))
     {
         base.replace(pos,srcLen,dst);
@@ -145,13 +146,12 @@ void RoadMap::ChangeLaneCharactor(Edge& edge)
    StringReplace(edge.to,originLanCharactor,changeLaneCharactor);
    return;
 }
+
 void RoadMap::ChangeLaneCharactor(Lane& lane)
 {
     StringReplace(lane.id,originLanCharactor,changeLaneCharactor);
     return;
 }
-
-
 
 int RoadMap::Read_lane(TiXmlElement* pElement)
 {

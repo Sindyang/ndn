@@ -82,6 +82,12 @@ public:
 	{
 		return m_CoordinateToLane;
 	}
+	
+	//added by sy 2017.9.5
+	void PrintVehicle();
+	
+	//added by sy 2017.9.5
+	void PrintEdges();
 
 private:
 	void LoadTraffic();

@@ -290,7 +290,10 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
+			cout<<eit.first<<" ";
 		}
+		getchar();
+		cout<<endl;
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "(beginLen+middleLen+localPos)" << endl;
 		distance = -(beginLen+middleLen+localPos);
 	}
@@ -311,13 +314,27 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
+			cout<<eit.first<<" ";
 		}
+		getchar();
+		cout<<endl;
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< " beginLen+middleLen+remotePos" << endl;
 		distance = beginLen+middleLen+remotePos;
 
 	}
 	//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "return" << endl;
 	return std::pair<bool, double>(true,distance);
+}
+
+//added by sy 2017.9.5
+void SumoNodeSensor::printVehicle()
+{
+	m_sumodata->PrintVehicle();
+}
+
+void SumoNodeSensor::printEdges()
+{
+	m_sumodata->PrintEdges();
 }
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(

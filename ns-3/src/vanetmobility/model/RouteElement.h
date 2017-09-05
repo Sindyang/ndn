@@ -78,7 +78,6 @@ public:
 	void printedges();
 	const std::map<std::string,Edge>& getEdges()const;  //warning: the key is lane's id, not edges
 
-
 private:
 	std::map<std::string,Edge> edges;
 	Edge m_temp_edge;
@@ -88,7 +87,6 @@ private:
 	void InitializeEdges( TiXmlNode* pParent);
     void ChangeLaneCharactor(Edge& edge);
     void ChangeLaneCharactor(Lane& lane);
-
 };
 
 
