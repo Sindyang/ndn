@@ -290,7 +290,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
-			cout<<eit.first<<" ";
+			cout<<eit->first<<" ";
 		}
 		getchar();
 		cout<<endl;
@@ -314,7 +314,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
-			cout<<eit.first<<" ";
+			cout<<eit->first<<" ";
 		}
 		getchar();
 		cout<<endl;
