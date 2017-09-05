@@ -63,7 +63,6 @@ void SumoMobility::LoadTraffic()
 double SumoMobility::GetStartTime(uint32_t id)
 {
 	return vl.getVehicles()[id].trace.front().time;
-
 }
 
 double SumoMobility::GetStopTime(uint32_t id)
@@ -115,7 +114,8 @@ void SumoMobility::Install()
 		{
 			// Create waypoints
 			end_time = (*t).time;
-			if(end_time>maxTime)maxTime=end_time;
+			if(end_time > maxTime)
+				maxTime = end_time;
 			Waypoint wp(Seconds(end_time),Vector((*t).x,(*t).y,0.0));
 			waypointmodel->AddWaypoint(wp);
 		}
@@ -150,11 +150,9 @@ void SumoMobility::ForceUpdates(std::vector<Ptr<MobilityModel> > mobilityStack)
 		if (model == 0)
 		{
 			model = mobilityStack[i];
-
 		}
 		model->SetPosition(waypoint.position);
 	}
-
 }
 
 const sumomobility::Trace& SumoMobility::GetTrace(uint32_t& Vehicle_ID,Vector& pos) const

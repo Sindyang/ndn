@@ -17,6 +17,7 @@ namespace sumomobility
 
 using namespace std;
 
+//将"/"转化为"-"
 void StringReplace(std::string& base,const std::string& src,const std::string& dst)
 {
     std::string::size_type pos = 0;
@@ -66,8 +67,12 @@ RoadMap::~RoadMap()
 	// TODO Auto-generated destructor stub
 }
 
-RoadMap::RoadMap(const RoadMap& r):edges(r.edges){}
+RoadMap::RoadMap(const RoadMap& r):edges(r.edges)
+{
+	
+}
 
+//对应的文件为input_net.net.xml
 void RoadMap::LoadNetXMLFile(const char* pFilename)
 {
 	TiXmlDocument doc(pFilename);
@@ -115,6 +120,7 @@ bool RoadMap::edge_with_attribs(TiXmlElement* pElement,const char* str)//���
 	return false;
 }
 
+//对应的文件为input_net.net.xml
 int RoadMap::Read_edges(TiXmlElement* pElement)
 {
 
@@ -130,7 +136,7 @@ int RoadMap::Read_edges(TiXmlElement* pElement)
 		case ATTR_ID      :m_temp_edge.id      =pAttrib->Value();break;
 		case ATTR_FROM    :m_temp_edge.from    =pAttrib->Value();break;
 		case ATTR_TO      :m_temp_edge.to      =pAttrib->Value();break;
-		case ATTR_PRIORITY:m_temp_edge.priority=atof(pAttrib->Value());break;
+		case ATTR_PRIORITY:m_temp_edge.priority=atof(pAttrib->Value());break;//atof:字符串转化为浮点数
 		default:break;
 		}
 		i++;
@@ -140,6 +146,7 @@ int RoadMap::Read_edges(TiXmlElement* pElement)
 	return i;
 }
 
+//将"/"更改为"-"
 void RoadMap::ChangeLaneCharactor(Edge& edge)
 {
    StringReplace(edge.id,originLanCharactor,changeLaneCharactor);
@@ -148,11 +155,13 @@ void RoadMap::ChangeLaneCharactor(Edge& edge)
    return;
 }
 
+//将"/"更改为"-"
 void RoadMap::ChangeLaneCharactor(Lane& lane)
 {
     StringReplace(lane.id,originLanCharactor,changeLaneCharactor);
     return;
 }
+
 
 int RoadMap::Read_lane(TiXmlElement* pElement)
 {
@@ -185,6 +194,7 @@ int RoadMap::Read_lane(TiXmlElement* pElement)
 	return i;
 }
 
+//对应的文件为input_net.net.xml
 void RoadMap::InitializeEdges( TiXmlNode* pParent)
 {
 	if ( !pParent ) return;
@@ -217,6 +227,8 @@ void RoadMap::InitializeEdges( TiXmlNode* pParent)
 			case 2:
 				{
 					Read_lane(pParent->ToElement());
+					//map insert 重复插入，第二次插入的无效
+					//导致多车道的道路只能插入第一个车道的信息
 					edges.insert(map<string,Edge>::value_type(m_temp_edge.lane.id,m_temp_edge));
 					//edges.push_back(m_temp_edge);
 					break;
@@ -264,21 +276,21 @@ void Route::LoadRouteString(const char* pRouteStr)
 		size_t last_pos = 0;
 
 		found = line.find(split);
-		while (found != string::npos) {
-
+		while (found != string::npos) 
+		{
 			string s = line.substr(last_pos, found - last_pos);
 			last_pos = found + split.length();
 			found = line.find(split, last_pos);
 
 			if (s.compare("") == 0) continue;
-		//	s+="_0";
+		    //	s+="_0";
 			edgesID.push_back(s);
 		}
 
 		if (line.substr(last_pos).length() > 0)
 		{
 			string add=line.substr(last_pos);
-		//	add+="_0";
+		    //	add+="_0";
 			edgesID.push_back(add);
 		}
 
@@ -305,8 +317,13 @@ VehicleLoader::~VehicleLoader()
 	// TODO Auto-generated destructor stub
 }
 
-VehicleLoader::VehicleLoader(const VehicleLoader& v){vehicles=v.vehicles;m_temp_vehicle=NULL;}
+VehicleLoader::VehicleLoader(const VehicleLoader& v)
+{
+	vehicles=v.vehicles;
+	m_temp_vehicle=NULL;
+}
 
+//对应的文件为routes.rou.xml
 void VehicleLoader::LoadRouteXML(const char *  pXMLFilename)
 {
 	TiXmlDocument doc(pXMLFilename);
@@ -323,6 +340,7 @@ void VehicleLoader::LoadRouteXML(const char *  pXMLFilename)
 	}
 }
 
+//对应的文件为fcdoutput.xml
 void VehicleLoader::LoadFCDOutputXML(const char *  pXMLFilename)
 {
 	TiXmlDocument doc(pXMLFilename);
@@ -359,14 +377,15 @@ const vector<Vehicle>& VehicleLoader::getVehicles()const
 	return vehicles;
 }
 
-
+//对应的文件为routes.rou.xml
 void VehicleLoader::initialize_vehicles( TiXmlNode* pParent)
 {
-	if ( !pParent ) return;
+	if (!pParent) 
+		return;
 	TiXmlNode* pChild;
 	int t = pParent->Type();
 	//int num;
-	switch ( t )
+	switch (t)
 	{
 	case TiXmlNode::TINYXML_ELEMENT:
 		{
@@ -402,6 +421,7 @@ void VehicleLoader::initialize_vehicles( TiXmlNode* pParent)
 
 }
 
+//对应的文件为routes.rou.xml 
 int VehicleLoader::read_vehicle(TiXmlElement* pElement)
 {
 	if ( !pElement ) return 0;
@@ -424,20 +444,24 @@ int VehicleLoader::read_vehicle(TiXmlElement* pElement)
 	return i;
 }
 
+//对应的文件为fcdoutput.xml
 void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 {
-	if ( !pParent ) return;
+	if (!pParent) 
+		return;
 	TiXmlNode* pChild;
 	int t = pParent->Type();
 	int vid;
-	switch ( t )
+	switch (t)
 	{
 	case TiXmlNode::TINYXML_ELEMENT:
 		{
 			const char *element = pParent->Value();
-			int elementID=0;
-			if (0==strcmp(element,"timestep"))elementID=1;
-			if (0==strcmp(element,"vehicle"))elementID=2;
+			int elementID = 0;
+			if (0 == strcmp(element,"timestep"))
+				elementID = 1;
+			if (0 == strcmp(element,"vehicle"))
+				elementID = 2;
 			switch(elementID)
 			{
 			case 1:
@@ -447,7 +471,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 				}//timestep
 			case 2:
 				{
-					vid=read_trace(pParent->ToElement());
+					vid = read_trace(pParent->ToElement());
 					vehicles[vid].trace.push_back(m_temp_trace);
 					break;
 				}//vehicle
@@ -457,18 +481,18 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 		}
 	default:break;
 	}
-
-	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling())
+	for (pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling())
 		initialize_trace(pChild);
 }
 
 int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 {
-	if ( !pElement ) return 0;
+	if (!pElement) 
+		return 0;
 	TiXmlAttribute* pAttrib=pElement->FirstAttribute();
-	int i=0;
+	int i = 0;
 	int attributeID;
-	int vid=-1;
+	int vid = -1;
 	while (pAttrib)
 	{
 		attributeID=getAttribuutID(pAttrib->Name());
@@ -484,8 +508,10 @@ int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 		case ATTR_SLOPE :m_temp_trace.slope=atof(pAttrib->Value());break;
 		case ATTR_LANE  :
 			{
-				m_temp_trace.lane =     pAttrib->Value();
+				m_temp_trace.lane = pAttrib->Value();
+				//删除lane的最后两位：_x
 				m_temp_trace.lane.erase(m_temp_trace.lane.end()-2,m_temp_trace.lane.end());
+				//将"/"替换为"-"
                 StringReplace(m_temp_trace.lane,originLanCharactor,changeLaneCharactor);
 				//cout<<m_temp_trace.lane<<endl;
 				break;
