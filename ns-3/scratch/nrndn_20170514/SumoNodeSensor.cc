@@ -231,7 +231,9 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
-	cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
+	printEdges();
+	getchar();
+	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
 	//当前节点所在路段和位置
 	const string& localLane = getLane();
 	const double& localPos  = getPos();
@@ -290,10 +292,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
-			cout<<eit->first<<" ";
 		}
-		getchar();
-		cout<<endl;
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "(beginLen+middleLen+localPos)" << endl;
 		distance = -(beginLen+middleLen+localPos);
 	}
@@ -314,10 +313,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			eit = edges.find(uriConvertToString(route.at(i)));
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
-			cout<<eit->first<<" ";
 		}
-		getchar();
-		cout<<endl;
 		//cout << "(SuNodeSensor.cc-getDistanceWith) "<< " beginLen+middleLen+remotePos" << endl;
 		distance = beginLen+middleLen+remotePos;
 
