@@ -371,7 +371,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
-		const char *pshape = shape.c_str();
+		char *pshape = shape.data();
 		const char *sep = ", ";
 		char *token = strtok(pshape,sep);
 		int count = 1;
