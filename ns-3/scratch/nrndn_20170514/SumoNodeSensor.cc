@@ -382,8 +382,11 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		const char *sep = ", ";
 		char *token = strtok(pshape,sep);
 		int count = 1;
+		
 		vector<double> x_coordinates;
 		vector<double> y_coordinates;
+		vector<double> temp_x;
+		vector<double> temp_y;
 		double x;
 		double y;
 		while(token)
@@ -393,24 +396,27 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				x = atof(token);
 				cout<<"x坐标为 "<<x<<" ";
+				temp_x.push_back(x);
 			}
 			else
 			{
 				y = atof(token);
+				temp_y.push_back(y);
 				cout<<"y坐标为 "<<y<<" ";
-				std::pair<std::string, double> pathInfo = convertCoordinateToLanePos(x,y);
-				const double& pathPos = remoteInfo.second;
-				cout<<"Pos为 "<<pathPos<<endl;
-				if(pathPos > localPos)
-				{
-					x_coordinates.push_back(x);
-					y_coordinates.push_back(y);
-					cout<<"(SumoNodeSensor-IsCoverThePath) 该坐标已经加入vector中"<<endl;
-				}
 			}
 			token = strtok(NULL,sep);
 			count += 1;
 		}
+		
+		if(temp_x.size() == temp_y.size())
+		{
+			
+		}
+		else
+		{
+			
+		}			
+		
 		//获取当前节点与另一节点之间的道路坐标
 		for(uint32_t i = localIndex+1;i < remoteIndex;++i)
 		{
