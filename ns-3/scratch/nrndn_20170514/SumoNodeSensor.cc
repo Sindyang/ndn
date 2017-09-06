@@ -388,14 +388,15 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		double y;
 		while(token)
 		{
+			cout<<"token "<<token<<" ";
 			if(count%2)
 			{
-				x = atoi(token);
+				x = atof(token);
 				cout<<"x坐标为 "<<x<<" ";
 			}
 			else
 			{
-				y = atoi(token);
+				y = atof(token);
 				cout<<"y坐标为 "<<y<<" ";
 				std::pair<std::string, double> pathInfo = convertCoordinateToLanePos(x,y);
 				const double& pathPos = remoteInfo.second;
@@ -425,12 +426,12 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				if(count%2)
 				{
 					cout<<"x坐标为 "<<x<<" ";
-					x_coordinates.push_back(atoi(token));
+					x_coordinates.push_back(atof(token));
 				}
 				else
 				{
 					cout<<"y坐标为 "<<y<<endl;
-					y_coordinates.push_back(atoi(token));
+					y_coordinates.push_back(atof(token));
 				}
 				token = strtok(NULL,sep);
 				count+=1;
@@ -448,12 +449,12 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			cout<<token<<endl;
 			if(count%2)
 			{
-				x = atoi(token);
+				x = atof(token);
 				cout<<"x坐标为 "<<x<<" ";
 			}
 			else
 			{
-				y = atoi(token);
+				y = atof(token);
 				cout<<"y坐标为 "<<y<<" ";
 				std::pair<std::string, double> pathInfo = convertCoordinateToLanePos(x,y);
 				const double& pathPos = remoteInfo.second;
