@@ -371,7 +371,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
-		char *pshape = shape.data();
+		char *pshape = const_cast<char *>(shape.c_str());
 		const char *sep = ", ";
 		char *token = strtok(pshape,sep);
 		int count = 1;
@@ -405,7 +405,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		{
 			eit = edges.find(uriConvertToString(route.at(i)));
 			shape = eit->second.lane.shape;
-			pshape = shape.c_str();
+			pshape = const_cast<char *>(shape.c_str());
 		    token = strtok(pshape,sep);
 			count = 1;
 			while(token)
@@ -426,7 +426,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		//获取另一节点所在道路坐标
 		eit = edges.find(uriConvertToString(route.at(remoteIndex)));
 		shape = eit->second.lane.shape;
-		pshape = shape.c_str();
+		pshape = const_cast<char *>(shape.c_str());
 		token = strtok(pshape,sep);
 		count = 1;
 		while(token)
