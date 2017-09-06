@@ -204,7 +204,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
 {
 	//NS_LOG_FUNCTION (this);
@@ -248,7 +248,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}
+}*/
 
 //changed by sy 2017.9.6
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
