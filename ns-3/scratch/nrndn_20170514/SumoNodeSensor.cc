@@ -319,6 +319,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 
 	}
 	//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "return" << endl;
+	getchar();
 	return std::pair<bool, double>(true,distance);
 }
 
