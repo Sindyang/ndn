@@ -204,8 +204,8 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
-		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
+//std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
+		//const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
 /*{
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
