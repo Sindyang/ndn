@@ -283,6 +283,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 		}
 	}
 	cout<<endl;
+	getchar();
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
 	for(it=sortlist.begin();it!=sortlist.end();++it)
