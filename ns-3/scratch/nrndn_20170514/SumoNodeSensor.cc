@@ -371,7 +371,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
-		char *pshape = shape.c_str();
+		const char *pshape = shape.c_str();
 		const char *sep = ", ";
 		char *token = strtok(pshape,sep);
 		int count = 1;
@@ -428,11 +428,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		shape = eit->second.lane.shape;
 		pshape = shape.c_str();
 		token = strtok(pshape,sep);
-		int count = 1;
-		vector<double> x_coordinates;
-		vector<double> y_coordinates;
-		double x;
-		double y;
+		count = 1;
 		while(token)
 		{
 			cout<<token<<endl;
@@ -458,15 +454,15 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		bool iscover = false;
 		if(x_coordinates.size() == y_coordinates.size())
 		{
-			vector localPos = GetObject<MobilityModel>()->GetPosition();
+			Vector localPos = GetObject<MobilityModel>()->GetPosition();
 			localPos.z = 0;
 			
-			for(int i = 0;i < x_coordinates.size();i++)
+			for(int i = 0;i < (signed)x_coordinates.size();i++)
 			{
 				x = x_coordinates[i];
 				y = y_coordinates[i];
 				Vector pathPos(x,y,0);
-				if(CalculateDistance(localPos,remotePos) < TransRange)
+				if(CalculateDistance(localPos,pathPos) < TransRange)
 				{
 					iscover = true;
 				}
