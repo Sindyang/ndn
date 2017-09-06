@@ -43,6 +43,7 @@ public:
 
 	std::string uriConvertToString(std::string str);
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
+	virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//added by sy 2017.9.5
 	void printVehicle();
 	void printEdges();

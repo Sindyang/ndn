@@ -250,7 +250,53 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 	return PriorityList;
 }
 
+//changed by sy 2017.9.6
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+{
+	std::vector<uint32_t> PriorityList;
+	std::ostringstream str;
+	str<<"PriorityList is";
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
+	// The default order of multimap is ascending order,
+	// but I need a descending order
+	std::multimap<double,uint32_t,std::greater<double> > sortlist;
+
+	// step 1. 寻找位于导航路线前方的一跳邻居列表,m_nb为邻居列表
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	
+	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
+	{
+		std::pair<bool, double> result=
+				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
+		//cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+		
+		// Be careful with the order, increasing or descending?
+		if(result.first && result.second > 0)
+		{
+			bool iscover = m_sensor->IsCoverThePath(nb->second.m_x,nb->second.m_y,route);
+			if(iscover)
+			{
+				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			}
+		}
+	}
+	cout<<endl;
+	// step 2. Sort By Distance Descending
+	std::multimap<double,uint32_t>::iterator it;
+	for(it=sortlist.begin();it!=sortlist.end();++it)
+	{
+		PriorityList.push_back(it->second);
+
+		str<<" "<<it->second;
+		//cout<<" "<<it->second;
+	}
+	NS_LOG_DEBUG(str.str());
+	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//getchar();
+	return PriorityList;
+}
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
