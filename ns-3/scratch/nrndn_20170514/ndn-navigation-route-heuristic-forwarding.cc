@@ -206,7 +206,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 //获取优先列表
 /*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
-{
+/*{
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -256,7 +256,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -269,7 +269,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	{
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		//cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+		cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 		
 		// Be careful with the order, increasing or descending?
 		if(result.first && result.second > 0)
@@ -278,7 +278,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 			if(iscover)
 			{
 				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-				//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
 		}
 	}
