@@ -379,7 +379,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		string temp = eit->second.lane.shape;
 		string shape = temp;
 		char c = shape[0];
-		shape[0] = 'a';
+		shape[0] = c;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
 		cout<<eit->second.lane.shape<<endl;
 		char *pshape = const_cast<char *>(shape.c_str());
