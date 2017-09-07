@@ -12,6 +12,7 @@
 #include "ns3/SumoMobility.h"
 
 #include <unordered_map>
+#include <vector>
 
 namespace ns3
 {
@@ -42,6 +43,7 @@ public:
 	virtual const std::vector<std::string>& getNavigationRoute();
 
 	std::string uriConvertToString(std::string str);
+	std::vector <string> split(const string & s, const string & d);
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
 	virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 
