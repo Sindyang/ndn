@@ -379,52 +379,56 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		string shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
 		vector<double> coordinates = split(shape," ,");
+		int num = 0;
 		
 		for(int i = 0;i < (signed)coordinates.size();i++)
 		{
 			cout<<coordinates[i]<<" ";
 		}
+		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
+		getchar();
+		
 		if(coordinates.size()%2 == 0)
 		{
 			num = coordinates.size()/2;
 		}
-		int num = coordinates.size()/2;
-		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
-		getchar();
-	
+		else
+		{
+			cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数不相同"<<endl;
+		}
+		
 		vector<double> x_coordinates;
 		vector<double> y_coordinates;
 	
-		cout<<"(SumoNodeSensor-IsCoverThePath) 获取当前节点所在道路坐标"<<endl;
 		cout<<eit->second.lane.shape<<endl;
 		getchar();
 		
-		if()
+		if(num)
 		{
-			if(temp_x.size() == 1)
+			if(num == 1)
 			{
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数只有一个"<<endl;
 				getchar();
 			}
-			else if(temp_x.size() == 2)
+			else if(num == 2)
 			{
-				x_coordinates.push_back(temp_x.back());
-				y_coordinates.push_back(temp_y.back());
+				x_coordinates.push_back(coordinates.back()-1);
+				y_coordinates.push_back(coordinates.back());
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数有2个，已添加"<<endl;
 			}
 			else
 			{
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数大于2"<<endl;
-				double x_begin = temp_x.front();
-				double x_end = temp_x.back();
+				double x_begin = coordinates.front();
+				double x_end = coordinates.back()-1;
 				bool x_increase = false;
 				if(x_begin < x_end)
 				{
 					x_increase = true;
 				}
 				
-				double y_begin = temp_y.front();
-				double y_end = temp_y.back();
+				double y_begin = coordinates.front()+1;
+				double y_end = coordinates.back();
 				bool y_increase = false;
 				if(y_begin < y_end)
 				{
@@ -434,53 +438,14 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				double x_local = getX();
 				double y_local = getY();
 				//寻找符合条件的道路坐标，即位于当前节点与道路末端之间的坐标
-				for(int i = 1;i < (signed)temp_x.size();i++)
+				for(int i = 0;i < num*2;i+=2)
 				{
-					bool flag_x = false;
-					bool flag_y = false;
-					if(x_increase)
+					bool flag = IsCorrectPosition(x_increase,y_increase,x_local,x_end,y_local,y_end,coordinates[i],coordinates[i+1]);
+					if(flag)
 					{
-						//道路位于当前节点与道路末端之间
-						if(temp_x[i] > x_local && temp_x[i] <= x_end)
-						{
-							flag_x = true;
-						}
-						else
-							flag_x = false;
-					}
-					else
-					{
-						//道路位于当前节点与道路末端之间
-						if(temp_x[i] < x_local && temp_x[i] >= x_end)
-						{
-							flag_x = true;
-						}
-						else
-							flag_x = false;
-					}
-					if(y_increase)
-					{
-						if(temp_y[i] > y_local && temp_y[i] <= y_end)
-						{
-							flag_y = true;
-						}
-						else
-							flag_y  = false;
-					}
-					else
-					{
-						if(temp_y[i] < y_local && temp_y[i] >= y_end)
-						{
-							flag_y = true;
-						}
-						else
-							flag_y = false;
-					}
-					if(flag_x && flag_y)
-					{
-						x_coordinates.push_back(temp_x[i]);
-						y_coordinates.push_back(temp_y[i]);
-						cout<<"x "<<temp_x[i]<<" y "<<temp_y[i]<<" 已加入"<<endl;
+						x_coordinates.push_back(coordinates[i]);
+						y_coordinates.push_back(coordinates[i+1]);
+						cout<<"x "<<coordinates[i]<<" y "<<coordinates[i+1]<<" 已加入"<<endl;
 					}
 				}
 			}
@@ -497,139 +462,86 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			eit = edges.find(uriConvertToString(route.at(i)));
 			shape = eit->second.lane.shape;
 			cout<<"(SumoNodeSensor-IsCoverThePath) 道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-			pshape = const_cast<char *>(shape.c_str());
-		    token = strtok(pshape,sep);
-			count = 1;
-			while(token)
+			vector<double> coordinates = split(shape," ,");
+			for(int i = 0;i < (signed)coordinates.size();i+=2)
 			{
-				cout<<token<<endl;
-				if(count%2)
-				{
-					cout<<"x坐标为 "<<x<<" ";
-					x_coordinates.push_back(atof(token));
-				}
-				else
-				{
-					cout<<"y坐标为 "<<y<<endl;
-					y_coordinates.push_back(atof(token));
-				}
-				token = strtok(NULL,sep);
-				count+=1;
+				x_coordinates.push_back(coordinates[i]);
+				y_coordinates.push_back(coordinates[i+1]);
 			}
 		}
+		
 		//获取另一节点所在道路坐标
 		eit = edges.find(uriConvertToString(route.at(remoteIndex)));
 		shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 另一节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-		pshape = const_cast<char *>(shape.c_str());
-		token = strtok(pshape,sep);
-		count = 1;
-		temp_x.clear();
-		temp_y.clear();
-		while(token)
+		coordinates.clear();
+		coordinates = split(shape," ,");
+		num = 0;
+		
+		for(int i = 0;i < (signed)coordinates.size();i++)
 		{
-			cout<<token<<endl;
-			if(count%2)
-			{
-				x = atof(token);
-				temp_x.push_back(x);
-				cout<<"x坐标为 "<<x<<" ";
-			}
-			else
-			{
-				y = atof(token);
-				temp_y.push_back(y);
-				cout<<"y坐标为 "<<y<<endl;
-			}
-			token = strtok(NULL,sep);
-			count += 1;
+			cout<<coordinates[i]<<" ";
 		}
-		if(temp_x.size() == temp_y.size())
+		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
+		getchar();
+		
+		if(coordinates.size()%2 == 0)
 		{
-			if(temp_x.size() == 1)
+			num = coordinates.size()/2;
+		}
+		else
+		{
+			cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数不相同"<<endl;
+		}
+		
+		cout<<eit->second.lane.shape<<endl;
+		getchar();
+		
+		if(num)
+		{
+			if(num == 1)
 			{
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数只有一个"<<endl;
 				getchar();
 			}
-			else if(temp_x.size() == 2)
+			else if(num == 2)
 			{
-				x_coordinates.push_back(temp_x.front());
-				y_coordinates.push_back(temp_y.front());
+				x_coordinates.push_back(coordinates.front());
+				y_coordinates.push_back(coordinates.front()+1);
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数有2个，已添加"<<endl;
 			}
 			else
 			{
-				double x_begin = temp_x.front();
-				double x_end = temp_x.back();
-				bool x_increase = false;
+				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数大于2"<<endl;
+				x_begin = coordinates.front();
+				x_end = coordinates.back()-1;
+				x_increase = false;
 				if(x_begin < x_end)
 				{
 					x_increase = true;
 				}
 				
-				double y_begin = temp_y.front();
-				double y_end = temp_y.back();
+				y_begin = coordinates.front()+1;
+				y_end = coordinates.back();
 				bool y_increase = false;
 				if(y_begin < y_end)
 				{
 					y_increase = true;
 				}
 				
-				//寻找符合条件的道路坐标，即位于道路开始与另一节点之间的坐标
-				for(int i = 0;i < (signed)temp_x.size();i++)
+				//寻找符合条件的道路坐标，即位于当前节点与道路末端之间的坐标
+				for(int i = 0;i < num*2;i+=2)
 				{
-					bool flag_x = false;
-					bool flag_y = false;
-					if(x_increase)
+					bool flag = IsCorrectPosition(x_increase,y_increase,x_begin,x,y_begin,y,coordinates[i],coordinates[i+1]);
+					if(flag)
 					{
-						if(temp_x[i] < x && temp_x[i] >= x_begin)
-						{
-							flag_x = true;
-						}
-						else
-							flag_x = false;
-					}
-					else
-					{
-						if(temp_x[i] > x && temp_x[i] <= x_begin)
-						{
-							flag_x = true;
-						}
-						else
-							flag_x = false;
-					}
-					if(y_increase)
-					{
-						if(temp_y[i] < y && temp_y[i] >= y_begin)
-						{
-							flag_y = true;
-						}
-						else
-							flag_y = false;
-					}
-					else
-					{
-						if(temp_y[i] > y && temp_y[i] <= y_begin)
-						{
-							flag_y = true;
-						}
-						else
-							flag_y = false;
-					}
-					if(flag_x && flag_y)
-					{
-						x_coordinates.push_back(temp_x[i]);
-						y_coordinates.push_back(temp_y[i]);
-						cout<<"x "<<temp_x[i]<<" y "<<temp_y[i]<<" 已加入"<<endl;
+						x_coordinates.push_back(coordinates[i]);
+						y_coordinates.push_back(coordinates[i+1]);
+						cout<<"x "<<coordinates[i]<<" y "<<coordinates[i+1]<<" 已加入"<<endl;
 					}
 				}
 			}
 		}
-		else
-		{
-			cout<<"(SumoNodeSensor-IsCoverThePath)x与y的个数不相同"<<endl;
-			getchar();
-		}			
 		
 		//判断以当前节点为圆心，传输长度为半径的圆是否可以覆盖到当前节点-转发节点之间的所有路段
 		bool iscover = false;
@@ -665,6 +577,51 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	}
 	return false;
 }
+
+bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y)
+{		
+	bool flag_x = false;
+	bool flag_y = false;
+	
+	if(x_increase)
+	{
+			//道路位于当前节点与道路末端之间
+		if(x >= x_begin && x <= x_end)
+		{
+			flag_x = true;
+		}
+	}
+	else
+	{
+		//道路位于当前节点与道路末端之间
+		if(x <= x_begin && x >= x_end)
+		{
+			flag_x = true;
+		}
+	}
+		
+	if(y_increase)
+	{
+		if(y >= y_begin && y <= y_end)
+		{
+			flag_y = true;
+		}
+	}
+	else
+	{
+		if(y <= y_begin && y >= y_end)
+		{
+			flag_y = true;
+		}
+	}
+		
+	if(flag_x && flag_y)
+	{
+		return true;
+	}
+	return false;
+}
+
 
 std::vector<std::double> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
