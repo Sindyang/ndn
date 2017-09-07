@@ -679,7 +679,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	return false;
 }
 
-std::vector<string> SumoNodeSensor::split(const string & s, const string & d)
+std::vector<std::string> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
 	std::vector<std::string> v;
 	char *str = new char[s.size()+1];
