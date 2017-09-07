@@ -183,7 +183,14 @@ int RoadMap::Read_lane(TiXmlElement* pElement)
 		case ATTR_INDEX :m_temp_edge.lane.index   =atoi(pAttrib->Value());break;
 		case ATTR_SPEED :m_temp_edge.lane.speed   =atof(pAttrib->Value());break;
 		case ATTR_LENGTH:m_temp_edge.lane.length  =atof(pAttrib->Value());break;
-		case ATTR_SHAPE :m_temp_edge.lane.shape   =pAttrib->Value();break;
+		case ATTR_SHAPE :
+		{
+			m_temp_edge.lane.shape   =pAttrib->Value();
+			std::cout<<m_temp_edge.lane.shape<<std::endl;
+			getchar();
+			break;
+		}
+		
 		default:break;
 		}
 		i++;
