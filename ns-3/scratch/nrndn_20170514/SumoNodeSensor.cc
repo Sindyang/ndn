@@ -325,8 +325,6 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 //added by sy 2017.9.6
 bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route)
 {
-	m_sumodata->PrintEdges();
-	getchar();
 	cout<<"进入(SumoNodeSensor.cc-IsCoverThePath)"<<endl;
 	//当前节点所在路段和位置
 	const string& localLane = getLane();
@@ -380,6 +378,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
+		cout<<eit->second.lane.shape<<endl;
 		char *pshape = const_cast<char *>(shape.c_str());
 		const char *sep = " ,";
 		char *token = strtok(pshape,sep);
