@@ -378,47 +378,28 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-		vector<string> coordinates = split(shape," ,");
+		vector<double> coordinates = split(shape," ,");
+		
 		for(int i = 0;i < (signed)coordinates.size();i++)
 		{
 			cout<<coordinates[i]<<" ";
 		}
+		if(coordinates.size()%2 == 0)
+		{
+			num = coordinates.size()/2;
+		}
+		int num = coordinates.size()/2;
+		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
 		getchar();
-		
-		char *pshape = const_cast<char *>(shape.c_str());
-		const char *sep = " ,";
-		char *token = strtok(pshape,sep);
-		int count = 1;
-		
+	
 		vector<double> x_coordinates;
 		vector<double> y_coordinates;
-		vector<double> temp_x;
-		vector<double> temp_y;
-		double x;
-		double y;
+	
 		cout<<"(SumoNodeSensor-IsCoverThePath) 获取当前节点所在道路坐标"<<endl;
-		while(token)
-		{
-			cout<<"count "<<count<<endl;
-			if(count%2)
-			{
-				x = atof(token);
-				cout<<"x坐标为 "<<x<<" ";
-				temp_x.push_back(x);
-			}
-			else
-			{
-				y = atof(token);
-				temp_y.push_back(y);
-				cout<<"y坐标为 "<<y<<endl;
-			}
-			token = strtok(NULL,sep);
-			count += 1;
-		}
 		cout<<eit->second.lane.shape<<endl;
 		getchar();
 		
-		if(temp_x.size() == temp_y.size())
+		if()
 		{
 			if(temp_x.size() == 1)
 			{
@@ -685,13 +666,13 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	return false;
 }
 
-std::vector<std::string> SumoNodeSensor::split(const std::string & s, const std::string & d)
+std::vector<std::double> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
 	std::vector<std::string> v;
 	char *str = new char[s.size()+1];
 	strcpy(str,s.c_str());
 	while(char *t = strsep(&str,d.c_str()))
-		v.push_back(t);
+		v.push_back(atof(i));
 	delete []str;
 	return v;
 }
