@@ -169,18 +169,6 @@ const sumomobility::Trace& SumoMobility::GetTrace(uint32_t& Vehicle_ID,Vector& p
 	return *result;
 }
 
-//added by sy 2017.9.5
-void SumoMobility::PrintVehicle()
-{
-	vl.print_vehicle();
-}
-
-//added by sy 2017.9.5
-void SumoMobility::PrintEdges()
-{
-	roadmap.printedges();
-}
-
 void SumoMobility::InitializeCoordinateToLane()
 {
 	const vector<Vehicle>& vehicles=vl.getVehicles();
