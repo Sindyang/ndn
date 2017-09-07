@@ -94,8 +94,7 @@ void RoadMap::printedges()
 	map<string,Edge>::iterator edge;
 	for (edge=edges.begin();edge!=edges.end();edge++)
 	{
-		//changed by sy 2017.9.5 增加了(*edge).first的输出
-		cout<<(*edge).first<<" "<<cout<<(*edge).second.id<<"  "<<(*edge).second.from<<"  "<<(*edge).second.to<<"  "<<(*edge).second.priority<<endl;
+		cout<<(*edge).second.id<<"  "<<(*edge).second.from<<"  "<<(*edge).second.to<<"  "<<(*edge).second.priority<<endl;
 		cout<<"    "<<(*edge).second.lane.id<<"  "<<(*edge).second.lane.index<<"  "<<(*edge).second.lane.speed<<"  "<<(*edge).second.lane.length<<"  "<<(*edge).second.lane.shape<<endl;
 
 	}
