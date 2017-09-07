@@ -82,8 +82,6 @@ void RoadMap::LoadNetXMLFile(const char* pFilename)
 	{
 	//	printf("\n%s:\n", pFilename);
 		InitializeEdges( &doc ); // defined later in the tutorial
-		printedges();
-		getchar();
 	}
 	else
 	{
