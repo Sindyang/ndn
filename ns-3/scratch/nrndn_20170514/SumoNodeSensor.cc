@@ -441,10 +441,10 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					y_increase = true;
 				}
 				
-				double x_local = m_sensor->getX();
-				double y_local = m_sensor->getY();
+				double x_local = getX();
+				double y_local = getY();
 				//寻找符合条件的道路坐标，即位于当前节点与道路末端之间的坐标
-				for(int i = 1;i < temp_x.size();i++)
+				for(int i = 1;i < (signed)temp_x.size();i++)
 				{
 					bool flag_x = false;
 					bool flag_y = false;
@@ -586,7 +586,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				}
 				
 				//寻找符合条件的道路坐标，即位于道路开始与另一节点之间的坐标
-				for(int i = 0;i < temp_x.size();i++)
+				for(int i = 0;i < (signed)temp_x.size();i++)
 				{
 					bool flag_x = false;
 					bool flag_y = false;
@@ -601,7 +601,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					}
 					else
 					{
-						if(temp_x[i] > x_local && temp_x[i] <= x_begin)
+						if(temp_x[i] > x && temp_x[i] <= x_begin)
 						{
 							flag_x = true;
 						}
@@ -610,7 +610,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					}
 					if(y_increase)
 					{
-						if(temp_y[i] < y_local && temp_y[i] >= y_begin)
+						if(temp_y[i] < y && temp_y[i] >= y_begin)
 						{
 							flag_y = true;
 						}
@@ -619,7 +619,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					}
 					else
 					{
-						if(temp_y[i] > y_local && temp_y[i] <= y_begin)
+						if(temp_y[i] > y && temp_y[i] <= y_begin)
 						{
 							flag_y = true;
 						}
