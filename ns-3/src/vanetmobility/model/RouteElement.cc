@@ -82,6 +82,8 @@ void RoadMap::LoadNetXMLFile(const char* pFilename)
 	{
 	//	printf("\n%s:\n", pFilename);
 		InitializeEdges( &doc ); // defined later in the tutorial
+		printedges();
+		getchar();
 	}
 	else
 	{
@@ -235,8 +237,6 @@ void RoadMap::InitializeEdges( TiXmlNode* pParent)
 					//导致多车道的道路只能插入第一个车道的信息
 					edges.insert(map<string,Edge>::value_type(m_temp_edge.lane.id,m_temp_edge));
 					//edges.push_back(m_temp_edge);
-					cout<<m_temp_edge.lane.shape<<endl;
-					getchar();
 					break;
 				}//lane
 			default:break;
