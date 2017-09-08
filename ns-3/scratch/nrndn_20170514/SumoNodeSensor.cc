@@ -514,17 +514,17 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			else
 			{
 				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数大于2"<<endl;
-				x_begin = coordinates.front();
-				x_end = coordinates.back()-1;
-				x_increase = false;
+				double x_begin = coordinates.front();
+				double x_end = coordinates.back()-1;
+				bool x_increase = false;
 				if(x_begin < x_end)
 				{
 					x_increase = true;
 				}
 				
-				y_begin = coordinates.front()+1;
-				y_end = coordinates.back();
-				y_increase = false;
+				double y_begin = coordinates.front()+1;
+				double y_end = coordinates.back();
+				bool y_increase = false;
 				if(y_begin < y_end)
 				{
 					y_increase = true;
@@ -553,10 +553,10 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			
 			for(int i = 0;i < (signed)x_coordinates.size();i++)
 			{
-				x = x_coordinates[i];
-				y = y_coordinates[i];
+				int tempx = x_coordinates[i];
+				int tempy = y_coordinates[i];
 				Vector pathPos(x,y,0);
-				cout<<"(SumoNodeSensor-IsCoverThePath) 当前计算的坐标为 x "<<x<<" y "<<y<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
+				cout<<"(SumoNodeSensor-IsCoverThePath) 当前计算的坐标为 x "<<tempx<<" y "<<tempy<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
 			
 				if(CalculateDistance(localPos,pathPos) < TransRange)
 				{
