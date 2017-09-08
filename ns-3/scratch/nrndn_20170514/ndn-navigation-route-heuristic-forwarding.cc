@@ -275,11 +275,12 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 		if(result.first && result.second > 0)
 		{
 			bool iscover = m_sensor->IsCoverThePath(nb->second.m_x,nb->second.m_y,route);
+			cout<<"iscover "<<iscover<<endl;
+			getchar();
 			if(iscover)
 			{
 				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
 				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
-				getchar();
 			}
 		}
 	}
