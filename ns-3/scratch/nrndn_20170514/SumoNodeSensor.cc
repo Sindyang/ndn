@@ -403,8 +403,8 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			}
 			else if(num == 2)
 			{
-				x_coordinates.push_back(coordinates.back()-1);
-				y_coordinates.push_back(coordinates.back());
+				x_coordinates.push_back(coordinates[2]);
+				y_coordinates.push_back(coordinates[3]);
 				cout<<"已添加坐标 ("<<coordinates.back()-1<<","<<coordinates.back()<<")"<<endl;
 			}
 			else
@@ -459,7 +459,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				x_coordinates.push_back(coordinates[i]);
 				y_coordinates.push_back(coordinates[i+1]);
-				cout<<"已添加坐标 ("<<coordinates.front()<<","<<coordinates.front()+1<<")"<<endl;
+				cout<<"已添加坐标 ("<<coordinates[i]<<","<<coordinates[i+1]<<")"<<endl;
 			}
 		}
 		
@@ -490,8 +490,8 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			}
 			else if(num == 2)
 			{
-				x_coordinates.push_back(coordinates.front());
-				y_coordinates.push_back(coordinates.front()+1);
+				x_coordinates.push_back(coordinates[0]);
+				y_coordinates.push_back(coordinates[1]);
 				cout<<"已添加坐标 ("<<coordinates.front()<<","<<coordinates.front()+1<<")"<<endl;
 			}
 			else
