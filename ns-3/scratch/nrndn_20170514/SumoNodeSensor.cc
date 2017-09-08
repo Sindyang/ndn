@@ -438,9 +438,9 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				double x_local = getX();
 				double y_local = getY();
 				//寻找符合条件的道路坐标，即位于当前节点与道路末端之间的坐标
-				for(int i = 0;i < num*2;i+=2)
+				for(int i = 0;i < num*2;i += 2)
 				{
-					bool flag = IsCorrectPosition(x_increase,y_increase,x_local,x_end,y_local,y_end,coordinates[i],coordinates[i+1]);
+					bool flag = IsCorrectPosition(x_increase,y_increase,x_local,y_local,x_end,y_end,coordinates[i],coordinates[i+1]);
 					if(flag)
 					{
 						x_coordinates.push_back(coordinates[i]);
@@ -482,7 +482,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		{
 			cout<<coordinates[i]<<" ";
 		}
-		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
+		cout<<endl<<"道路的坐标个数为 "<<coordinates.size()<<endl;
 		getchar();
 		
 		if(coordinates.size()%2 == 0)
@@ -523,7 +523,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				
 				y_begin = coordinates.front()+1;
 				y_end = coordinates.back();
-				bool y_increase = false;
+				y_increase = false;
 				if(y_begin < y_end)
 				{
 					y_increase = true;
@@ -532,7 +532,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				//寻找符合条件的道路坐标，即位于当前节点与道路末端之间的坐标
 				for(int i = 0;i < num*2;i+=2)
 				{
-					bool flag = IsCorrectPosition(x_increase,y_increase,x_begin,x,y_begin,y,coordinates[i],coordinates[i+1]);
+					bool flag = IsCorrectPosition(x_increase,y_increase,x_begin,y_begin,x,y,coordinates[i],coordinates[i+1]);
 					if(flag)
 					{
 						x_coordinates.push_back(coordinates[i]);
@@ -585,7 +585,6 @@ bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_beg
 	
 	if(x_increase)
 	{
-			//道路位于当前节点与道路末端之间
 		if(x >= x_begin && x <= x_end)
 		{
 			flag_x = true;
@@ -593,7 +592,6 @@ bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_beg
 	}
 	else
 	{
-		//道路位于当前节点与道路末端之间
 		if(x <= x_begin && x >= x_end)
 		{
 			flag_x = true;
