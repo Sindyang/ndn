@@ -380,13 +380,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
 		vector<double> coordinates = split(shape," ,");
 		int num = 0;
-		
-		for(int i = 0;i < (signed)coordinates.size();i++)
-		{
-			cout<<coordinates[i]<<" ";
-		}
 		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
-		getchar();
 		
 		if(coordinates.size()%2 == 0)
 		{
@@ -394,27 +388,24 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		}
 		else
 		{
-			cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数不相同"<<endl;
+			cout<<"(SumoNodeSensor-IsCoverThePath) x与y的坐标个数不相同"<<endl;
 		}
 		
 		vector<double> x_coordinates;
 		vector<double> y_coordinates;
-	
-		cout<<eit->second.lane.shape<<endl;
-		getchar();
 		
 		if(num)
 		{
 			if(num == 1)
 			{
-				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数只有一个"<<endl;
+				cout<<"(SumoNodeSensor-IsCoverThePath) 只有一个坐标"<<endl;
 				getchar();
 			}
 			else if(num == 2)
 			{
 				x_coordinates.push_back(coordinates.back()-1);
 				y_coordinates.push_back(coordinates.back());
-				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数有2个，已添加"<<endl;
+				cout<<"已添加坐标 ("<<coordinates.back()-1<<","<<coordinates.back()<<")"<<endl;
 			}
 			else
 			{
@@ -445,14 +436,14 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					{
 						x_coordinates.push_back(coordinates[i]);
 						y_coordinates.push_back(coordinates[i+1]);
-						cout<<"x "<<coordinates[i]<<" y "<<coordinates[i+1]<<" 已加入"<<endl;
+						cout<<"已添加坐标 ("<<coordinates[i]<<","<<coordinates[i+1]<<")"<<endl;
 					}
 				}
 			}
 		}
 		else
 		{
-			cout<<"(SumoNodeSensor-IsCoverThePath)x与y的个数不相同"<<endl;
+			cout<<"(SumoNodeSensor-IsCoverThePath)x与y的坐标个数不相同"<<endl;
 			getchar();
 		}			
 		
@@ -468,6 +459,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				x_coordinates.push_back(coordinates[i]);
 				y_coordinates.push_back(coordinates[i+1]);
+				cout<<"已添加坐标 ("<<coordinates.front()<<","<<coordinates.front()+1<<")"<<endl;
 			}
 		}
 		
@@ -478,13 +470,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		coordinates.clear();
 		coordinates = split(shape," ,");
 		num = 0;
-		
-		for(int i = 0;i < (signed)coordinates.size();i++)
-		{
-			cout<<coordinates[i]<<" ";
-		}
 		cout<<endl<<"道路的坐标个数为 "<<coordinates.size()<<endl;
-		getchar();
 		
 		if(coordinates.size()%2 == 0)
 		{
@@ -495,21 +481,18 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数不相同"<<endl;
 		}
 		
-		cout<<eit->second.lane.shape<<endl;
-		getchar();
-		
 		if(num)
 		{
 			if(num == 1)
 			{
-				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数只有一个"<<endl;
+				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的坐标个数只有一个"<<endl;
 				getchar();
 			}
 			else if(num == 2)
 			{
 				x_coordinates.push_back(coordinates.front());
 				y_coordinates.push_back(coordinates.front()+1);
-				cout<<"(SumoNodeSensor-IsCoverThePath) x与y的个数有2个，已添加"<<endl;
+				cout<<"已添加坐标 ("<<coordinates.front()<<","<<coordinates.front()+1<<")"<<endl;
 			}
 			else
 			{
@@ -538,7 +521,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 					{
 						x_coordinates.push_back(coordinates[i]);
 						y_coordinates.push_back(coordinates[i+1]);
-						cout<<"x "<<coordinates[i]<<" y "<<coordinates[i+1]<<" 已加入"<<endl;
+						cout<<"已添加坐标 ("<<coordinates[i]<<","<<coordinates[i+1]<<")"<<endl;
 					}
 				}
 			}
@@ -553,8 +536,8 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			
 			for(int i = 0;i < (signed)x_coordinates.size();i++)
 			{
-				int tempx = x_coordinates[i];
-				int tempy = y_coordinates[i];
+				double tempx = x_coordinates[i];
+				double tempy = y_coordinates[i];
 				Vector pathPos(x,y,0);
 				cout<<"(SumoNodeSensor-IsCoverThePath) 当前计算的坐标为 x "<<tempx<<" y "<<tempy<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
 			
