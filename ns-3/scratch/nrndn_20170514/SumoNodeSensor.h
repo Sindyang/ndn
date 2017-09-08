@@ -43,7 +43,7 @@ public:
 	virtual const std::vector<std::string>& getNavigationRoute();
 
 	std::string uriConvertToString(std::string str);
-	std::vector <std::double> split(const std::string & s, const std::string & d);
+	std::vector <double> split(const std::string & s, const std::string & d);
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
 	virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);

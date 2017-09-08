@@ -378,7 +378,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-		vector<std::double> coordinates = split(shape," ,");
+		vector<double> coordinates = split(shape," ,");
 		int num = 0;
 		
 		for(int i = 0;i < (signed)coordinates.size();i++)
@@ -462,7 +462,8 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			eit = edges.find(uriConvertToString(route.at(i)));
 			shape = eit->second.lane.shape;
 			cout<<"(SumoNodeSensor-IsCoverThePath) 道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-			vector<double> coordinates = split(shape," ,");
+			coordinates.clear();
+			coordinates = split(shape," ,");
 			for(int i = 0;i < (signed)coordinates.size();i+=2)
 			{
 				x_coordinates.push_back(coordinates[i]);
@@ -621,9 +622,9 @@ bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_beg
 }
 
 
-std::vector<std::double> SumoNodeSensor::split(const std::string & s, const std::string & d)
+std::vector<double> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
-	std::vector<std::double> v;
+	std::vector<double> v;
 	char *str = new char[s.size()+1];
 	strcpy(str,s.c_str());
 	while(char *t = strsep(&str,d.c_str()))
