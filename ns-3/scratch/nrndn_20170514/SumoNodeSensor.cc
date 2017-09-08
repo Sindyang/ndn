@@ -623,7 +623,7 @@ bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_beg
 
 std::vector<std::double> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
-	std::vector<std::string> v;
+	std::vector<std::double> v;
 	char *str = new char[s.size()+1];
 	strcpy(str,s.c_str());
 	while(char *t = strsep(&str,d.c_str()))
