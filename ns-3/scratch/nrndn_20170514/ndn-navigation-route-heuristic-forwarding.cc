@@ -297,8 +297,9 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 		PriorityList.push_back(it->second);
 
 		str<<" "<<it->second;
-		//cout<<" "<<it->second;
+		cout<<" "<<it->second;
 	}
+	cout<<endl;
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
