@@ -1154,7 +1154,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
 	
