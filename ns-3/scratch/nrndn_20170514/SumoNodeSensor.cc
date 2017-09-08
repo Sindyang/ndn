@@ -378,7 +378,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		//获取当前节点所在道路坐标
 		string shape = eit->second.lane.shape;
 		cout<<"(SumoNodeSensor-IsCoverThePath) 当前节点所在道路为 "<<eit->second.lane.id<<" ,坐标为 "<<shape<<endl;
-		vector<double> coordinates = split(shape," ,");
+		vector<std::double> coordinates = split(shape," ,");
 		int num = 0;
 		
 		for(int i = 0;i < (signed)coordinates.size();i++)
@@ -627,7 +627,7 @@ std::vector<std::double> SumoNodeSensor::split(const std::string & s, const std:
 	char *str = new char[s.size()+1];
 	strcpy(str,s.c_str());
 	while(char *t = strsep(&str,d.c_str()))
-		v.push_back(atof(i));
+		v.push_back(atof(t));
 	delete []str;
 	return v;
 }
