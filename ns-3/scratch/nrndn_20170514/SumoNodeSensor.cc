@@ -405,7 +405,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				x_coordinates.push_back(coordinates[2]);
 				y_coordinates.push_back(coordinates[3]);
-				cout<<"已添加坐标 ("<<coordinates.back()-1<<","<<coordinates.back()<<")"<<endl;
+				cout<<"已添加坐标 ("<<coordinates[2]<<","<<coordinates[3]<<")"<<endl;
 			}
 			else
 			{
@@ -470,7 +470,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		coordinates.clear();
 		coordinates = split(shape," ,");
 		num = 0;
-		cout<<endl<<"道路的坐标个数为 "<<coordinates.size()<<endl;
+		cout<<"道路的坐标个数为 "<<coordinates.size()<<endl;
 		
 		if(coordinates.size()%2 == 0)
 		{
@@ -492,7 +492,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				x_coordinates.push_back(coordinates[0]);
 				y_coordinates.push_back(coordinates[1]);
-				cout<<"已添加坐标 ("<<coordinates.front()<<","<<coordinates.front()+1<<")"<<endl;
+				cout<<"已添加坐标 ("<<coordinates[0]<<","<<coordinates[1]<<")"<<endl;
 			}
 			else
 			{
@@ -539,7 +539,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 				double tempx = x_coordinates[i];
 				double tempy = y_coordinates[i];
 				Vector pathPos(x,y,0);
-				cout<<"(SumoNodeSensor-IsCoverThePath) 当前计算的坐标为 x "<<tempx<<" y "<<tempy<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
+				cout<<"当前计算的坐标为 x "<<tempx<<" y "<<tempy<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
 			
 				if(CalculateDistance(localPos,pathPos) < TransRange)
 				{
