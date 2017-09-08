@@ -325,11 +325,11 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 //added by sy 2017.9.6
 bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route)
 {
-	cout<<"进入(SumoNodeSensor.cc-IsCoverThePath)"<<endl;
+	//cout<<"进入(SumoNodeSensor.cc-IsCoverThePath)"<<endl;
 	//当前节点所在路段和位置
 	const string& localLane = getLane();
 	const double& localPos = getPos();
-	cout<<"(SuNodeSensor-IsCoverThePath) 当前节点所在路段 "<<localLane<<", 所在位置 "<<localPos<<endl;
+	//cout<<"(SuNodeSensor-IsCoverThePath) 当前节点所在路段 "<<localLane<<", 所在位置 "<<localPos<<endl;
 	
 	vector<string>::const_iterator localLaneIterator;
 	vector<string>::const_iterator remoteLaneIterator;
@@ -339,7 +339,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	//另一节点所在路段和位置
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;
-	cout<<"(SumoNodeSensor-IsCoverThePath) 另一节点所在路段 "<<remoteLane<<", 所在位置 "<<remotePos<<endl;
+	//cout<<"(SumoNodeSensor-IsCoverThePath) 另一节点所在路段 "<<remoteLane<<", 所在位置 "<<remotePos<<endl;
 	
 	//当前节点所在路段在导航路线中的下标
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);

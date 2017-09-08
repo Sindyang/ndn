@@ -281,7 +281,11 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
 				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
-			getchar();
+			else
+			{
+				cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+			}
+			//getchar();
 		}
 	}
 	cout<<endl;
