@@ -538,7 +538,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 			{
 				double tempx = x_coordinates[i];
 				double tempy = y_coordinates[i];
-				Vector pathPos(x,y,0);
+				Vector pathPos(tempx,tempy,0);
 				cout<<"当前计算的坐标为 x "<<tempx<<" y "<<tempy<<" 距离为 "<<CalculateDistance(localPos,pathPos)<<endl;
 			
 				if(CalculateDistance(localPos,pathPos) < TransRange)
