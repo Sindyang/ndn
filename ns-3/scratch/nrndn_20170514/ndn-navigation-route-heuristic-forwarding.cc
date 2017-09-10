@@ -1127,7 +1127,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}*/
-	//cout<<"\n转发节点为 "<<forwardNode<<endl;
+	cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
