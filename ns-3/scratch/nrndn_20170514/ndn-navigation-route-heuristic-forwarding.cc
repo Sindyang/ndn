@@ -1176,20 +1176,21 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
 		cout<<*it<<" ";
+		auto preit = it;
+		it++;
 		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
 			if(msgdirection.first && msgdirection.second >= 0)
 			{
 				notifyUpperOnInterest();
-				it = ForwardNodeList.erase(it);
+				ForwardNodeList.erase(preit);
 				cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
 			}
 		}
 		else
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
-			it++;
 		}
 	}
 	
