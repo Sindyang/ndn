@@ -1192,7 +1192,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 						cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 						{
-							notifyUpperOnInterest();
+							//notifyUpperOnInterest();
 						}
 					}
 				}
@@ -1201,7 +1201,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
 					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 					{
-						notifyUpperOnInterest();
+						//notifyUpperOnInterest();
 					}
 				}
 			}
