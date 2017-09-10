@@ -256,7 +256,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
+	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -1194,7 +1194,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	
-	
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
@@ -1256,7 +1255,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	m_preNB = m_nb;
-	cout<<endl;
+	//cout<<endl;
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
