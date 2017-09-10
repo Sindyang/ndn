@@ -1161,14 +1161,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
-	/*std::unordered_set<uint32_t>::iterator it;
-	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();it++)
+	std::unordered_set<uint32_t>::iterator it;
+	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
-		if(m_nb.getNb().find(*it) != m_nb.getNb().end())
-		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
-		}
-		else
+		cout<<*it<<endl;
+		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
 			if(msgdirection.first && msgdirection.second >= 0)
@@ -1177,10 +1174,15 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				ForwardNodeList.erase(it);
 			}
 		}
-	}*/
+		else
+		{
+			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+			it++;
+		}
+	}
 	
 	//转发节点存在
-	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		//cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
@@ -1236,7 +1238,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 			forwardNode = 6666666;
 		}
-	}
+	}*/
 	
 	m_preNB = m_nb;
 	cout<<endl;
