@@ -256,7 +256,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -269,26 +269,26 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	{
 		std::pair<bool, double> result=
 				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") "<<endl;
+		//cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") "<<endl;
 		
 		// Be careful with the order, increasing or descending?
 		if(result.first && result.second > 0)
 		{
 			bool iscover = m_sensor->IsCoverThePath(nb->second.m_x,nb->second.m_y,route);
-			cout<<"iscover "<<iscover<<endl;
+			//cout<<"iscover "<<iscover<<endl;
 			if(iscover)
 			{
 				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				//cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
 			else
 			{
-				cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				//cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
 			//getchar();
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
@@ -297,9 +297,9 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 		PriorityList.push_back(it->second);
 
 		str<<" "<<it->second;
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}
-	cout<<endl;
+	//cout<<endl;
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
@@ -1167,7 +1167,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
-			cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
 		}
 	}
 	
@@ -1183,7 +1183,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				notifyUpperOnInterest();
 				it = ForwardNodeList.erase(it);
-				cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
+				//cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
 			}
 			else
 				it++;
@@ -1252,7 +1252,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			//notifyUpperOnInterest();
 			forwardNode = 6666666;
-			cout<<"notifyUpperOnInterest"<<endl;
+			//cout<<"notifyUpperOnInterest"<<endl;
 		}
 	}
 	
@@ -1388,7 +1388,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
-			cout<<"(forwarding.cc-GetNrPayload)"<<endl;
+			//cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = GetPriorityList();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
