@@ -1079,7 +1079,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	int m_nbChange_mode = 0;
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1161,14 +1161,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
-	/*std::unordered_set<uint32_t>::iterator it = ForwardNodeList.begin();
+	std::unordered_set<uint32_t>::iterator it = ForwardNodeList.begin();
 	if(ForwardNodeList.size() == 0)
 	{
 		cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
-			ForwardNodeList.erase(it);
 			cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
 		}
 	}
@@ -1192,7 +1191,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 			it++;
 		}
-	}*/
+	}
 	
 	
 	//转发节点存在
@@ -1229,7 +1228,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 						{
-							notifyUpperOnInterest();
+							//notifyUpperOnInterest();
 						}
 					}
 				}
@@ -1238,7 +1237,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					//cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
 					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 					{
-						notifyUpperOnInterest();
+						//notifyUpperOnInterest();
 					}
 				}
 			}
@@ -1249,7 +1248,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<"转发节点丢失"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
-			notifyUpperOnInterest();
+			//notifyUpperOnInterest();
 			forwardNode = 6666666;
 			cout<<"notifyUpperOnInterest"<<endl;
 		}
