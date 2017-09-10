@@ -256,7 +256,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -1173,6 +1173,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				notifyUpperOnInterest();
 				ForwardNodeList.erase(it);
+				cout<<"notifyUpperOnInterest"<<endl;
 			}
 		}
 		else
@@ -1182,10 +1183,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
+	
 	//转发节点存在
-	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
-		//cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
 		if(sourceId == forwardNode)
 		{
@@ -1209,11 +1211,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					double index = distance(currentroute.begin(), idit);
 					if(index == 1)
 					{
-						cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
+						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
 					}
 					else
 					{
-						cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
+						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 						{
 							//notifyUpperOnInterest();
@@ -1222,7 +1224,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				}
 				else
 				{
-					cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
+					//cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
 					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 					{
 						//notifyUpperOnInterest();
@@ -1236,10 +1238,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
-			notifyUpperOnInterest();
+			//notifyUpperOnInterest();
 			forwardNode = 6666666;
+			cout<<"notifyUpperOnInterest"<<endl;
 		}
-	}*/
+	}
 	
 	m_preNB = m_nb;
 	cout<<endl;
