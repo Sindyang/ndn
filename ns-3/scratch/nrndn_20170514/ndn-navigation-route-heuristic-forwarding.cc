@@ -338,7 +338,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    //cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
