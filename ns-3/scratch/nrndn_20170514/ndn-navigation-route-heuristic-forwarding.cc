@@ -1161,19 +1161,20 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
-	for(int i = 0;i < (signed)ForwardNodeList.size();i++)
+	std::unordered_set<uint32_t>::iterator it;
+	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();it++)
 	{
-		if(m_nb.getNb().find(ForwardNodeList[i]) != m_nb.getNb().end())
+		if(m_nb.getNb().find(*it) != m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
 			if(msgdirection.first && msgdirection.second >= 0)
 			{
 				notifyUpperOnInterest();
-				ForwardNodeList.erase(ForwardNodeList[i]);
+				ForwardNodeList.erase(it);
 			}
 		}
 	}
