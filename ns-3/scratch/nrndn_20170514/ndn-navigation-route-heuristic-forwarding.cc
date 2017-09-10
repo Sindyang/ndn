@@ -1186,7 +1186,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		//cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
-		/*if(sourceId == forwardNode)
+		if(sourceId == forwardNode)
 		{
 			pair<bool, double> msg = packetFromDirection(interest);
 			//cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
@@ -1228,7 +1228,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					}
 				}
 			}
-		}*/
+		}
 	}
 	else
 	{
