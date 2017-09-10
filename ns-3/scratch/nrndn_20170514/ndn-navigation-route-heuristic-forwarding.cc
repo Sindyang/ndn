@@ -382,7 +382,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		forwardNode = forwardId;
 		ForwardNodeList.insert(forwardId);
-		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
 		//getchar();
 	}
 
@@ -1161,10 +1161,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
+	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	std::unordered_set<uint32_t>::iterator it;
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
-		cout<<*it<<endl;
+		cout<<*it<<" ";
 		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
