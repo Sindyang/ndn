@@ -1173,7 +1173,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
+	/*for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
 		cout<<*it<<" ";
 		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
@@ -1191,7 +1191,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 			it++;
 		}
-	}
+	}*/
 	
 	
 	//转发节点存在
