@@ -485,6 +485,8 @@ private:
 	
 	uint32_t forwardNode;//added by sy
 	
+	std::unordered_set<uint32_t> ForwardNodeList;//added by sy
+	
 	/*
 	* gap_mode = 0 初始值
 	* gap_mode = 1 若该数据包从应用层发出，且优先级列表仅由不感兴趣邻居组成

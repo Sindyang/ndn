@@ -305,6 +305,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	return PriorityList;
 }
 
+
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
@@ -380,6 +381,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		forwardNode = forwardId;
+		ForwardNodeList.insert(forwardId);
 		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
 		//getchar();
 	}
@@ -1158,8 +1160,26 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
+	//判断转发列表中的节点是否丢失 2017.9.10
+	for(int i = 0;i < (signed)ForwardNodeList.size();i++)
+	{
+		if(m_nb.getNb().find(ForwardNodeList[i]) != m_nb.getNb().end())
+		{
+			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+		}
+		else
+		{
+			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+			if(msgdirection.first && msgdirection.second >= 0)
+			{
+				notifyUpperOnInterest();
+				ForwardNodeList.erase(ForwardNodeList[i]);
+			}
+		}
+	}
+	
 	//转发节点存在
-	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		//cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
@@ -1215,7 +1235,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 			forwardNode = 6666666;
 		}
-	}
+	}*/
+	
 	m_preNB = m_nb;
 	cout<<endl;
 }
