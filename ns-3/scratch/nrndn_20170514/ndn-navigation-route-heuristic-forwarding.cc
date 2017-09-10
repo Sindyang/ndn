@@ -338,7 +338,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    //cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
@@ -376,7 +376,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
 	if(nodeId == myNodeId)
 	{
@@ -448,12 +448,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		if(currentType == "DEFAULT_VEHTYPE")
 		{
-			cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
+			//cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		    m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		}
 		else if(currentType == "BUS")
 		{
-			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
+			//cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
 		}
 		
@@ -538,7 +538,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		NotifyUpperLayer(data);
 
 		uint32_t myNodeId = m_node->GetId();
-		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		//cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
 		return;
 	}
@@ -557,7 +557,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	uint32_t received_gap_mode = nrheader.getGapMode();
 	
-	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
+	//cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
 	
 	
 	std::vector<uint32_t> newPriorityList;
@@ -567,7 +567,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//If the data packet has already been sent, do not proceed the packet
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		cout<<"该数据包已经被发送"<<endl<<endl;
+		//cout<<"该数据包已经被发送"<<endl<<endl;
 		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
@@ -599,19 +599,19 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				ToContentStore(data);
 				// 2. Notify upper layer
 				NotifyUpperLayer(data);
-				cout<<"该数据包第一次从后方得到且当前节点对该数据包感兴趣"<<endl;
+				//cout<<"该数据包第一次从后方得到且当前节点对该数据包感兴趣"<<endl;
 				return;
 			}
 			else
 			{
-				cout<<"该数据包第一次从后方得到且当前节点对该数据包不感兴趣"<<endl;
+				//cout<<"该数据包第一次从后方得到且当前节点对该数据包不感兴趣"<<endl;
 				DropDataPacket(data);
 				return;
 			}
 		}
 		else // duplicated data
 		{
-			cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl<<endl;
+			//cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl<<endl;
 			ExpireDataPacketTimer(nodeId,signature);
 			return;
 		}
@@ -744,19 +744,19 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				if(Will)
 				{
 					sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣"<<endl;
+					//cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣"<<endl;
 				}
 				else
 				{
 					if(received_gap_mode == 1 || received_gap_mode == 2)
 					{
 						sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					    cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
+					    //cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
 					}
 					else
 					{
 						sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
-					    cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
+					    //cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
 					}
 				}
 			}
@@ -879,7 +879,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
-    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+    //cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	//getchar();
 }
 
@@ -1161,7 +1161,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
-	
 	if(ForwardNodeList.size() == 0)
 	{
 		cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
@@ -1303,11 +1302,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			string remoteroute = remoteroutes.front();
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
 	
@@ -1402,7 +1401,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
+				//cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
 			}		
 		    //cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包的gap_mode为 "<<gap_mode<<endl;
@@ -1424,7 +1423,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	nrheader.setGapMode(gap_mode);
 	nrPayload->AddHeader(nrheader);
 	
-	cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
+	//cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
 }
 
