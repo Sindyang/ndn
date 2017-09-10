@@ -1103,7 +1103,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//寻找上次的邻居，看看能不能找到，找不到证明变化了
 			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
 			{  
-				//删除已经不在RSU前方的邻居
 				nbChange=true;
 				break;
 				
@@ -1151,7 +1150,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			string remoteroute = remoteroutes.front();
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}
 		else
 		{
@@ -1170,7 +1169,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
 			if(msg.first && msg.second >= 0)
 			{
-					//cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
+				//cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
 			}
 			else if(!msg.first)
 			{
@@ -1186,11 +1185,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 					double index = distance(currentroute.begin(), idit);
 					if(index == 1)
 					{
-						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
+						cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
 					}
 					else
 					{
-						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
+						cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
 						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 						{
 							notifyUpperOnInterest();
@@ -1199,6 +1198,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				}
 				else
 				{
+					cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
 					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
 					{
 						notifyUpperOnInterest();
@@ -1209,7 +1209,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else
 	{
-		//cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 转发节点丢失"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
@@ -1217,7 +1217,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	m_preNB = m_nb;
-	//cout<<endl;
+	cout<<endl;
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
