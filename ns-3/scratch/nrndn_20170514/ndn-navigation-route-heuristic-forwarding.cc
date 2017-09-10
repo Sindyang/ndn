@@ -376,7 +376,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	//cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
 	if(nodeId == myNodeId)
 	{
@@ -840,7 +840,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -1161,10 +1161,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	//判断转发列表中的节点是否丢失 2017.9.10
-	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	std::unordered_set<uint32_t>::iterator it = ForwardNodeList.begin();
 	if(ForwardNodeList.size() == 0)
 	{
+		cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
@@ -1173,7 +1173,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	/*for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
+	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
+	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
 		cout<<*it<<" ";
 		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
@@ -1191,11 +1192,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
 			it++;
 		}
-	}*/
+	}
 	
 	
 	//转发节点存在
-	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		cout<<"转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
@@ -1252,10 +1253,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			forwardNode = 6666666;
 			cout<<"notifyUpperOnInterest"<<endl;
 		}
-	}
+	}*/
 	
 	m_preNB = m_nb;
-	//cout<<endl;
+	cout<<endl;
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
@@ -1386,6 +1387,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
+			cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = GetPriorityList();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
