@@ -483,8 +483,6 @@ private:
 	
 	double m_resendInterestTime;//added by siukwan
 	
-	uint32_t forwardNode;//added by sy
-	
 	std::unordered_set<uint32_t> ForwardNodeList;//added by sy
 	
 	/*

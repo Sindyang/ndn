@@ -97,7 +97,6 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false),
 	m_resendInterestTime(0),
-	forwardNode(6666666),
 	gap_mode(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
@@ -204,9 +203,8 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-//std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
-		//const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
-/*{
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+{
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -248,10 +246,10 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}*/
+}
 
 //changed by sy 2017.9.6
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -303,7 +301,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
-}
+}*/
 
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
@@ -380,9 +378,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(nodeId == myNodeId)
 	{
-		forwardNode = forwardId;
 		ForwardNodeList.insert(forwardId);
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardNode<<endl;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
 		//getchar();
 	}
 
@@ -1129,7 +1126,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}*/
-	cout<<"\n转发节点为 "<<forwardNode<<endl;
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1160,7 +1156,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	//判断转发列表中的节点是否丢失 2017.9.10
+	//判断转发列表是否为空 2017.9.10
 	if(ForwardNodeList.size() == 0)
 	{
 		cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
@@ -1171,6 +1167,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
+	//判断转发节点是否丢失
 	std::unordered_set<uint32_t>::iterator it;
 	bool lostforwardnode = false;
 	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
@@ -1205,67 +1202,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 		}
 	}
-	
-	//转发节点存在
-	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
-	{
-		cout<<"转发节点存在"<<endl;
-		//判断转发节点所在路段和方向
-		if(sourceId == forwardNode)
-		{
-			pair<bool, double> msg = packetFromDirection(interest);
-			//cout<<"(forwarding.cc-ProcessHello) 转发节点的位置为 "<<msg.first<<" "<<msg.second<<endl;
-			if(msg.first && msg.second >= 0)
-			{
-				//cout<<"(forwarding.cc-ProcessHello) 转发节点位于当前节点所在路段前方"<<endl;
-			}
-			else if(!msg.first)
-			{
-				const vector<string>& currentroute = m_sensor->getNavigationRoute();
-				vector<string>::const_iterator idit = currentroute.begin();
-				const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
-		        //获取心跳包所在路段
-		        string remoteroute = remoteroutes.front();
-				idit = find(currentroute.begin(), currentroute.end(), remoteroute);
-				//转发节点位于当前节点导航路线上
-				if(idit != currentroute.end())
-				{
-					double index = distance(currentroute.begin(), idit);
-					if(index == 1)
-					{
-						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于前一个路段"<<endl;
-					}
-					else
-					{
-						//cout<<"(forwarding.cc-ProcessHello) 转发节点位于其他路段"<<endl;
-						if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
-						{
-							//notifyUpperOnInterest();
-						}
-					}
-				}
-				else
-				{
-					//cout<<"(forwarding.cc-ProcessHello) 转发节点不在当前节点的导航路线上"<<endl;
-					if(msgdirection.first && msgdirection.second >= 0 && m_nbChange_mode > 1)
-					{
-						//notifyUpperOnInterest();
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		cout<<"转发节点丢失"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0)
-		{
-			//notifyUpperOnInterest();
-			forwardNode = 6666666;
-			//cout<<"notifyUpperOnInterest"<<endl;
-		}
-	}*/
-	
+
 	m_preNB = m_nb;
 	cout<<endl;
 }
