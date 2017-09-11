@@ -1191,15 +1191,23 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
-	//转发节点全部丢失
-	if(lostforwardnode && ForwardNodeList.empty() && msgdirection.first && msgdirection.second)
+	//转发节点丢失
+	if(lostforwardnode)
 	{
-		cout<<"转发节点全部丢失"<<endl;
-		notifyUpperOnInterest();
+		if(ForwardNodeList.empty() && msgdirection.first && msgdirection.second)
+		{
+			cout<<"转发节点全部丢失"<<endl;
+			notifyUpperOnInterest();
+		}
+		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
+		{
+			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
+			notifyUpperOnInterest();
+		}
 	}
 	
 	//转发节点存在
-	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
+	/*if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
 	{
 		cout<<"转发节点存在"<<endl;
 		//判断转发节点所在路段和方向
@@ -1256,7 +1264,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			forwardNode = 6666666;
 			//cout<<"notifyUpperOnInterest"<<endl;
 		}
-	}
+	}*/
 	
 	m_preNB = m_nb;
 	cout<<endl;
