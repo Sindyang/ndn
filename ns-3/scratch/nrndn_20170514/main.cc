@@ -918,7 +918,6 @@ void nrndnExample::InstallTraffics()
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
 			uint32_t index=rnd.GetValue();
-			it = find(RSU.begin(),RSU.end(),index);
 				while(randomNode[index])
 				{
 					index=rnd.GetValue();
