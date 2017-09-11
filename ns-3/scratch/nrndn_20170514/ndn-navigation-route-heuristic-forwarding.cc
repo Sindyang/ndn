@@ -1172,6 +1172,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	std::unordered_set<uint32_t>::iterator it;
+	bool lostforwardnode = false;
 	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
@@ -1179,14 +1180,9 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
-			if(msgdirection.first && msgdirection.second >= 0)
-			{
-				notifyUpperOnInterest();
-				it = ForwardNodeList.erase(it);
-				//cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
-			}
-			else
-				it++;
+			//notifyUpperOnInterest();
+			it = ForwardNodeList.erase(it);
+			lostforwardnode = true;
 		}
 		else
 		{
@@ -1195,6 +1191,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	
+	//转发节点全部丢失
+	if(lostforwardnode && ForwardNodeList.empty() && msgdirection.first && msgdirection.second)
+	{
+		cout<<"转发节点全部丢失"<<endl;
+		notifyUpperOnInterest();
+	}
 	
 	//转发节点存在
 	if(m_nb.getNb().find(forwardNode) != m_nb.getNb().end())
