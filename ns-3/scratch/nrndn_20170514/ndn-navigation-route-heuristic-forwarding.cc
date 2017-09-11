@@ -1170,7 +1170,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//判断转发节点是否丢失
 	std::unordered_set<uint32_t>::iterator it;
 	bool lostforwardnode = false;
-	bool resend = false;
 	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
@@ -1185,9 +1184,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
-			bool iscover = m_sensor->IsCoverThePath(nrheader.getX(),nrheader.getY(),m_sensor->getNavigationRoute());
-			if(!iscover)
-				resend = true;
 			it++;
 		}
 	}
@@ -1203,15 +1199,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
 		{
 			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
-			notifyUpperOnInterest();
-		}
-	}
-	else
-	{
-		//若转发节点存在但转发节点不能完整覆盖，则再次发送兴趣包
-		if(resend && msgdirection.first && msgdirection.second)
-		{
-			cout<<"转发节点存在，但不能覆盖之间的路径"<<endl;
 			notifyUpperOnInterest();
 		}
 	}

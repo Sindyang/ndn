@@ -349,6 +349,8 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	if(remoteLaneIterator==route.end()||localLaneIterator==route.end())
 	{
 		cout<<"(SumoNodeSensor.cc-IsCoverThePath) 当前节点所在路段或另一节点所在路段不在当前节点的导航路线中"<<endl;
+		cout<<"当前节点所在路段为 "<<localLane<<endl;
+		cout<<"另一节点所在路段为 "<<remoteLane<<endl;
 		getchar();
 	}
 	
