@@ -352,16 +352,21 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	uint32_t remoteIndex= distance(route.begin(),remoteLaneIterator);
 	
 	//在同一条路上且另一节点位于当前节点前方
-	if(localIndex==remoteIndex && remotePos-localPos >= 0)
+	if(localIndex==remoteIndex)
 	{
-		if(remotePos-localPos <= TransRange)
+		if(remotePos-localPos <= TransRange && remotePos-localPos >=0)
 		{
 			cout<<"(SumoNodeSensor-IsCoverThePath) 两节点位于同一段路且另一节点在当前节点前方 ,距离 "<<remotePos-localPos<<endl;
 			return true;
 		}
-		else
+		else if(remotePos-localPos > TransRange)
 		{
 			cout<<"(SumoNodeSensor-IsCoverThePath) 两节点位于同一段路且另一节点在当前节点前方，但超出了传输范围。距离 "<<remotePos-localPos<<endl;
+			return false;
+		}
+		else if(remotePos-localPos < 0)
+		{
+			cout<<"(SumoNodeSensor-IsCoverThePath) 两节点位于同一段路且另一节点在当前节点后方"<<endl;
 			return false;
 		}
 	}
