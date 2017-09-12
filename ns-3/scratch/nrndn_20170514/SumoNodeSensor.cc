@@ -352,7 +352,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	uint32_t remoteIndex= distance(route.begin(),remoteLaneIterator);
 	
 	//在同一条路上且另一节点位于当前节点前方
-	if(localIndex==remoteIndex && remotePos-localPos > 0)
+	if(localIndex==remoteIndex && remotePos-localPos >= 0)
 	{
 		if(remotePos-localPos <= TransRange)
 		{
