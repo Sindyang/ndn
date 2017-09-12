@@ -380,7 +380,6 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	//位于不同路段
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-	NS_ASSERT_MSG(localIndex < remoteIndex,"另一节点位于当前节点前方");
 	
 	if(localIndex < remoteIndex)
 	{
@@ -546,7 +545,7 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	else if(localIndex > remoteIndex)
 	{
 		cout<<"(SuNodeSensor.cc-IsCoverThePath) 当前节点位于另一节点前方"<<endl;
-		getchar();
+		return false;
 	}
 	return false;
 }
