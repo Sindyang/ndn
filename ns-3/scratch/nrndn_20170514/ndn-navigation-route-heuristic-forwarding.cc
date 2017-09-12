@@ -1174,11 +1174,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
-		cout<<*it<<" ";
+		cout<<*it<<endl;
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator itnb = m_nb.getNb().find(*it);
 		if(itnb == m_nb.getNb().end())
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
+			cout<<"转发节点丢失 "<<*it<<endl;
 			//notifyUpperOnInterest();
 			it = ForwardNodeList.erase(it);
 			lostforwardnode = true;
@@ -1190,12 +1190,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			bool iscover = m_sensor->IsCoverThePath(x,y,m_sensor->getNavigationRoute());
 			if(iscover)
 			{
-				cout<<"(forwarding.cc-ProcessHello) 转发节点存在且符合要求"<<endl;
+				cout<<"转发节点存在且符合要求"<<endl;
 			}
 			else
 			{
 				resend = true;
-				cout<<"(forwarding.cc-ProcessHello) 转发节点存在但不符合要求"<<endl;
+				cout<<"转发节点存在但不符合要求"<<endl;
 			}
 			it++;
 		}
