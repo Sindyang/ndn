@@ -203,7 +203,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
@@ -246,10 +246,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}
+}*/
 
 //changed by sy 2017.9.6
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -301,7 +301,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
-}*/
+}
 
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
