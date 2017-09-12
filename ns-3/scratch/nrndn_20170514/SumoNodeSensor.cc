@@ -346,6 +346,12 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 	//另一节点所在路段在导航路线中的下标
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
 	
+	if(localLaneIterator == route.end() || remoteLaneIterator == route.end())
+	{
+		cout<<"另一节点所在路段不在当前节点导航路线中"<<endl;
+		return false;
+	}
+	
 	NS_ASSERT_MSG(remoteLaneIterator != route.end() && localLaneIterator != route.end(),"当前节点所在路段为 "<<localLane<<"另一节点所在路段为 "<< remoteLane);
 	
 	uint32_t localIndex = distance(route.begin(),localLaneIterator);
