@@ -203,7 +203,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
@@ -246,10 +246,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}
+}*/
 
 //changed by sy 2017.9.6
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -301,7 +301,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
-}*/
+}
 
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
@@ -1185,18 +1185,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			double x = itnb->second.m_x;
-			double y = itnb->second.m_y;
-			bool iscover = m_sensor->IsCoverThePath(x,y,m_sensor->getNavigationRoute());
-			if(iscover)
-			{
-				cout<<"转发节点存在且符合要求"<<endl;
-			}
-			else
-			{
-				resend = true;
-				cout<<"转发节点存在但不符合要求"<<endl;
-			}
+				cout<<"转发节点存在"<<endl;
 			it++;
 		}
 	}
@@ -1215,16 +1204,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 		}
 	}
-	else
-	{
-		//2017.9.12
-		if(resend && msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
-		{
-			cout<<"转发节点存在，但需要重新发送"<<endl;
-			notifyUpperOnInterest();
-		}
-	}
-
+	
 	m_preNB = m_nb;
 	cout<<endl;
 }
