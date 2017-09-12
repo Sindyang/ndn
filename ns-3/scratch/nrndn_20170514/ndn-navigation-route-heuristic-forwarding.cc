@@ -1198,7 +1198,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"转发节点全部丢失"<<endl;
 			notifyUpperOnInterest();
 		}
-		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
+		else if(msgdirection.first && msgdirection.second)
 		{
 			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
 			notifyUpperOnInterest();
