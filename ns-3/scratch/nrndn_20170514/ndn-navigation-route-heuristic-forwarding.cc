@@ -381,7 +381,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ForwardNodeList.insert(forwardId);
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
 		//getchar();
-	}
+	} 
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -1217,9 +1217,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	else
 	{
+		//2017.9.12
 		if(resend && msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
 		{
-			
+			cout<<"转发节点存在，但需要重新发送"<<endl;
+			notifyUpperOnInterest();
 		}
 	}
 
