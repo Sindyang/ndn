@@ -203,7 +203,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
@@ -246,10 +246,10 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}*/
+}
 
 //changed by sy 2017.9.6
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
@@ -301,7 +301,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	NS_LOG_DEBUG(str.str());
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
-}
+}*/
 
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
@@ -1170,11 +1170,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//判断转发节点是否丢失
 	std::unordered_set<uint32_t>::iterator it;
 	bool lostforwardnode = false;
+	bool resend = false;
 	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
 		cout<<*it<<" ";
-		if(m_nb.getNb().find(*it) == m_nb.getNb().end())
+		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator itnb = m_nb.getNb().find(*it);
+		if(itnb == m_nb.getNb().end())
 		{
 			cout<<"(forwarding.cc-ProcessHello) 转发节点丢失 "<<*it<<endl;
 			//notifyUpperOnInterest();
@@ -1183,7 +1185,18 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 转发节点存在"<<endl;
+			double x = itnb->second.m_x;
+			double y = itnb->second.m_y;
+			bool iscover = m_sensor->IsCoverThePath(x,y,m_sensor->getNavigationRoute());
+			if(iscover)
+			{
+				cout<<"(forwarding.cc-ProcessHello) 转发节点存在且符合要求"<<endl;
+			}
+			else
+			{
+				resend = true;
+				cout<<"(forwarding.cc-ProcessHello) 转发节点存在但不符合要求"<<endl;
+			}
 			it++;
 		}
 	}
@@ -1196,10 +1209,17 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"转发节点全部丢失"<<endl;
 			notifyUpperOnInterest();
 		}
-		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
+		else if(msgdirection.first && msgdirection.second)
 		{
 			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
 			notifyUpperOnInterest();
+		}
+	}
+	else
+	{
+		if(resend && msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
+		{
+			
 		}
 	}
 
