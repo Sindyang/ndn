@@ -701,11 +701,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				// 3. Is there any interested nodes behind?
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
-				if (interestNodes.size() == 1)
+				cout<<"当前节点为 "<<myNodeId<<endl;
+				m_nrpit->showPit();
+				if (interestNodes.empty())
 				{
-					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT中只有自身节点，因此停止转发该数据包"<<endl;
-					cout<<"当前节点为 "<<myNodeId<<endl;
-					m_nrpit->showPit();
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;
 					BroadcastStopMessage(data);
 					return;
 				}
