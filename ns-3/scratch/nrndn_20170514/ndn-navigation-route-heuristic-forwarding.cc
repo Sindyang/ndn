@@ -1175,20 +1175,20 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	std::unordered_set<uint32_t>::iterator it;
 	bool lostforwardnode = false;
 	bool resend = false;
-	cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
+	//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
 		cout<<*it<<endl;
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator itnb = m_nb.getNb().find(*it);
 		if(itnb == m_nb.getNb().end())
 		{
-			cout<<"转发节点丢失 "<<*it<<endl;
+			//cout<<"转发节点丢失 "<<*it<<endl;
 			it = ForwardNodeList.erase(it);
 			lostforwardnode = true;
 		}
 		else
 		{
-			cout<<"转发节点存在"<<endl;
+			//cout<<"转发节点存在"<<endl;
 			it++;
 		}
 	}
@@ -1198,12 +1198,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(ForwardNodeList.empty() && msgdirection.first && msgdirection.second)
 		{
-			cout<<"转发节点全部丢失"<<endl;
+			//cout<<"转发节点全部丢失"<<endl;
 			notifyUpperOnInterest();
 		}
 		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
 		{
-			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
+			//cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
 			notifyUpperOnInterest();
 		}
 	}
