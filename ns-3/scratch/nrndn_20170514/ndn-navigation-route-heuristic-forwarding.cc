@@ -1178,7 +1178,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
 	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
 	{
-		cout<<*it<<endl;
+		//cout<<*it<<endl;
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator itnb = m_nb.getNb().find(*it);
 		if(itnb == m_nb.getNb().end())
 		{
