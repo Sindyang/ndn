@@ -117,9 +117,9 @@ void EntryNrImpl::listPitEntry()
 	//std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<": ";
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{
-		//std::cout<<*ite<<" ";
+		std::cout<<*ite<<" ";
 	}
-	//std::cout<<std::endl;
+	std::cout<<std::endl;
 }
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
