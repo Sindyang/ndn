@@ -379,7 +379,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
+		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
 		//getchar();
 	} 
 
@@ -562,6 +562,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	//If the data packet has already been sent, do not proceed the packet
+	//该数据包已经被转发过
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		//cout<<"该数据包已经被发送"<<endl<<endl;
@@ -629,11 +630,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			//在优先级列表中
 			else
 			{
+				//Question 能否替换为ExpireDataPacketTimer
 				DropDataPacket(data);
 				return;
 			}
 		}
-		else
+		else//第一次收到该数据包
 		{
 			//cout<<"(forwarding.cc-OnData) 进行转发"<<endl;
 			//getchar();
@@ -648,7 +650,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				}
 				else
 				{  
-			        cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣，但位于其优先级列表中"<<endl;
+			        //cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣，但位于其优先级列表中"<<endl;
 					bool isTTLReachMax;
 					/*
 					 * 		When a data is received by disinterested node,
@@ -699,9 +701,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				// 3. Is there any interested nodes behind?
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
-				if (interestNodes.empty())
+				if (interestNodes.size() == 1)
 				{
-					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;
+					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT中只有自身节点，因此停止转发该数据包"<<endl;
+					cout<<"当前节点为 "<<myNodeId<<endl;
+					m_nrpit->showPit();
 					BroadcastStopMessage(data);
 					return;
 				}
@@ -837,7 +841,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -1076,7 +1080,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	int m_nbChange_mode = 0;
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1159,7 +1163,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//判断转发列表是否为空 2017.9.10
 	if(ForwardNodeList.size() == 0)
 	{
-		cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
 		{
 			notifyUpperOnInterest();
@@ -1385,7 +1389,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
 	
 	//added by sy
-	cout<<"(forwarding.cc-GetPriorityListOfDataSource) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<" 的PIT为："<<endl;
+	//cout<<"(forwarding.cc-GetPriorityListOfDataSource) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<" 的PIT为："<<endl;
 	m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
@@ -1420,7 +1424,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 				if(!result.first)
 				{
 					NS_LOG_DEBUG("At "<<Simulator::Now().GetSeconds()<<", "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" do not on its route, but in its interest list.Check!!");
-					cout<<"At "<<Simulator::Now().GetSeconds()<<", 源节点 "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" does not on it's route, but in its interest list.Check!!"<<endl;
+					//cout<<"At "<<Simulator::Now().GetSeconds()<<", 源节点 "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" does not on it's route, but in its interest list.Check!!"<<endl;
 					sortInterest.insert(std::pair<double,uint32_t>(result.second,nb->first));
 				}
 				// from local route behind
@@ -1519,9 +1523,9 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	//2.Remove the useless payload, save the bandwidth
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader srcheader,dstheader;
-	nrPayload->PeekHeader( srcheader);
+	nrPayload->PeekHeader(srcheader);
 	dstheader.setSourceId(srcheader.getSourceId());//Stop message contains an empty priority list
-	Ptr<Packet> newPayload	= Create<Packet> ();
+	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(dstheader);
 	data->SetPayload(newPayload);
 
@@ -1549,7 +1553,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	double y= m_sensor->getY();
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
-	cout << "(forwarding.cc-ForwardDataPacket) 当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId <<" gap_mode "<<mode<< " Signature " << signature << endl;
+	//cout << "(forwarding.cc-ForwardDataPacket) 当前节点 " <<m_node->GetId() << " 源节点 "<< sourceId <<" gap_mode "<<mode<< " Signature " << signature << endl;
 	//getchar();
 	
 	// 	2.1 setup nrheader, source id do not change
@@ -1666,8 +1670,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		gap_mode = 2;
 	}
 	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) gap_mode "<<gap_mode<<endl;
-	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
-	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
+	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
+	//<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
 	//getchar();
 	
 	return priorityList;
