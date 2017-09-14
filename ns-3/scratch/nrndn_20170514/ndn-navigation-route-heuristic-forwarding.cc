@@ -768,7 +768,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 }
 
@@ -1209,7 +1209,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	
 	m_preNB = m_nb;
-	cout<<endl;
+	//cout<<endl;
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
