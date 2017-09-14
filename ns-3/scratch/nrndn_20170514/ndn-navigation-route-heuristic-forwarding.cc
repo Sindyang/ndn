@@ -702,6 +702,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 				cout<<"当前节点为 "<<myNodeId<<endl;
+				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
 				entry->listPitEntry();
 				if (interestNodes.empty())
 				{
