@@ -1179,13 +1179,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(itnb == m_nb.getNb().end())
 		{
 			cout<<"转发节点丢失 "<<*it<<endl;
-			//notifyUpperOnInterest();
 			it = ForwardNodeList.erase(it);
 			lostforwardnode = true;
 		}
 		else
 		{
-				cout<<"转发节点存在"<<endl;
+			cout<<"转发节点存在"<<endl;
 			it++;
 		}
 	}
