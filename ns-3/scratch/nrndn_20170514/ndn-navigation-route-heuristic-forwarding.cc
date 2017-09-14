@@ -1198,7 +1198,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"转发节点全部丢失"<<endl;
 			notifyUpperOnInterest();
 		}
-		else if(msgdirection.first && msgdirection.second)
+		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
 		{
 			cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
 			notifyUpperOnInterest();
@@ -1350,7 +1350,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			if(priorityList.empty())
 			{
 				//added by sy
-				//cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
+				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
 			}		
 		    //cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包的gap_mode为 "<<gap_mode<<endl;
@@ -1390,10 +1390,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 	m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
+	NS_ASSERT_MSG(entry != 0,"该数据包不在PIT中");
 	if(entry == 0)
 	{
 		cout<<"该数据包并不在PIT中"<<endl;
-		getchar();
 		return priorityList;
 	}
 	
@@ -1429,7 +1429,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 					//Question 当result.second == 0时，是否需要加入sortInterest中
 					//modified by sy:result.second < 0 => result.second <= 0
 					if(result.second <= 0)
-						sortInterest.insert(std::pair<double,uint32_t> ( -result.second , nb->first ) );
+						sortInterest.insert(std::pair<double,uint32_t> (-result.second,nb->first));
 					else
 					{
 						//otherwise it is in front of route.No need to forward, simply do nothing
@@ -1443,7 +1443,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 				else
 				{
 					if(result.second <= 0)
-						sortNotInterest.insert(std::pair<double,uint32_t> ( -result.second , nb->first ) );
+						sortNotInterest.insert(std::pair<double,uint32_t> (-result.second,nb->first));
 				}
 			}
 		}
