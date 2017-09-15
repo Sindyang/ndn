@@ -704,7 +704,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				cout<<"当前节点为 "<<myNodeId<<endl;
 				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
 				entry->listPitEntry1(myNodeId);
-				if (interestNodes.empty())
+				if (interestNodes.size() == 1 && m_sensor->getType() == "DEFAULT_VEHTYPE")
 				{
 					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;
 					BroadcastStopMessage(data);
