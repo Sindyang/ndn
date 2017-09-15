@@ -704,13 +704,19 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				cout<<"当前节点为 "<<myNodeId<<endl;
 				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
 				entry->listPitEntry1(myNodeId);
-				if (interestNodes.size() == 1 && m_sensor->getType() == "DEFAULT_VEHTYPE")
+				if (interestNodes.empty())
 				{
 					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;
 					BroadcastStopMessage(data);
 					return;
 				}
 				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);
+				cout<<"The size of PriorityList is "<<newPriorityList.size()<<endl;
+				for(int i = 0;i < (signed)newPriorityList.size();i++)
+				{
+					cout<<newPriorityList[i]<<" ";
+				}
+				cout<<endl;
 			}
 
 			//cout<<"(forwarding.cc-OnData) 当前节点 "<<m_node->GetId()<<"的gap_mode为 "<<gap_mode<<endl;
