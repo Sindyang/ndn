@@ -122,6 +122,29 @@ void EntryNrImpl::listPitEntry()
 	std::cout<<std::endl;
 }
 
+void EntryNrImpl::listPitEntry1(uint32_t node)
+{
+	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<": ";
+	uint32_t temp;
+	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
+	{
+		std::cout<<*ite<<" ";
+		temp = *ite;
+	}
+	if(m_incomingnbs.size() == 1)
+	{
+		if(node == temp)
+		{
+			cout<<"当前节点在PIT列表中"<<endl;
+		}
+		else
+		{
+			cout<<"当前节点不在PIT列表中"<<endl;
+		}
+	}
+	std::cout<<std::endl;
+}
+
 void EntryNrImpl::RemoveAllTimeoutEvent()
 {
 	//std::cout<<"(forwarding.cc-RemoveAllTimeoutEvent)"<<std::endl;
