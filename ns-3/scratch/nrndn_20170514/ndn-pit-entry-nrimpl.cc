@@ -135,11 +135,11 @@ void EntryNrImpl::listPitEntry1(uint32_t node)
 	{
 		if(node == temp)
 		{
-			cout<<"当前节点在PIT列表中"<<endl;
+			std::cout<<"当前节点在PIT列表中"<<std::endl;
 		}
 		else
 		{
-			cout<<"当前节点不在PIT列表中"<<endl;
+			std::cout<<"当前节点不在PIT列表中"<<std::endl;
 		}
 	}
 	std::cout<<std::endl;
