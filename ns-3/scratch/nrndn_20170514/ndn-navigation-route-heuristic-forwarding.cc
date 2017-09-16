@@ -254,7 +254,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	std::vector<uint32_t> PriorityList;
 	std::ostringstream str;
 	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
+	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
 
 	// The default order of multimap is ascending order,
 	// but I need a descending order
@@ -273,15 +273,15 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 		if(result.first && result.second > 0)
 		{
 			bool iscover = m_sensor->IsCoverThePath(nb->second.m_x,nb->second.m_y,route);
-			//cout<<"iscover "<<iscover<<endl;
+			cout<<"iscover "<<iscover<<endl;
 			if(iscover)
 			{
 				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-				//cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
 			else
 			{
-				//cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
 			}
 			//getchar();
 		}
@@ -1348,7 +1348,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
-			//cout<<"(forwarding.cc-GetNrPayload)"<<endl;
+			cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = GetPriorityList();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
