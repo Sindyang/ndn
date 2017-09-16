@@ -1329,7 +1329,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	vector<string> result;
 	Name::const_reverse_iterator it;
 	//Question:有非字符内容输出
-	//cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
+	cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
 	for(it=name.rbegin();it!=name.rend();++it)
 	{
 		result.push_back(it->toUri());
