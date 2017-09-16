@@ -215,6 +215,7 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 void 
 NrPitImpl::showPit()
 {
+	std::cout<<"showPit"<<std::endl;
 	for(uint32_t i = 0;i<m_pitContainer.size();++i)
 	{
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);
