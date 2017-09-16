@@ -225,7 +225,7 @@ NrPitImpl::showPit()
 void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
-	cout<<"(DeleteFrontNode)"<<endl;
+	std::cout<<"(DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
 	//找到lane在PIT表项中的位置
 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
