@@ -445,12 +445,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		if(currentType == "DEFAULT_VEHTYPE")
 		{
-			//cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
+			cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		    m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		}
 		else if(currentType == "BUS")
 		{
-			//cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
+			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
 		}
 		
