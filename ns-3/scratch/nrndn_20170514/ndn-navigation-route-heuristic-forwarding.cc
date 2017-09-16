@@ -311,12 +311,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
 	//getchar();
-	//cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
+	cout<<endl<<"进入(forwarding.cc-OnInterest)"<<endl;
 	
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
-		//cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
+		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -374,7 +374,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	//cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
 	if(nodeId == myNodeId)
 	{
@@ -1088,7 +1088,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	int m_nbChange_mode = 0;
 	
-	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
