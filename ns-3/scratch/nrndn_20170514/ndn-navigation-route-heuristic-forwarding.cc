@@ -554,7 +554,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//判断收到的数据包是否需要增加延迟
 	uint32_t received_gap_mode = nrheader.getGapMode();
 	
-	//cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
 	
 	
 	std::vector<uint32_t> newPriorityList;
@@ -565,7 +565,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//该数据包已经被转发过
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		//cout<<"该数据包已经被发送"<<endl<<endl;
+		cout<<"该数据包已经被发送"<<endl<<endl;
 		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
@@ -579,6 +579,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		return;
 	}
+	
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = m_sensor->getDistanceWith(nrheader.getX(), nrheader.getY(),m_sensor->getNavigationRoute());
@@ -1677,8 +1678,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 		gap_mode = 2;
 	}
 	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) gap_mode "<<gap_mode<<endl;
-	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
-	//<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
+	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
 	//getchar();
 	
 	return priorityList;
