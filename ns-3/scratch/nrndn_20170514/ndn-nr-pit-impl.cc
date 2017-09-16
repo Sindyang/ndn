@@ -134,7 +134,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 		else
 			break;
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
