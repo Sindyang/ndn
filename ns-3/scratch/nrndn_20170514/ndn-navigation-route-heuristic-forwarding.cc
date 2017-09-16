@@ -379,26 +379,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
-		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
 		//getchar();
 	} 
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		//cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
+		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 	
 	//获取优先列表
-	//cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
+	cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		//cout<<*it<<" ";
+		cout<<*it<<" ";
 	}
-	//cout<<endl;
+	cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
