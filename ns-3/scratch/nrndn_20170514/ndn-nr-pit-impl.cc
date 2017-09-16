@@ -102,6 +102,8 @@ std::string NrPitImpl::getCurrentLane()
 bool 
 NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
+	std::cout<<"UpdateCarPit"<<std::endl;
+	showPit();
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
