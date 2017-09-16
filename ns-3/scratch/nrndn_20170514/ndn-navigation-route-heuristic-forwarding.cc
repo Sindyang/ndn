@@ -1158,7 +1158,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 			//获取心跳包所在路段
 			string remoteroute = remoteroutes.front();
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"DEFAULT_VEHTYPE");
 			overtake.erase(it);
 			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}
@@ -1260,7 +1260,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 			//获取心跳包所在路段
 			string remoteroute = remoteroutes.front();
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"BUS");
 			overtake.erase(it);
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}

@@ -226,7 +226,7 @@ NrPitImpl::showPit()
 
 //added by sy
 void 
-NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string type)
 {
 	std::cout<<"(DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
@@ -251,7 +251,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			//若PIT的表项为空，可以删除该表项
 			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
 			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
-			if(interestNodes.empty())
+			if(interestNodes.empty() && type == "DEFAULT_VEHTYPE")
 			{
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 				std::string pitname = pitName.toUri();
@@ -334,7 +334,7 @@ NrPitImpl::InitializeNrPitEntry()
 	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
 	//added by sy
-	uint32_t id = m_sensor->getNodeId();
+	//uint32_t id = m_sensor->getNodeId();
 	std::vector<std::string>::const_iterator rit;
 	//每个路段配置一个兴趣
 	for(rit=route.begin();rit!=route.end();++rit)
@@ -352,9 +352,9 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		m_pitContainer.push_back(entry);
 		//added by sy
-		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
+		//Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
 		//将节点自身添加到PIT表中
-		pitEntry->AddIncomingNeighbors(id);
+		//pitEntry->AddIncomingNeighbors(id);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
