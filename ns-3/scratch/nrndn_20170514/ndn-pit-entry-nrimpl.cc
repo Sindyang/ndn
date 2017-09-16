@@ -124,7 +124,7 @@ void EntryNrImpl::listPitEntry()
 
 void EntryNrImpl::listPitEntry1(uint32_t node)
 {
-	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<": ";
+	std::cout<<"(pit-entry.cc-listPitEntry1) interest_name："<<m_interest_name<<": ";
 	uint32_t temp;
 	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
 	{

@@ -134,7 +134,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 		else
 			break;
 	}
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
@@ -203,7 +203,7 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 			//getchar();
 		}
 	}
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	NS_LOG_DEBUG("update RSUpit:"<<os.str());
@@ -225,6 +225,7 @@ NrPitImpl::showPit()
 void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
+	cout<<"(DeleteFrontNode)"<<endl;
 	std::vector<Ptr<Entry> >::iterator pit;
 	//找到lane在PIT表项中的位置
 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
