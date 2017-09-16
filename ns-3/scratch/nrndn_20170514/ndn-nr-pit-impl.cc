@@ -334,7 +334,7 @@ NrPitImpl::InitializeNrPitEntry()
 	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
 	//added by sy
-	//uint32_t id = m_sensor->getNodeId();
+	uint32_t id = m_sensor->getNodeId();
 	std::vector<std::string>::const_iterator rit;
 	//每个路段配置一个兴趣
 	for(rit=route.begin();rit!=route.end();++rit)
@@ -352,9 +352,9 @@ NrPitImpl::InitializeNrPitEntry()
 		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		m_pitContainer.push_back(entry);
 		//added by sy
-		//Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
+		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
 		//将节点自身添加到PIT表中
-		//pitEntry->AddIncomingNeighbors(id);
+		pitEntry->AddIncomingNeighbors(id);
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
