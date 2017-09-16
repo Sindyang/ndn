@@ -632,7 +632,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			else
 			{
 				//Question 能否替换为ExpireDataPacketTimer
-				DropDataPacket(data);
+				//DropDataPacket(data);
+				ExpireDataPacketTimer(nodeId,signature);
 				return;
 			}
 		}
