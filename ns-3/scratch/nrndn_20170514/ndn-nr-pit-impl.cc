@@ -102,6 +102,8 @@ std::string NrPitImpl::getCurrentLane()
 bool 
 NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
+	std::cout<<"UpdateCarPit"<<std::endl;
+	showPit();
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
@@ -112,7 +114,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 			std::find(route.begin(),route.end(),head->toUri());
 			
 	//当前路段为：uriConvertToString(head->toUri())
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
 	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	//找不到
@@ -122,19 +124,19 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
-		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
 		if(pitName.toUri() == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 		else
 			break;
 	}
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
@@ -203,7 +205,7 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 			//getchar();
 		}
 	}
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
 	showPit();
 	//getchar();
 	NS_LOG_DEBUG("update RSUpit:"<<os.str());
@@ -213,6 +215,7 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 void 
 NrPitImpl::showPit()
 {
+	std::cout<<"showPit"<<std::endl;
 	for(uint32_t i = 0;i<m_pitContainer.size();++i)
 	{
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);
@@ -223,8 +226,9 @@ NrPitImpl::showPit()
 
 //added by sy
 void 
-NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string type)
 {
+	std::cout<<"(DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
 	//找到lane在PIT表项中的位置
 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
@@ -247,7 +251,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			//若PIT的表项为空，可以删除该表项
 			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
 			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
-			if(interestNodes.empty())
+			if(interestNodes.empty() && type == "BUS" && pit!=m_pitContainer.begin())
 			{
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 				std::string pitname = pitName.toUri();

@@ -49,7 +49,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
+	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
@@ -68,7 +68,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		if(producer->IsInterestLane(lane))
 		{
 			++interestSize;
-			//cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
+			cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
 		}
 		idx++;
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
