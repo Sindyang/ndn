@@ -303,7 +303,41 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	return PriorityList;
 }
 
+uint32_t NavigationRouteHeuristic::GetNumbersofFrontNodes()
+{
+	uint32_t num = 0;
 
+	// step 1. 寻找位于导航路线前方的一跳邻居列表,m_nb为邻居列表
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	
+	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
+	{
+		std::pair<bool, double> result=
+				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
+		//cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") "<<endl;
+		
+		// Be careful with the order, increasing or descending?
+		if(result.first && result.second > 0)
+		{
+		}
+	}
+	//cout<<endl;
+	//getchar();
+	// step 2. Sort By Distance Descending
+	std::multimap<double,uint32_t>::iterator it;
+	for(it=sortlist.begin();it!=sortlist.end();++it)
+	{
+		PriorityList.push_back(it->second);
+
+		str<<" "<<it->second;
+		//cout<<" "<<it->second;
+	}
+	//cout<<endl;
+	NS_LOG_DEBUG(str.str());
+	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	return PriorityList;
+	return num;
+}
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
@@ -504,18 +538,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
-				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket At Time "<<Simulator::Now().GetSeconds()<<endl;
-				cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
-				//判断此时，m_sendintInterestEvent是否有被赋值
-				if(!isDuplicatedInterest(nodeId,seq))
-				{
-					cout<<"还没被赋值"<<endl;
-				}
-				else
-				{
-					cout<<"已经被赋值"<<endl;
-				}
-				getchar();
 			}
 		}
 		else
@@ -1600,6 +1622,7 @@ NavigationRouteHeuristic::SendHello()
 	//cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
 }
 
+//2017.12.13 这部分也要修改，不用那么复杂
 void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running){

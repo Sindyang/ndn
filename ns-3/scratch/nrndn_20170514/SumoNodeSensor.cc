@@ -322,7 +322,8 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	return std::pair<bool, double>(true,distance);
 }
 
-//2017.12.13 判断车辆与另一节点的位置关系
+//2017.12.13 判断车辆与其他车辆或消息包的位置关系
+//并不适用于车辆与RSU的位置关系
 /*std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
 	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
