@@ -328,7 +328,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		string route = interest.GetRoutes();
+		string route = interest->GetRoutes();
 		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<" 实际转发路线为 "<<route<<endl;
 		getchar();
 
