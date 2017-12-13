@@ -322,6 +322,38 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	return std::pair<bool, double>(true,distance);
 }
 
+//2017.12.13 判断车辆与另一节点的位置关系
+/*std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
+{
+	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
+	//当前节点所在路段和位置
+	const string& localLane = getLane();
+	const double& localPos  = getPos();
+	//cout << "(SumoNodeSensor.cc-getPos )" << endl;
+
+	std::pair<std::string, double> remoteInfo = convertCoordinateToLanePos(x,y);
+
+	//另一节点所在路段和位置
+	const string& remoteLane = remoteInfo.first;
+	const double& remotePos  = remoteInfo.second;
+	
+	//位于同一路段
+	if(remoteLane == localLane)
+	{
+		return pair<bool, double>(true, remotePos-localPos);
+	}
+	else//位于不同路段
+	{
+		Vector 	localPos = GetObject<MobilityModel>()->GetPosition();
+		localPos.z=0;//Just in case
+		Vector remotePos(x,y,0);
+		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
+	}
+}*/
+
+//还需要判断RSU与消息包或车辆的位置关系！！！！！
+
+
 //added by sy 2017.9.6
 bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route)
 {

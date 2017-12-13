@@ -328,17 +328,17 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		vector<string> routes = interest->GetRoutes();
+		/*vector<string> routes = interest->GetRoutes();
 		std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
 	    for(int i = 0;i < (signed)routes.size();i++)
 		{
 			std::cout<<routes[i]<<" ";
 		}
-		std::cout<<std::endl;
+		std::cout<<std::endl;*/
 	 
 		
-		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
-		getchar();
+		//cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
+		//getchar();
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -504,7 +504,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
-				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
+				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket At Time "<<Simulator::Now().GetSeconds()<<endl;
+				cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+				//判断此时，m_sendintInterestEvent是否有被赋值
+				if(!isDuplicatedInterest(nodeId,seq))
+				{
+					cout<<"还没被赋值"<<endl;
+				}
+				else
+				{
+					cout<<"已经被赋值"<<endl;
+				}
+				getchar();
 			}
 		}
 		else
@@ -710,7 +721,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				//Start a timer and wait
 			//}
 			//判断前方邻居是否为空
-			if()
+			if(yes)
 			{
 				double index = distance(pri.begin(),idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -1304,7 +1315,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	NS_LOG_FUNCTION (this);
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader( nrheader);
+	nrPayload->PeekHeader(nrheader);
 	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
@@ -1366,7 +1377,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -1405,8 +1416,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
-    //cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	//getchar();
+    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+	getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(

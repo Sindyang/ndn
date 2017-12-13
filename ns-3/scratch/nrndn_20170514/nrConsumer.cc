@@ -173,57 +173,57 @@ void nrConsumer::SendPacket()
 	
 	//std::cout<<"进入(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl;
 	
-	 NS_LOG_FUNCTION_NOARGS ();
+	NS_LOG_FUNCTION_NOARGS ();
 
-	 //返回编译器允许的uint32_t型数的最大值
-	 uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
+	//返回编译器允许的uint32_t型数的最大值
+	uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
 
-	 //在ndn-consumer-cbr.cc中,m_seqMax被初始化为std::numeric_limits<uint32_t>::max ();
-	 if (m_seqMax != std::numeric_limits<uint32_t>::max())
-	 {
+	//在ndn-consumer-cbr.cc中,m_seqMax被初始化为std::numeric_limits<uint32_t>::max ();
+	if (m_seqMax != std::numeric_limits<uint32_t>::max())
+	{
 		if (m_seq >= m_seqMax)
 		{
 			return; // we are totally done
 		}
-	 }
+	}
 
-	 //2017.12.13 Question:m_seq到底是啥
-	 seq = m_seq++;
-	 
-	 //2017.12.13 Question：m_interestName的定义
-	 Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
-	 nameWithSequence->appendSeqNum (seq);
+	//2017.12.13 Question:m_seq到底是啥
+	seq = m_seq++;
+	
+	//2017.12.13 Question：m_interestName的定义
+	Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
+	nameWithSequence->appendSeqNum (seq);
 
-	 //2017.12.13 added by sy 
-	 //这里需要得到兴趣路线
-	 std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
-	 std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
-	 for(int i = 0;i < (signed)routes.size();i++)
-	 {
+	//2017.12.13 added by sy 
+	//这里需要得到兴趣路线
+	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
+	/*std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
+	for(int i = 0;i < (signed)routes.size();i++)
+	{
 		 std::cout<<routes[i]<<" ";
-	 }
-	 std::cout<<std::endl;
-	 
-	 Ptr<Interest> interest = Create<Interest> ();
-	 interest->SetNonce(m_rand.GetValue ());
-	 interest->SetName(nameWithSequence);
-	 interest->SetInterestLifetime(m_interestLifeTime);
-	 //2017.12.13 加入实际转发路线
-	 interest->SetRoutes(routes);
+	}
+	std::cout<<std::endl;*/
+	
+	Ptr<Interest> interest = Create<Interest> ();
+	interest->SetNonce(m_rand.GetValue ());
+	interest->SetName(nameWithSequence);
+	interest->SetInterestLifetime(m_interestLifeTime);
+	//2017.12.13 加入实际转发路线
+	interest->SetRoutes(routes);
 
-	 // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
-	 NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
+	// NS_LOG_INFO ("Requesting Interest: \n" << *interest);
+	NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
 
-	 //WillSendOutInterest (seq);
+	//WillSendOutInterest (seq);
 
-	 FwHopCountTag hopCountTag;
-	 interest->GetPayload ()->AddPacketTag (hopCountTag);
+	FwHopCountTag hopCountTag;
+	interest->GetPayload ()->AddPacketTag (hopCountTag);
 
-	 m_transmittedInterests (interest, this, m_face);
-	 m_face->ReceiveInterest (interest);
-	 std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<std::endl<<std::endl;
-	 getchar();
-	 //ScheduleNextPacket ();
+	m_transmittedInterests (interest, this, m_face);
+	m_face->ReceiveInterest (interest);
+	//std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<std::endl<<std::endl;
+	//getchar();
+	//ScheduleNextPacket ();
 }
 
 std::vector<std::string> nrConsumer::ExtractActualRouteFromName(const Name& name)
