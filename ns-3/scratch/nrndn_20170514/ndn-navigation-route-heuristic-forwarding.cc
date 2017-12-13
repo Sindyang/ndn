@@ -337,7 +337,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		std::cout<<std::endl;
 	 
 		
-		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<" 实际转发路线为 "<<route<<endl;
+		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
 		getchar();
 
 		// 2. record the Interest Packet
