@@ -304,7 +304,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 }
 
 
-void NavigationRouteHeuristic::OnInterest1(Ptr<Face> face,
+void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
@@ -316,7 +316,7 @@ void NavigationRouteHeuristic::OnInterest1(Ptr<Face> face,
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		//consumer产生兴趣包，在路由层进行转发
-		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
+		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层。当前节点为 "<<m_node->GetId() <<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -326,6 +326,11 @@ void NavigationRouteHeuristic::OnInterest1(Ptr<Face> face,
         ndn::nrndn::nrHeader nrheader;
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t nodeId = nrheader.getSourceId();
+		
+		//2017.12.13 输出兴趣包实际转发路线
+		string route = interest.GetRoutes();
+		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<" 实际转发路线为 "<<route<<endl;
+		getchar();
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -505,7 +510,7 @@ void NavigationRouteHeuristic::OnInterest1(Ptr<Face> face,
 	}
 }
 
-void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
+/*void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
@@ -530,7 +535,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}	
 }
 
-void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> interest)
+//void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_Car)"<<endl;
 	
@@ -564,15 +569,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//收到心跳包
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
-		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		//if(m_sensor->getType() == "BUS")
-		//{
-			//ProcessHelloRSU(interest);
-		//}
-		//else
-		//{
-			ProcessHello(interest);
-		//}
+		ProcessHello(interest);
 		return;
 	}
 	
@@ -595,7 +592,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
 	//2017.12.12这部分没有必要保留了 因为车辆不用重复发送兴趣包
-	if(nodeId == myNodeId)
+	/*if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
@@ -705,7 +702,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				//Start a timer and wait
 			//}
 			//判断前方邻居是否为空
-			if(前方邻居为空)
+			if()
 			{
 				double index = distance(pri.begin(),idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -734,7 +731,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
-void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
+//void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
@@ -767,7 +764,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}*/
 	
 	//收到心跳包
-	if(HELLO_MESSAGE==interest->GetScope())
+/*	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
 		//if(m_sensor->getType() == "BUS")
@@ -808,7 +805,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	} */
 
 	//If the interest packet has already been sent, do not proceed the packet
-	if(m_interestNonceSeen.Get(interest->GetNonce()))
+/*	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
@@ -838,7 +835,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//If it is not a stop message, prepare to forward:
 	//pair<bool, double> msgdirection = packetFromDirection(interest);
 	//2017.12.12 增加函数：判断兴趣包上一跳所在路段是否为以RSU为终点的路段 若是：可以处理该兴趣包；若否：丢弃该兴趣包
-	if(不符合条件)// or from front
+	if()// or from front
 	{
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
@@ -878,7 +875,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//{
 		//	cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 		//判断兴趣包上一跳所在路段是否为兴趣路段
-		if(上一跳所在路段为兴趣路段)
+		if()
 		{
 			//更新主待处理兴趣列表
 			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
@@ -930,7 +927,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						//缓存该兴趣包的备份
 						//重新选择路线
 						//查看新路段是否有车辆
-						if(有车辆)
+						if()
 						{
 							double index = distance(pri.begin(), idit);
 							double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -984,7 +981,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				}
 			}
 			//判断前方邻居是否为空
-			if(前方邻居为空)
+			if()
 			{
 				double index = distance(pri.begin(),idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -1012,7 +1009,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 		//cout<<endl;
 	}
-}
+}*/
 
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
@@ -1894,7 +1891,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	//added by sy
 	nrheader.setGapMode(gap_mode);
 	nrPayload->AddHeader(nrheader);
-	
 	//cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
 }

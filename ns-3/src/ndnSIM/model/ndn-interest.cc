@@ -51,6 +51,7 @@ Interest::Interest (const Interest &interest)
   , m_interestLifetime (interest.m_interestLifetime)
   , m_nonce            (interest.m_nonce)
   , m_nackType         (interest.m_nackType)
+  , m_routes           (interest.m_routes)
   , m_exclude          (interest.m_exclude ? Create<Exclude> (*interest.GetExclude ()) : 0)
   , m_payload          (interest.GetPayload ()->Copy ())
   , m_wire             (0)
@@ -137,6 +138,19 @@ Interest::GetNack () const
   return m_nackType;
 }
 
+void 
+Interest::SetRoutes (std::string r)
+{
+	m_routes = r;
+	m_wire = 0;
+}
+
+std::string
+Interest::GetRoutes () const
+{
+	return m_routes;
+}
+  
 void
 Interest::SetExclude (Ptr<Exclude> exclude)
 {

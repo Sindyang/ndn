@@ -39,10 +39,8 @@ Time Neighbors::GetExpireTime(uint32_t id)
 	  if(it!=m_nb.end())
 	  {
 		  //Found the neighbor
-		  //找到邻居
 		  return (it->second.m_expireTime - Simulator::Now ());
 	  }
-
 	  return Seconds (0);
 }
 
@@ -55,7 +53,6 @@ bool Neighbors::IsNeighbor(uint32_t id)
 		  //Found the neighbor
 		  return true;
 	  }
-
 	  return false;
 }
 
@@ -125,7 +122,7 @@ void Neighbors::Purge()
 	}
 	//erase an element from a standard associative container(map) is not like
 	//the sequence container, use the erase method directly. Remember to
-	//postincrement the iterator. (See <<effective STL>>item9)
+	//post increment the iterator. (See <<effective STL>>item9)
 	//Here, See the difference in ns3::AODV::Neighbors
 	m_ntimer.Cancel();
 	m_ntimer.Schedule();

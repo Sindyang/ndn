@@ -175,8 +175,10 @@ void nrConsumer::SendPacket()
 	
 	 NS_LOG_FUNCTION_NOARGS ();
 
+	 //返回编译器允许的uint32_t型数的最大值
 	 uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
 
+	 //在ndn-consumer-cbr.cc中,m_seqMax被初始化为std::numeric_limits<uint32_t>::max ();
 	 if (m_seqMax != std::numeric_limits<uint32_t>::max())
 	 {
 		if (m_seq >= m_seqMax)
@@ -185,15 +187,24 @@ void nrConsumer::SendPacket()
 		}
 	 }
 
+	 //2017.12.13 Question:m_seq到底是啥
 	 seq = m_seq++;
 	 
+	 //2017.12.13 Question：m_interestName的定义
 	 Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
 	 nameWithSequence->appendSeqNum (seq);
 
+	 //2017.12.13 added by sy 
+	 //这里需要得到兴趣路线
+	 std::string route = nameWithSequence->toUri();
+	 std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 "<<route<<std::endl;
+	 
 	 Ptr<Interest> interest = Create<Interest> ();
 	 interest->SetNonce(m_rand.GetValue ());
 	 interest->SetName(nameWithSequence);
 	 interest->SetInterestLifetime(m_interestLifeTime);
+	 //2017.12.13 加入实际转发路线
+	 interest->SetRoutes(route);
 
 	 // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
 	 NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
@@ -205,8 +216,8 @@ void nrConsumer::SendPacket()
 
 	 m_transmittedInterests (interest, this, m_face);
 	 m_face->ReceiveInterest (interest);
-	 //std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<endl<<endl;
-	 //getchar();
+	 std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<std::endl<<std::endl;
+	 getchar();
 	 //ScheduleNextPacket ();
 }
 
