@@ -67,7 +67,7 @@ protected:
 	  * 2017.12.13 added by sy
 	  * @brief obtain actual route from interest name
 	  */
-	  vector<string> nrConsumer::ExtractActualRouteFromName(const Name& name);
+	  std::vector<std::string> nrConsumer::ExtractActualRouteFromName(const Name& name);
 
 	  virtual void
 	  OnTimeout (uint32_t sequenceNumber);

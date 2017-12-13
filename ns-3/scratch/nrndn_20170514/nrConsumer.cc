@@ -196,7 +196,7 @@ void nrConsumer::SendPacket()
 
 	 //2017.12.13 added by sy 
 	 //这里需要得到兴趣路线
-	 vector<string> routes = ExtractActualRouteFromName(nameWithSequence);
+	 std::vector<std::string> routes = ExtractActualRouteFromName(nameWithSequence);
 	 std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
 	 for(int i = 0;i < (signed)routes.size();i++)
 	 {
@@ -226,11 +226,11 @@ void nrConsumer::SendPacket()
 	 //ScheduleNextPacket ();
 }
 
-vector<string> nrConsumer::ExtractActualRouteFromName(const Name& name)
+std::vector<std::string> nrConsumer::ExtractActualRouteFromName(const Name& name)
 {
 	// Name is in reverse order, so reverse it again
 	// eg. if the navigation route is R1-R2-R3, the name is /R3/R2/R1
-	vector<string> result;
+	std::vector<std::string> result;
 	Name::const_reverse_iterator it;
 	//Question:有非字符内容输出
 	//cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;

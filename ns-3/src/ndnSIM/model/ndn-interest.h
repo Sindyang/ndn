@@ -185,13 +185,13 @@ public:
   *\brief Set actual forwarding route
   */
   void 
-  SetRoutes (vector<string> routes);
+  SetRoutes (std::vector<std::string> routes);
   
   /**
   *added by wsy
   \brief Get actual forwarding route
   */
-  vector<string>
+  std::vector<std::string>
   GetRoutes () const;
 
   /**
@@ -255,7 +255,7 @@ private:
   Time  m_interestLifetime; ///< @brief InterestLifetime
   uint32_t m_nonce;         ///< @brief Nonce. not used if zero
   uint8_t  m_nackType;      ///< @brief Negative Acknowledgement type
-  vector<string> m_routes;            ///< @brief Actual Forwarding Routes added by wsy
+  std::vector<std::string> m_routes;            ///< @brief Actual Forwarding Routes added by wsy
 
   Ptr<Exclude> m_exclude;   ///< @brief Exclude filter
   Ptr<Packet> m_payload;    ///< @brief virtual payload
