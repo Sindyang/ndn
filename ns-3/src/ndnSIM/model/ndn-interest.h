@@ -30,6 +30,7 @@
 #include <ns3/ndnSIM/ndn.cxx/name.h>
 #include <ns3/ndnSIM/ndn.cxx/exclude.h>
 #include <string>
+#include <vector>
 namespace ns3 {
 
 class Packet;
@@ -184,13 +185,13 @@ public:
   *\brief Set actual forwarding route
   */
   void 
-  SetRoutes (std::string route);
+  SetRoutes (vector<string> routes);
   
   /**
   *added by wsy
   \brief Get actual forwarding route
   */
-  std::string
+  vector<string>
   GetRoutes () const;
 
   /**
@@ -254,7 +255,7 @@ private:
   Time  m_interestLifetime; ///< @brief InterestLifetime
   uint32_t m_nonce;         ///< @brief Nonce. not used if zero
   uint8_t  m_nackType;      ///< @brief Negative Acknowledgement type
-  std::string m_routes;            ///< @brief Actual Forwarding Routes added by wsy
+  vector<string> m_routes;            ///< @brief Actual Forwarding Routes added by wsy
 
   Ptr<Exclude> m_exclude;   ///< @brief Exclude filter
   Ptr<Packet> m_payload;    ///< @brief virtual payload

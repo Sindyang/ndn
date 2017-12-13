@@ -196,15 +196,20 @@ void nrConsumer::SendPacket()
 
 	 //2017.12.13 added by sy 
 	 //这里需要得到兴趣路线
-	 std::string route = nameWithSequence->toUri();
-	 std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 "<<route<<std::endl;
+	 vector<string> routes = ExtractActualRouteFromName(nameWithSequence);
+	 std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
+	 for(int i = 0;i < (signed)routes.size();i++)
+	 {
+		 std::cout<<routes[i]<<" ";
+	 }
+	 std::cout<<std::endl;
 	 
 	 Ptr<Interest> interest = Create<Interest> ();
 	 interest->SetNonce(m_rand.GetValue ());
 	 interest->SetName(nameWithSequence);
 	 interest->SetInterestLifetime(m_interestLifeTime);
 	 //2017.12.13 加入实际转发路线
-	 interest->SetRoutes(route);
+	 interest->SetRoutes(routes);
 
 	 // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
 	 NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
@@ -219,6 +224,22 @@ void nrConsumer::SendPacket()
 	 std::cout<<"离开(nrConsumer.cc-SendPacket) "<<GetNode()->GetId()<<std::endl<<std::endl;
 	 getchar();
 	 //ScheduleNextPacket ();
+}
+
+vector<string> nrConsumer::ExtractActualRouteFromName(const Name& name)
+{
+	// Name is in reverse order, so reverse it again
+	// eg. if the navigation route is R1-R2-R3, the name is /R3/R2/R1
+	vector<string> result;
+	Name::const_reverse_iterator it;
+	//Question:有非字符内容输出
+	//cout<<"(forwarding.cc-ExtractRouteFromName) 得到该兴趣包的兴趣路线："<<endl;
+	for(it=name.rbegin();it!=name.rend();++it)
+	{
+		result.push_back(it->toUri());
+		//cout<<it->toUri()<<endl;
+	}
+	return result;
 }
 
 void nrConsumer::OnData(Ptr<const Data> data)

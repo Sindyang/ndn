@@ -139,13 +139,13 @@ Interest::GetNack () const
 }
 
 void 
-Interest::SetRoutes (std::string r)
+Interest::SetRoutes (vector<string> r)
 {
-	m_routes = r;
+	my_routes.assign(r.begin(), r.end());
 	m_wire = 0;
 }
 
-std::string
+vector<string>
 Interest::GetRoutes () const
 {
 	return m_routes;

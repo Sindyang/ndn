@@ -328,7 +328,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		string route = interest->GetRoutes();
+		vector<string> routes = interest->GetRoutes();
+		std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
+	    for(int i = 0;i < (signed)routes.size();i++)
+		{
+			std::cout<<routes[i]<<" ";
+		}
+		std::cout<<std::endl;
+	 
+		
 		cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<" 实际转发路线为 "<<route<<endl;
 		getchar();
 
@@ -341,7 +349,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    //cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
