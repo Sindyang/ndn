@@ -72,7 +72,6 @@ double SumoMobility::GetStopTime(uint32_t id)
 
 void SumoMobility::Install()
 {
-
 	MobilityHelper mobility;
 	Ptr<ListPositionAllocator> positionAlloc = CreateObject<ListPositionAllocator> ();
 

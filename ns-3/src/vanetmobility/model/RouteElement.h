@@ -149,7 +149,7 @@ public:
 
 private:
 	std::vector<Vehicle> vehicles;
-	std::map<int,Vehicle> mapvehicles;
+	std::map<int,Vehicle> mapvehicles; //mapvehicles的值最终全部存储到了vehicles中
 	Vehicle *m_temp_vehicle;
 	Trace   m_temp_trace;
 	void initialize_vehicles( TiXmlNode* pParent);

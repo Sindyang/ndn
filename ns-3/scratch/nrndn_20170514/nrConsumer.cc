@@ -164,8 +164,8 @@ void nrConsumer::SendPacket()
 	//added by sy
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	const std::string& currentType = sensor->getType();
-	//RSU的Type为”BUS" RSU不发送兴趣包
-	if(currentType == "BUS")
+	//RSU的Type为”RSU" RSU不发送兴趣包
+	if(currentType == "RSU")
 	{
 		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
 		return;

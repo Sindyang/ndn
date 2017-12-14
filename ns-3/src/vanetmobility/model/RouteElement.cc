@@ -72,7 +72,7 @@ RoadMap::RoadMap(const RoadMap& r):edges(r.edges)
 	
 }
 
-//对应的文件为input_net.net.xml
+//读入的文件为input_net.net.xml
 void RoadMap::LoadNetXMLFile(const char* pFilename)
 {
 	TiXmlDocument doc(pFilename);
@@ -119,7 +119,7 @@ bool RoadMap::edge_with_attribs(TiXmlElement* pElement,const char* str)//���
 	return false;
 }
 
-//对应的文件为input_net.net.xml
+//读入的文件为input_net.net.xml
 int RoadMap::Read_edges(TiXmlElement* pElement)
 {
 
@@ -161,7 +161,7 @@ void RoadMap::ChangeLaneCharactor(Lane& lane)
     return;
 }
 
-
+//读入的文件为input_net.net.xml
 int RoadMap::Read_lane(TiXmlElement* pElement)
 {
 	if ( !pElement ) return 0;
@@ -176,6 +176,7 @@ int RoadMap::Read_lane(TiXmlElement* pElement)
 		case ATTR_ID    :
 			{
 				m_temp_edge.lane.id      =pAttrib->Value();
+				//lane的id去掉的最后两个字符
 				m_temp_edge.lane.id.erase(m_temp_edge.lane.id.end()-2,m_temp_edge.lane.id.end());
 				break;
 			}
@@ -271,6 +272,7 @@ Route::Route(const Route& r)
 {
 	this->edgesID=r.edgesID;
 }
+
 void Route::LoadRouteString(const char* pRouteStr)
 {
 		string line(pRouteStr);

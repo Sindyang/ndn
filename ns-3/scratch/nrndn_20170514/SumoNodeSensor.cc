@@ -198,6 +198,17 @@ const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()
 	return m_navigationRoute;
 }
 
+
+const std::string SumoNodeSensor::getJunctionId(uint32_t id)
+{
+	std::string route = m_sumodata->getVl().getVehicles()[id].route.edgesID;
+	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	eit = edges.find(route);
+	std::string JunctionId = eit->second.to;
+	return JunctionId;
+}
+
 std::string SumoNodeSensor::uriConvertToString(std::string str)
 {
 	//因为获取兴趣时使用toUri，避免出现类似[]的符号，进行编码转换

@@ -303,7 +303,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	return PriorityList;
 }
 
-uint32_t NavigationRouteHeuristic::GetNumbersofFrontNodes()
+/*uint32_t NavigationRouteHeuristic::GetNumbersofFrontNodes()
 {
 	uint32_t num = 0;
 
@@ -337,7 +337,8 @@ uint32_t NavigationRouteHeuristic::GetNumbersofFrontNodes()
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	return PriorityList;
 	return num;
-}
+}*/
+
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
@@ -398,7 +399,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		if(m_sensor->getType() == "BUS")
+		if(m_sensor->getType() == "RSU")
 		{
 			ProcessHelloRSU(interest);
 		}
@@ -1786,7 +1787,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	const std::string& lane = m_sensor->getLane();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	std::string junctionid = m_sensor->getJunctionId(nodeId);
+	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
+	getchar();
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));

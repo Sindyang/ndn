@@ -60,6 +60,7 @@ def roadlength(in_file,junctions):
 def get_rsu(junctions,lengths):
 	out_file = raw_input("Input OutFile Direction:") 
 	first_rsu = raw_input("Input the first ID of RSU:")
+	first_rsu = int(first_rsu)
 	end_time = raw_input("Input the end of time:")
 	fw_add = open(out_file,'w')
 	add_head = '<additional>'+'\n\t'+'<vType id="RSU" color="255,0,0" guiShape="bus"/>'+'\n\n'
@@ -68,11 +69,13 @@ def get_rsu(junctions,lengths):
 	#设置RSU
 	for id in junctions:
 		lane = id
-		new_id = 'RSU'+junctions[id]
+		#new_id = 'RSU'+junctions[id]
 		road = lane[:-2]
 		departpos = lengths[lane]
-		add_line = '\t<vehicle id="'+new_id+'" type="RSU" depart="0" departPos="'+departpos+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" parking="true" endPos="'+departpos+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
+		id = str(first_rsu)
+		add_line = '\t<vehicle id="'+ id +'" type="RSU" depart="0" departPos="'+departpos+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" parking="true" endPos="'+departpos+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
 		fw_add.writelines(add_line)
+		first_rsu += 1
 	fw_add.writelines('</additional>')
 	fw_add.close()
 
