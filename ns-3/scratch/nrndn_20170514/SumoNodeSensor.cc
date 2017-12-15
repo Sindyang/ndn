@@ -161,7 +161,7 @@ const std::string& SumoNodeSensor::getLane()
 	uint32_t id = node->GetId();
 	//RSU
 	if(id >= getNumsofVehicles())
-		return m_sumodata->getVl().getVehicles()[m_id].trace.front().lane;
+		return m_sumodata->getVl().getVehicles()[id].trace.front().lane;
 	//cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
@@ -202,7 +202,7 @@ const std::string& SumoNodeSensor::getLane()
     return m_sumoLane;
 }
 
-const int SumoNodeSensor::getNumsofVehicles()
+const uint32_t SumoNodeSensor::getNumsofVehicles()
 {
 	return m_sumodata->GetVehiclesSize();
 }

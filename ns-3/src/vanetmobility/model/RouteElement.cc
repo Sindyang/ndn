@@ -559,12 +559,12 @@ void VehicleLoader::ReadMapIntoVector()
 	}
 }
 
-int VehicleLoader::getNumOfVehicles() const
+uint32_t VehicleLoader::getNumOfVehicles() const
 {
 	return vehicles.size()-numofRSUs;
 }
 
-int VehicleLoader::getNumOfRSUs() const
+uint32_t VehicleLoader::getNumOfRSUs() const
 {
 	return numofRSUs;
 }

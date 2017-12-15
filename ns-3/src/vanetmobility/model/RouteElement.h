@@ -146,11 +146,11 @@ public:
 	void print_vehicle();
 	const std::vector<Vehicle>& getVehicles() const;
 	void Clear();
-	int getNumOfVehicles() const;
-	int getNumOfRSUs() const;
+	uint32_t getNumOfVehicles() const;
+	uint32_t getNumOfRSUs() const;
 
 private:
-	int numofRSUs;//2017.12.15 sy:记录RSU的数目
+	uint32_t numofRSUs;//2017.12.15 sy:记录RSU的数目
 	std::vector<Vehicle> vehicles;
 	std::map<int,Vehicle> mapvehicles; //sy:mapvehicles的值最终全部存储到了vehicles中
 	Vehicle *m_temp_vehicle;

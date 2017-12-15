@@ -98,7 +98,7 @@ public:
 	 * @brief get the number of vehicles(excluding RSU)
 	 *
 	 **/
-	virtual const int getNumsofVehicles() = 0;
+	virtual const uint32_t getNumsofVehicles() = 0;
 	
 	/*
 	 * @brief get the id of the node
