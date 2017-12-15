@@ -176,6 +176,11 @@ const std::string& SumoNodeSensor::getLane()
     return m_sumoLane;
 }
 
+const int SumoNodeSensor::getNumsofVehicles()
+{
+	return m_sumodata->getVl().getNumOfVehicles();
+}
+	
 const std::uint32_t SumoNodeSensor::getNodeId()
 {
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();

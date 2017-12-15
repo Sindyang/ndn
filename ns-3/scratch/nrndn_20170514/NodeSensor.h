@@ -94,6 +94,13 @@ public:
 	virtual const std::string& getLane();
 	
 	/*
+	 * added by sy
+	 * @brief get the number of vehicles(excluding RSU)
+	 *
+	 **/
+	virtual const int getNumsofVehicles() = 0;
+	
+	/*
 	 * @brief get the id of the node
      * \return the id of the node 	 
 	 **/

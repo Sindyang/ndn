@@ -376,7 +376,7 @@ void VehicleLoader::print_vehicle()
 			for (t=(*v).trace.begin();t!=(*v).trace.end();t++)
 			{
 				cout<<"trace:  "<<(*t).time<<"  "<<(*t).x<<"  "<<(*t).y<<"  "<<(*t).angle<<" "<<(*t).type<<" "
-				<<(*t).speed<<(*t).pos<<"  "<<(*t).lane<<"  "<<"  "<<(*t).slope<<"  "<<"  "<<endl;
+				<<(*t).speed<<" "<<(*t).pos<<"  "<<(*t).lane<<"  "<<(*t).slope<<"  "<<endl;
 			}
 		}
 	}

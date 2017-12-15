@@ -39,6 +39,8 @@ public:
 	virtual const std::string& getType() ;
 	virtual const std::string& getLane();
 	//added by sy
+	virtual const int getNumsofVehicles();
+	//added by sy
 	virtual const std::uint32_t getNodeId();
 	virtual const std::vector<std::string>& getNavigationRoute();
 	//added by sy

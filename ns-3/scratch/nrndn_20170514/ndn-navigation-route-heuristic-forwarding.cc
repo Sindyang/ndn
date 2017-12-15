@@ -396,6 +396,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 	
+	int num = m_sensor->getNumsofVehicles();
+	cout<<"(forwarding.cc-OnInterest) 普通车辆的数目为 "<<num<<endl;
+	getchar();
+	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
