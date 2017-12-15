@@ -483,6 +483,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 					vid = read_trace(pParent->ToElement());
 					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
 					vehicles[vid].trace.push_back(m_temp_trace);
+					cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
 				}//vehicle
 			default:break;
@@ -549,7 +550,7 @@ void VehicleLoader::ReadMapIntoVector()
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
-		cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<endl;
+		//cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<endl;
 	}
 		
 }
