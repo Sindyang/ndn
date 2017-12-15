@@ -307,25 +307,25 @@ nrndnExample::RunNrndnSim ()
 {
 	name = "NR-NDN-Simulation";
 
-	//std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
+	std::cout<<"(main.cc-RunNrndnSim)读取交通数据"<<std::endl;
 	LoadTraffic();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造节点"<<std::endl;
 	CreateNodes();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)创造设备"<<std::endl;
 	CreateDevices();
-	//InstallInternetStack();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
+	InstallInternetStack();
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化Mobility"<<std::endl;
 	InstallMobility();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装传感器"<<std::endl;
 	InstallSensor();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)初始化NrNdnStack"<<std::endl;
 	InstallNrNdnStack();
 
 	//InstallTestMobility();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装Nrndn应用程序"<<std::endl;
 	InstallNrndnApplications();
 	//InstallTestApplications();
-	//std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
+	std::cout<<std::endl<<"(main.cc-RunNrndnSim)安装交通状况"<<std::endl;
 	InstallTraffics();
 
 
