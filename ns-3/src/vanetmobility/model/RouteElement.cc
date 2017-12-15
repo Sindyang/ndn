@@ -482,6 +482,14 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 				{
 					vid = read_trace(pParent->ToElement());
 					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
+					cout<<m_temp_trace.x<<endl;
+					cout<<m_temp_trace.y<<endl;
+					cout<<m_temp_trace.angle<<endl;
+					cout<<m_temp_trace.type<<endl;
+					cout<<m_temp_trace.speed<<endl;
+					cout<<m_temp_trace.pos<<endl;
+					cout<<m_temp_trace.lane<<endl;
+					cout<<m_temp_trace.slope<<endl;
 					vehicles[vid].trace.push_back(m_temp_trace);
 					cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
@@ -501,7 +509,7 @@ int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 	
 	if (!pElement) 
 		return 0;
-	//cout<<"进入(RouteElement.cc-read_trace)"<<endl;
+	cout<<"进入(RouteElement.cc-read_trace)"<<endl;
 	TiXmlAttribute* pAttrib=pElement->FirstAttribute();
 	int i = 0;
 	int attributeID;
@@ -509,6 +517,7 @@ int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 	while (pAttrib)
 	{
 		attributeID=getAttribuutID(pAttrib->Name());
+		cout<<"(RouteElement.cc-read_trace) attributeID "<<attributeID<<endl;
 		switch(attributeID)
 		{
 		case ATTR_ID    :vid               =atoi(pAttrib->Value());break;
