@@ -44,7 +44,7 @@ public:
 	virtual const std::uint32_t getNodeId();
 	virtual const std::vector<std::string>& getNavigationRoute();
 	//added by sy
-	//virtual const std::string getJunctionId(uint32_t id);
+	virtual const std::string getJunctionId(uint32_t id);
 
 	std::string uriConvertToString(std::string str);
 	std::vector <double> split(const std::string & s, const std::string & d);

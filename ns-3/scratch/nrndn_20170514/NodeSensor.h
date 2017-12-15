@@ -118,7 +118,7 @@ public:
 	* @brief get the junction id 
 	* added by sy
 	**/
-	//virtual const std::string getJunctionId(uint32_t id) = 0;
+	virtual const std::string getJunctionId(uint32_t id) = 0;
 
 	/**
 	 * 	\brief	1. Firstly, determine whether a given location is on the given navigation route
