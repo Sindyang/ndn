@@ -396,10 +396,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 	
-	int num = m_sensor->getNumsofVehicles();
-	cout<<"(forwarding.cc-OnInterest) 普通车辆的数目为 "<<num<<endl;
-	getchar();
-	
 	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
@@ -1444,7 +1440,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	getchar();
+	//getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(

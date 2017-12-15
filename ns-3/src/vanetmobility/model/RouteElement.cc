@@ -485,16 +485,6 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 				{
 					vid = read_trace(pParent->ToElement());
 					//cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
-					/*cout<<m_temp_trace.time<<endl;
-					cout<<m_temp_trace.x<<endl;
-					cout<<m_temp_trace.y<<endl;
-					cout<<m_temp_trace.angle<<endl;
-					cout<<m_temp_trace.type<<endl;
-					cout<<m_temp_trace.speed<<endl;
-					cout<<m_temp_trace.pos<<endl;
-					cout<<m_temp_trace.lane<<endl;
-					cout<<m_temp_trace.slope<<endl;*/
-					//cout<<vehicles[101].id<<" "<<vehicles[101].depart<<endl;
 					/*2017.12.15 判断该车辆是否为RSU*/
 					if(vid >= FIRST_RSU_ID)
 					{

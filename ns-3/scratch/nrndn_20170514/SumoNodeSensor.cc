@@ -17,6 +17,7 @@ namespace nrndn
 {
 using namespace std;
 #define TransRange 300
+#define FIRST_RSU_ID   10000
 NS_OBJECT_ENSURE_REGISTERED (SumoNodeSensor);
 
 SumoNodeSensor::SumoNodeSensor()
