@@ -391,7 +391,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(currentType == "RSU")
 		{
 			cout<<"(forwarding.cc-OnInterest) RSU不该发送兴趣包。出错！！"<<endl;
-			getchar();
+			//getchar();
 		}
 		return;
 	}
@@ -1604,7 +1604,7 @@ NavigationRouteHeuristic::SendHello()
 	cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" "<<endl;
 	uint32_t num = m_sensor->getNumsofVehicles();
 	cout<<"(forwarding.cc-SendHello) 普通车辆的数目为 "<<num<<endl;
-	getchar();
+	//getchar();
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
 
@@ -1625,7 +1625,7 @@ NavigationRouteHeuristic::SendHello()
 	SendInterestPacket(interest);
 	
 	cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
-	getchar();
+	//getchar();
 }
 
 //2017.12.13 这部分也要修改，不用那么复杂
@@ -1795,7 +1795,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//std::string junctionid = m_sensor->getJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
-	getchar();
+	//getchar();
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
