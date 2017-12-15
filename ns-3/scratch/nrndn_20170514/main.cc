@@ -584,16 +584,16 @@ nrndnExample::LoadTraffic()
 
 	string outfile      = outputDir + "/result.txt";
 
-	//std::cout<<"(main.cc-LoadTraffic)输出文件路径："<<outfile<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)输出文件路径："<<outfile<<std::endl;
 	os.open(outfile.data(),ios::out);
-	//std::cout<<"(main.cc-LoadTraffic)文件打开成功"<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)文件打开成功"<<std::endl;
 
 	VANETmobilityHelper mobilityHelper;
 	mobility=mobilityHelper.GetSumoMObility(netxmlpath,routexmlpath,fcdxmlpath);
-	//std::cout<<"(main.cc-LoadTraffic)读取完毕！"<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)读取完毕！"<<std::endl;
     //获取结点size
 	size = mobility->GetNodeSize();
-	//std::cout<<"(main.cc-LoadTraffic)节点size："<<size<<std::endl;
+	std::cout<<"(main.cc-LoadTraffic)节点size："<<size<<std::endl;
 
 	if(accidentNum == 0 || accidentNum == 999)
 	{
