@@ -162,7 +162,7 @@ public:
 	 */
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)=0;
 
-	virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
+	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
 	
 	const static std::string emptyType;
 	const static std::string emptyLane;

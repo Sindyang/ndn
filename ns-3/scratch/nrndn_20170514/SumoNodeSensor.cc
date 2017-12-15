@@ -398,7 +398,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 
 
 //added by sy 2017.9.6
-bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route)
+/*bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route)
 {
 	//cout<<"进入(SumoNodeSensor.cc-IsCoverThePath)"<<endl;
 	//当前节点所在路段和位置
@@ -623,9 +623,9 @@ bool SumoNodeSensor::IsCoverThePath(const double& x,const double& y,const std::v
 		return false;
 	}
 	return false;
-}
+}*/
 
-bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y)
+/*bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y)
 {		
 	bool flag_x = false;
 	bool flag_y = false;
@@ -665,10 +665,10 @@ bool SumoNodeSensor::IsCorrectPosition(bool x_increase,bool y_increase,int x_beg
 		return true;
 	}
 	return false;
-}
+}*/
 
 
-std::vector<double> SumoNodeSensor::split(const std::string & s, const std::string & d)
+/*std::vector<double> SumoNodeSensor::split(const std::string & s, const std::string & d)
 {
 	std::vector<double> v;
 	char *str = new char[s.size()+1];
@@ -677,7 +677,7 @@ std::vector<double> SumoNodeSensor::split(const std::string & s, const std::stri
 		v.push_back(atof(t));
 	delete []str;
 	return v;
-}
+}*/
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(
 		const double& x, const double& y)

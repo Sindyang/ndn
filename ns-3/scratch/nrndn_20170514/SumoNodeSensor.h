@@ -47,10 +47,10 @@ public:
 	virtual const std::string getJunctionId(uint32_t id);
 
 	std::string uriConvertToString(std::string str);
-	std::vector <double> split(const std::string & s, const std::string & d);
+	//std::vector <double> split(const std::string & s, const std::string & d);
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
-	virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
-	bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
+	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
+	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
 private:
 	/*
 	 * @brief convert the coordinate (x,y) to the lane and offset pair
