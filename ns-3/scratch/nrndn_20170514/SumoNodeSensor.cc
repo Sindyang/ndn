@@ -53,6 +53,12 @@ double SumoNodeSensor::getX()
 	uint32_t m_id = node->GetId();
 	cout<<"(SumoNodeSensor.cc-getX) ID "<<m_id<<endl;
 	cout<<"x "<<pos.x<<"y "<<pos.y<<endl;
+	if(m_id == 106)
+	{
+		cout<<m_sumodata->getVl().getVehicles()[m_id].trace.front().x;
+		return m_sumodata->getVl().getVehicles()[m_id].trace.front().x;
+	}
+		
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getX():Cannot find Trace!!");
 	NS_ASSERT_MSG(m_sumodata->GetTrace(m_id,pos).x == pos.x,"Can not find coordinate x");
 	return m_sumodata->GetTrace(m_id,pos).x;
