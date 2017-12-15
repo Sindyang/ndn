@@ -350,7 +350,7 @@ void VehicleLoader::LoadRouteXML(const char *  pXMLFilename)
 //对应的文件为fcdoutput.xml
 void VehicleLoader::LoadFCDOutputXML(const char *  pXMLFilename)
 {
-	cout<<"进入(RouteElement.cc-LoadFCDOutputXML)"<<endl;
+	//cout<<"进入(RouteElement.cc-LoadFCDOutputXML)"<<endl;
 	TiXmlDocument doc(pXMLFilename);
 	bool loadOkay = doc.LoadFile();
 	if (loadOkay)
@@ -457,7 +457,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 {
 	if (!pParent) 
 		return;
-	cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
+	//cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
 	TiXmlNode* pChild;
 	int t = pParent->Type();
 	int vid;
@@ -476,13 +476,13 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 			case 1:
 				{
 					read_trace(pParent->ToElement());
-					cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
+					//cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
 					break;
 				}//timestep
 			case 2:
 				{
 					vid = read_trace(pParent->ToElement());
-					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
+					//cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
 					/*cout<<m_temp_trace.time<<endl;
 					cout<<m_temp_trace.x<<endl;
 					cout<<m_temp_trace.y<<endl;
@@ -500,7 +500,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 						vid = vid - FIRST_RSU_ID + numofvehicles;
 					}
 					vehicles[vid].trace.push_back(m_temp_trace);
-					cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
+					//cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
 				}//vehicle
 			default:break;
@@ -568,7 +568,7 @@ void VehicleLoader::ReadMapIntoVector()
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
-		cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<" "<<it->second.depart<<endl;
+		//cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<" "<<it->second.depart<<endl;
 		/*
 		 * added by sy:
 		 * 记录普通车辆的数目 

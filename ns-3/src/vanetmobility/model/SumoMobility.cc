@@ -58,6 +58,7 @@ void SumoMobility::LoadTraffic()
 	vl.LoadRouteXML(routexmlpath.data());
 	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadFCDOutputXML" << endl;
 	vl.LoadFCDOutputXML(fcdxmlpath.data());
+	PrintVehicle();
 }
 
 double SumoMobility::GetStartTime(uint32_t id)
