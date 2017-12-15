@@ -500,7 +500,7 @@ int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 	
 	if (!pElement) 
 		return 0;
-	cout<<"进入(RouteElement.cc-read_trace)"<<endl;
+	//cout<<"进入(RouteElement.cc-read_trace)"<<endl;
 	TiXmlAttribute* pAttrib=pElement->FirstAttribute();
 	int i = 0;
 	int attributeID;
@@ -547,7 +547,11 @@ void VehicleLoader::ReadMapIntoVector()
 {
 	map<int,Vehicle>::iterator it;
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
+	{
 		vehicles.push_back(it->second);
+		cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<endl;
+	}
+		
 }
 
 } /* namespace sumomobility */
