@@ -1593,7 +1593,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
@@ -1601,6 +1601,7 @@ NavigationRouteHeuristic::SendHello()
 	const double& x		= m_sensor->getX();
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
+	cout<<"(SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" "<<endl;
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
 
@@ -1620,7 +1621,8 @@ NavigationRouteHeuristic::SendHello()
 	//4. send the hello message
 	SendInterestPacket(interest);
 	
-	//cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
+	cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<endl;
+	getchar();
 }
 
 //2017.12.13 这部分也要修改，不用那么复杂
