@@ -98,7 +98,7 @@ public:
      * \return the id of the node 	 
 	 **/
 	
-	//virtual const std::uint32_t getNodeId() = 0;
+	virtual const std::uint32_t getNodeId() = 0;
 
 	/*
 	 * @brief get the navigation route of the node.
@@ -111,7 +111,7 @@ public:
 	* @brief get the junction id 
 	* added by sy
 	**/
-	virtual const std::string getJunctionId(uint32_t id) = 0;
+	//virtual const std::string getJunctionId(uint32_t id) = 0;
 
 	/**
 	 * 	\brief	1. Firstly, determine whether a given location is on the given navigation route

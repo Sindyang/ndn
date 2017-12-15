@@ -1788,7 +1788,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	const std::string& lane = m_sensor->getLane();
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	std::string junctionid = m_sensor->getJunctionId(nodeId);
+	//std::string junctionid = m_sensor->getJunctionId(nodeId);
 	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	getchar();
 	
