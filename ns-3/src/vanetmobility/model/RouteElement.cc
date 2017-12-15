@@ -475,6 +475,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 			case 1:
 				{
 					read_trace(pParent->ToElement());
+					cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
 					break;
 				}//timestep
 			case 2:
