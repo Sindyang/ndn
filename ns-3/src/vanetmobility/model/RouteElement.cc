@@ -316,6 +316,7 @@ VehicleLoader::VehicleLoader()
 {
 	// TODO Auto-generated constructor stub
 	numofvehicles = 0;
+	numofRSUs = 0;
 }
 
 VehicleLoader::~VehicleLoader()
@@ -327,6 +328,7 @@ VehicleLoader::VehicleLoader(const VehicleLoader& v)
 {
 	vehicles=v.vehicles;
 	numofvehicles = v.numofvehicles;
+	numofRSUs = v.numofRSUs;
 	m_temp_vehicle=NULL;
 }
 
@@ -339,6 +341,7 @@ void VehicleLoader::LoadRouteXML(const char *  pXMLFilename)
 	{
 	//	printf("\n%s:\n", pXMLFilename);
 		initialize_vehicles( &doc ); // defined later in the tutorial
+		cout<<"(RouteElement.cc-LoadRouteXML) numofRSUs "<<numofRSUs<<endl;
 		ReadMapIntoVector();
 	}
 	else
@@ -446,6 +449,11 @@ int VehicleLoader::read_vehicle(TiXmlElement* pElement)
 		case ATTR_ID    :m_temp_vehicle->id      =atoi(pAttrib->Value());break;
 		case ATTR_DEPART:m_temp_vehicle->depart  =atof(pAttrib->Value());break;
 		case ATTR_EDGES :m_temp_vehicle->route.LoadRouteString(pAttrib->Value());break;
+		/*
+		 * 2017.12.15 统计RSU的数目
+		 * added by sy
+		 */
+		case ATTR_TYPE  :numofRSUs+=1;break;
 		default:break;
 		}
 		i++;
@@ -575,6 +583,11 @@ void VehicleLoader::ReadMapIntoVector()
 int VehicleLoader::getNumOfVehicles() const
 {
 	return numofvehicles;
+}
+
+int VehicleLoader::getNumOfRSUs() const
+{
+	return numofRSUs;
 }
 
 } /* namespace sumomobility */
