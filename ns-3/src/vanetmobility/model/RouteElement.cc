@@ -561,9 +561,8 @@ void VehicleLoader::ReadMapIntoVector()
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
-		//cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<endl;
+		cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<" "<<it->second.depart<<endl;
 	}
-		
 }
 
 } /* namespace sumomobility */
