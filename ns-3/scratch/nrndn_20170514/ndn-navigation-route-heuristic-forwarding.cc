@@ -388,7 +388,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
-		if(currentType == "BUS")
+		if(currentType == "RSU")
 		{
 			cout<<"(forwarding.cc-OnInterest) RSU不该发送兴趣包。出错！！"<<endl;
 			getchar();
@@ -498,7 +498,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		    m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		}
-		else if(currentType == "BUS")
+		else if(currentType == "RSU")
 		{
 			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
@@ -707,7 +707,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			//cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		   // m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		//}
-		//else if(currentType == "BUS")
+		//else if(currentType == "RSU")
 		//{
 		//	cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 			//m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
@@ -809,7 +809,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 /*	if(HELLO_MESSAGE==interest->GetScope())
 	{		
 		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		//if(m_sensor->getType() == "BUS")
+		//if(m_sensor->getType() == "RSU")
 		//{
 			ProcessHelloRSU(interest);
 		//}
@@ -913,7 +913,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			//cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		   // m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		//}
-		//else if(currentType == "BUS")
+		//else if(currentType == "RSU")
 		//{
 		//	cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
 		//判断兴趣包上一跳所在路段是否为兴趣路段
@@ -1815,7 +1815,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 			//获取心跳包所在路段
 			string remoteroute = remoteroutes.front();
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"BUS");
+			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"RSU");
 			overtake.erase(it);
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}

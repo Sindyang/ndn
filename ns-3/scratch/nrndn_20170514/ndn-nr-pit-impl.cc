@@ -251,7 +251,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string
 			//若PIT的表项为空，可以删除该表项
 			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
 			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
-			if(interestNodes.empty() && type == "BUS" && pit!=m_pitContainer.begin())
+			if(interestNodes.empty() && type == "RSU" && pit!=m_pitContainer.begin())
 			{
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 				std::string pitname = pitName.toUri();
