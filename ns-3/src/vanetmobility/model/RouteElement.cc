@@ -370,12 +370,14 @@ void VehicleLoader::print_vehicle()
 	for (v=vehicles.begin();v!=vehicles.end();v++)
 	{
 		cout<<(*v).id<<"  "<<(*v).depart<<endl;
-		//(*v).route.printroute();
-		vector<Trace>::iterator t;
-		for (t=(*v).trace.begin();t!=(*v).trace.end();t++)
+		if((*v).id >= FIRST_RSU_ID)
 		{
-			cout<<"trace:  "<<(*t).time<<"  "<<(*t).x<<"  "<<(*t).y<<"  "<<(*t).angle<<(*t).type
+			vector<Trace>::iterator t;
+			for (t=(*v).trace.begin();t!=(*v).trace.end();t++)
+			{
+				cout<<"trace:  "<<(*t).time<<"  "<<(*t).x<<"  "<<(*t).y<<"  "<<(*t).angle<<" "<<(*t).type<<" "
 				<<(*t).speed<<(*t).pos<<"  "<<(*t).lane<<"  "<<"  "<<(*t).slope<<"  "<<"  "<<endl;
+			}
 		}
 	}
 }
