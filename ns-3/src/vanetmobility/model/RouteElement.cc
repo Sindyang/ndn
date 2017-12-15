@@ -315,7 +315,7 @@ void Route::printroute()
 VehicleLoader::VehicleLoader()
 {
 	// TODO Auto-generated constructor stub
-
+	numofvehicles = 0;
 }
 
 VehicleLoader::~VehicleLoader()
@@ -326,6 +326,7 @@ VehicleLoader::~VehicleLoader()
 VehicleLoader::VehicleLoader(const VehicleLoader& v)
 {
 	vehicles=v.vehicles;
+	numofvehicles = v.numofvehicles;
 	m_temp_vehicle=NULL;
 }
 
@@ -491,7 +492,13 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 					cout<<m_temp_trace.pos<<endl;
 					cout<<m_temp_trace.lane<<endl;
 					cout<<m_temp_trace.slope<<endl;*/
-					cout<<vehicles[101].id<<" "<<vehicles[101].depart<<endl;
+					//cout<<vehicles[101].id<<" "<<vehicles[101].depart<<endl;
+					/*2017.12.15 判断该车辆是否为RSU*/
+					if(vid >= FIRST_RSU_ID)
+					{
+						/*确认RSU对应的下标*/
+						vid = vid - FIRST_RSU_ID + numofvehicles;
+					}
 					vehicles[vid].trace.push_back(m_temp_trace);
 					cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
@@ -562,7 +569,20 @@ void VehicleLoader::ReadMapIntoVector()
 	{
 		vehicles.push_back(it->second);
 		cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<" "<<it->second.depart<<endl;
+		/*
+		 * added by sy:
+		 * 记录普通车辆的数目 
+		 * RSU的编号从10000开始
+		 */
+		if(it->second.id < FIRST_RSU_ID)
+			numofvehicles+=1;
 	}
+	cout<<"(RouteElement.cc-ReadMapIntoVector) 普通车辆的数目为 "<<numofvehicles<<endl;
+}
+
+int VehicleLoader::getNumOfVehicles() const
+{
+	return numofvehicles;
 }
 
 } /* namespace sumomobility */
