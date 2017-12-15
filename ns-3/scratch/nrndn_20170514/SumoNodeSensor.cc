@@ -17,7 +17,6 @@ namespace nrndn
 {
 using namespace std;
 #define TransRange 300
-#define FIRST_RSU_ID   10000
 NS_OBJECT_ENSURE_REGISTERED (SumoNodeSensor);
 
 SumoNodeSensor::SumoNodeSensor()
@@ -52,13 +51,7 @@ double SumoNodeSensor::getX()
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
 	cout<<"(SumoNodeSensor.cc-getX) ID "<<m_id<<endl;
-	cout<<"x "<<pos.x<<"y "<<pos.y<<endl;
-	if(m_id == 106)
-	{
-		cout<<m_sumodata->getVl().getVehicles()[m_id].trace.front().x;
-		return m_sumodata->getVl().getVehicles()[m_id].trace.front().x;
-	}
-		
+	cout<<"x "<<pos.x<<"y "<<pos.y<<endl;	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getX():Cannot find Trace!!");
 	NS_ASSERT_MSG(m_sumodata->GetTrace(m_id,pos).x == pos.x,"Can not find coordinate x");
 	return m_sumodata->GetTrace(m_id,pos).x;
@@ -186,7 +179,7 @@ const std::string& SumoNodeSensor::getLane()
 
 const int SumoNodeSensor::getNumsofVehicles()
 {
-	return m_sumodata->getVl().getNumOfVehicles();
+	return m_sumodata->GetVehiclesSize();
 }
 	
 const std::uint32_t SumoNodeSensor::getNodeId()

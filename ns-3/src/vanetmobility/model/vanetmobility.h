@@ -28,8 +28,8 @@ public:
 	virtual void Install()=0;
 	virtual double GetReadTotalTime()=0;
 	virtual const uint32_t GetNodeSize() const=0;
+	virtual const uint32_t GetVehiclesSize() const=0;
 	virtual const sumomobility::Trace& GetTrace(uint32_t&,Vector&) const=0;
-
 };
 
 

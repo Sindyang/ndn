@@ -68,6 +68,11 @@ public:
 	{
 		return vl.getVehicles().size();
 	}
+	
+	const uint32_t GetVehiclesSize() const
+	{
+		return vl.getNumOfVehicles();
+	}
 
 	void Install();
 

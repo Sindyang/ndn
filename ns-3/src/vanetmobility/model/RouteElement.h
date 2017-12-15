@@ -41,7 +41,6 @@ namespace sumomobility
 #define ATTR_POS       16
 #define ATTR_LANE      17
 #define ATTR_SLOPE     18
-#define FIRST_RSU_ID   10000
 
 const std::string originLanCharactor("/");
 const std::string changeLaneCharactor("-");
@@ -151,7 +150,6 @@ public:
 	int getNumOfRSUs() const;
 
 private:
-	int numofvehicles; //2017.12.15 sy:记录普通车辆的数目
 	int numofRSUs;//2017.12.15 sy:记录RSU的数目
 	std::vector<Vehicle> vehicles;
 	std::map<int,Vehicle> mapvehicles; //sy:mapvehicles的值最终全部存储到了vehicles中

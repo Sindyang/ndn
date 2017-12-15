@@ -1601,7 +1601,10 @@ NavigationRouteHeuristic::SendHello()
 	const double& x		= m_sensor->getX();
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
-	cout<<"(SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" "<<endl;
+	cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" "<<endl;
+	uint32_t num = m_sensor->getNumsofVehicles();
+	cout<<"(forwarding.cc-SendHello) 普通车辆的数目为 "<<num<<endl;
+	getchar();
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
 

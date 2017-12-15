@@ -315,7 +315,6 @@ void Route::printroute()
 VehicleLoader::VehicleLoader()
 {
 	// TODO Auto-generated constructor stub
-	numofvehicles = 0;
 	numofRSUs = 0;
 }
 
@@ -431,7 +430,6 @@ void VehicleLoader::initialize_vehicles( TiXmlNode* pParent)
 
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling())
 		initialize_vehicles(pChild);
-
 }
 
 //对应的文件为routes.rou.xml 
@@ -492,13 +490,6 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 			case 2:
 				{
 					vid = read_trace(pParent->ToElement());
-					//cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<endl;
-					/*2017.12.15 判断该车辆是否为RSU*/
-					if(vid >= FIRST_RSU_ID)
-					{
-						/*确认RSU对应的下标*/
-						vid = vid - FIRST_RSU_ID + numofvehicles;
-					}
 					vehicles[vid].trace.push_back(m_temp_trace);
 					//cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
@@ -568,21 +559,12 @@ void VehicleLoader::ReadMapIntoVector()
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
-		//cout<<"(RouteElement.cc-ReadMapIntoVector)"<<it->second.id<<" "<<it->second.depart<<endl;
-		/*
-		 * added by sy:
-		 * 记录普通车辆的数目 
-		 * RSU的编号从10000开始
-		 */
-		if(it->second.id < FIRST_RSU_ID)
-			numofvehicles+=1;
 	}
-	cout<<"(RouteElement.cc-ReadMapIntoVector) 普通车辆的数目为 "<<numofvehicles<<endl;
 }
 
 int VehicleLoader::getNumOfVehicles() const
 {
-	return numofvehicles;
+	return vehicles.size()-numofRSUs;
 }
 
 int VehicleLoader::getNumOfRSUs() const
