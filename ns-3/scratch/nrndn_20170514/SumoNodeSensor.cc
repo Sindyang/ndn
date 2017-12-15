@@ -199,7 +199,7 @@ const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()
 }
 
 
-const std::string SumoNodeSensor::getJunctionId(uint32_t id)
+/*const std::string SumoNodeSensor::getJunctionId(uint32_t id)
 {
 	std::vector<std::string> route = m_sumodata->getVl().getVehicles()[id].route.edgesID;
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
@@ -207,7 +207,7 @@ const std::string SumoNodeSensor::getJunctionId(uint32_t id)
 	eit = edges.find(route[0]);
 	std::string JunctionId = eit->second.to;
 	return JunctionId;
-}
+}*/
 
 std::string SumoNodeSensor::uriConvertToString(std::string str)
 {
