@@ -163,6 +163,15 @@ private:
 	 * \return priority list
 	 */
 	std::vector<uint32_t> GetPriorityList();
+	
+	/**
+	 * 2017.12.16 
+	 * added by sy
+	 * @brief Get priority list of interest packet. default route is the local node's navigation route
+	 * \return priority list
+	 */
+	
+	uint32_t std::vector<uint32_t> VehicleGetPriorityListOfInterest(const vector<string>& route)();
 
 	/**
 	 * @brief Get priority list of data packet from the source node

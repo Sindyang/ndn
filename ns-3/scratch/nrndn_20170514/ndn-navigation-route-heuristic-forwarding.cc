@@ -230,7 +230,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
 		}
-			
 	}
 	cout<<endl;
 	// step 2. Sort By Distance Descending
@@ -248,96 +247,63 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	return PriorityList;
 }
 
-//changed by sy 2017.9.6
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+//获取转发优先级列表
+std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest(const vector<string>& route)
 {
 	std::vector<uint32_t> PriorityList;
-	std::ostringstream str;
-	str<<"PriorityList is";
-	cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 "<<endl;
-
-	// The default order of multimap is ascending order,
-	// but I need a descending order
-	std::multimap<double,uint32_t,std::greater<double> > sortlist;
+	//节点中的车辆数目
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<endl;
+	
+	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
+	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
 
 	// step 1. 寻找位于导航路线前方的一跳邻居列表,m_nb为邻居列表
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	
 	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
 	{
-		std::pair<bool, double> result=
-				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		//cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") "<<endl;
-		
-		// Be careful with the order, increasing or descending?
-		if(result.first && result.second > 0)
+		uint32_t id = nb.first;
+		//判断车辆与RSU的位置关系
+		if(nb.first >= numofvehicles)
 		{
-			bool iscover = m_sensor->IsCoverThePath(nb->second.m_x,nb->second.m_y,route);
-			cout<<"iscover "<<iscover<<endl;
-			if(iscover)
+			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb.first);
+			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second >= 0)
 			{
-				sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-				cout<<"Front "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
-			else
+		}
+		//判断车辆与其他车辆的位置关系
+		else
+		{
+			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y,route);
+			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second >= 0)
 			{
-				cout<<"Disgard "<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+				sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
-			//getchar();
 		}
 	}
-	//cout<<endl;
-	//getchar();
+	cout<<endl<<"加入RSU：";
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
-	for(it=sortlist.begin();it!=sortlist.end();++it)
+	// 加入RSU
+	for(it=sortlistRSU.begin();it!=sortlistRSU.end();++it)
 	{
 		PriorityList.push_back(it->second);
-
-		str<<" "<<it->second;
-		//cout<<" "<<it->second;
+		cout<<" "<<it->second;
 	}
-	//cout<<endl;
-	NS_LOG_DEBUG(str.str());
-	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	return PriorityList;
-}*/
-
-/*uint32_t NavigationRouteHeuristic::GetNumbersofFrontNodes()
-{
-	uint32_t num = 0;
-
-	// step 1. 寻找位于导航路线前方的一跳邻居列表,m_nb为邻居列表
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	
-	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
-	{
-		std::pair<bool, double> result=
-				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		//cout<<"All "<<nb->first<<" ("<<result.first<<" "<<result.second<<") "<<endl;
-		
-		// Be careful with the order, increasing or descending?
-		if(result.first && result.second > 0)
-		{
-		}
-	}
-	//cout<<endl;
-	//getchar();
-	// step 2. Sort By Distance Descending
-	std::multimap<double,uint32_t>::iterator it;
-	for(it=sortlist.begin();it!=sortlist.end();++it)
+	cout<<endl<<"加入普通车辆：";
+	// 加入普通车辆
+	for(it=sortlistVehicle.begin();it!=sortlistVehicle.end();++it)
 	{
 		PriorityList.push_back(it->second);
-
-		str<<" "<<it->second;
-		//cout<<" "<<it->second;
-	}
-	//cout<<endl;
-	NS_LOG_DEBUG(str.str());
-	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+		cout<<" "<<it->second;
+	}	
+	cout<<endl;
 	return PriorityList;
-	return num;
-}*/
+}
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
