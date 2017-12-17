@@ -398,6 +398,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
+	if(myNodeId >= 101)
+	{
+		getchar();
+	}
 	if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
@@ -1626,7 +1630,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	if(sourceId >= 101)
 	{
-		getchar();
+		//getchar();
 	}
 	
 	
@@ -1780,7 +1784,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	if(sourceId >= 101)
 	{
-		getchar();
+		//getchar();
 	}
 	//getchar();
 	
