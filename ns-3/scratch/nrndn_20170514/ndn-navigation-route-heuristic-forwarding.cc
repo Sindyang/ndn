@@ -253,7 +253,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<"时间为 "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
@@ -267,7 +267,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second >= 0)
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -277,8 +277,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		else
 		{
 			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y,route);
-			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second >= 0)
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
 			{
 				sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
