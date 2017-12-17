@@ -408,9 +408,10 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWithRSU(const double& x,const
 	std::string to = eit->second.to;
 	//当前节点所在路段的长度
 	double length = eit->second.lane.length;
-	
+	cout<<"(SumoNodeSensor.cc-getDistanceWithRSU) localLane "<<localLane<<" from "<<from<<" to "<<to<<" length "<<length<<endl;
 	//RSU所在交点
 	std::string junction = getJunctionId(RSUID);
+	cout<<"(SumoNodeSensor.cc-getDistanceWithRSU) junction "<<junction<<endl;
 	//RSU位于车辆所在路段起点
 	if(from == junction)
 	{

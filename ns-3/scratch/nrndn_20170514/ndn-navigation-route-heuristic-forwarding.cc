@@ -253,6 +253,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) numsofvehicles "<<numsofvehicles<<endl;
 	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
@@ -272,6 +273,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
+			getchar();
 		}
 		//判断车辆与其他车辆的位置关系
 		else
@@ -1592,13 +1594,6 @@ NavigationRouteHeuristic::SendHello()
 
 	//4. send the hello message
 	SendInterestPacket(interest);
-	
-	if(m_node->GetId()>=101)
-	{
-		cout<<"(forwarding.cc-SendHello) 发送心跳包,源节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
-		getchar();
-	}
-	
 	//getchar();
 }
 
