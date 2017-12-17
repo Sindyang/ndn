@@ -1615,7 +1615,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	
+	if(sorceId >= 101)
+	{
+		getchar();
+	}
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
