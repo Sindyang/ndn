@@ -1615,7 +1615,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	if(sorceId >= 101)
+	if(sourceId >= 101)
 	{
 		getchar();
 	}
