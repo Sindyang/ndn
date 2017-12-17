@@ -1572,7 +1572,7 @@ NavigationRouteHeuristic::SendHello()
 	const double& x		= m_sensor->getX();
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
-	//cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" "<<endl;
+	
 	uint32_t num = m_sensor->getNumsofVehicles();
 	//cout<<"(forwarding.cc-SendHello) 普通车辆的数目为 "<<num<<endl;
 	//getchar();
@@ -1594,7 +1594,11 @@ NavigationRouteHeuristic::SendHello()
 
 	//4. send the hello message
 	SendInterestPacket(interest);
-	//getchar();
+	if(m_node->GetId() >= num)
+	{
+		cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" 时间 "<<Simulator::Now().GetSeconds()<<endl;
+	}
+	getchar();
 }
 
 //2017.12.13 这部分也要修改，不用那么复杂
