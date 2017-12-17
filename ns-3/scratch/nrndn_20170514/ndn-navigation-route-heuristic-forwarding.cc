@@ -203,7 +203,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }
 
 //获取优先列表
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
 {
 	//NS_LOG_FUNCTION (this);
 	std::vector<uint32_t> PriorityList;
@@ -245,7 +245,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	return PriorityList;
-}
+}*/
 
 //获取转发优先级列表
 std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest(const vector<string>& route)
@@ -263,11 +263,10 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
-		uint32_t id = nb.first;
 		//判断车辆与RSU的位置关系
-		if(nb.first >= numofvehicles)
+		if(nb->first >= numsofvehicles)
 		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb.first);
+			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second >= 0)
 			{
