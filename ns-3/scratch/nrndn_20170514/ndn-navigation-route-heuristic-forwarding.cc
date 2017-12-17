@@ -1419,6 +1419,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+	if(m_node->GetId()>=101)
+		getchar();
 	//getchar();
 }
 
