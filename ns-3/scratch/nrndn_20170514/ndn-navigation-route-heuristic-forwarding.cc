@@ -170,16 +170,16 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add application face "<<face->GetId());
-		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add application face "<<face->GetId()<<endl;
-		getchar();
+		//cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add application face "<<face->GetId()<<endl;
+		//getchar();
 		m_inFaceList.push_back(face);
 		
 	}
 	else
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId());
-		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId()<<endl;
-		getchar();
+		//cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId()<<endl;
+		//getchar();
 		m_outFaceList.push_back(face);
 	}
 }
@@ -1603,7 +1603,7 @@ NavigationRouteHeuristic::SendHello()
 		std::string junctionid = m_sensor->getJunctionId(m_node->GetId());
 		cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" junctionid "<<junctionid<<" 时间 "<<Simulator::Now().GetSeconds()<<endl;	
 	}
-	getchar();
+	//getchar();
 }
 
 //2017.12.13 这部分也要修改，不用那么复杂
@@ -1772,8 +1772,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	const std::string& lane = m_sensor->getLane();
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	std::string junctionid = m_sensor->getJunctionId(nodeId);
-	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
+	//std::string junctionid = m_sensor->getJunctionId(nodeId);
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	getchar();
 	
 	//更新邻居列表
