@@ -11,7 +11,7 @@ def get_road(in_file):
 	d = {}
 	for i in range(len(information)):
 		line = information[i]
-		nPos = line.find(incLanes)
+		nPos = line.find("type=\"traffic_light\"")
 		if nPos >= 0:
 			each_part = line.strip().split(' ')
 			#获取incLanes的部分
@@ -71,9 +71,10 @@ def get_rsu(junctions,lengths):
 		lane = id
 		#new_id = 'RSU'+junctions[id]
 		road = lane[:-2]
-		departpos = lengths[lane]
+		departpos = float(lengths[lane])
+		departpos = departpos-1
 		id = str(first_rsu)
-		add_line = '\t<vehicle id="'+ id +'" type="RSU" depart="0" departPos="'+departpos+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" parking="true" endPos="'+departpos+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
+		add_line = '\t<vehicle id="'+ id +'" type="RSU" depart="0" departPos="'+str(departpos)+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" endPos="'+str(departpos)+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
 		fw_add.writelines(add_line)
 		first_rsu += 1
 	fw_add.writelines('</additional>')

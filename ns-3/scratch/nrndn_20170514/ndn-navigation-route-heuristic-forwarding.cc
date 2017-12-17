@@ -1624,7 +1624,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	getchar();
+	if(sourceId >= 101)
+	{
+		getchar();
+	}
+	
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
@@ -1774,7 +1778,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//std::string junctionid = m_sensor->getJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
-	getchar();
+	if(sourceId >= 101)
+	{
+		getchar();
+	}
+	//getchar();
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
