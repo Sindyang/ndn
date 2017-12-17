@@ -11,7 +11,7 @@ def get_road(in_file):
 	d = {}
 	for i in range(len(information)):
 		line = information[i]
-		nPos = line.find("type=\"traffic_light\"")
+		nPos = line.find(incLanes)
 		if nPos >= 0:
 			each_part = line.strip().split(' ')
 			#获取incLanes的部分
