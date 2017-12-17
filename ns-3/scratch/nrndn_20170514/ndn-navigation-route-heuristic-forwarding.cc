@@ -293,6 +293,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		PriorityList.push_back(it->second);
 		cout<<" "<<it->second;
 	}
+	if(!PriorityList.empty())
+		getchar();
 	cout<<endl<<"加入普通车辆：";
 	// 加入普通车辆
 	for(it=sortlistVehicle.begin();it!=sortlistVehicle.end();++it)
@@ -301,7 +303,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
-	getchar();
+	//getchar();
 	return PriorityList;
 }
 
