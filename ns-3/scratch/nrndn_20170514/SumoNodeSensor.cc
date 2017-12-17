@@ -98,7 +98,7 @@ double SumoNodeSensor::getTime()
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getTime():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).time;
 }
-f
+
 double SumoNodeSensor::getAngle()
 {
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
