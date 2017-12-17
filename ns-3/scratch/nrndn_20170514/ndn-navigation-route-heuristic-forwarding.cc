@@ -1596,8 +1596,8 @@ NavigationRouteHeuristic::SendHello()
 	SendInterestPacket(interest);
 	if(m_node->GetId() >= num)
 	{
-		cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" 时间 "<<Simulator::Now().GetSeconds()<<endl;
 		std::string junctionid = m_sensor->getJunctionId(m_node->GetId());
+		cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" junctionid "<<junctionid<<" 时间 "<<Simulator::Now().GetSeconds()<<endl;	
 	}
 	getchar();
 }
