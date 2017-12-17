@@ -261,7 +261,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	// step 1. 寻找位于导航路线前方的一跳邻居列表,m_nb为邻居列表
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	
-	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
 		uint32_t id = nb.first;
 		//判断车辆与RSU的位置关系
@@ -302,6 +302,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
+	getchar();
 	return PriorityList;
 }
 
@@ -1383,7 +1384,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	double y= m_sensor->getY();
 	const vector<string> route	=
 			ExtractRouteFromName(src->GetName());
-	const std::vector<uint32_t> priorityList=GetPriorityList(route);
+	//const std::vector<uint32_t> priorityList=GetPriorityList(route);
+	const std::vector<uint32_t> priorityList=VehicleGetPriorityListOfInterest(route);
 	sourceId=nrheader.getSourceId();
 	nonce   =src->GetNonce();
 	// source id do not change
@@ -1839,13 +1841,13 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	if(count>2)
 	{
 		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
-		getchar();
+		NS_ASSERT_MSG(count <= 2,"notifyUpperOnInterest:Face数量大于2！");
 	}
 }
 
-std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
+std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest()
 {
-	return GetPriorityList(m_sensor->getNavigationRoute());
+	return VehicleGetPriorityListOfInterest(m_sensor->getNavigationRoute());
 }
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
@@ -1875,7 +1877,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
 			cout<<"(forwarding.cc-GetNrPayload)"<<endl;
-			priorityList = GetPriorityList();
+			priorityList = VehicleGetPriorityListOfInterest();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
 			break;
