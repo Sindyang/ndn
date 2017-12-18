@@ -277,7 +277,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
-			getchar();
+			//getchar();
 		}
 		//判断车辆与其他车辆的位置关系
 		else
@@ -400,7 +400,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	if(myNodeId >= 101)
 	{
-		getchar();
+		//getchar();
 	}
 	if(nodeId == myNodeId)
 	{
@@ -1420,7 +1420,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	if(m_node->GetId()>=101)
-		getchar();
+		//getchar();
 	//getchar();
 }
 
@@ -1632,7 +1632,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	if(sourceId >= 101)
 	{
-		getchar();
+		//getchar();
 	}
 	
 	
@@ -1786,7 +1786,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	if(sourceId >= 101)
 	{
-		getchar();
+		//getchar();
 	}
 	//getchar();
 	
