@@ -15,6 +15,7 @@
 #include "ns3/string.h"
 #include "ns3/random-variable-stream.h"
 #include "ns3/ndn-header-helper.h"
+#include "ns3/ndn-content-store.h"
 
 #include "LRUCache.h"
 #include "NodeSensor.h"
