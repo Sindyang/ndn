@@ -5,10 +5,10 @@
  *      Author: WSY
  */
 
-#ifndef NDN_CONTENT_STORE_INTEREST_H
-#define	NDN_CONTENT_STORE_INTEREST_H
+#ifndef NDN_INTEREST_STORE_H
+#define	NDN_INTEREST_STORE_H
 
-#include "ns3/ndn-content-store.h"
+#include "ns3/ndnSIM/model/cs/ndn-interest-store.h"
 
 #include "ns3/log.h"
 #include "ns3/simulator.h"
