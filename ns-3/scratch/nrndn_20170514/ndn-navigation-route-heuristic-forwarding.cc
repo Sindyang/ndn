@@ -1414,7 +1414,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src,std::vect
 	nrheader.setY(y);
 	//2017.6.16
 	nrheader.setForwardId(m_node->GetId());
-	nrheader.setPriorityList(priorityList);
+	nrheader.setPriorityList(newPriorityList);
 	nrheader.setGapMode(0);
 	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(nrheader);

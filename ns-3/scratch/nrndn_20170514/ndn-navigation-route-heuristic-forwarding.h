@@ -381,6 +381,13 @@ private:
 	 * 			representing it is a Duplicated Data
 	 */
 	void BroadcastStopMessage(Ptr<Data> src);
+	
+	/**
+	 * \brief   Cache Interest Packet
+	 *          Broadcast stop message
+	 *          2017.12.18 added by sy
+	 */
+	void CachingInterestPacket(Ptr<Interest> interest);
 
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire
