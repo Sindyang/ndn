@@ -252,7 +252,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 }*/
 
 //获取转发优先级列表
-std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest(const vector<string>& route)
+std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest()
 {
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
@@ -282,7 +282,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		//判断车辆与其他车辆的位置关系
 		else
 		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y,route);
+			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
@@ -512,9 +512,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				double index = distance(pri.begin(), idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this,
-						interest);
+				//构造转发优先级列表，并判断前方邻居是否为空
+				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+				if(newPriorityList.empty())
+				{
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
+				}
+				else
+				{
+					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+				}
 			}
 		}
 		else
@@ -1346,6 +1353,12 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	eventid.Cancel();
 }
 
+void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
+{
+	m_csinterest->Add(interest);
+	BroadcastStopMessage(interest);
+}
+
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 {
 	if(!m_running) return;
@@ -1360,7 +1373,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	//3.Remove the useless payload, save the bandwidth
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader srcheader,dstheader;
-	nrPayload->PeekHeader( srcheader);
+	nrPayload->PeekHeader(srcheader);
 	dstheader.setSourceId(srcheader.getSourceId());
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(dstheader);
@@ -1369,10 +1382,9 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	//4. send the payload
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-
 }
 
-void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
+void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src,std::vector<uint32_t> newPriorityList)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
@@ -1391,10 +1403,10 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	nrPayload->PeekHeader(nrheader);
 	double x= m_sensor->getX();
 	double y= m_sensor->getY();
-	const vector<string> route	=
-			ExtractRouteFromName(src->GetName());
+	//const vector<string> route	=
+		//	ExtractRouteFromName(src->GetName());
 	//const std::vector<uint32_t> priorityList=GetPriorityList(route);
-	const std::vector<uint32_t> priorityList=VehicleGetPriorityListOfInterest(route);
+	//const std::vector<uint32_t> priorityList=VehicleGetPriorityListOfInterest(route);
 	sourceId=nrheader.getSourceId();
 	nonce   =src->GetNonce();
 	// source id do not change
@@ -1404,7 +1416,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(priorityList);
 	nrheader.setGapMode(0);
-	Ptr<Packet> newPayload	= Create<Packet> ();
+	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(nrheader);
 
 	Ptr<Interest> interest = Create<Interest> (*src);
@@ -1526,6 +1538,14 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 	  if(pit)
 		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
 	  //cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+  }
+  
+  //2017.12.18 added by sy
+  if(m_csinterest == 0)
+  {
+	  Ptr<ContentStoreInterest> csinterest = GetObject<ContentStoreInterest>();
+	  if(csinterest)
+		  m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
   }
   
   if(m_node==0)
@@ -1868,10 +1888,6 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 	}
 }
 
-std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest()
-{
-	return VehicleGetPriorityListOfInterest(m_sensor->getNavigationRoute());
-}
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 {

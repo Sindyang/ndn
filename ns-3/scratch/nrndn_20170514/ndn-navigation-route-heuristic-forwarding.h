@@ -171,8 +171,6 @@ private:
 	 * \return priority list
 	 */
 	std::vector<uint32_t> VehicleGetPriorityListOfInterest();
-	
-	std::vector<uint32_t> VehicleGetPriorityListOfInterest(const vector<string>& route);
 
 	/**
 	 * @brief Get priority list of data packet from the source node
@@ -386,7 +384,7 @@ private:
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire
 	 */
-	void ForwardInterestPacket(Ptr<Interest>);
+	void ForwardInterestPacket(Ptr<Interest>,std::vector<uint32_t> newPriorityList);
 
 	/**
 	 * \brief	the function which will be executed after DataPacketTimer expire
@@ -449,7 +447,7 @@ private:
 	//It is use for finding a scheduled sending event for a paticular data packet, nodeid+seq can locate a sending event
 	std::map< uint32_t, std::map<uint32_t, EventId> > m_sendingDataEvent;
 
-	//when a packet is about to send, it should wait several time slot before it is actuall send
+	//when a packet is about to send, it should wait several time slot before it is actual send
 	//Default is 0.05, so the sending frequency is 20Hz
 	Time m_timeSlot;
 
@@ -459,6 +457,8 @@ private:
 	Ptr<ndn::nrndn::NodeSensor> m_sensor;
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
+	
+	Ptr<cs::nrndn::NrCsInterestImpl> m_csinterest;
 
 	uint32_t				m_CacheSize;
 

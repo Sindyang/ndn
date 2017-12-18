@@ -162,7 +162,7 @@ public:
 	 */
 	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)=0;
 	
-	virtual std::pair<bool, double> getDistanceWithVehicle(const double& x,const double& y,const std::vector<std::string>& route)=0;
+	virtual std::pair<bool, double> getDistanceWithVehicle(const double& x,const double& y)=0;
 	
 	virtual std::pair<bool, double> getDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID)=0;
 
