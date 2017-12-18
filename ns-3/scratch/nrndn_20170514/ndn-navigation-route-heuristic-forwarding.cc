@@ -76,6 +76,10 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 		         UintegerValue (3),
 		         MakeUintegerAccessor (&NavigationRouteHeuristic::m_TTLMax),
 		         MakeUintegerChecker<uint32_t> ())
+		.AddAttribute ("CSInterest","cs of forwarder",
+	    		 PointerValue (),
+		    	 MakePointerAccessor (&NavigationRouteHeuristic::m_csinterest),
+				 MakePointerChecker<ns3::ndn::cs::nrndn::NrCsInterestImpl> ())
 	    ;
 	  return tid;
 }
@@ -1549,9 +1553,11 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   //2017.12.18 added by sy
   if(m_csinterest == 0)
   {
+	  cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
 	  Ptr<ContentStoreInterest> csinterest = GetObject<ContentStoreInterest>();
 	  if(csinterest)
 		  m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
+	  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
   }
   
   if(m_node==0)
