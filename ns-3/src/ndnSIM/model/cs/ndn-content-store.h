@@ -38,7 +38,7 @@ class Data;
 class Interest;
 class Name;
 class ContentStore;
-class ContentStoreInterest;
+//class ContentStoreInterest;
 
 /**
  * @ingroup ndn
@@ -94,7 +94,7 @@ private:
   Ptr<const Data> m_data; ///< \brief non-modifiable Data
 };
 
-class EntryInterest : public SimpleRefCount<Entry>
+/*class EntryInterest : public SimpleRefCount<Entry>
 {
 public:
   /**
@@ -106,32 +106,32 @@ public:
    * The constructor will make a copy of the supplied packet and calls
    * RemoveHeader and RemoveTail on the copy.
    */
-  EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
+  //EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
 
   /**
    * \brief Get prefix of the stored entry
    * \returns prefix of the stored entry
    */
-  const Name&
-  GetName () const;
+  //const Name&
+ // GetName () const;
 
   /**
    * \brief Get Data of the stored entry
    * \returns Data of the stored entry
    */
-  Ptr<const Interest>
-  GetInterest () const;
+  //Ptr<const Interest>
+  //GetInterest () const;
 
   /**
    * @brief Get pointer to access store, to which this entry is added
    */
-  Ptr<ContentStoreInterest>
-  GetContentStoreInterest ();
+  //Ptr<ContentStoreInterest>
+  //GetContentStoreInterest ();
 
-private:
+/*private:
   Ptr<ContentStoreInterest> m_cs; ///< \brief content store to which entry is added
   Ptr<const Interest> m_interest; ///< \brief non-modifiable Data
-};
+};*/
 
 } // namespace cs
 
@@ -252,7 +252,7 @@ ContentStore::GetContentStore (Ptr<Object> node)
   return node->GetObject<ContentStore> ();
 }
 
-class ContentStoreInterest : public Object
+/*class ContentStoreInterest : public Object
 {
 public:
   /**
@@ -260,14 +260,14 @@ public:
    *
    * \return interface ID
    */
-  static
-  TypeId GetTypeId ();
+ // static
+  //TypeId GetTypeId ();
 
   /**
    * @brief Virtual destructor
    */
-  virtual
-  ~ContentStoreInterest ();
+ // virtual
+  //~ContentStoreInterest ();
 
   /**
    * \brief Find corresponding CS entry for the given interest
@@ -289,8 +289,8 @@ public:
    * (will be copied and stripped down of headers)
    * @returns true if an existing entry was updated, false otherwise
    */
-  virtual bool
-  Add (Ptr<const Interest> interest) = 0;
+ // virtual bool
+ // Add (Ptr<const Interest> interest) = 0;
 
   // /*
   //  * \brief Add a new content to the content store.
@@ -304,33 +304,33 @@ public:
   /**
    * \brief Print out content store entries
    */
-  virtual void
-  Print (std::ostream &os) const = 0;
+ // virtual void
+ // Print (std::ostream &os) const = 0;
 
 
   /**
    * @brief Get number of entries in content store
    */
-  virtual uint32_t
-  GetSize () const = 0;
+  //virtual uint32_t
+ // GetSize () const = 0;
 
   /**
    * @brief Return first element of content store (no order guaranteed)
    */
-  virtual Ptr<cs::EntryInterest>
-  Begin () = 0;
+  //virtual Ptr<cs::EntryInterest>
+ // Begin () = 0;
 
   /**
    * @brief Return item next after last (no order guaranteed)
    */
-  virtual Ptr<cs::EntryInterest>
-  End () = 0;
+  //virtual Ptr<cs::EntryInterest>
+ // End () = 0;
 
   /**
    * @brief Advance the iterator
    */
-  virtual Ptr<cs::EntryInterest>
-  Next (Ptr<cs::EntryInterest>) = 0;
+ // virtual Ptr<cs::EntryInterest>
+  //Next (Ptr<cs::EntryInterest>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
@@ -339,7 +339,7 @@ public:
   /**
    * @brief Static call to cheat python bindings
    */
-  static inline Ptr<ContentStoreInterest>
+ /* static inline Ptr<ContentStoreInterest>
   GetContentStoreInterest (Ptr<Object> node);
 
 protected:
@@ -360,7 +360,7 @@ inline Ptr<ContentStoreInterest>
 ContentStoreInterest::GetContentStoreInterest (Ptr<Object> node)
 {
   return node->GetObject<ContentStoreInterest> ();
-}
+}*/
 
 
 } // namespace ndn
