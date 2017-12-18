@@ -20,7 +20,7 @@
  *         
  */
 
-#include "ndn-content-store.h"
+#include "ndn-interest-store.h"
 #include "ns3/log.h"
 #include "ns3/packet.h"
 #include "ns3/ndn-name.h"
