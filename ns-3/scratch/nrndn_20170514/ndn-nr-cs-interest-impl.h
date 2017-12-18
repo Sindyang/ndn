@@ -105,7 +105,7 @@ public:
   virtual bool
   Add (Ptr<const Interest> Interest);
   
-  std::vector<Ptr<Interest>>
+  std::vector<Ptr<Interest> >
   GetInterest(std::string lane);
 
 
@@ -119,7 +119,7 @@ protected:
 
 private:
   Ptr<ForwardingStrategy>		        m_forwardingStrategy;
-  std::vector<Ptr<EntryInterest>> 		m_csInterestContainer;
+  std::vector<Ptr<EntryInterest> > 		m_csInterestContainer;
 };
 
 

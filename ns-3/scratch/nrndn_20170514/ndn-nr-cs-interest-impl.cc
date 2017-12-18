@@ -108,7 +108,7 @@ NrCsInterestImpl::MarkErased (Ptr<EntryInterest> item)
 void
 NrCsInterestImpl::Print (std::ostream& os) const
 {
-	std::vector<Ptr<EntryInterest>>::const_iterator it; 
+	std::vector<Ptr<EntryInterest> >::const_iterator it; 
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
 		std::cout<<(*it)->GetInterest()->GetNonce()<<" "<<(*it)->GetName().toUri()<<std::endl;
@@ -164,7 +164,7 @@ std::vector<Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	std::vector<Ptr<const Interest> > InterestCollection;
-	std::vector<Ptr<EntryInterest>>::iterator it;
+	std::vector<Ptr<EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
 		Ptr<const Interest> interest = (*it)->GetInterest();
