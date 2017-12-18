@@ -357,7 +357,7 @@ operator<< (std::ostream &os, const ContentStoreInterest &cs)
 }
 
 inline Ptr<ContentStoreInterest>
-ContentStoreInterest::GetContentStore (Ptr<Object> node)
+ContentStoreInterest::GetContentStoreInterest (Ptr<Object> node)
 {
   return node->GetObject<ContentStoreInterest> ();
 }
