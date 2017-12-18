@@ -514,14 +514,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				//构造转发优先级列表，并判断前方邻居是否为空
 				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
-				//if(newPriorityList.empty())
-				//{
-				//	Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
-				//}
-				//else
-				//{
+				if(newPriorityList.empty())
+				{
+					cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
+				}
+				else
+				{
 					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-				//}
+				}
 			}
 		}
 		else
@@ -1355,14 +1356,19 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 
 void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
 {
+	//获取兴趣的随机编码
+	uint32_t seq = interest->GetNonce();
+	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"缓存兴趣包 "<<seq<<endl;
 	m_csinterest->Add(interest);
+	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<"已缓存兴趣包"<<endl;
+	getchar();
 	BroadcastStopMessage(interest);
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 {
 	if(!m_running) return;
-	//cout<<"进入(forwarding.cc-BroadcastStopMessage) 广播停止的消息为 "<<src->GetName().toUri() <<endl;
+	cout<<"进入(forwarding.cc-BroadcastStopMessage) 广播停止的消息为 "<<src->GetName().toUri() <<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the interest packet
 	Ptr<Interest> interest = Create<Interest> (*src);

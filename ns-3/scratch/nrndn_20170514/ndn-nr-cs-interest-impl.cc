@@ -62,8 +62,10 @@ NrCsInterestImpl::NotifyNewAggregate ()
 
 bool NrCsInterestImpl::Add(Ptr<const Interest> interest)
 {
+	std::cout<<"(NrCsInterestImpl-Add)"<<std::endl;
     Ptr<cs::EntryInterest> csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
     m_csInterestContainer.push_back(csEntryInterest);
+	Print();
 	return true;
 }
 
