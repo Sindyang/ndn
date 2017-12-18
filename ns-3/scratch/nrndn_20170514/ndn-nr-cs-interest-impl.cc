@@ -6,6 +6,7 @@
  */
 
 #include "ndn-nr-cs-interest-impl.h"
+#include "nrHeader.h"
 #include "ns3/log.h"
 
 NS_LOG_COMPONENT_DEFINE ("ndn.cs.NrCsInterestImpl");
@@ -78,12 +79,12 @@ NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
-		Ptr<Interest> interest = (*it)->GetInterest();
+		Ptr<const Interest> interest = (*it)->GetInterest();
 		ndn::nrndn::nrHeader nrheader;
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t nodeId = nrheader.getSourceId();
 		
-		if((*it)->GetNonce()==nonce && nodeId == sourceId)
+		if(interest->GetNonce()==nonce && nodeId == sourceId)
 			return *it;
 	}
 	return 0;
@@ -159,10 +160,10 @@ NrCsInterestImpl::Next (Ptr<EntryInterest> from)
 }
 
 
-vector<Ptr<Interest>>
+std::vector<Ptr<Interest>>
 NrCsInterestImpl::GetInterest(std::string lane)
 {
-	vector<Ptr<Interest> InterestCollection;
+	std::vector<Ptr<Interest> InterestCollection;
 	std::vector<Ptr<EntryInterest>>::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
