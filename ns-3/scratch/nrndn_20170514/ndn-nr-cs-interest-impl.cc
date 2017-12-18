@@ -65,7 +65,7 @@ bool NrCsInterestImpl::Add(Ptr<const Interest> interest)
 	std::cout<<"(NrCsInterestImpl-Add)"<<std::endl;
     Ptr<cs::EntryInterest> csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
     m_csInterestContainer.push_back(csEntryInterest);
-	Print();
+	PrintCache();
 	return true;
 }
 
@@ -113,6 +113,11 @@ NrCsInterestImpl::MarkErased (Ptr<EntryInterest> item)
   
 void
 NrCsInterestImpl::Print (std::ostream& os) const
+{
+}
+
+void
+NrCsInterestImpl::PrintCache () const
 {
 	std::vector<Ptr<EntryInterest> >::const_iterator it; 
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)

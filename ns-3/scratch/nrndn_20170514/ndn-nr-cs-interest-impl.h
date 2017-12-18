@@ -81,6 +81,8 @@ public:
 
   virtual void
   Print (std::ostream &os) const;
+  
+  void PrintCache()const;
 
   virtual uint32_t
   GetSize () const;
