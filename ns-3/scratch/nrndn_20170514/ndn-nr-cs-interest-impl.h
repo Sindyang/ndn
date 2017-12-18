@@ -20,7 +20,7 @@
 
 #include "NodeSensor.h"
 
-#include <queue>
+#include <vector>
 
 
 namespace ns3
@@ -59,8 +59,8 @@ public:
 
 
   //This prefix is different from the format of interest's name
-  virtual Ptr<EntryInterest>
-  Find (const Name &prefix);
+  Ptr<EntryInterest>
+  Find (const uint32_t nonce,const uint32_t sourceId);
 
   //abandon
  /* virtual Ptr<EntryInterest>
@@ -116,7 +116,7 @@ protected:
 
 private:
   Ptr<ForwardingStrategy>		        m_forwardingStrategy;
-  std::queue<Ptr<EntryInterest>> 		m_csInterestContainer;
+  std::vector<Ptr<EntryInterest>> 		m_csInterestContainer;
 };
 
 

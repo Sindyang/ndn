@@ -58,7 +58,7 @@ NrCsInterestImpl::NotifyNewAggregate ()
 bool NrCsInterestImpl::Add(Ptr<const Interest> interest)
 {
     Ptr<cs::EntryInterest> csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
-    m_csInterestContainer.push(csEntryInterest);
+    m_csInterestContainer.push_back(csEntryInterest);
 	return true;
 }
 
@@ -74,7 +74,7 @@ NrCsInterestImpl::DoDispose ()
 Ptr<EntryInterest>
 NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 {
-	std::queue<Ptr<EntryInterest> >::iterator it;
+	std::vector<Ptr<EntryInterest> >::iterator it;
 	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
@@ -107,7 +107,7 @@ NrCsInterestImpl::MarkErased (Ptr<EntryInterest> item)
 void
 NrCsInterestImpl::Print (std::ostream& os) const
 {
-	std::queue<Ptr<EntryInterest> >::const_iterator it; 
+	std::vector<Ptr<EntryInterest>>::const_iterator it; 
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
 		std::cout<<(*it)->GetInterest()->GetNonce()<<" "<<(*it)->GetName().toUri()<<std::endl;
@@ -144,7 +144,7 @@ NrCsInterestImpl::Next (Ptr<EntryInterest> from)
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
 	if (from == 0) return 0;
 
-	std::queue<Ptr<EntryInterest> >::iterator it;
+	std::vector<Ptr<EntryInterest> >::iterator it;
 	it = find(m_csInterestContainer.begin(),m_csInterestContainer.end(),from);
 	if(it==m_csInterestContainer.end())
 		return End();
@@ -163,7 +163,7 @@ vector<Ptr<Interest>>
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	vector<Ptr<Interest> InterestCollection;
-	std::queue<Ptr<EntryInterest>>::iterator it;
+	std::vector<Ptr<EntryInterest>>::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
 		Ptr<Interest> interest = (*it)->GetInterest();
