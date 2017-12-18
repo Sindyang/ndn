@@ -104,6 +104,9 @@ public:
      */
   virtual bool
   Add (Ptr<const Interest> Interest);
+  
+  std::vector<Ptr<Interest>>
+  GetInterest(std::string lane);
 
 
 protected:
