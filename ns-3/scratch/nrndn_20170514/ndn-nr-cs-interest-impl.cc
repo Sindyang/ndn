@@ -168,7 +168,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
 		Ptr<const Interest> interest = (*it)->GetInterest();
-		std::vector<str::string> routes = interest->GetRoutes();
+		std::vector<std::string> routes = interest->GetRoutes();
 		if(routes.front() == lane)
 			InterestCollection.push_back(interest);
 	}
