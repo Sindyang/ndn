@@ -38,6 +38,7 @@ class Data;
 class Interest;
 class Name;
 class ContentStore;
+class ContentStoreInterest;
 
 /**
  * @ingroup ndn
