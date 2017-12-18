@@ -521,6 +521,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				if(newPriorityList.empty())
 				{
 					cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+					getchar();
 					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
 				}
 				else
@@ -1556,8 +1557,11 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 	  cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
 	  Ptr<ContentStoreInterest> csinterest = GetObject<ContentStoreInterest>();
 	  if(csinterest)
+	  {
 		  m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
-	  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+		  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+	  } 
+	  
   }
   
   if(m_node==0)
