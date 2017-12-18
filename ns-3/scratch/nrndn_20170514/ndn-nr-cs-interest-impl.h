@@ -8,7 +8,7 @@
 #ifndef NDN_INTEREST_STORE_H
 #define	NDN_INTEREST_STORE_H
 
-#include "ns3/ndn-interest-store.h"
+#include <ns3/ndnSIM/model/cs/ndn-interest-store.h>
 #include "ns3/log.h"
 #include "ns3/simulator.h"
 
