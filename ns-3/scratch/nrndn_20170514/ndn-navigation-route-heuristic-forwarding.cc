@@ -514,14 +514,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				//构造转发优先级列表，并判断前方邻居是否为空
 				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
-				if(newPriorityList.empty())
-				{
-					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
-				}
-				else
-				{
+				//if(newPriorityList.empty())
+				//{
+				//	Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
+				//}
+				//else
+				//{
 					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-				}
+				//}
 			}
 		}
 		else
