@@ -160,15 +160,15 @@ NrCsInterestImpl::Next (Ptr<EntryInterest> from)
 }
 
 
-std::vector<Ptr<Interest>>
+std::vector<Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
-	std::vector<Ptr<Interest> InterestCollection;
+	std::vector<Ptr<const Interest> > InterestCollection;
 	std::vector<Ptr<EntryInterest>>::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
-		Ptr<Interest> interest = (*it)->GetInterest();
-		vector<str::string> routes = interest->GetRoutes();
+		Ptr<const Interest> interest = (*it)->GetInterest();
+		std::vector<str::string> routes = interest->GetRoutes();
 		if(routes.front() == lane)
 			InterestCollection.push_back(interest);
 	}
