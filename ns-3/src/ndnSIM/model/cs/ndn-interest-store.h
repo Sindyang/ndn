@@ -54,7 +54,7 @@ namespace cs {
  * @ingroup ndn-cs
  * @brief NDN content store entry
  */
-class EntryInterest : public SimpleRefCount<Entry>
+class EntryInterest : public SimpleRefCount<EntryInterest>
 {
 public:
   /**
