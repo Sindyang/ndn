@@ -5,7 +5,7 @@
  *      Author: DJ
  */
 
-#include "ndn-nr-cs-interest-impl.h""
+#include "ndn-nr-cs-interest-impl.h"
 #include "ns3/log.h"
 
 NS_LOG_COMPONENT_DEFINE ("ndn.cs.NrCsInterestImpl");
