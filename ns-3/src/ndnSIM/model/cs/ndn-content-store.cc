@@ -32,8 +32,29 @@ NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStore");
 namespace ns3 {
 namespace ndn {
 
-NS_OBJECT_ENSURE_REGISTERED (ContentStore);
 NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
+NS_OBJECT_ENSURE_REGISTERED (ContentStore);
+
+TypeId
+ContentStoreInterest::GetTypeId (void)
+{
+  static TypeId tid = TypeId ("ns3::ndn::ContentStoreInterest")
+    .SetGroupName ("Ndn")
+    .SetParent<Object> ()
+	
+    .AddTraceSource ("CacheHits", "Trace called every time there is a cache hit",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheHitsTrace))
+
+    .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheMissesTrace))
+    ;
+  return tid;
+}
+
+
+ContentStoreInterest::~ContentStoreInterest () 
+{
+}
 
 TypeId
 ContentStore::GetTypeId (void)
@@ -53,29 +74,6 @@ ContentStore::GetTypeId (void)
 
 
 ContentStore::~ContentStore () 
-{
-}
-
-
-TypeId
-ContentStoreInterest::GetTypeId (void)
-{
-  static TypeId tid = TypeId ("ns3::ndn::ContentStoreInterest")
-    .SetGroupName ("Ndn")
-    .SetParent<Object> ()
-
-    .AddTraceSource ("CacheHits", "Trace called every time there is a cache hit",
-                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheHitsTrace))
-
-    .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
-                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheMissesTrace))
-    ;
-
-  return tid;
-}
-
-
-ContentStoreInterest::~ContentStoreInterest () 
 {
 }
 
