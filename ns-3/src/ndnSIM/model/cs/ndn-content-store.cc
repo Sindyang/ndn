@@ -33,6 +33,7 @@ namespace ns3 {
 namespace ndn {
 
 NS_OBJECT_ENSURE_REGISTERED (ContentStore);
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
 
 TypeId
 ContentStore::GetTypeId (void)
@@ -47,7 +48,6 @@ ContentStore::GetTypeId (void)
     .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
                      MakeTraceSourceAccessor (&ContentStore::m_cacheMissesTrace))
     ;
-
   return tid;
 }
 
@@ -56,7 +56,6 @@ ContentStore::~ContentStore ()
 {
 }
 
-NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
 
 TypeId
 ContentStoreInterest::GetTypeId (void)
