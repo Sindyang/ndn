@@ -56,6 +56,30 @@ ContentStore::~ContentStore ()
 {
 }
 
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
+
+TypeId
+ContentStoreInterest::GetTypeId (void)
+{
+  static TypeId tid = TypeId ("ns3::ndn::ContentStoreInterest")
+    .SetGroupName ("Ndn")
+    .SetParent<Object> ()
+
+    .AddTraceSource ("CacheHits", "Trace called every time there is a cache hit",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheHitsTrace))
+
+    .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheMissesTrace))
+    ;
+
+  return tid;
+}
+
+
+ContentStoreInterest::~ContentStoreInterest () 
+{
+}
+
 namespace cs {
 
 //////////////////////////////////////////////////////////////////////
@@ -84,6 +108,29 @@ Entry::GetContentStore ()
   return m_cs;
 }
 
+EntryInterest::EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
+  : m_cs (cs)
+  , m_interest (interest)
+{
+}
+
+const Name&
+EntryInterest::GetName () const
+{
+  return m_interest->GetName ();
+}
+
+Ptr<const Interest>
+EntryInterest::GetInterest () const
+{
+  return m_interest;
+}
+
+Ptr<ContentStoreInterest>
+EntryInterest::GetContentStoreInterest ()
+{
+  return m_cs;
+}
 
 } // namespace cs
 } // namespace ndn
