@@ -34,7 +34,7 @@ namespace ns3 {
 namespace ndn {
 
 NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
-NS_OBJECT_ENSURE_REGISTERED (ContentStoreNew);
+NS_OBJECT_ENSURE_REGISTERED (ContentStore);
 
 TypeId
 ContentStoreInterest::GetTypeId (void)
