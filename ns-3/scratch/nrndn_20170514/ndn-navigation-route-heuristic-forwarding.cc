@@ -1573,7 +1573,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 	if (m_csinterest == 0)
 	{
 		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
-   	    Ptr<ContentStoreInterest> csinterest=GetObject<ContentStoreInterest>();
+   	    Ptr<ContentStore> csinterest=GetObject<ContentStore>();
    	    if(csinterest)
 		{
 			m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
