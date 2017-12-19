@@ -83,7 +83,7 @@ public:
   Print (std::ostream &os) const;
 
   virtual uint32_t
-  GetSize () const;
+  GetSizeEntry () const;
 
   virtual Ptr<Entry>
   Begin ();

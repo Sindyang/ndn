@@ -1,5 +1,5 @@
 /*
- * ndn-nr-cs-impl.h
+ * ndn-nr-cs-interest-impl.h
  *
  *  Created on: Dec 18, 2017
  *      Author: WSY
@@ -8,7 +8,7 @@
 #ifndef NDN_INTEREST_STORE_H
 #define	NDN_INTEREST_STORE_H
 
-#include "ns3/ndnSIM/model/cs/ndn-interest-store.h"
+#include "ns3/ndn-content-store.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
 
@@ -36,7 +36,7 @@ namespace nrndn
  * @brief Class implementing Content Store,
  * 		  with navigation route customize
  */
-class NrCsInterestImpl	: public ContentStoreInterest
+class NrCsInterestImpl	: public ContentStore
 {
 public:
   /**

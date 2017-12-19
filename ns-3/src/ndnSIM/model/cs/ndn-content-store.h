@@ -19,8 +19,8 @@
  *         Ilya Moiseenko <iliamo@cs.ucla.edu>
  */
 
-#ifndef NDN_CONTENT_STORE_H
-#define	NDN_CONTENT_STORE_H
+#ifndef NDN_CONTENT_STORE_NEW_H
+#define	NDN_CONTENT_STORE_NEW_H
 
 #include "ns3/object.h"
 #include "ns3/ptr.h"
@@ -93,6 +93,45 @@ private:
   Ptr<const Data> m_data; ///< \brief non-modifiable Data
 };
 
+class EntryInterest : public SimpleRefCount<Entry>
+{
+public:
+   /**
+    * \brief Construct content store entry
+    *
+    * \param header Parsed Interest header
+    * \param packet Original Ndn packet
+    *
+    * The constructor will make a copy of the supplied packet and calls
+    * RemoveHeader and RemoveTail on the copy.
+    */
+    EntryInterest (Ptr<ContentStore> cs, Ptr<const Interest> interest);
+
+   /**
+    * \brief Get prefix of the stored entry
+    * \returns prefix of the stored entry
+    */
+    const Name&
+    GetName () const;
+
+   /**
+    * \brief Get Data of the stored entry
+    * \returns Data of the stored entry
+    */
+    Ptr<const Interest>
+    GetInterest () const;
+
+   /**
+    * @brief Get pointer to access store, to which this entry is added
+    */
+    Ptr<ContentStore>
+    GetContentStore ();
+
+private:
+  Ptr<ContentStore> m_cs; ///< \brief content store to which entry is added
+  Ptr<const Interest> m_interest; ///< \brief non-modifiable Data
+};
+
 } // namespace cs
 
 
@@ -105,42 +144,45 @@ private:
 class ContentStore : public Object
 {
 public:
-  /**
-   * \brief Interface ID
-   *
-   * \return interface ID
-   */
-  static
-  TypeId GetTypeId ();
+   /**
+    * \brief Interface ID
+    *
+    * \return interface ID
+    */
+    static
+    TypeId GetTypeId ();
 
-  /**
-   * @brief Virtual destructor
-   */
-  virtual
-  ~ContentStore ();
+   /**
+    * @brief Virtual destructor
+    */
+    virtual
+    ~ContentStore ();
 
-  /**
-   * \brief Find corresponding CS entry for the given interest
-   *
-   * \param interest Interest for which matching content store entry
-   * will be searched
-   *
-   * If an entry is found, it is promoted to the top of most recent
-   * used entries index, \see m_contentStore
-   */
-  virtual Ptr<Data>
-  Lookup (Ptr<const Interest> interest) = 0;
+   /**
+    * \brief Find corresponding CS entry for the given interest
+    *
+    * \param interest Interest for which matching content store entry
+    * will be searched
+    *
+    * If an entry is found, it is promoted to the top of most recent
+    * used entries index, \see m_contentStore
+    */
+    virtual Ptr<Data>
+    Lookup (Ptr<const Interest> interest) = 0;
 
-  /**
-   * \brief Add a new content to the content store.
-   *
-   * \param header Fully parsed Data
-   * \param packet Fully formed Ndn packet to add to content store
-   * (will be copied and stripped down of headers)
-   * @returns true if an existing entry was updated, false otherwise
-   */
-  virtual bool
-  Add (Ptr<const Data> data) = 0;
+   /**
+    * \brief Add a new content to the content store.
+    *
+    * \param header Fully parsed Data
+    * \param packet Fully formed Ndn packet to add to content store
+    * (will be copied and stripped down of headers)
+    * @returns true if an existing entry was updated, false otherwise
+    */
+    virtual bool
+    Add (Ptr<const Data> data) = 0;
+	
+	virtual bool
+    Add (Ptr<const Interest> interest) = 0;
 
   // /*
   //  * \brief Add a new content to the content store.
@@ -151,59 +193,72 @@ public:
   // virtual bool
   // Remove (Ptr<Interest> header) = 0;
 
-  /**
-   * \brief Print out content store entries
-   */
-  virtual void
-  Print (std::ostream &os) const = 0;
+   /**
+    * \brief Print out content store entries
+    */
+    virtual void
+    Print (std::ostream &os) const = 0;
 
 
-  /**
-   * @brief Get number of entries in content store
-   */
-  virtual uint32_t
-  GetSize () const = 0;
+   /**
+    * @brief Get number of entries in content store
+    */
+    virtual uint32_t
+    GetSizeEntry () const = 0;
+	
+	virtual uint32_t
+    GetSizeEntryInterest () const = 0;
 
-  /**
-   * @brief Return first element of content store (no order guaranteed)
-   */
-  virtual Ptr<cs::Entry>
-  Begin () = 0;
+   /**
+    * @brief Return first element of content store (no order guaranteed)
+    */
+    virtual Ptr<cs::Entry>
+    Begin () = 0;
+	
+	virtual Ptr<cs::EntryInterest>
+    Begin () = 0;
 
-  /**
-   * @brief Return item next after last (no order guaranteed)
-   */
-  virtual Ptr<cs::Entry>
-  End () = 0;
+   /**
+    * @brief Return item next after last (no order guaranteed)
+    */
+    virtual Ptr<cs::Entry>
+    End () = 0;
+	
+	virtual Ptr<cs::EntryInterest>
+    End () = 0;
+	
 
-  /**
-   * @brief Advance the iterator
-   */
-  virtual Ptr<cs::Entry>
-  Next (Ptr<cs::Entry>) = 0;
+   /**
+    * @brief Advance the iterator
+    */
+    virtual Ptr<cs::Entry>
+    Next (Ptr<cs::Entry>) = 0;
+	
+	virtual Ptr<cs::EntryInterest>
+	Next (Ptr<cs::EntryInterest>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @brief Static call to cheat python bindings
-   */
-  static inline Ptr<ContentStore>
-  GetContentStore (Ptr<Object> node);
+   /**
+    * @brief Static call to cheat python bindings
+    */
+    static inline Ptr<ContentStore>
+    GetContentStore (Ptr<Object> node);
 
 protected:
-  TracedCallback<Ptr<const Interest>,
+    TracedCallback<Ptr<const Interest>,
                  Ptr<const Data> > m_cacheHitsTrace; ///< @brief trace of cache hits
 
-  TracedCallback<Ptr<const Interest> > m_cacheMissesTrace; ///< @brief trace of cache misses
+    TracedCallback<Ptr<const Interest> > m_cacheMissesTrace; ///< @brief trace of cache misses
 };
 
 inline std::ostream&
 operator<< (std::ostream &os, const ContentStore &cs)
 {
-  cs.Print (os);
-  return os;
+    cs.Print (os);
+    return os;
 }
 
 inline Ptr<ContentStore>

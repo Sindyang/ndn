@@ -34,6 +34,7 @@ namespace ndn {
 
 NS_OBJECT_ENSURE_REGISTERED (ContentStore);
 
+
 TypeId
 ContentStore::GetTypeId (void)
 {
@@ -47,7 +48,6 @@ ContentStore::GetTypeId (void)
     .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
                      MakeTraceSourceAccessor (&ContentStore::m_cacheMissesTrace))
     ;
-
   return tid;
 }
 
@@ -84,6 +84,29 @@ Entry::GetContentStore ()
   return m_cs;
 }
 
+EntryInterest::EntryInterest (Ptr<ContentStore> cs, Ptr<const Interest> interest)
+  : m_cs (cs)
+  , m_interest (interest)
+{
+}
+
+const Name&
+EntryInterest::GetName () const
+{
+  return m_interest->GetName ();
+}
+
+Ptr<const Interest>
+EntryInterest::GetInterest () const
+{
+  return m_interest;
+}
+
+Ptr<ContentStore>
+EntryInterest::GetContentStore ()
+{
+  return m_cs;
+}
 
 } // namespace cs
 } // namespace ndn
