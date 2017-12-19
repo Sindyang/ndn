@@ -92,7 +92,7 @@ NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 }
   
 
-Ptr<interest>
+Ptr<Interest>
 NrCsInterestImpl::Lookup (Ptr<const Interest> interest)
 {
    return 0;
@@ -123,9 +123,21 @@ NrCsInterestImpl::PrintCache () const
 }
 
 uint32_t
+NrCsInterestImpl::GetSizeEntry () const
+{
+	return 0;
+}
+
+uint32_t
 NrCsInterestImpl::GetSizeEntryInterest () const
 {
 	return m_csInterestContainer.size ();
+}
+
+Ptr<cs::Entry>
+NrCsInterestImpl::BeginEntry ()
+{
+	return 0;
 }
   
 Ptr<cs::EntryInterest>
@@ -138,6 +150,13 @@ NrCsInterestImpl::BeginEntryInterest ()
 		return *(m_csInterestContainer.begin());
 }
 
+Ptr<cs::Entry>
+NrCsInterestImpl::EndEntry ()
+{
+	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
+	return 0;
+}
+
 Ptr<cs::EntryInterest>
 NrCsInterestImpl::EndEntryInterest ()
 {
@@ -145,6 +164,13 @@ NrCsInterestImpl::EndEntryInterest ()
 	return 0;
 }
   
+Ptr<cs::Entry>
+NrCsInterestImpl::NextEntry ()
+{
+	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
+	return 0;
+}
+
 Ptr<cs::EntryInterest>
 NrCsInterestImpl::NextEntryInterest (Ptr<cs::EntryInterest> from)
 {

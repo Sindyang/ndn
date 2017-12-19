@@ -203,6 +203,9 @@ public:
    /**
     * @brief Get number of entries in content store
     */
+	virtual uint32_t
+	GetSize() const = 0;
+	
     virtual uint32_t
     GetSizeEntry () const = 0;
 	

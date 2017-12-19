@@ -82,15 +82,27 @@ public:
   Print (std::ostream &os) const;
   
   void PrintCache()const;
+  
+  virtual uint32_t
+  GetSizeEntry () const;
 
   virtual uint32_t
   GetSizeEntryInterest () const;
+  
+  virtual Ptr<cs::Entry>
+  BeginEntry ();
 
   virtual Ptr<EntryInterest>
   BeginEntryInterest ();
 
+  virtual Ptr<cs::Entry>
+  EndEntry ();
+	
   virtual Ptr<EntryInterest>
   EndEntryInterest ();
+  
+  virtual Ptr<cs::Entry>
+  NextEntry (Ptr<cs::Entry>);
 
   virtual Ptr<EntryInterest>
   NextEntryInterest (Ptr<EntryInterest>);
@@ -119,7 +131,7 @@ protected:
 
 
 private:
-  Ptr<ForwardingStrategy>		        m_forwardingStrategy;
+  Ptr<ForwardingStrategy>		            m_forwardingStrategy;
   std::vector<Ptr<cs::EntryInterest> > 		m_csInterestContainer;
 };
 
