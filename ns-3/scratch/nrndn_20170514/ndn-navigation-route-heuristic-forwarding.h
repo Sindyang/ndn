@@ -471,7 +471,7 @@ private:
 	
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_csdata;
 	
-	Ptr<ndn::cs::nrndn::NsCsInterestImpl> m_csinterest;
+	Ptr<ndn::cs::nrndn::NrCsInterestImpl> m_csinterest;
 
 	uint32_t				m_CacheSize;
 

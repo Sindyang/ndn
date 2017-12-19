@@ -38,11 +38,6 @@ NrCsInterestImpl::GetTypeId ()
   return tid;
 }
 
-NrCsInterestImpl::NrCsInterestImpl ()
-{
-	
-}
-
 NrCsInterestImpl::~NrCsInterestImpl ()
 {
 	
