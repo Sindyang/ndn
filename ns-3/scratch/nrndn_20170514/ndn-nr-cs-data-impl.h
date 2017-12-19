@@ -84,15 +84,27 @@ public:
 
   virtual uint32_t
   GetSizeEntry () const;
+  
+  virtual uint32_t
+  GetSizeEntryInterest () const;
 
   virtual Ptr<Entry>
   BeginEntry ();
+  
+  virtual Ptr<EntryInterest>
+  BeginEntryInterest ();
 
   virtual Ptr<Entry>
   EndEntry ();
+  
+  virtual Ptr<EntryInterest>
+  EndEntryInterest ();
 
   virtual Ptr<Entry>
   NextEntry (Ptr<Entry>);
+  
+  virtual Ptr<EntryInterest>
+  NextEntryInterest (Ptr<EntryInterest>);
 
   /**
      * \brief Add a new content to the content store.
