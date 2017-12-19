@@ -76,10 +76,6 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 		         UintegerValue (3),
 		         MakeUintegerAccessor (&NavigationRouteHeuristic::m_TTLMax),
 		         MakeUintegerChecker<uint32_t> ())
-		.AddAttribute ("CSInterest","cs of forwarder",
-	    		 PointerValue (),
-		    	 MakePointerAccessor (&NavigationRouteHeuristic::m_csinterest),
-				 MakePointerChecker<ns3::ndn::cs::nrndn::NrCsInterestImpl> ())
 	    ;
 	  return tid;
 }
@@ -518,16 +514,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				//构造转发优先级列表，并判断前方邻居是否为空
 				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
-				if(newPriorityList.empty())
+				/*if(newPriorityList.empty())
 				{
 					cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					getchar();
 					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
 				}
 				else
-				{
+				{*/
 					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-				}
+				//}
 			}
 		}
 		else
@@ -1359,7 +1355,7 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	eventid.Cancel();
 }
 
-void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
+/*void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
 {
 	//获取兴趣的随机编码
 	uint32_t seq = interest->GetNonce();
@@ -1368,7 +1364,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<"已缓存兴趣包"<<endl;
 	getchar();
 	BroadcastStopMessage(interest);
-}
+}*/
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 {
@@ -1552,7 +1548,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   }
   
   //2017.12.18 added by sy
-  if(m_csinterest == 0)
+  /*if(m_csinterest == 0)
   {
 	  cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
 	  Ptr<ContentStoreInterest> csinterest = GetObject<ContentStoreInterest>();
@@ -1562,7 +1558,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 		  cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 	  } 
 	  
-  }
+  }*/
   
   if(m_node==0)
   {

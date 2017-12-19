@@ -73,7 +73,7 @@ public:
   //InitializeNrFibEntry ();
 
   virtual Ptr<Data>
-    Lookup (Ptr<const Interest> interest);
+  Lookup (Ptr<const Interest> interest);
 
   //abandon
   virtual void

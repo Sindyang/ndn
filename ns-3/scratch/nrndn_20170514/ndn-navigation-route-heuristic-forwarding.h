@@ -15,13 +15,11 @@
 #include "ns3/string.h"
 #include "ns3/random-variable-stream.h"
 #include "ns3/ndn-header-helper.h"
-#include "ns3/ndn-content-store.h"
 
 #include "LRUCache.h"
 #include "NodeSensor.h"
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
-#include "ndn-nr-cs-interest-impl.h"
 
 #include <vector>
 #include <map>
@@ -467,7 +465,7 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	
-	Ptr<cs::nrndn::NrCsInterestImpl> m_csinterest;
+	//Ptr<cs::nrndn::NrCsInterestImpl> m_csinterest;
 
 	uint32_t				m_CacheSize;
 
