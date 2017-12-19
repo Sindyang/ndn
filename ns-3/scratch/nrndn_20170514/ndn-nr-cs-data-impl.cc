@@ -178,13 +178,13 @@ NrCsImpl::Print (std::ostream& os) const
 }
 
 uint32_t
-NrCsImpl::GetSize () const
+NrCsImpl::GetSizeEntry () const
 {
 	return m_csContainer.size ();
 }
   
 Ptr<Entry>
-NrCsImpl::Begin ()
+NrCsImpl::BeginEntry ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
 
@@ -195,14 +195,14 @@ NrCsImpl::Begin ()
 }
 
 Ptr<Entry>
-NrCsImpl::End ()
+NrCsImpl::EndEntry ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
 }
   
 Ptr<Entry>
-NrCsImpl::Next (Ptr<Entry> from)
+NrCsImpl::NextEntry (Ptr<Entry> from)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
 	if (from == 0) return 0;

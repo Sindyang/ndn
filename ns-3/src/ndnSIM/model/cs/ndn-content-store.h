@@ -213,29 +213,29 @@ public:
     * @brief Return first element of content store (no order guaranteed)
     */
     virtual Ptr<cs::Entry>
-    Begin () = 0;
+    BeginEntry () = 0;
 	
 	virtual Ptr<cs::EntryInterest>
-    Begin () = 0;
+    BeginEntryInterest () = 0;
 
    /**
     * @brief Return item next after last (no order guaranteed)
     */
     virtual Ptr<cs::Entry>
-    End () = 0;
+    EndEntry () = 0;
 	
 	virtual Ptr<cs::EntryInterest>
-    End () = 0;
+    EndEntryInterest () = 0;
 	
 
    /**
     * @brief Advance the iterator
     */
     virtual Ptr<cs::Entry>
-    Next (Ptr<cs::Entry>) = 0;
+    NextEntry (Ptr<cs::Entry>) = 0;
 	
 	virtual Ptr<cs::EntryInterest>
-	Next (Ptr<cs::EntryInterest>) = 0;
+	NextEntryInterest (Ptr<cs::EntryInterest>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////

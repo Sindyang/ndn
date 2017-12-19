@@ -86,13 +86,13 @@ public:
   GetSizeEntry () const;
 
   virtual Ptr<Entry>
-  Begin ();
+  BeginEntry ();
 
   virtual Ptr<Entry>
-  End ();
+  EndEntry ();
 
   virtual Ptr<Entry>
-  Next (Ptr<Entry>);
+  NextEntry (Ptr<Entry>);
 
   /**
      * \brief Add a new content to the content store.
