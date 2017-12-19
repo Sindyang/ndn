@@ -26,7 +26,6 @@ namespace ns3
 {
 namespace ndn
 {
-class ContentStoreInterest;
 namespace cs
 {
 namespace nrndn
@@ -59,7 +58,7 @@ public:
 
 
   //This prefix is different from the format of interest's name
-  Ptr<EntryInterest>
+  virtual Ptr<EntryInterest>
   Find (const uint32_t nonce,const uint32_t sourceId);
 
   //abandon
@@ -130,4 +129,4 @@ private:
 } /* namespace ndn */
 } /* namespace ns3 */
 
-#endif /* NDN_NR_CS_IMPL_H_ */
+#endif /* NDN_INTEREST_STORE_H */
