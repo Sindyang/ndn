@@ -20,70 +20,69 @@
  *         
  */
 
-#include "ndn-content-store.h"
+#include "ndn-interest-store.h"
 #include "ns3/log.h"
 #include "ns3/packet.h"
 #include "ns3/ndn-name.h"
 #include "ns3/ndn-interest.h"
 #include "ns3/ndn-data.h"
 
-NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStore");
+NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStoreInterest");
 
 namespace ns3 {
 namespace ndn {
 
-NS_OBJECT_ENSURE_REGISTERED (ContentStore);
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
 
 TypeId
-ContentStore::GetTypeId (void)
+ContentStoreInterest::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::ndn::ContentStore")
+  static TypeId tid = TypeId ("ns3::ndn::ContentStoreInterest")
     .SetGroupName ("Ndn")
     .SetParent<Object> ()
-
+	
     .AddTraceSource ("CacheHits", "Trace called every time there is a cache hit",
-                     MakeTraceSourceAccessor (&ContentStore::m_cacheHitsTrace))
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheHitsTrace))
 
     .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
-                     MakeTraceSourceAccessor (&ContentStore::m_cacheMissesTrace))
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheMissesTrace))
     ;
-
   return tid;
 }
 
 
-ContentStore::~ContentStore () 
+ContentStoreInterest::~ContentStoreInterest () 
 {
 }
+
 
 namespace cs {
 
 //////////////////////////////////////////////////////////////////////
 
-Entry::Entry (Ptr<ContentStore> cs, Ptr<const Data> data)
+Entry::Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
   : m_cs (cs)
-  , m_data (data)
+  , m_interest (interest)
 {
 }
 
 const Name&
 Entry::GetName () const
 {
-  return m_data->GetName ();
+  return m_interest->GetName ();
 }
 
-Ptr<const Data>
-Entry::GetData () const
+Ptr<const Interest>
+Entry::GetInterest () const
 {
-  return m_data;
+  return m_interest;
 }
 
-Ptr<ContentStore>
-Entry::GetContentStore ()
+Ptr<ContentStoreInterest>
+Entry::GetContentStoreInterest ()
 {
   return m_cs;
 }
-
 
 } // namespace cs
 } // namespace ndn

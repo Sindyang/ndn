@@ -19,8 +19,8 @@
  *         Ilya Moiseenko <iliamo@cs.ucla.edu>
  */
 
-#ifndef NDN_CONTENT_STORE_H
-#define	NDN_CONTENT_STORE_H
+#ifndef NDN_INTEREST_STORE_H
+#define	NDN_INTEREST_STORE_H
 
 #include "ns3/object.h"
 #include "ns3/ptr.h"
@@ -37,7 +37,7 @@ namespace ndn {
 class Data;
 class Interest;
 class Name;
-class ContentStore;
+class ContentStoreInterest;
 
 /**
  * @ingroup ndn
@@ -60,13 +60,13 @@ public:
   /**
    * \brief Construct content store entry
    *
-   * \param header Parsed Data header
+   * \param header Parsed Interest header
    * \param packet Original Ndn packet
    *
    * The constructor will make a copy of the supplied packet and calls
    * RemoveHeader and RemoveTail on the copy.
    */
-  Entry (Ptr<ContentStore> cs, Ptr<const Data> data);
+  Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
 
   /**
    * \brief Get prefix of the stored entry
@@ -79,18 +79,18 @@ public:
    * \brief Get Data of the stored entry
    * \returns Data of the stored entry
    */
-  Ptr<const Data>
-  GetData () const;
+  Ptr<const Interest>
+  GetInterest () const;
 
   /**
    * @brief Get pointer to access store, to which this entry is added
    */
-  Ptr<ContentStore>
-  GetContentStore ();
+  Ptr<ContentStoreInterest>
+  GetContentStoreInterest ();
 
 private:
-  Ptr<ContentStore> m_cs; ///< \brief content store to which entry is added
-  Ptr<const Data> m_data; ///< \brief non-modifiable Data
+  Ptr<ContentStoreInterest> m_cs; ///< \brief content store to which entry is added
+  Ptr<const Interest> m_interest; ///< \brief non-modifiable Data
 };
 
 } // namespace cs
@@ -102,7 +102,7 @@ private:
  *
  * Particular implementations should implement Lookup, Add, and Print methods
  */
-class ContentStore : public Object
+class ContentStoreInterest : public Object
 {
 public:
   /**
@@ -117,7 +117,7 @@ public:
    * @brief Virtual destructor
    */
   virtual
-  ~ContentStore ();
+  ~ContentStoreInterest ();
 
   /**
    * \brief Find corresponding CS entry for the given interest
@@ -128,8 +128,8 @@ public:
    * If an entry is found, it is promoted to the top of most recent
    * used entries index, \see m_contentStore
    */
-  virtual Ptr<Data>
-  Lookup (Ptr<const Interest> interest) = 0;
+  //virtual Ptr<Data>
+  //Lookup (Ptr<const Interest> interest) = 0;
 
   /**
    * \brief Add a new content to the content store.
@@ -140,7 +140,7 @@ public:
    * @returns true if an existing entry was updated, false otherwise
    */
   virtual bool
-  Add (Ptr<const Data> data) = 0;
+  Add (Ptr<const Interest> interest) = 0;
 
   // /*
   //  * \brief Add a new content to the content store.
@@ -189,8 +189,8 @@ public:
   /**
    * @brief Static call to cheat python bindings
    */
-  static inline Ptr<ContentStore>
-  GetContentStore (Ptr<Object> node);
+  static inline Ptr<ContentStoreInterest>
+  GetContentStoreInterest (Ptr<Object> node);
 
 protected:
   TracedCallback<Ptr<const Interest>,
@@ -200,16 +200,16 @@ protected:
 };
 
 inline std::ostream&
-operator<< (std::ostream &os, const ContentStore &cs)
+operator<< (std::ostream &os, const ContentStoreInterest &cs)
 {
   cs.Print (os);
   return os;
 }
 
-inline Ptr<ContentStore>
-ContentStore::GetContentStore (Ptr<Object> node)
+inline Ptr<ContentStoreInterest>
+ContentStoreInterest::GetContentStoreInterest (Ptr<Object> node)
 {
-  return node->GetObject<ContentStore> ();
+  return node->GetObject<ContentStoreInterest> ();
 }
 
 
