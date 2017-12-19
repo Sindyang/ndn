@@ -8,7 +8,7 @@
 #ifndef NDN_NR_CS_IMPL_H_
 #define NDN_NR_CS_IMPL_H_
 
-#include "ns3/ndn-content-store-new.h"
+#include "ns3/ndn-content-store.h"
 
 #include "ns3/log.h"
 #include "ns3/simulator.h"
