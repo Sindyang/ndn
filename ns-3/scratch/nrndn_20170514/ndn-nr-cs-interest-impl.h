@@ -58,7 +58,7 @@ public:
 
 
   //This prefix is different from the format of interest's name
-  virtual Ptr<EntryInterest>
+  virtual Ptr<cs::EntryInterest>
   Find (const uint32_t nonce,const uint32_t sourceId);
 
   //abandon
@@ -76,7 +76,7 @@ public:
 
   //abandon
   virtual void
-  MarkErased (Ptr<EntryInterest> EntryInterest);
+  MarkErased (Ptr<cs::EntryInterest> EntryInterest);
 
   virtual void
   Print (std::ostream &os) const;
@@ -86,14 +86,14 @@ public:
   virtual uint32_t
   GetSize () const;
 
-  virtual Ptr<EntryInterest>
+  virtual Ptr<cs::EntryInterest>
   Begin ();
 
-  virtual Ptr<EntryInterest>
+  virtual Ptr<cs::EntryInterest>
   End ();
 
-  virtual Ptr<EntryInterest>
-  Next (Ptr<EntryInterest>);
+  virtual Ptr<cs::EntryInterest>
+  Next (Ptr<cs::EntryInterest>);
 
   /**
      * \brief Add a new content to the content store.
@@ -120,7 +120,7 @@ protected:
 
 private:
   Ptr<ForwardingStrategy>		        m_forwardingStrategy;
-  std::vector<Ptr<EntryInterest> > 		m_csInterestContainer;
+  std::vector<Ptr<cs::EntryInterest> > 		m_csInterestContainer;
 };
 
 
