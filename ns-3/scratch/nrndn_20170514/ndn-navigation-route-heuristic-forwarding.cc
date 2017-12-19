@@ -1569,6 +1569,17 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 		}
     }
+	
+	if (m_csinterest == 0)
+	{
+		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
+   	    Ptr<ContentStoreInterest> csinterest=GetObject<ContentStoreInterest>();
+   	    if(csinterest)
+		{
+			m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
+			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+		}
+	}
   
     if(m_node==0)
     {
