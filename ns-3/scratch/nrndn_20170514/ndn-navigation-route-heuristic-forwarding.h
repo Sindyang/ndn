@@ -20,7 +20,7 @@
 #include "NodeSensor.h"
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
-#include "nrndn-nr-cs-data-impl.h"
+#include "ndn-nr-cs-data-impl.h"
 
 #include <vector>
 #include <map>
