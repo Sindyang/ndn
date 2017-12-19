@@ -32,7 +32,7 @@ NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStoreInterest");
 namespace ns3 {
 namespace ndn {
 
-NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterestContentStoreInterest);
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
 
 TypeId
 ContentStoreInterest::GetTypeId (void)
