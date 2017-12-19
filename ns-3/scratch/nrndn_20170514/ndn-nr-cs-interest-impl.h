@@ -5,8 +5,8 @@
  *      Author: WSY
  */
 
-#ifndef NDN_INTEREST_STORE_H
-#define	NDN_INTEREST_STORE_H
+#ifndef NDN_NR_CS_INTEREST_IMPL_H_
+#define NDN_NR_CS_INTEREST_IMPL_H_
 
 #include "ns3/ndn-content-store.h"
 #include "ns3/log.h"
@@ -58,7 +58,7 @@ public:
 
 
   //This prefix is different from the format of interest's name
-  virtual Ptr<cs::EntryInterest>
+  virtual Ptr<EntryInterest>
   Find (const uint32_t nonce,const uint32_t sourceId);
 
   //abandon
@@ -71,12 +71,12 @@ public:
   //bool
   //InitializeNrFibEntryInterest ();
 
-  //virtual Ptr<Data>
-  //Lookup (Ptr<const Interest> interest);
+  virtual Ptr<Data>
+  Lookup (Ptr<const Interest> interest);
 
   //abandon
   virtual void
-  MarkErased (Ptr<cs::EntryInterest> EntryInterest);
+  MarkErased (Ptr<EntryInterest> EntryInterest);
 
   virtual void
   Print (std::ostream &os) const;
@@ -86,14 +86,14 @@ public:
   virtual uint32_t
   GetSizeEntryInterest () const;
 
-  virtual Ptr<cs::EntryInterest>
+  virtual Ptr<EntryInterest>
   BeginEntryInterest ();
 
-  virtual Ptr<cs::EntryInterest>
+  virtual Ptr<EntryInterest>
   EndEntryInterest ();
 
-  virtual Ptr<cs::EntryInterest>
-  NextEntryInterest (Ptr<cs::EntryInterest>);
+  virtual Ptr<EntryInterest>
+  NextEntryInterest (Ptr<EntryInterest>);
 
   /**
      * \brief Add a new content to the content store.

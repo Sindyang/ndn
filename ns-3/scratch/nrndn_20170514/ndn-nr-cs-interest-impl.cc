@@ -92,11 +92,11 @@ NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 }
   
 
-//Ptr<interest>
-//NrCsInterestImpl::Lookup (Ptr<const Interest> interest)
-//{
-  // return 0;
-//}
+Ptr<interest>
+NrCsInterestImpl::Lookup (Ptr<const Interest> interest)
+{
+   return 0;
+}
 
 void
 NrCsInterestImpl::MarkErased (Ptr<cs::EntryInterest> item)
