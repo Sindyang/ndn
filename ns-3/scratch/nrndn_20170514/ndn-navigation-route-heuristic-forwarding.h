@@ -467,8 +467,6 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	
-	//Ptr<cs::nrndn::NrCsInterestImpl> m_csinterest;
-	
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_csdata;
 	
 	Ptr<ndn::cs::nrndn::NrCsInterestImpl> m_csinterest;
