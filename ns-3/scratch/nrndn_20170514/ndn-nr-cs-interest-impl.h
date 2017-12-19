@@ -8,7 +8,7 @@
 #ifndef NDN_INTEREST_STORE_H
 #define	NDN_INTEREST_STORE_H
 
-#include "ns3/ndnSIM/model/cs/ndn-interest-store.h"
+#include "ns3/ndn-interest-store.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
 
@@ -58,25 +58,25 @@ public:
 
 
   //This prefix is different from the format of interest's name
-  Ptr<EntryInterest>
+  Ptr<Entry>
   Find (const uint32_t nonce,const uint32_t sourceId);
 
   //abandon
- /* virtual Ptr<EntryInterest>
+ /* virtual Ptr<Entry>
   Create (Ptr<const Interest> header);
 */
 
   //question by DJ on Jan 2,2016:cs need to be modified?
   //replace NrFibImpl::Create
   //bool
-  //InitializeNrFibEntryInterest ();
+  //InitializeNrFibEntry ();
 
   //virtual Ptr<Data>
   //Lookup (Ptr<const Interest> interest);
 
   //abandon
   virtual void
-  MarkErased (Ptr<EntryInterest> EntryInterest);
+  MarkErased (Ptr<Entry> Entry);
 
   virtual void
   Print (std::ostream &os) const;
@@ -86,14 +86,14 @@ public:
   virtual uint32_t
   GetSize () const;
 
-  virtual Ptr<EntryInterest>
+  virtual Ptr<Entry>
   Begin ();
 
-  virtual Ptr<EntryInterest>
+  virtual Ptr<Entry>
   End ();
 
-  virtual Ptr<EntryInterest>
-  Next (Ptr<EntryInterest>);
+  virtual Ptr<Entry>
+  Next (Ptr<Entry>);
 
   /**
      * \brief Add a new content to the content store.
@@ -101,7 +101,7 @@ public:
      * \param header Fully parsed Data
      * \param packet Fully formed Ndn packet to add to content store
      * (will be copied and stripped down of headers)
-     * @returns true if an existing EntryInterest was updated, false otherwise
+     * @returns true if an existing Entry was updated, false otherwise
      */
   virtual bool
   Add (Ptr<const Interest> Interest);
@@ -120,7 +120,7 @@ protected:
 
 private:
   Ptr<ForwardingStrategy>		        m_forwardingStrategy;
-  std::vector<Ptr<EntryInterest> > 		m_csInterestContainer;
+  std::vector<Ptr<Entry> > 		m_csInterestContainer;
 };
 
 

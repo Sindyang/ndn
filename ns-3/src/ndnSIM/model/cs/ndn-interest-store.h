@@ -54,7 +54,7 @@ namespace cs {
  * @ingroup ndn-cs
  * @brief NDN content store entry
  */
-class EntryInterest : public SimpleRefCount<EntryInterest>
+class Entry : public SimpleRefCount<Entry>
 {
 public:
   /**
@@ -66,7 +66,7 @@ public:
    * The constructor will make a copy of the supplied packet and calls
    * RemoveHeader and RemoveTail on the copy.
    */
-  EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
+  Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
 
   /**
    * \brief Get prefix of the stored entry
@@ -167,20 +167,20 @@ public:
   /**
    * @brief Return first element of content store (no order guaranteed)
    */
-  virtual Ptr<cs::EntryInterest>
+  virtual Ptr<cs::Entry>
   Begin () = 0;
 
   /**
    * @brief Return item next after last (no order guaranteed)
    */
-  virtual Ptr<cs::EntryInterest>
+  virtual Ptr<cs::Entry>
   End () = 0;
 
   /**
    * @brief Advance the iterator
    */
-  virtual Ptr<cs::EntryInterest>
-  Next (Ptr<cs::EntryInterest>) = 0;
+  virtual Ptr<cs::Entry>
+  Next (Ptr<cs::Entry>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////

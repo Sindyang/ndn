@@ -60,26 +60,26 @@ namespace cs {
 
 //////////////////////////////////////////////////////////////////////
 
-EntryInterest::EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
+Entry::Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
   : m_cs (cs)
   , m_interest (interest)
 {
 }
 
 const Name&
-EntryInterest::GetName () const
+Entry::GetName () const
 {
   return m_interest->GetName ();
 }
 
 Ptr<const Interest>
-EntryInterest::GetInterest () const
+Entry::GetInterest () const
 {
   return m_interest;
 }
 
 Ptr<ContentStoreInterest>
-EntryInterest::GetContentStoreInterest ()
+Entry::GetContentStoreInterest ()
 {
   return m_cs;
 }
