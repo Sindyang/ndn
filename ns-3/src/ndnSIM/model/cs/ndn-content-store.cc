@@ -20,7 +20,7 @@
  *         
  */
 
-#include "ndn-content-store.h"
+#include "ndn-content-store-new.h"
 #include "ns3/log.h"
 #include "ns3/packet.h"
 #include "ns3/ndn-name.h"
@@ -28,11 +28,34 @@
 #include "ns3/ndn-data.h"
 
 NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStore");
+NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStoreInterest");
 
 namespace ns3 {
 namespace ndn {
 
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
 NS_OBJECT_ENSURE_REGISTERED (ContentStore);
+
+TypeId
+ContentStoreInterest::GetTypeId (void)
+{
+  static TypeId tid = TypeId ("ns3::ndn::ContentStoreInterest")
+    .SetGroupName ("Ndn")
+    .SetParent<Object> ()
+	
+    .AddTraceSource ("CacheHits", "Trace called every time there is a cache hit",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheHitsTrace))
+
+    .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
+                     MakeTraceSourceAccessor (&ContentStoreInterest::m_cacheMissesTrace))
+    ;
+  return tid;
+}
+
+
+ContentStoreInterest::~ContentStoreInterest () 
+{
+}
 
 TypeId
 ContentStore::GetTypeId (void)
@@ -47,7 +70,6 @@ ContentStore::GetTypeId (void)
     .AddTraceSource ("CacheMisses", "Trace called every time there is a cache miss",
                      MakeTraceSourceAccessor (&ContentStore::m_cacheMissesTrace))
     ;
-
   return tid;
 }
 
@@ -84,6 +106,29 @@ Entry::GetContentStore ()
   return m_cs;
 }
 
+EntryInterest::EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
+  : m_cs (cs)
+  , m_interest (interest)
+{
+}
+
+const Name&
+EntryInterest::GetName () const
+{
+  return m_interest->GetName ();
+}
+
+Ptr<const Interest>
+EntryInterest::GetInterest () const
+{
+  return m_interest;
+}
+
+Ptr<ContentStoreInterest>
+EntryInterest::GetContentStoreInterest ()
+{
+  return m_cs;
+}
 
 } // namespace cs
 } // namespace ndn
