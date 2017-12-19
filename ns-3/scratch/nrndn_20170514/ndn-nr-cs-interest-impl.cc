@@ -96,7 +96,7 @@ NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 }
   
 
-Ptr<Interest>
+Ptr<Data>
 NrCsInterestImpl::Lookup (Ptr<const Interest> interest)
 {
    return 0;
@@ -164,7 +164,7 @@ NrCsInterestImpl::EndEntryInterest ()
 }
   
 Ptr<cs::Entry>
-NrCsInterestImpl::Next ()
+NrCsInterestImpl::Next (Ptr<cs::Entry>)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
