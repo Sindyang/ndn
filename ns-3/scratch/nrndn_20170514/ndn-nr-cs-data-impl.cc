@@ -86,7 +86,7 @@ NrCsImpl::DoDispose ()
 	//m_fib = 0;
   
 	ContentStore::DoDispose ();
- }
+}
   
 
 
@@ -174,19 +174,14 @@ NrCsImpl::Print (std::ostream& os) const
 }
 
 uint32_t
-NrCsImpl::GetSizeEntry () const
+NrCsImpl::GetSize () const
 {
 	return m_csContainer.size ();
 }
 
-uint32_t
-NrCsInterestImpl::GetSizeEntryInterest () const
-{
-	return 0;
-}
   
 Ptr<Entry>
-NrCsImpl::BeginEntry ()
+NrCsImpl::Begin ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
 
@@ -196,28 +191,17 @@ NrCsImpl::BeginEntry ()
 		return *(m_csContainer.begin());
 }
 
-Ptr<cs::EntryInterest>
-NrCsInterestImpl::BeginEntryInterest ()
-{
-	return 0;
-}
 
 Ptr<Entry>
-NrCsImpl::EndEntry ()
+NrCsImpl::End ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
 }
 
-Ptr<cs::EntryInterest>
-NrCsInterestImpl::EndEntryInterest ()
-{
-	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
-	return 0;
-}
   
 Ptr<Entry>
-NrCsImpl::NextEntry (Ptr<Entry> from)
+NrCsImpl::Next (Ptr<Entry> from)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
 	if (from == 0) return 0;
@@ -236,12 +220,6 @@ NrCsImpl::NextEntry (Ptr<Entry> from)
 	}
 }
 
-Ptr<cs::EntryInterest>
-NrCsInterestImpl::NextEntryInterest ()
-{
-	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
-	return 0;
-}
 
 void NrCsImpl::DoInitialize(void)
 {

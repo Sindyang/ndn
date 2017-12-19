@@ -144,45 +144,42 @@ private:
 class ContentStore : public Object
 {
 public:
-   /**
-    * \brief Interface ID
-    *
-    * \return interface ID
-    */
-    static
-    TypeId GetTypeId ();
+  /**
+   * \brief Interface ID
+   *
+   * \return interface ID
+   */
+  static
+  TypeId GetTypeId ();
 
-   /**
-    * @brief Virtual destructor
-    */
-    virtual
-    ~ContentStore ();
+  /**
+   * @brief Virtual destructor
+   */
+  virtual
+  ~ContentStore ();
 
-   /**
-    * \brief Find corresponding CS entry for the given interest
-    *
-    * \param interest Interest for which matching content store entry
-    * will be searched
-    *
-    * If an entry is found, it is promoted to the top of most recent
-    * used entries index, \see m_contentStore
-    */
-    virtual Ptr<Data>
-    Lookup (Ptr<const Interest> interest) = 0;
+  /**
+   * \brief Find corresponding CS entry for the given interest
+   *
+   * \param interest Interest for which matching content store entry
+   * will be searched
+   *
+   * If an entry is found, it is promoted to the top of most recent
+   * used entries index, \see m_contentStore
+   */
+  virtual Ptr<Data>
+  Lookup (Ptr<const Interest> interest) = 0;
 
-   /**
-    * \brief Add a new content to the content store.
-    *
-    * \param header Fully parsed Data
-    * \param packet Fully formed Ndn packet to add to content store
-    * (will be copied and stripped down of headers)
-    * @returns true if an existing entry was updated, false otherwise
-    */
-    virtual bool
-    Add (Ptr<const Data> data) = 0;
-	
-	virtual bool
-    Add (Ptr<const Interest> interest) = 0;
+  /**
+   * \brief Add a new content to the content store.
+   *
+   * \param header Fully parsed Data
+   * \param packet Fully formed Ndn packet to add to content store
+   * (will be copied and stripped down of headers)
+   * @returns true if an existing entry was updated, false otherwise
+   */
+  virtual bool
+  Add (Ptr<const Data> data) = 0;
 
   // /*
   //  * \brief Add a new content to the content store.
@@ -193,75 +190,59 @@ public:
   // virtual bool
   // Remove (Ptr<Interest> header) = 0;
 
-   /**
-    * \brief Print out content store entries
-    */
-    virtual void
-    Print (std::ostream &os) const = 0;
+  /**
+   * \brief Print out content store entries
+   */
+  virtual void
+  Print (std::ostream &os) const = 0;
 
 
-   /**
-    * @brief Get number of entries in content store
-    */
-	virtual uint32_t
-	GetSize() const = 0;
-	
-    virtual uint32_t
-    GetSizeEntry () const = 0;
-	
-	virtual uint32_t
-    GetSizeEntryInterest () const = 0;
+  /**
+   * @brief Get number of entries in content store
+   */
+  virtual uint32_t
+  GetSize () const = 0;
 
-   /**
-    * @brief Return first element of content store (no order guaranteed)
-    */
-    virtual Ptr<cs::Entry>
-    BeginEntry () = 0;
-	
-	virtual Ptr<cs::EntryInterest>
-    BeginEntryInterest () = 0;
+  /**
+   * @brief Return first element of content store (no order guaranteed)
+   */
+  virtual Ptr<cs::Entry>
+  Begin () = 0;
 
-   /**
-    * @brief Return item next after last (no order guaranteed)
-    */
-    virtual Ptr<cs::Entry>
-    EndEntry () = 0;
-	
-	virtual Ptr<cs::EntryInterest>
-    EndEntryInterest () = 0;
-	
+  /**
+   * @brief Return item next after last (no order guaranteed)
+   */
+  virtual Ptr<cs::Entry>
+  End () = 0;
 
-   /**
-    * @brief Advance the iterator
-    */
-    virtual Ptr<cs::Entry>
-    NextEntry (Ptr<cs::Entry>) = 0;
-	
-	virtual Ptr<cs::EntryInterest>
-	NextEntryInterest (Ptr<cs::EntryInterest>) = 0;
+  /**
+   * @brief Advance the iterator
+   */
+  virtual Ptr<cs::Entry>
+  Next (Ptr<cs::Entry>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
 
-   /**
-    * @brief Static call to cheat python bindings
-    */
-    static inline Ptr<ContentStore>
-    GetContentStore (Ptr<Object> node);
+  /**
+   * @brief Static call to cheat python bindings
+   */
+  static inline Ptr<ContentStore>
+  GetContentStore (Ptr<Object> node);
 
 protected:
-    TracedCallback<Ptr<const Interest>,
+  TracedCallback<Ptr<const Interest>,
                  Ptr<const Data> > m_cacheHitsTrace; ///< @brief trace of cache hits
 
-    TracedCallback<Ptr<const Interest> > m_cacheMissesTrace; ///< @brief trace of cache misses
+  TracedCallback<Ptr<const Interest> > m_cacheMissesTrace; ///< @brief trace of cache misses
 };
 
 inline std::ostream&
 operator<< (std::ostream &os, const ContentStore &cs)
 {
-    cs.Print (os);
-    return os;
+  cs.Print (os);
+  return os;
 }
 
 inline Ptr<ContentStore>

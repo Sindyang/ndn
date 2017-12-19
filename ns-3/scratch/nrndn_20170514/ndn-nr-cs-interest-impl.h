@@ -84,25 +84,22 @@ public:
   void PrintCache()const;
   
   virtual uint32_t
-  GetSizeEntry () const;
-
-  virtual uint32_t
-  GetSizeEntryInterest () const;
+  GetSize () const;
   
   virtual Ptr<cs::Entry>
-  BeginEntry ();
+  Begin ();
 
   virtual Ptr<EntryInterest>
   BeginEntryInterest ();
 
   virtual Ptr<cs::Entry>
-  EndEntry ();
+  End ();
 	
   virtual Ptr<EntryInterest>
   EndEntryInterest ();
   
   virtual Ptr<cs::Entry>
-  NextEntry (Ptr<cs::Entry>);
+  Next(Ptr<cs::Entry>);
 
   virtual Ptr<EntryInterest>
   NextEntryInterest (Ptr<EntryInterest>);

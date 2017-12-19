@@ -122,20 +122,15 @@ NrCsInterestImpl::PrintCache () const
 	std::cout<<std::endl;
 }
 
-uint32_t
-NrCsInterestImpl::GetSizeEntry () const
-{
-	return 0;
-}
 
 uint32_t
-NrCsInterestImpl::GetSizeEntryInterest () const
+NrCsInterestImpl::GetSize () const
 {
 	return m_csInterestContainer.size ();
 }
 
 Ptr<cs::Entry>
-NrCsInterestImpl::BeginEntry ()
+NrCsInterestImpl::Begin ()
 {
 	return 0;
 }
@@ -151,7 +146,7 @@ NrCsInterestImpl::BeginEntryInterest ()
 }
 
 Ptr<cs::Entry>
-NrCsInterestImpl::EndEntry ()
+NrCsInterestImpl::End ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
@@ -165,7 +160,7 @@ NrCsInterestImpl::EndEntryInterest ()
 }
   
 Ptr<cs::Entry>
-NrCsInterestImpl::NextEntry ()
+NrCsInterestImpl::Next ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;

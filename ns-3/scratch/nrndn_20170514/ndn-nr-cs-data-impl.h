@@ -82,29 +82,15 @@ public:
   virtual void
   Print (std::ostream &os) const;
 
-  virtual uint32_t
-  GetSizeEntry () const;
+  virtual Ptr<Entry>
+  Begin ();
   
-  virtual uint32_t
-  GetSizeEntryInterest () const;
+  virtual Ptr<Entry>
+  End ();
 
   virtual Ptr<Entry>
-  BeginEntry ();
+  Next (Ptr<Entry>);
   
-  virtual Ptr<EntryInterest>
-  BeginEntryInterest ();
-
-  virtual Ptr<Entry>
-  EndEntry ();
-  
-  virtual Ptr<EntryInterest>
-  EndEntryInterest ();
-
-  virtual Ptr<Entry>
-  NextEntry (Ptr<Entry>);
-  
-  virtual Ptr<EntryInterest>
-  NextEntryInterest (Ptr<EntryInterest>);
 
   /**
      * \brief Add a new content to the content store.
@@ -116,8 +102,6 @@ public:
      */
   virtual bool
   Add (Ptr<const Data> data);
-
-
 
 protected:
   // inherited from Object class
