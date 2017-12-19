@@ -113,7 +113,7 @@ public:
      * @returns true if an existing EntryInterest was updated, false otherwise
      */
   virtual bool
-  Add (Ptr<const Interest> Interest);
+  AddInterest (Ptr<const Interest> Interest);
   
   virtual bool
   Add (Ptr<const Data> data);
