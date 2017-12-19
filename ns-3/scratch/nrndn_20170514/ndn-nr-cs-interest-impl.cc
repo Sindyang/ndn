@@ -64,6 +64,10 @@ bool NrCsInterestImpl::Add(Ptr<const Interest> interest)
 	return true;
 }
 
+bool NrCsInterestImpl::Add (Ptr<const Data> data)
+{
+	return false;
+}
 
 void
 NrCsInterestImpl::DoDispose ()
