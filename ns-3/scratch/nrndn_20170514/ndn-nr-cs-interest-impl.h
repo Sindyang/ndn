@@ -84,16 +84,16 @@ public:
   void PrintCache()const;
 
   virtual uint32_t
-  GetSize () const;
+  GetSizeEntryInterest () const;
 
   virtual Ptr<cs::EntryInterest>
-  Begin ();
+  BeginEntryInterest ();
 
   virtual Ptr<cs::EntryInterest>
-  End ();
+  EndEntryInterest ();
 
   virtual Ptr<cs::EntryInterest>
-  Next (Ptr<cs::EntryInterest>);
+  NextEntryInterest (Ptr<cs::EntryInterest>);
 
   /**
      * \brief Add a new content to the content store.

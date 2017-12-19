@@ -128,13 +128,13 @@ NrCsInterestImpl::PrintCache () const
 }
 
 uint32_t
-NrCsInterestImpl::GetSize () const
+NrCsInterestImpl::GetSizeEntryInterest () const
 {
 	return m_csInterestContainer.size ();
 }
   
 Ptr<cs::EntryInterest>
-NrCsInterestImpl::Begin ()
+NrCsInterestImpl::BeginEntryInterest ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
 	if(m_csInterestContainer.begin() == m_csInterestContainer.end())
@@ -144,14 +144,14 @@ NrCsInterestImpl::Begin ()
 }
 
 Ptr<cs::EntryInterest>
-NrCsInterestImpl::End ()
+NrCsInterestImpl::EndEntryInterest ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
 }
   
 Ptr<cs::EntryInterest>
-NrCsInterestImpl::Next (Ptr<cs::EntryInterest> from)
+NrCsInterestImpl::NextEntryInterest (Ptr<cs::EntryInterest> from)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
 	if (from == 0) return 0;
