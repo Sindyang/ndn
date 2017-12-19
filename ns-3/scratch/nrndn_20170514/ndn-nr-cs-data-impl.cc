@@ -46,6 +46,10 @@ NrCsImpl::GetTypeId ()
   return tid;
 }
 
+NrCsImpl::NrCsImpl ()
+{
+}
+
 NrCsImpl::~NrCsImpl ()
 {
 }
