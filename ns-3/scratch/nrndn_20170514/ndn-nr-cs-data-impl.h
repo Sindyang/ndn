@@ -102,6 +102,9 @@ public:
      */
   virtual bool
   Add (Ptr<const Data> data);
+  
+  virtual uint32_t
+  GetSize () const;
 
 protected:
   // inherited from Object class

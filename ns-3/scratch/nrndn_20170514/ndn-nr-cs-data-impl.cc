@@ -186,7 +186,7 @@ NrCsImpl::Begin ()
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
 
 	if(m_csContainer.begin() == m_csContainer.end())
-		return EndEntry();
+		return End();
 	else
 		return *(m_csContainer.begin());
 }
@@ -209,12 +209,12 @@ NrCsImpl::Next (Ptr<Entry> from)
 	std::vector<Ptr<Entry> >::iterator it;
 	it = find(m_csContainer.begin(),m_csContainer.end(),from);
 	if(it==m_csContainer.end())
-		return EndEntry();
+		return End();
 	else
 	{
 		++it;
 		if(it==m_csContainer.end())
-			return EndEntry();
+			return End();
 		else
 			return *it;
 	}
