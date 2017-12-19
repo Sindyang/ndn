@@ -52,13 +52,13 @@ namespace cs {
 
 /**
  * @ingroup ndn-cs
- * @brief NDN content store entry
+ * @brief NDN content store EntryInterest
  */
-class Entry : public SimpleRefCount<Entry>
+class EntryInterest : public SimpleRefCount<EntryInterest>
 {
 public:
   /**
-   * \brief Construct content store entry
+   * \brief Construct content store EntryInterest
    *
    * \param header Parsed Interest header
    * \param packet Original Ndn packet
@@ -66,30 +66,30 @@ public:
    * The constructor will make a copy of the supplied packet and calls
    * RemoveHeader and RemoveTail on the copy.
    */
-  Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
+  EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest);
 
   /**
-   * \brief Get prefix of the stored entry
-   * \returns prefix of the stored entry
+   * \brief Get prefix of the stored EntryInterest
+   * \returns prefix of the stored EntryInterest
    */
   const Name&
   GetName () const;
 
   /**
-   * \brief Get Data of the stored entry
-   * \returns Data of the stored entry
+   * \brief Get Data of the stored EntryInterest
+   * \returns Data of the stored EntryInterest
    */
   Ptr<const Interest>
   GetInterest () const;
 
   /**
-   * @brief Get pointer to access store, to which this entry is added
+   * @brief Get pointer to access store, to which this EntryInterest is added
    */
   Ptr<ContentStoreInterest>
   GetContentStoreInterest ();
 
 private:
-  Ptr<ContentStoreInterest> m_cs; ///< \brief content store to which entry is added
+  Ptr<ContentStoreInterest> m_cs; ///< \brief content store to which EntryInterest is added
   Ptr<const Interest> m_interest; ///< \brief non-modifiable Data
 };
 
@@ -120,12 +120,12 @@ public:
   ~ContentStoreInterest ();
 
   /**
-   * \brief Find corresponding CS entry for the given interest
+   * \brief Find corresponding CS EntryInterest for the given interest
    *
-   * \param interest Interest for which matching content store entry
+   * \param interest Interest for which matching content store EntryInterest
    * will be searched
    *
-   * If an entry is found, it is promoted to the top of most recent
+   * If an EntryInterest is found, it is promoted to the top of most recent
    * used entries index, \see m_contentStore
    */
   //virtual Ptr<Data>
@@ -137,7 +137,7 @@ public:
    * \param header Fully parsed Data
    * \param packet Fully formed Ndn packet to add to content store
    * (will be copied and stripped down of headers)
-   * @returns true if an existing entry was updated, false otherwise
+   * @returns true if an existing EntryInterest was updated, false otherwise
    */
   virtual bool
   Add (Ptr<const Interest> interest) = 0;
@@ -145,8 +145,8 @@ public:
   // /*
   //  * \brief Add a new content to the content store.
   //  *
-  //  * \param header Interest header for which an entry should be removed
-  //  * @returns true if an existing entry was removed, false otherwise
+  //  * \param header Interest header for which an EntryInterest should be removed
+  //  * @returns true if an existing EntryInterest was removed, false otherwise
   //  */
   // virtual bool
   // Remove (Ptr<Interest> header) = 0;
@@ -167,20 +167,20 @@ public:
   /**
    * @brief Return first element of content store (no order guaranteed)
    */
-  virtual Ptr<cs::Entry>
+  virtual Ptr<cs::EntryInterest>
   Begin () = 0;
 
   /**
    * @brief Return item next after last (no order guaranteed)
    */
-  virtual Ptr<cs::Entry>
+  virtual Ptr<cs::EntryInterest>
   End () = 0;
 
   /**
    * @brief Advance the iterator
    */
-  virtual Ptr<cs::Entry>
-  Next (Ptr<cs::Entry>) = 0;
+  virtual Ptr<cs::EntryInterest>
+  Next (Ptr<cs::EntryInterest>) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////

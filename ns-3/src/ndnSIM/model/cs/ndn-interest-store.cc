@@ -32,7 +32,7 @@ NS_LOG_COMPONENT_DEFINE ("ndn.cs.ContentStoreInterest");
 namespace ns3 {
 namespace ndn {
 
-NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterest);
+NS_OBJECT_ENSURE_REGISTERED (ContentStoreInterestContentStoreInterest);
 
 TypeId
 ContentStoreInterest::GetTypeId (void)
@@ -60,26 +60,26 @@ namespace cs {
 
 //////////////////////////////////////////////////////////////////////
 
-Entry::Entry (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
+EntryInterest::EntryInterest (Ptr<ContentStoreInterest> cs, Ptr<const Interest> interest)
   : m_cs (cs)
   , m_interest (interest)
 {
 }
 
 const Name&
-Entry::GetName () const
+EntryInterest::GetName () const
 {
   return m_interest->GetName ();
 }
 
 Ptr<const Interest>
-Entry::GetInterest () const
+EntryInterest::GetInterest () const
 {
   return m_interest;
 }
 
 Ptr<ContentStoreInterest>
-Entry::GetContentStoreInterest ()
+EntryInterest::GetContentStoreInterest ()
 {
   return m_cs;
 }
