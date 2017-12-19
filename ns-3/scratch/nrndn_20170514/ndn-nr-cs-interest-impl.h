@@ -26,6 +26,7 @@ namespace ns3
 {
 namespace ndn
 {
+class ContentStoreInterest;
 namespace cs
 {
 namespace nrndn
