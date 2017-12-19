@@ -32,7 +32,7 @@ NrCsInterestImpl::GetTypeId ()
 {
   static TypeId tid = TypeId ("ns3::ndn::cs::nrndn::NrCsInterestImpl")
     .SetGroupName ("Ndn")
-    .SetParent<ContentStoreInterest> ()
+    .SetParent<ContentStore> ()
     .AddConstructor< NrCsInterestImpl > ()
     ;
   return tid;
@@ -56,7 +56,7 @@ NrCsInterestImpl::NotifyNewAggregate ()
 	{
 		m_forwardingStrategy = GetObject<ForwardingStrategy>();
 	}
-  ContentStoreInterest::NotifyNewAggregate ();
+  ContentStore::NotifyNewAggregate ();
 }
 
 
@@ -74,7 +74,7 @@ void
 NrCsInterestImpl::DoDispose ()
 {
 	m_forwardingStrategy = 0;
-	ContentStoreInterest::DoDispose ();
+	ContentStore::DoDispose ();
 }
   
   
@@ -189,7 +189,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 
 void NrCsInterestImpl::DoInitialize(void)
 {
-	ContentStoreInterest::DoInitialize();
+	ContentStore::DoInitialize();
 }
 
 } /* namespace nrndn */
