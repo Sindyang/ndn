@@ -138,7 +138,7 @@ NrCsInterestImpl::BeginEntryInterest ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
 	if(m_csInterestContainer.begin() == m_csInterestContainer.end())
-		return End();
+		return EndEntryInterest();
 	else
 		return *(m_csInterestContainer.begin());
 }
@@ -159,12 +159,12 @@ NrCsInterestImpl::NextEntryInterest (Ptr<cs::EntryInterest> from)
 	std::vector<Ptr<cs::EntryInterest> >::iterator it;
 	it = find(m_csInterestContainer.begin(),m_csInterestContainer.end(),from);
 	if(it==m_csInterestContainer.end())
-		return End();
+		return EndEntryInterest();
 	else
 	{
 		++it;
 		if(it==m_csInterestContainer.end())
-			return End();
+			return EndEntryInterest();
 		else
 			return *it;
 	}
