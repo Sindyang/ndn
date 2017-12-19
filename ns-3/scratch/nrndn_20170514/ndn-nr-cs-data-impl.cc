@@ -46,8 +46,7 @@ NrCsImpl::GetTypeId ()
   return tid;
 }
 
-NrCsImpl::NrCsImpl ():
-		m_cleanInterval(Seconds(300.0))
+NrCsImpl::NrCsImpl ()
 {
 }
 
@@ -59,30 +58,10 @@ NrCsImpl::~NrCsImpl ()
 void
 NrCsImpl::NotifyNewAggregate ()
 {
-	////delete by DJ on Dec 27,2015:no fib itself
-	/*if (m_fib == 0)
-	{
-		m_fib = GetObject<Fib>();
-	}*/
 	if (m_forwardingStrategy == 0)
 	{
 		m_forwardingStrategy = GetObject<ForwardingStrategy>();
 	}
-
-	/*if (m_sensor == 0)
-	{
-		m_sensor = GetObject<ndn::nrndn::NodeSensor>();
-		// Setup Lane change action
-		if (m_sensor != NULL)
-		{
-			m_sensor->TraceConnectWithoutContext("LaneChange",
-					MakeCallback(&NrCsImpl::laneChange, this));
-
-			//NrFibEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
-			InitializeNrFibEntry();
-		}
-	}*/
-
   ContentStore::NotifyNewAggregate ();
 }
 

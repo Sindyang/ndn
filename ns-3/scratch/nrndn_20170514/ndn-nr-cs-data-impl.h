@@ -116,10 +116,8 @@ protected:
 
 
 private:
-  Time m_cleanInterval;
   Ptr<ForwardingStrategy>		m_forwardingStrategy;
   std::vector<Ptr<Entry> >		m_csContainer;
-  Ptr<ndn::nrndn::NodeSensor>	m_sensor;
 
   //friend class EntryNrImpl;
 

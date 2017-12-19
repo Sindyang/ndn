@@ -1531,21 +1531,20 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 
 void NavigationRouteHeuristic::NotifyNewAggregate()
 {
+	if (m_sensor == 0)
+    {
+		//cout<<"(forwarding.cc-NotifyNewAggregate)新建NodeSensor"<<endl;
+	    m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
+    }
 
-  if (m_sensor == 0)
-  {
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)新建NodeSensor"<<endl;
-	  m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
-  }
-
-  if (m_nrpit == 0)
-  {
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
-	  Ptr<Pit> pit=GetObject<Pit>();
-	  if(pit)
-		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
-	  //cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
-  }
+    if (m_nrpit == 0)
+    {
+		//cout<<"(forwarding.cc-NotifyNewAggregate)新建PIT表"<<endl;
+	    Ptr<Pit> pit=GetObject<Pit>();
+	    if(pit)
+			m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
+	    //cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+    }
   
   //2017.12.18 added by sy
   /*if(m_csinterest == 0)
@@ -1560,13 +1559,24 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 	  
   }*/
   
-  if(m_node==0)
-  {
-	 // cout<<"(forwarding.cc-NotifyNewAggregate)新建Node"<<endl;
-	  m_node=GetObject<Node>();
-  }
+    if (m_csdata == 0)
+    {
+		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
+   	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
+   	    if(csdata)
+		{
+			m_csdata = DynamicCast<cs::nrndn::NrCsImpl>(csdata);
+			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+		}
+    }
+  
+    if(m_node==0)
+    {
+	    // cout<<"(forwarding.cc-NotifyNewAggregate)新建Node"<<endl;
+	    m_node=GetObject<Node>();
+    }
 
-  super::NotifyNewAggregate ();
+    super::NotifyNewAggregate ();
 }
 
 void
