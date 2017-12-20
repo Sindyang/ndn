@@ -144,7 +144,7 @@ NrCsInterestImpl::PrintCache () const
 }
 
 void
-NrCsInterestImpl::PrintEntryInterest(uint32_t nonce) const
+NrCsInterestImpl::PrintEntryInterest(uint32_t nonce) 
 {
 	Ptr<cs::EntryInterest> csEntryInterest = Find(nonce);
 	Ptr<const Interest> interest = csEntryInterest->GetInterest();

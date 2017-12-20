@@ -71,7 +71,7 @@ public:
   
   void PrintCache() const;
   
-  void PrintEntryInterest(uint32_t nonce) const;
+  void PrintEntryInterest(uint32_t nonce) ;
   
   virtual uint32_t
   GetSize () const;
