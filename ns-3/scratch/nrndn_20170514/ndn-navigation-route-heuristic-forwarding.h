@@ -388,7 +388,7 @@ private:
 	 *          Broadcast stop message
 	 *          2017.12.18 added by sy
 	 */
-	void CachingInterestPacket(Ptr<Interest> interest);
+	void CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest);
 
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire

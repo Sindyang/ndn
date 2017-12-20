@@ -518,7 +518,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				{
 					cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					getchar();
-					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest);
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				}
 				else
 				{
@@ -1355,15 +1355,17 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	eventid.Cancel();
 }
 
-void NavigationRouteHeuristic::CachingInterestPacket(Ptr<Interest> interest)
+void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest)
 {
 	//获取兴趣的随机编码
-	uint32_t seq = interest->GetNonce();
-	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"缓存兴趣包 "<<seq<<endl;
-	m_csinterest->AddInterest(interest);
-	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<"已缓存兴趣包"<<endl;
+	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"缓存兴趣包 "<<nonce<<endl;
+	bool result = m_csinterest->AddInterest(nonce,interest);
+	if(result)
+	{
+		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<"已缓存兴趣包"<<endl;
+		BroadcastStopMessage(interest);
+	}
 	getchar();
-	BroadcastStopMessage(interest);
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
@@ -1549,23 +1551,23 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   
     if (m_csdata == 0)
     {
-		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
+		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
    	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
    	    if(csdata)
 		{
 			m_csdata = DynamicCast<cs::nrndn::NrCsImpl>(csdata);
-			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 		}
     }
 	
 	if (m_csinterest == 0)
 	{
-		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
+		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
    	    Ptr<ContentStore> csinterest=GetObject<ContentStore>();
    	    if(csinterest)
 		{
 			m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
-			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 		}
 	}
   

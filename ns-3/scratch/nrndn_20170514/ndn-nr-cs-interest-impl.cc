@@ -60,11 +60,18 @@ NrCsInterestImpl::NotifyNewAggregate ()
 }
 
 
-bool NrCsInterestImpl::AddInterest(Ptr<const Interest> interest)
+bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 {
+	
 	std::cout<<"(NrCsInterestImpl-Add)"<<std::endl;
-    Ptr<cs::EntryInterest> csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
-    m_csInterestContainer.push_back(csEntryInterest);
+	Ptr<cs::EntryInterest> csEntryInterest = Find(nonce);
+	if(csEntryInterest != 0)
+	{
+		PrintEntryInterest(nonce);
+		return false;
+	}
+    csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
+    m_csInterestContainer[nonce] = csEntryInterest;
 	PrintCache();
 	return true;
 }
@@ -84,19 +91,16 @@ NrCsInterestImpl::DoDispose ()
   
   
 Ptr<cs::EntryInterest>
-NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
+NrCsInterestImpl::Find(const uint32_t nonce)
 {
-	std::vector<Ptr<cs::EntryInterest> >::iterator it;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
-		Ptr<const Interest> interest = (*it)->GetInterest();
-		ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t nodeId = nrheader.getSourceId();
-		
-		if(interest->GetNonce()==nonce && nodeId == sourceId)
-			return *it;
+		if(it->first == nonce)
+		{
+			return it->second;
+		}
 	}
 	return 0;
 }
@@ -124,14 +128,34 @@ NrCsInterestImpl::Print (std::ostream& os) const
 void
 NrCsInterestImpl::PrintCache () const
 {
-	std::vector<Ptr<cs::EntryInterest> >::const_iterator it; 
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::const_iterator it; 
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
-		std::cout<<(*it)->GetInterest()->GetNonce()<<" "<<(*it)->GetName().toUri()<<std::endl;
+		Ptr<const Interest> interest = it->second->GetInterest();
+		Ptr<const Packet> nrPayload	= interest->GetPayload();
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader(nrheader);
+		//获取发送兴趣包节点的ID
+		uint32_t nodeId = nrheader.getSourceId();
+		std::cout<<"(cs-interest.cc-PrintCache) 兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
+		<<" 兴趣包的名字为 "<<it->second->GetName().toUri()<<std::endl;
 	}
 	std::cout<<std::endl;
 }
 
+void
+NrCsInterestImpl::PrintEntryInterest(uint32_t nonce) const
+{
+	Ptr<cs::EntryInterest> csEntryInterest = Find(nonce);
+	Ptr<const Interest> interest = csEntryInterest->GetInterest();
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	std::cout<<"(cs-interest.cc-PrintEntryInterest) 兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
+	<<" 兴趣包的名字为 "<<csEntryInterest->GetName().toUri()<<std::endl;
+}
 
 uint32_t
 NrCsInterestImpl::GetSize () const
@@ -153,7 +177,7 @@ NrCsInterestImpl::BeginEntryInterest ()
 	if(m_csInterestContainer.begin() == m_csInterestContainer.end())
 		return EndEntryInterest();
 	else
-		return *(m_csInterestContainer.begin());
+		return m_csInterestContainer.begin()->second;
 }
 
 //abandon
@@ -180,37 +204,15 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 	return 0;
 }
 
-
-Ptr<cs::EntryInterest>
-NrCsInterestImpl::NextEntryInterest (Ptr<cs::EntryInterest> from)
-{
-	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
-	if (from == 0) 
-		return 0;
-
-	std::vector<Ptr<cs::EntryInterest> >::iterator it;
-	it = find(m_csInterestContainer.begin(),m_csInterestContainer.end(),from);
-	if(it==m_csInterestContainer.end())
-		return EndEntryInterest();
-	else
-	{
-		++it;
-		if(it==m_csInterestContainer.end())
-			return EndEntryInterest();
-		else
-			return *it;
-	}
-}
-
-
+//还未添加删除操作
 std::vector<Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	std::vector<Ptr<const Interest> > InterestCollection;
-	std::vector<Ptr<cs::EntryInterest> >::iterator it;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
-		Ptr<const Interest> interest = (*it)->GetInterest();
+		Ptr<const Interest> interest = it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
 		if(routes.front() == lane)
 			InterestCollection.push_back(interest);
