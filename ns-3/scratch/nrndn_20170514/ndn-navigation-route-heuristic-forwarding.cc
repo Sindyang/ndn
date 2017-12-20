@@ -1358,11 +1358,11 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest)
 {
 	//获取兴趣的随机编码
-	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"缓存兴趣包 "<<nonce<<endl;
+	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 缓存兴趣包 "<<nonce<<endl;
 	bool result = m_csinterest->AddInterest(nonce,interest);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<"已缓存兴趣包"<<endl;
+		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包"<<endl;
 		BroadcastStopMessage(interest);
 	}
 	getchar();

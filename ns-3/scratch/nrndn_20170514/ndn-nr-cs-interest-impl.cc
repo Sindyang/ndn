@@ -62,17 +62,22 @@ NrCsInterestImpl::NotifyNewAggregate ()
 
 bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 {
-	
-	std::cout<<"(NrCsInterestImpl-Add)"<<std::endl;
 	Ptr<cs::EntryInterest> csEntryInterest = Find(nonce);
 	if(csEntryInterest != 0)
 	{
+		std::cout<<"()"<<std::endl;
 		PrintEntryInterest(nonce);
 		return false;
 	}
+	uint32_t size = GetSize();
+	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包前的缓存大小为 "<<size<<std::endl;
     csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
     m_csInterestContainer[nonce] = csEntryInterest;
-	PrintCache();
+	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 兴趣包已经添加到了缓存中"<<std::endl;
+	size = GetSize();
+	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
+	PrintEntryInterest(nonce);
+	
 	return true;
 }
 
@@ -128,6 +133,7 @@ NrCsInterestImpl::Print (std::ostream& os) const
 void
 NrCsInterestImpl::PrintCache () const
 {
+	std::cout<<"(NrCsInterestImpl.cc-PrintCache.cc)"<<std::endl;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::const_iterator it; 
 	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
 	{
@@ -137,7 +143,7 @@ NrCsInterestImpl::PrintCache () const
 		nrPayload->PeekHeader(nrheader);
 		//获取发送兴趣包节点的ID
 		uint32_t nodeId = nrheader.getSourceId();
-		std::cout<<"(cs-interest.cc-PrintCache) 兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
+		std::cout<<"兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
 		<<" 兴趣包的名字为 "<<it->second->GetName().toUri()<<std::endl;
 	}
 	std::cout<<std::endl;
@@ -204,19 +210,30 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 	return 0;
 }
 
-//还未添加删除操作
+
 std::vector<Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	std::vector<Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
-	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
+	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
 		if(routes.front() == lane)
+		{
+			PrintEntryInterest(interest->GetNonce());
 			InterestCollection.push_back(interest);
+			m_csInterestContainer.erase(it++);
+		}
+		else
+		{
+			it++;
+		}
+			
 	}
+	uint32_t size = GetSize();
+	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
 	return InterestCollection;
 }
 
