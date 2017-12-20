@@ -102,7 +102,7 @@ std::string NrPitImpl::getCurrentLane()
 bool 
 NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
-	std::cout<<"UpdateCarPit"<<std::endl;
+	//std::cout<<"UpdateCarPit"<<std::endl;
 	showPit();
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
@@ -114,7 +114,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 			std::find(route.begin(),route.end(),head->toUri());
 			
 	//当前路段为：uriConvertToString(head->toUri())
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
 	
 	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
 	//找不到
@@ -124,20 +124,20 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
 		if(pitName.toUri() == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 		else
 			break;
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)添加后 NodeId "<<id<<std::endl;
-	showPit();
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)添加后 NodeId "<<id<<std::endl;
+	//showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
 	NS_LOG_DEBUG("update Carpit:"<<os.str());

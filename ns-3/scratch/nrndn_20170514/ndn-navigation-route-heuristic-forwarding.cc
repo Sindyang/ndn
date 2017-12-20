@@ -257,7 +257,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) numsofvehicles "<<numsofvehicles<<endl;
+	//cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) numsofvehicles "<<numsofvehicles<<endl;
 	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
@@ -273,7 +273,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		{
 			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second >= 0)
+			if(result.first && result.second > 0)
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
 			}
@@ -284,6 +284,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		{
 			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//若result.second >= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second > 0)
 			{
 				sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -309,7 +310,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	cout<<endl;
 	//getchar();
 	return PriorityList;
-}
+} 
 
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
@@ -396,10 +397,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	if(myNodeId >= 101)
-	{
-		//getchar();
-	}
 	if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
@@ -1365,13 +1362,19 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包"<<endl;
 		BroadcastStopMessage(interest);
 	}
+	else
+	{
+		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
+		NS_ASSERT_MSG(result == false,"该兴趣包已经位于缓存中");
+	}
 	getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 {
 	if(!m_running) return;
-	cout<<"进入(forwarding.cc-BroadcastStopMessage) 广播停止的消息为 "<<src->GetName().toUri() <<endl;
+	cout<<"(forwarding.cc-BroadcastStopMessage) 节点 "<<m_node->GetId()<<" 广播停止转发兴趣包的消息 "<<src->GetNonce()<<endl;
+	cout<<"(forwarding.cc-BroadcastStopMessage) 兴趣包的名字为 "<<src->GetName().toUri() <<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the interest packet
 	Ptr<Interest> interest = Create<Interest> (*src);
@@ -1671,17 +1674,29 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	if(sourceId >= 101)
-	{
-		//getchar();
-	}
-	
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
+	uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
+	uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
+	
+	//前方道路从无车辆到有车辆
+	if(nums_car_pre == 0 && nums_car_current > 0)
+	{
+		//有兴趣包在缓存中
+		if(m_csinterest->GetSize() > 0)
+		{
+			const string& localLane = m_sensor->getLane();
+			//获得缓存的兴趣包
+			vector<Ptr<Interest>> interestcollection = m_csinterest->GetInterest(localLane);
+			
+		}
+	}
+
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
+	
 	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
@@ -1691,7 +1706,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	else if(m_preNB.getNb().size()>m_nb.getNb().size())
 	{
 		m_nbChange_mode = 1;
-		//cout<<"邻居减少"<<endl;
+		//cout<<"邻居减少"<<endl;f
 	}
 	else
 	{
@@ -1805,6 +1820,46 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	m_preNB = m_nb;
 	//cout<<endl;
+}
+
+uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
+{
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	uint32_t num = 0;
+	
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
+	{
+		//判断车辆与RSU的位置关系
+		if(nb->first >= numsofvehicles)
+		{
+			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
+			{
+				num += 1;
+			}
+			//getchar();
+		}
+		//判断车辆与其他车辆的位置关系
+		else
+		{
+			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//若result.second >= 0,会将自身加入转发优先级列表中
+			if(result.first && result.second > 0)
+			{
+				num += 1;
+			}
+		}
+	}
+	return num;
+}
+
+
+//发送缓存的兴趣包
+void NavigationRouteHeuristic::SendInterestInCache(std::vector<Ptr<Interest>> interestcollection)
+{
+	
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
