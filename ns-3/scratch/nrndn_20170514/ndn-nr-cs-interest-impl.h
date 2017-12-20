@@ -69,9 +69,9 @@ public:
   virtual void
   Print (std::ostream &os) const;
   
-  void PrintCache()const;
+  void PrintCache() const;
   
-  void PrintEntryInterest(uint32_t nonce);
+  void PrintEntryInterest(uint32_t nonce) const;
   
   virtual uint32_t
   GetSize () const;
