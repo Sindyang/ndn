@@ -93,6 +93,11 @@ private:
   Ptr<const Data> m_data; ///< \brief non-modifiable Data
 };
 
+/**
+ * 2017.12.19
+ * Added by sy
+ * EntryInterest为存放兴趣包的表项
+ */
 class EntryInterest : public SimpleRefCount<Entry>
 {
 public:

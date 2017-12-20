@@ -1,8 +1,8 @@
 /*
  * ndn-nr-cs-impl.h
  *
- *  Created on: Jan 2, 2016
- *      Author: DJ
+ *  Created on: Dec. 19, 2017
+ *      Author: WSY
  */
 
 #ifndef NDN_NR_CS_IMPL_H_
@@ -62,15 +62,6 @@ public:
   virtual Ptr<Entry>
   Find (const Name &prefix);
 
-  //abandon
- /* virtual Ptr<Entry>
-  Create (Ptr<const Interest> header);
-*/
-
-  //question by DJ on Jan 2,2016:cs need to be modified?
-  //replace NrFibImpl::Create
-  //bool
-  //InitializeNrFibEntry ();
 
   virtual Ptr<Data>
   Lookup (Ptr<const Interest> interest);
@@ -113,15 +104,9 @@ protected:
   virtual void DoInitialize(void);
 
 
-
 private:
   Ptr<ForwardingStrategy>		m_forwardingStrategy;
   std::vector<Ptr<Entry> >		m_csContainer;
-
-  //friend class EntryNrImpl;
-
-  //delete by DJ on Dec 27,2015:no need to link to itself
-  //Ptr<Fib> m_fib; ///< \brief Link to FIB table(Useless, Just for compatibility)
 };
 
 

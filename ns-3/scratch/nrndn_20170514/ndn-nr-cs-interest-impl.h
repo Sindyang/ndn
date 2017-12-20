@@ -2,7 +2,7 @@
  * ndn-nr-cs-interest-impl.h
  *
  *  Created on: Dec 18, 2017
- *      Author: WSY
+ *  Author: WSY
  */
 
 #ifndef NDN_NR_CS_INTEREST_IMPL_H_
@@ -46,9 +46,6 @@ public:
    */
   static TypeId GetTypeId ();
 
-  /**
-   * \brief FIB constructor
-   */
   NrCsInterestImpl();
 
   /**
@@ -61,15 +58,6 @@ public:
   virtual Ptr<EntryInterest>
   Find (const uint32_t nonce,const uint32_t sourceId);
 
-  //abandon
- /* virtual Ptr<EntryInterest>
-  Create (Ptr<const Interest> header);
-*/
-
-  //question by DJ on Jan 2,2016:cs need to be modified?
-  //replace NrFibImpl::Create
-  //bool
-  //InitializeNrFibEntryInterest ();
 
   virtual Ptr<Data>
   Lookup (Ptr<const Interest> interest);
@@ -86,18 +74,21 @@ public:
   virtual uint32_t
   GetSize () const;
   
+  //abandon
   virtual Ptr<cs::Entry>
   Begin ();
 
   virtual Ptr<EntryInterest>
   BeginEntryInterest ();
 
+  //abandon
   virtual Ptr<cs::Entry>
   End ();
 	
   virtual Ptr<EntryInterest>
   EndEntryInterest ();
   
+  //abandon
   virtual Ptr<cs::Entry>
   Next(Ptr<cs::Entry>);
 
@@ -105,7 +96,7 @@ public:
   NextEntryInterest (Ptr<EntryInterest>);
 
   /**
-     * \brief Add a new content to the content store.
+     * \brief Add a new Interest to the interest store.
      *
      * \param header Fully parsed Data
      * \param packet Fully formed Ndn packet to add to content store
@@ -115,6 +106,7 @@ public:
   virtual bool
   AddInterest (Ptr<const Interest> Interest);
   
+  //abandon
   virtual bool
   Add (Ptr<const Data> data);
   
@@ -141,4 +133,4 @@ private:
 } /* namespace ndn */
 } /* namespace ns3 */
 
-#endif /* NDN_INTEREST_STORE_H */
+#endif /* NDN_NR_CS_INTEREST_IMPL_H_ */

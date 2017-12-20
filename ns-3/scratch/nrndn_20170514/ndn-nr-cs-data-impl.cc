@@ -1,15 +1,11 @@
 /*
  * ndn-nr-cs-impl.cc
  *
- *  Created on: Jan 2, 2016
- *      Author: DJ
+ *  Created on: Dec 19, 2017
+ *      Author: WSY
  */
 
 #include "ndn-nr-cs-data-impl.h"
-//#include "ndn-fib-entry-nrimpl.h"
-//#include "NodeSensor.h"
-
-
 #include "ns3/log.h"
 
 NS_LOG_COMPONENT_DEFINE ("ndn.cs.NrCsImpl");
@@ -37,10 +33,6 @@ NrCsImpl::GetTypeId ()
     .SetGroupName ("Ndn")
     .SetParent<ContentStore> ()
     .AddConstructor< NrCsImpl > ()
-    //.AddAttribute ("CleanInterval", "cleaning interval of the timeout incoming faces of FIB entry",
-   		//	                    TimeValue (Seconds (10)),
-   			//                    MakeTimeAccessor (&NrCsImpl::m_cleanInterval),
-   			  //                  MakeTimeChecker ())
     ;
 
   return tid;
@@ -64,8 +56,6 @@ NrCsImpl::NotifyNewAggregate ()
 	}
   ContentStore::NotifyNewAggregate ();
 }
-
-
 
 
 bool NrCsImpl::Add (Ptr<const Data> data)
@@ -92,10 +82,7 @@ NrCsImpl::DoDispose ()
 	ContentStore::DoDispose ();
 }
   
-
-
   
-//need to modify by DJ Dec 25,2015. Fib update according to source packet.
 Ptr<Entry>
 NrCsImpl::Find (const Name &prefix)
 {
@@ -111,44 +98,7 @@ NrCsImpl::Find (const Name &prefix)
 	return 0;
 }
   
-//modify by DJ Dec 25,2015. Fib update according to source packet.
-/*Ptr<Entry>
-NrCsImpl::Create (Ptr<const Data> header)
- {
 
-	NS_LOG_DEBUG (header->GetName ());
-	NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Create (Ptr<const Data> header) "
-			"should not be invoked, use "
-			"NrCsImpl::CreateNrCsEntry instead");
-	return 0;
-}*/
-
-//need to modify by DJ Dec 25,2015. Fib update according to source packet.
-/*bool
-NrCsImpl::InitializeNrFibEntry()
-{
-	NS_LOG_FUNCTION (this);
-	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
-	std::vector<std::string>::const_iterator rit;
-	for(rit=route.begin();rit!=route.end();++rit)
-	{
-		Ptr<Name> name = ns3::Create<Name>('/'+*rit);
-		Ptr<Data> data=ns3::Create<Data> ();
-		//Ptr<Interest> interest=ns3::Create<Interest> ();
-		//interest->SetInterestLifetime();
-		data->SetName				(name);
-		//by DJ on Dec 27,2015:setLifeTime
-		//data->SetInterestLifetime	(Time::Max());//never expire
-
-		//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using fibEntry->GetFibEntry)
-		Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
-
-		Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,data,fibEntry,m_cleanInterval) ;
-		m_csContainer.push_back(entry);
-		NS_LOG_DEBUG("Initialize fib:Push_back"<<name->toUri());
-	}
-	return true;
-}*/
   
 Ptr<Data>
 NrCsImpl::Lookup (Ptr<const Interest> interest)

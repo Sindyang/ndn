@@ -2,7 +2,7 @@
  * ndn-nr-cs-impl.cc
  *
  *  Created on: Dec 18, 2017
- *      Author: DJ
+ *      Author: WSY
  */
 
 #include "ndn-nr-cs-interest-impl.h"
@@ -69,6 +69,7 @@ bool NrCsInterestImpl::AddInterest(Ptr<const Interest> interest)
 	return true;
 }
 
+//abandon
 bool NrCsInterestImpl::Add (Ptr<const Data> data)
 {
 	return false;
@@ -100,7 +101,7 @@ NrCsInterestImpl::Find(const uint32_t nonce,const uint32_t sourceId)
 	return 0;
 }
   
-
+//abandon
 Ptr<Data>
 NrCsInterestImpl::Lookup (Ptr<const Interest> interest)
 {
@@ -138,6 +139,7 @@ NrCsInterestImpl::GetSize () const
 	return m_csInterestContainer.size ();
 }
 
+//abandon
 Ptr<cs::Entry>
 NrCsInterestImpl::Begin ()
 {
@@ -154,12 +156,14 @@ NrCsInterestImpl::BeginEntryInterest ()
 		return *(m_csInterestContainer.begin());
 }
 
+//abandon
 Ptr<cs::Entry>
 NrCsInterestImpl::End ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::End () should not be invoked");
 	return 0;
 }
+
 
 Ptr<cs::EntryInterest>
 NrCsInterestImpl::EndEntryInterest ()
@@ -168,6 +172,7 @@ NrCsInterestImpl::EndEntryInterest ()
 	return 0;
 }
   
+//abandon
 Ptr<cs::Entry>
 NrCsInterestImpl::Next (Ptr<cs::Entry>)
 {
@@ -175,11 +180,13 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 	return 0;
 }
 
+
 Ptr<cs::EntryInterest>
 NrCsInterestImpl::NextEntryInterest (Ptr<cs::EntryInterest> from)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
-	if (from == 0) return 0;
+	if (from == 0) 
+		return 0;
 
 	std::vector<Ptr<cs::EntryInterest> >::iterator it;
 	it = find(m_csInterestContainer.begin(),m_csInterestContainer.end(),from);
