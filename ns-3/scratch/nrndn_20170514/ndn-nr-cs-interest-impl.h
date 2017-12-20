@@ -56,7 +56,7 @@ public:
 
   //This prefix is different from the format of interest's name
   virtual Ptr<EntryInterest>
-  Find (const uint32_t nonce,const uint32_t sourceId);
+  Find (const uint32_t nonce);
 
   //abandon
   virtual Ptr<Data>
@@ -70,6 +70,8 @@ public:
   Print (std::ostream &os) const;
   
   void PrintCache()const;
+  
+  void PrintEntryInterest(uint32_t nonce);
   
   virtual uint32_t
   GetSize () const;
