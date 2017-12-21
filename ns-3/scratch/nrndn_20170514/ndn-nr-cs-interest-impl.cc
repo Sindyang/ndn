@@ -80,14 +80,14 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 		std::cout<<*it<<" ";
 	}
 	std::cout<<std::endl;
-	getchar();
+	//getchar();
 	
     m_csInterestContainer[nonce] = csEntryInterest;
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 兴趣包已经添加到了缓存中"<<std::endl;
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
 	PrintEntryInterest(nonce);
-	getchar();
+	//getchar();
 	return true;
 }
 
@@ -248,6 +248,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	}
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
+	getchar();
 	return InterestCollection;
 }
 

@@ -343,7 +343,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			std::cout<<routes[i]<<" ";
 		}
 		std::cout<<std::endl;
-		getchar();
+		//getchar();
 	 
 		
 		//cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
@@ -1373,7 +1373,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<*it<<" ";
 	}
 	cout<<endl;
-	getchar();
+	//getchar();
 	
 	bool result = m_csinterest->AddInterest(nonce,interest);
 	if(result)
@@ -1540,7 +1540,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		std::cout<<routes[i]<<" ";
 	}
 	std::cout<<std::endl;
-	getchar();
+	//getchar();
 
 	//added by sy
     //ndn::nrndn::nrHeader nrheader;
