@@ -117,7 +117,8 @@ Interest::GetSerializedSize (void) const
      (2 + 0)/* options */);
 	 
 	 // 2017.12.21 added by sy
-	 size+=m_interest->GetRoutes().size();
+	 std::string routes = m_interest->GetRoutes();
+	 size+=routes.size();
   
   NS_LOG_INFO ("Serialize size = " << size);
   return size;
@@ -135,7 +136,14 @@ Interest::Serialize (Buffer::Iterator start) const
   start.WriteU8 (m_interest->GetScope ());
   start.WriteU8 (m_interest->GetNack ());
   // 2017.12.21 added by sy
-  start.WriteU32(m_interest->GetRoutes().size());
+  std::string routes = m_interest->GetRoutes();
+  start.WriteU32(routes.size());
+  for(uint32_t j = 0;j < routes.size();++j)
+  {
+	//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
+	uint8_t tmp = (uint8_t)(routes[j]);
+	i.Write((uint8_t*)&tmp,sizeof(tmp));
+  }
   
 
   NS_ASSERT_MSG (0 <= m_interest->GetInterestLifetime ().ToInteger (Time::S) && m_interest->GetInterestLifetime ().ToInteger (Time::S) < 65535,
@@ -177,7 +185,15 @@ Interest::Deserialize (Buffer::Iterator start)
   m_interest->SetScope (i.ReadU8 ());
   m_interest->SetNack (i.ReadU8 ());
   // 2017.12.21 added by sy
-  m_interest->SetRoutes(i.ReadU32());
+  uint32_t routessize = i.ReadU32();
+  std::string routes = "";
+  for(uint32_t j = 0;j < routessize;++j)
+  {
+	  uint8_t a;
+	  i.Read((uint8_t*)&a,sizeof(a));
+	  routes+=(char)a;
+  }
+  m_interest->SetRoutes(routes);
 
   m_interest->SetInterestLifetime (Seconds (i.ReadU16 ()));
 
