@@ -224,12 +224,12 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
 		std::cout<<"(NrCsInterestImpl.cc-GetInterest) 兴趣包下一行驶路段为 "<<routes.front()<<std::endl;
-		if(routes.front() == lane)
-		{
-			PrintEntryInterest(interest->GetNonce());
+		//if(routes.front() == lane)
+		//{
+			//PrintEntryInterest(interest->GetNonce());
 			//InterestCollection[interest->GetNonce()] = interest;
 			//m_csInterestContainer.erase(it++);
-		}
+	//	}
 		//else
 		//{
 		//	++it;
