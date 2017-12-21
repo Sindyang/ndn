@@ -401,7 +401,7 @@ private:
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire
 	 */
-	void ForwardInterestPacket(Ptr<Interest>,std::vector<uint32_t> newPriorityList);
+	void ForwardInterestPacket(Ptr<const Interest>,std::vector<uint32_t> newPriorityList);
 
 	/**
 	 * \brief	the function which will be executed after DataPacketTimer expire
