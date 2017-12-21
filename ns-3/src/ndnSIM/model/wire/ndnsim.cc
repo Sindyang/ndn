@@ -142,7 +142,7 @@ Interest::Serialize (Buffer::Iterator start) const
   {
 	//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
 	uint8_t tmp = (uint8_t)(routes[j]);
-	i.Write((uint8_t*)&tmp,sizeof(tmp));
+	start.Write((uint8_t*)&tmp,sizeof(tmp));
   }
   
 
