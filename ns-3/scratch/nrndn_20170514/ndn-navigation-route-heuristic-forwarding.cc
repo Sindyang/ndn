@@ -1689,7 +1689,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			const string& localLane = m_sensor->getLane();
 			//获得缓存的兴趣包
-			map<uint32_t,Ptr<Interest> > interestcollection = m_csinterest->GetInterest(localLane);
+			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 			SendInterestInCache(interestcollection);
 		}
 	}
@@ -1858,14 +1858,14 @@ uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 
 
 //发送缓存的兴趣包
-void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<Interest> > interestcollection)
+void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	std::map<uint32_t,Ptr<Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
 		uint32_t nonce = it->first;
 		uint32_t nodeId = m_node->GetId();
-		Ptr<Interest> interest = it->second;
+		Ptr<Interest> interest = const_cast<Ptr<Interest>>(it->second);
 		std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random));
