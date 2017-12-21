@@ -232,6 +232,14 @@ private:
 	
 	void ProcessHelloRSU (Ptr<Interest> interest);
 	
+	
+	// 2017.12.20 获取前方邻居数目
+	uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb);
+	
+	// 2017.12.21 发送缓存的兴趣包
+	void SendInterestInCache(std::vector<Ptr<Interest>> interestcollection);
+
+	
 	/**
 	 * \brief	Tell the direction of the Packet from
 	 *          the front and behind is Only base on the moving direction of received Packet

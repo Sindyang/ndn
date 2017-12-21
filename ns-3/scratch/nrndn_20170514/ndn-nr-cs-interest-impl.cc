@@ -211,10 +211,10 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 }
 
 
-std::vector<Ptr<const Interest> >
+std::map<uint32_t,Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
-	std::vector<Ptr<const Interest> > InterestCollection;
+	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{
@@ -223,7 +223,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		if(routes.front() == lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
-			InterestCollection.push_back(interest);
+			InterestCollection[interest->GetNonce()] = interest;
 			m_csInterestContainer.erase(it++);
 		}
 		else

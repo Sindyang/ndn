@@ -1822,6 +1822,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//cout<<endl;
 }
 
+//获取前方邻居数目
 uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 {
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
@@ -1857,8 +1858,19 @@ uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 
 
 //发送缓存的兴趣包
-void NavigationRouteHeuristic::SendInterestInCache(std::vector<Ptr<Interest>> interestcollection)
+void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<Interest> > interestcollection)
 {
+	std::vector<Ptr<Interest> >::iterator it;
+	for(it = interestcollection.begin();it != interestcollection.end();it++)
+	{
+		uint32_t nonce = it->first;
+		uint32_t nodeId = m_node->GetId();
+		Ptr<Interest> interest = it->second;
+		std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+		double random = m_uniformRandomVariable->GetInteger(0, 20);
+		Time sendInterval(MilliSeconds(random));
+		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+	}
 	
 }
 
