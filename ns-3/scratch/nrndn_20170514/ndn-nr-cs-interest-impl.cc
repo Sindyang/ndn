@@ -227,7 +227,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		if(routes.front() == lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
-			InterestCollection[interest->GetNonce()] = interest;
+			//InterestCollection[interest->GetNonce()] = interest;
 			//m_csInterestContainer.erase(it++);
 		}
 		//else
