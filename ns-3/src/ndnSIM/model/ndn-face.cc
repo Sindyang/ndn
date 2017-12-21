@@ -160,7 +160,6 @@ Face::Send (Ptr<Packet> packet)
       hopCount.Increment ();
       packet->AddPacketTag (hopCount);
     }
-
   return true;
 }
 

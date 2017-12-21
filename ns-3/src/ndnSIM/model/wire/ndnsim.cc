@@ -69,17 +69,18 @@ Interest::GetInstanceTypeId (void) const
 Ptr<Packet>
 Interest::ToWire (Ptr<const ndn::Interest> interest)
 {
-  Ptr<const Packet> p = interest->GetWire ();
-  if (!p)
+	std::string routes = interest->GetRoutes();
+	std::cout<<"(ndnSIM.cc-ToWire) routes "<<routes<<std::endl;
+    Ptr<const Packet> p = interest->GetWire ();
+    if (!p)
     {
-      Ptr<Packet> packet = Create<Packet> (*interest->GetPayload ());
-      Interest wireEncoding (ConstCast<ndn::Interest> (interest));
-      packet->AddHeader (wireEncoding);
-      interest->SetWire (packet);
-      p = packet;
-	  std::string routes = p->GetRoutes();
-	  std::cout<<"(ndnsim.cc-ToWire) routes "<<routes<<std::endl;
-	  getchar();
+        Ptr<Packet> packet = Create<Packet> (*interest->GetPayload ());
+        Interest wireEncoding (ConstCast<ndn::Interest> (interest));
+		std::string routes = wireEncoding->GetRoutes();
+	    std::cout<<"(ndnSIM.cc-ToWire) routes "<<routes<<std::endl;
+        packet->AddHeader (wireEncoding);
+        interest->SetWire (packet);
+        p = packet;
     }
   return p->Copy ();
 }
