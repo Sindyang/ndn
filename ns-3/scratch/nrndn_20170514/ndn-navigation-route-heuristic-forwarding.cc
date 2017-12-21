@@ -395,6 +395,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	std::string routes = interest->GetRoutes();
 	std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
+	std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
+	
 	getchar();
 		
 	if(nodeId == myNodeId)
