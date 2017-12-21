@@ -337,7 +337,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		//2017.12.13 输出兴趣包实际转发路线
 		vector<string> routes = interest->GetRoutes();
-		std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
+		std::cout<<"(forwarding.cc-OnInterest) 收到了来自应用层的兴趣包。兴趣路线为 ";
 	    for(int i = 0;i < (signed)routes.size();i++)
 		{
 			std::cout<<routes[i]<<" ";
@@ -1533,6 +1533,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	if(!m_running) return;
 	
 	vector<string> routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-SendInterestPacket)routes.size() "<<routes.size()<<endl;
 	std::cout<<"(forwarding.cc-SendInterestPacket) 兴趣路线为 ";
 	for(int i = 0;i < (signed)routes.size();i++)
 	{
