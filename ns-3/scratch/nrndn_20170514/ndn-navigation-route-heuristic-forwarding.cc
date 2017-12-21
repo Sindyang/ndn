@@ -272,7 +272,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -283,7 +283,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		else
 		{
 			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			//若result.second >= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second > 0)
 			{
@@ -291,23 +291,23 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 			}
 		}
 	}
-	cout<<endl<<"加入RSU：";
+	//cout<<endl<<"加入RSU：";
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
 	// 加入RSU
 	for(it=sortlistRSU.begin();it!=sortlistRSU.end();++it)
 	{
 		PriorityList.push_back(it->second);
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}
-	cout<<endl<<"加入普通车辆：";
+	//cout<<endl<<"加入普通车辆：";
 	// 加入普通车辆
 	for(it=sortlistVehicle.begin();it!=sortlistVehicle.end();++it)
 	{
 		PriorityList.push_back(it->second);
-		cout<<" "<<it->second;
+		//cout<<" "<<it->second;
 	}	
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 	return PriorityList;
 } 
@@ -1624,7 +1624,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
