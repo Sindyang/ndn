@@ -1689,8 +1689,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			const string& localLane = m_sensor->getLane();
 			//获得缓存的兴趣包
-			vector<Ptr<Interest>> interestcollection = m_csinterest->GetInterest(localLane);
-			
+			map<uint32_t,Ptr<Interest> > interestcollection = m_csinterest->GetInterest(localLane);
+			SendInterestInCache(interestcollection);
 		}
 	}
 

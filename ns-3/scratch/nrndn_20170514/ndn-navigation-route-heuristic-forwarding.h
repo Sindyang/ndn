@@ -234,10 +234,10 @@ private:
 	
 	
 	// 2017.12.20 获取前方邻居数目
-	uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb);
+	uint32_t GetNumberofVehiclesInFront(Neighbors m_nb);
 	
 	// 2017.12.21 发送缓存的兴趣包
-	void SendInterestInCache(std::vector<Ptr<Interest>> interestcollection);
+	void SendInterestInCache(std::map<uint32_t,Ptr<Interest> > interestcollection);
 
 	
 	/**
