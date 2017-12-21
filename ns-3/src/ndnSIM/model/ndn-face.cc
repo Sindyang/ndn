@@ -131,6 +131,8 @@ Face::SendInterest (Ptr<const Interest> interest)
 
 	std::string routes = interest->GetRoutes();
 	std::cout<<"(ndn-face.cc-SendInterest) routes "<<routes<<std::endl;
+	std::string name = interest->GetName().toUri();
+	std::cout<<"(ndn-face.cc-SendInterest) name "<<name<<std::endl;
 	getchar();
   return Send (Wire::FromInterest (interest));
 }
