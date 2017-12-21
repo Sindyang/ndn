@@ -216,6 +216,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 {
 	uint32_t size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
+	PrintCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
