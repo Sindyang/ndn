@@ -514,7 +514,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				if(newPriorityList.empty())
 				{
 					cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-					getchar();
+					//getchar();
 					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				}
 				else
@@ -1367,7 +1367,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 		NS_ASSERT_MSG(result == false,"该兴趣包已经位于缓存中");
 	}
-	getchar();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
@@ -1618,7 +1618,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
