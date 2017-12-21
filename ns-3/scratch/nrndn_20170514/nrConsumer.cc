@@ -115,12 +115,12 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	std::vector<std::string>::const_iterator it;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
 
-	cout<<"(nrConsumer.cc-GetCurrentInterest) 当前节点为 "<<m_node->GetId()<<" 导航路线为 ";
+	/*cout<<"(nrConsumer.cc-GetCurrentInterest) 当前节点为 "<<m_node->GetId()<<" 导航路线为 ";
 	for(it = route.begin();it!= route.end();++it)
 	{
 		cout<<*it<<" ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
@@ -203,19 +203,27 @@ void nrConsumer::SendPacket()
 	//2017.12.13 added by sy 
 	//这里需要得到兴趣路线
 	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
-	std::string forwardingroutes = "";
-	std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
-	for(int i = 0;i < (signed)routes.size();i++)
+	std::string temp = "";
+	for(int i = 0;i < (signed)route.size();i++)
 	{
-		 std::cout<<routes[i]<<" ";
-		 forwardingroutes+=routes[i];
+		 temp+=routes[i];
+		 temp+=" ";
+		 
+	}
+	std::cout<<"(nrConsumer.cc-SendPacket) temp "<<temp<<std::endl;
+	
+	std::string forwardingroutes = "";
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentLane = sensor->getLane();
+	std::vector<std::string>::const_iterator it;
+	const std::vector<std::string>& route = sensor->getNavigationRoute();
+	for(int i = 0;i < (signed)route.size();i++)
+	{
+		 forwardingroutes+=route[i];
 		 forwardingroutes+=" ";
 		 
 	}
-	std::cout<<std::endl;
 	std::cout<<"(nrConsumer.cc-SendPacket) forwardingroutes "<<forwardingroutes<<std::endl;
-	
-	GetCurrentInterest();
 	getchar();
 	
 	Ptr<Interest> interest = Create<Interest> ();
