@@ -227,11 +227,11 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			it = m_csInterestContainer.erase(it);
+			m_csInterestContainer.erase(it++);
 		}
 		else
 		{
-			it++;
+			++it;
 		}
 			
 	}
