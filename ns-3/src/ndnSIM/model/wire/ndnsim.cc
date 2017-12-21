@@ -115,6 +115,9 @@ Interest::GetSerializedSize (void) const
       )/* selectors */ +
      
      (2 + 0)/* options */);
+	 
+	 // 2017.12.21 added by sy
+	 size+=m_interest->GetRoutes().size();
   
   NS_LOG_INFO ("Serialize size = " << size);
   return size;
@@ -131,6 +134,9 @@ Interest::Serialize (Buffer::Iterator start) const
   start.WriteU32 (m_interest->GetNonce ());
   start.WriteU8 (m_interest->GetScope ());
   start.WriteU8 (m_interest->GetNack ());
+  // 2017.12.21 added by sy
+  start.WriteU32(m_interest->GetRoutes().size());
+  
 
   NS_ASSERT_MSG (0 <= m_interest->GetInterestLifetime ().ToInteger (Time::S) && m_interest->GetInterestLifetime ().ToInteger (Time::S) < 65535,
                  "Incorrect InterestLifetime (should not be smaller than 0 and larger than 65535");
@@ -170,6 +176,8 @@ Interest::Deserialize (Buffer::Iterator start)
   m_interest->SetNonce (i.ReadU32 ());
   m_interest->SetScope (i.ReadU8 ());
   m_interest->SetNack (i.ReadU8 ());
+  // 2017.12.21 added by sy
+  m_interest->SetRoutes(i.ReadU32());
 
   m_interest->SetInterestLifetime (Seconds (i.ReadU16 ()));
 
