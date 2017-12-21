@@ -338,7 +338,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//2017.12.13 输出兴趣包实际转发路线
 		std::string routes = interest->GetRoutes();
 		std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
-		//getchar();
+		getchar();
 	 
 		
 		//cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
@@ -1516,17 +1516,15 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	
+	//added by sy
+    ndn::nrndn::nrHeader nrheader;
+    interest->GetPayload()->PeekHeader(nrheader);
+    uint32_t nodeId = nrheader.getSourceId();
+	uint32_t myNodeId = m_node->GetId();
+	cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
 	std::string routes = interest->GetRoutes();
 	std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
 	getchar();
-
-	//added by sy
-    //ndn::nrndn::nrHeader nrheader;
-    //interest->GetPayload()->PeekHeader(nrheader);
-    //uint32_t nodeId = nrheader.getSourceId();
-	//uint32_t myNodeId = m_node->GetId();
-	//cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
