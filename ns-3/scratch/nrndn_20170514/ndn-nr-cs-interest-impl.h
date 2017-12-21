@@ -129,7 +129,7 @@ public:
     Add (Ptr<const Data> data);
     
 	//返回当前所在路段为lane的兴趣包
-    std::map<uint32_t,Ptr<const Interest> >
+    std::map<uint32_t,Ptr<Interest> >
     GetInterest(std::string lane);
     
     

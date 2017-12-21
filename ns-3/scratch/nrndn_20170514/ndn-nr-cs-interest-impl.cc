@@ -211,7 +211,7 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 }
 
 
-std::map<uint32_t,Ptr<const Interest> >
+std::map<uint32_t,Ptr<Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
