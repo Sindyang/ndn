@@ -214,7 +214,7 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 std::map<uint32_t,Ptr<Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
-	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
+	std::map<uint32_t,Ptr<Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{

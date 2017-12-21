@@ -1827,7 +1827,7 @@ uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 {
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	uint32_t num = 0;
-	
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
 		//判断车辆与RSU的位置关系
