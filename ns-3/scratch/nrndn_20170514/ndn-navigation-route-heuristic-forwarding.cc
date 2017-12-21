@@ -1719,7 +1719,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		cout<<nb->first<<" ";
 	}
-	getchar();
+	//getchar();
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	
@@ -1776,7 +1776,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 	}
 	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
-	getchar();
+	//getchar();
 	
 	//uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
 	//cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
@@ -1785,7 +1785,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//getchar();
 	
 	//前方道路从无车辆到有车辆
-	/*if(nums_car_pre == 0 && nums_car_current > 0)
+	if(nums_car_pre == 0 && nums_car_current > 0)
 	{
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
@@ -1795,7 +1795,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 			SendInterestInCache(interestcollection);
 		}
-	}*/
+	}
 	
 	
 	//判断心跳包的来源方向
