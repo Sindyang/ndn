@@ -115,6 +115,12 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	std::vector<std::string>::const_iterator it;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
 
+	cout<<"(nrConsumer.cc-GetCurrentInterest) 当前节点为 "<<m_node->GetId()<<" 导航路线为 ";
+	for(it = route.begin();it!= route.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
 
 	//遍历，寻找和当前道路相同的道路，把剩余的道路加入兴趣list中
 	for(it=route.begin();it!=route.end();++it)
@@ -197,12 +203,15 @@ void nrConsumer::SendPacket()
 	//2017.12.13 added by sy 
 	//这里需要得到兴趣路线
 	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
-	/*std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
+	std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
 	for(int i = 0;i < (signed)routes.size();i++)
 	{
 		 std::cout<<routes[i]<<" ";
 	}
-	std::cout<<std::endl;*/
+	std::cout<<std::endl;
+	
+	GetCurrentInterest();
+	getchar();
 	
 	Ptr<Interest> interest = Create<Interest> ();
 	interest->SetNonce(m_rand.GetValue ());
