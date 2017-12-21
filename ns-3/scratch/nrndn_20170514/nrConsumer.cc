@@ -210,7 +210,7 @@ void nrConsumer::SendPacket()
 		 temp+=" ";
 		 
 	}
-	std::cout<<"(nrConsumer.cc-SendPacket) temp "<<temp<<std::endl;
+	//std::cout<<"(nrConsumer.cc-SendPacket) temp "<<temp<<std::endl;
 	
 	std::string forwardingroutes = "";
 	//const std::string& currentLane = sensor->getLane();
@@ -222,8 +222,8 @@ void nrConsumer::SendPacket()
 		 forwardingroutes+=" ";
 		 
 	}
-	std::cout<<"(nrConsumer.cc-SendPacket) forwardingroutes "<<forwardingroutes<<std::endl;
-	getchar();
+	//std::cout<<"(nrConsumer.cc-SendPacket) forwardingroutes "<<forwardingroutes<<std::endl;
+	//getchar();
 	
 	Ptr<Interest> interest = Create<Interest> ();
 	interest->SetNonce(m_rand.GetValue ());

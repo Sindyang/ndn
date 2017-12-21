@@ -258,7 +258,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	//cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) numsofvehicles "<<numsofvehicles<<endl;
-	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
@@ -2040,7 +2040,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
-			cout<<"(forwarding.cc-GetNrPayload)"<<endl;
+			//cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = VehicleGetPriorityListOfInterest();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
