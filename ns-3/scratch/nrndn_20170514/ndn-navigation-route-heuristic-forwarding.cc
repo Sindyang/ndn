@@ -336,13 +336,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		/*vector<string> routes = interest->GetRoutes();
+		vector<string> routes = interest->GetRoutes();
 		std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
 	    for(int i = 0;i < (signed)routes.size();i++)
 		{
 			std::cout<<routes[i]<<" ";
 		}
-		std::cout<<std::endl;*/
+		std::cout<<std::endl;
+		getchar();
 	 
 		
 		//cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
@@ -397,6 +398,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
+	vector<string> routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
+    for(int i = 0;i < (signed)routes.size();i++)
+	{
+		std::cout<<routes[i]<<" ";
+	}
+	std::cout<<std::endl;
+	getchar();
+		
 	if(nodeId == myNodeId)
 	{
 		ForwardNodeList.insert(forwardId);
