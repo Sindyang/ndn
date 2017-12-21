@@ -53,7 +53,13 @@ Wire::FromInterest (Ptr<const Interest> interest, int8_t wireFormat/* = WIRE_FOR
     wireFormat = GetWireFormat ();
 
   if (wireFormat == WIRE_FORMAT_NDNSIM)
-    return wire::ndnSIM::Interest::ToWire (interest);
+  {
+		std::string routes = interest->GetRoutes();
+		std::cout<<"(ndn-wire.cc-FromInterest) routes "<<routes<<std::endl;
+		getchar();
+		return wire::ndnSIM::Interest::ToWire (interest);
+  }
+    
   else if (wireFormat == WIRE_FORMAT_CCNB)
     return wire::ccnb::Interest::ToWire (interest);
   else
