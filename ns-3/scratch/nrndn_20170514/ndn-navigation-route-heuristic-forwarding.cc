@@ -1721,10 +1721,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	//getchar();
 	
-	uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
-	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
-	uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
-	cout<<"(forwarding.cc-nums_car_pre) nums_car_pre "<<nums_car_pre<<endl;
+	//uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
+	//cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	//uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
+	//cout<<"(forwarding.cc-nums_car_pre) nums_car_pre "<<nums_car_pre<<endl;
 	
 	//前方道路从无车辆到有车辆
 	/*if(nums_car_pre == 0 && nums_car_current > 0)
