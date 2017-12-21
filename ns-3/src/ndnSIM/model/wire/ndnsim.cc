@@ -118,7 +118,8 @@ Interest::GetSerializedSize (void) const
 	 
 	 // 2017.12.21 added by sy
 	 std::string routes = m_interest->GetRoutes();
-	 size+=routes.size();
+	 size += sizeof(uint32_t);
+	 size += routes.size();
   
   NS_LOG_INFO ("Serialize size = " << size);
   return size;
