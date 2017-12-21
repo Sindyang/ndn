@@ -76,10 +76,11 @@ Interest::ToWire (Ptr<const ndn::Interest> interest)
       Interest wireEncoding (ConstCast<ndn::Interest> (interest));
       packet->AddHeader (wireEncoding);
       interest->SetWire (packet);
-
       p = packet;
+	  std::string routes = p->GetRoutes();
+	  std::cout<<"(ndnsim.cc-ToWire) routes "<<routes<<std::endl;
+	  getchar();
     }
-  
   return p->Copy ();
 }
 
