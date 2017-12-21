@@ -213,8 +213,7 @@ void nrConsumer::SendPacket()
 	std::cout<<"(nrConsumer.cc-SendPacket) temp "<<temp<<std::endl;
 	
 	std::string forwardingroutes = "";
-	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
-	const std::string& currentLane = sensor->getLane();
+	//const std::string& currentLane = sensor->getLane();
 	std::vector<std::string>::const_iterator it;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
 	for(int i = 0;i < (signed)route.size();i++)
