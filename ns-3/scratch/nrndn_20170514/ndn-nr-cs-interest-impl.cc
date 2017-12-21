@@ -77,9 +77,9 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	std::vector<std::string>::iterator it;
 	for(it = routes.begin();it != routes.end();it++)
 	{
-		cout<<*it<<" ";
+		std::cout<<*it<<" ";
 	}
-	cout<<endl;
+	std::cout<<std::endl;
 	getchar();
 	
     m_csInterestContainer[nonce] = csEntryInterest;
