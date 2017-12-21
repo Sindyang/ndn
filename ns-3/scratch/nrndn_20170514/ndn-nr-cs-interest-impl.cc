@@ -219,7 +219,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	PrintCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
-	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
+	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
@@ -228,12 +228,12 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			m_csInterestContainer.erase(it++);
+			//m_csInterestContainer.erase(it++);
 		}
-		else
-		{
-			++it;
-		}
+		//else
+		//{
+		//	++it;
+		//}
 			
 	}
 	size = GetSize();
