@@ -336,13 +336,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		vector<string> routes = interest->GetRoutes();
-		std::cout<<"(forwarding.cc-OnInterest) 收到了来自应用层的兴趣包。兴趣路线为 ";
-	    for(int i = 0;i < (signed)routes.size();i++)
-		{
-			std::cout<<routes[i]<<" ";
-		}
-		std::cout<<std::endl;
+		std::string routes = interest->GetRoutes();
+		std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 		//getchar();
 	 
 		
@@ -398,13 +393,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	vector<string> routes = interest->GetRoutes();
-	std::cout<<"(forwarding.cc-OnInterest) 兴趣路线为 ";
-    for(int i = 0;i < (signed)routes.size();i++)
-	{
-		std::cout<<routes[i]<<" ";
-	}
-	std::cout<<std::endl;
+	std::string routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 	//getchar();
 		
 	if(nodeId == myNodeId)
@@ -1366,13 +1356,8 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 {
 	//获取兴趣的随机编码
 	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 缓存兴趣包 "<<nonce<<endl;
-	std::vector<std::string> routes = interest->GetRoutes();
-	std::vector<std::string>::iterator it;
-	for(it = routes.begin();it != routes.end();it++)
-	{
-		cout<<*it<<" ";
-	}
-	cout<<endl;
+	std::string routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-CachingInterestPacket) routes "<<routes<<std::endl;
 	//getchar();
 	
 	bool result = m_csinterest->AddInterest(nonce,interest);
@@ -1532,14 +1517,8 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
 	
-	vector<string> routes = interest->GetRoutes();
-	std::cout<<"(forwarding.cc-SendInterestPacket)routes.size() "<<routes.size()<<endl;
-	std::cout<<"(forwarding.cc-SendInterestPacket) 兴趣路线为 ";
-	for(int i = 0;i < (signed)routes.size();i++)
-	{
-		std::cout<<routes[i]<<" ";
-	}
-	std::cout<<std::endl;
+	std::string routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
 	//getchar();
 
 	//added by sy
