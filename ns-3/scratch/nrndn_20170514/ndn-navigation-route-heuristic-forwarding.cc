@@ -1709,7 +1709,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	prenb = m_preNB.getNb().begin();
 	nb = m_nb.getNb().begin();
-	cout<<"原来的邻居：";
+	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1718,15 +1718,15 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
-	}
+	}*/
 	//getchar();
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	
+	// 2017.12.21 获取当前前方邻居数目
 	uint32_t nums_car_current = 0;
 	for(;nb != m_nb.getNb().end();++nb)
 	{
-		//判断车辆与RSU的位置关系
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
@@ -1737,7 +1737,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 			//getchar();
 		}
-		//判断车辆与其他车辆的位置关系
 		else
 		{
 			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
@@ -1750,6 +1749,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
 	
+	// 2017.12.21 获取上一时间点前方邻居数目
 	uint32_t nums_car_pre = 0;
 	for(;prenb != m_preNB.getNb().end();++prenb)
 	{
@@ -1778,22 +1778,20 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
 	//getchar();
 	
-	nums_car_current = GetNumberofVehiclesInFront(m_nb.getNb());
-	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
-	nums_car_pre = GetNumberofVehiclesInFront(m_preNB.getNb());
-	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
-	getchar();
 	
 	//前方道路从无车辆到有车辆
 	if(nums_car_pre == 0 && nums_car_current > 0)
 	{
+		cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
 		{
 			const string& localLane = m_sensor->getLane();
+			cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 			SendInterestInCache(interestcollection);
+			getchar();
 		}
 	}
 	
@@ -1880,43 +1878,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 }
 
 
-//获取前方邻居数目
-uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(const std::unordered_map<uint32_t, Neighbor> neighbors)
-{
-	cout<<"(进入forwarding.cc-GetNumberofVehiclesInFront)"<<endl;
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	uint32_t num = 0;
-	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	for(nb = neighbors.begin();nb != neighbors.end();++nb)
-	{
-		//判断车辆与RSU的位置关系
-		if(nb->first >= numsofvehicles)
-		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second > 0)
-			{
-				num += 1;
-			}
-			//getchar();
-		}
-		//判断车辆与其他车辆的位置关系
-		else
-		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second > 0)
-			{
-				num += 1;
-			}
-		}
-	}
-	cout<<endl;
-	return num;
-}
-
-
-//发送缓存的兴趣包
+// 2017.12.21 发送缓存的兴趣包
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
@@ -1924,13 +1886,19 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	{
 		uint32_t nonce = it->first;
 		uint32_t nodeId = m_node->GetId();
+		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<endl;
 		Ptr<const Interest> interest = it->second;
+		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 ";
 		std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+		for(uint32_t i = 0;i < newPriorityList.size();i++)
+		{
+			cout<<newPriorityList[i]<<" ";
+		}
+		cout<<endl;
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 	}
-	
 }
 
 void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
