@@ -1535,8 +1535,8 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
 		(*fit)->SendInterest(interest);
-		cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
-	    std::string routes = interest->GetRoutes();
+		std::string routes = interest->GetRoutes();
+		std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
 		getchar();
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
 	}
