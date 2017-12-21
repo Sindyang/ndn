@@ -284,6 +284,7 @@ Packet::AddHeader (const Header &header)
   header.Serialize (m_buffer.Begin ());
   m_metadata.AddHeader (header, size);
 }
+
 uint32_t
 Packet::RemoveHeader (Header &header)
 {
