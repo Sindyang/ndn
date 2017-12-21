@@ -218,7 +218,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{
-		Ptr<const Interest> interest = it->second->GetInterest();
+		Ptr<Interest> interest = const_cast<Ptr<Interest>>it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
 		if(routes.front() == lane)
 		{
