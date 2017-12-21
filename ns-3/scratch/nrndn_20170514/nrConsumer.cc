@@ -204,7 +204,7 @@ void nrConsumer::SendPacket()
 	//这里需要得到兴趣路线
 	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
 	std::string temp = "";
-	for(int i = 0;i < (signed)route.size();i++)
+	for(int i = 0;i < (signed)routes.size();i++)
 	{
 		 temp+=routes[i];
 		 temp+=" ";
