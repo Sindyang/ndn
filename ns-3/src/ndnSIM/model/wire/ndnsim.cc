@@ -40,10 +40,6 @@ Interest::Interest ()
 Interest::Interest (Ptr<ndn::Interest> interest)
   : m_interest (interest)
 {
-	std::string routes = interest->GetRoutes();
-	std::cout<<"(ndnsim.cc-Interest) interest-routes "<<routes<<std::endl;
-	routes = m_interest->GetRoutes();
-	std::cout<<"(ndnsim.cc-Interest) m_interest-routes "<<routes<<std::endl;
 }
 
 Ptr<ndn::Interest>
@@ -73,8 +69,6 @@ Interest::GetInstanceTypeId (void) const
 Ptr<Packet>
 Interest::ToWire (Ptr<const ndn::Interest> interest)
 {
-	std::string routes = interest->GetRoutes();
-	std::cout<<"(ndnSIM.cc-ToWire) routes "<<routes<<std::endl;
     Ptr<const Packet> p = interest->GetWire ();
     if (!p)
     {

@@ -128,12 +128,6 @@ Face::SendInterest (Ptr<const Interest> interest)
     {
       return false;
     }
-
-	std::string routes = interest->GetRoutes();
-	std::cout<<"(ndn-face.cc-SendInterest) routes "<<routes<<std::endl;
-	uint32_t nonce = interest->GetNonce();
-	std::cout<<"(ndn-face.cc-SendInterest) nonce "<<nonce<<std::endl;
-	getchar();
   return Send (Wire::FromInterest (interest));
 }
 
