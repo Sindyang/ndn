@@ -1860,7 +1860,7 @@ uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 //发送缓存的兴趣包
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<Interest> > interestcollection)
 {
-	std::vector<Ptr<Interest> >::iterator it;
+	std::map<uint32_t,Ptr<Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
 		uint32_t nonce = it->first;
