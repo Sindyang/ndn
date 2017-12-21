@@ -35,7 +35,7 @@ Interest::Interest (Ptr<Packet> payload/* = Create<Packet> ()*/)
   , m_interestLifetime (Seconds (0))
   , m_nonce (0)
   , m_nackType (NORMAL_INTEREST)
-  , m_routes()
+  , m_routes("")
   , m_exclude (0)
   , m_payload (payload)
   , m_wire (0)
@@ -140,13 +140,13 @@ Interest::GetNack () const
 }
 
 void 
-Interest::SetRoutes (std::vector<std::string> r)
+Interest::SetRoutes (std::string r)
 {
 	m_routes = r;
 	m_wire = 0;
 }
 
-std::vector<std::string>
+std::string
 Interest::GetRoutes () const
 {
 	return m_routes;

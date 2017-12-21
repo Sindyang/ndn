@@ -202,13 +202,18 @@ void nrConsumer::SendPacket()
 
 	//2017.12.13 added by sy 
 	//这里需要得到兴趣路线
-	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
+	//std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
+	std::string forwardingroutes = "";
 	std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
 	for(int i = 0;i < (signed)routes.size();i++)
 	{
 		 std::cout<<routes[i]<<" ";
+		 forwardingroutes+=routes[i];
+		 forwardingroutes+=" ";
+		 
 	}
 	std::cout<<std::endl;
+	std::cout<<"(nrConsumer.cc-SendPacket) forwardingroutes "<<forwardingroutes<<std::endl;
 	
 	GetCurrentInterest();
 	getchar();
@@ -218,7 +223,7 @@ void nrConsumer::SendPacket()
 	interest->SetName(nameWithSequence);
 	interest->SetInterestLifetime(m_interestLifeTime);
 	//2017.12.13 加入实际转发路线
-	interest->SetRoutes(routes);
+	interest->SetRoutes(forwardingroutes);
 
 	// NS_LOG_INFO ("Requesting Interest: \n" << *interest);
 	NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
