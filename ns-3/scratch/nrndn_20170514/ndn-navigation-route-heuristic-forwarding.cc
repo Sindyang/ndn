@@ -1356,6 +1356,15 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 {
 	//获取兴趣的随机编码
 	cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 缓存兴趣包 "<<nonce<<endl;
+	std::vector<std::string> routes = interest->GetRoutes();
+	std::vector<std::string>::iterator it;
+	for(it = routes.begin();it != routes.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	getchar();
+	
 	bool result = m_csinterest->AddInterest(nonce,interest);
 	if(result)
 	{

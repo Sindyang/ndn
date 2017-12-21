@@ -71,13 +71,23 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	}
 	uint32_t size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包前的缓存大小为 "<<size<<std::endl;
-    csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest) ;
+    csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest);
+	
+	std::vector<std::string> routes = interest->GetRoutes();
+	std::vector<std::string>::iterator it;
+	for(it = routes.begin();it != routes.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	getchar();
+	
     m_csInterestContainer[nonce] = csEntryInterest;
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 兴趣包已经添加到了缓存中"<<std::endl;
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
 	PrintEntryInterest(nonce);
-	
+	getchar();
 	return true;
 }
 
@@ -229,7 +239,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 			//PrintEntryInterest(interest->GetNonce());
 			//InterestCollection[interest->GetNonce()] = interest;
 			//m_csInterestContainer.erase(it++);
-	//	}
+	  //	}
 		//else
 		//{
 		//	++it;
