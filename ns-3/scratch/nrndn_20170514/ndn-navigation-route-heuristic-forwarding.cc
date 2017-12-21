@@ -1747,7 +1747,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 		}
 	}
-	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
 	
 	// 2017.12.21 获取上一时间点前方邻居数目
 	uint32_t nums_car_pre = 0;
@@ -1775,7 +1775,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 		}
 	}
-	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
+	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
 	//getchar();
 	
 	
@@ -1790,6 +1790,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
+			cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
 			getchar();
 		}
@@ -1881,6 +1882,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 // 2017.12.21 发送缓存的兴趣包
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
+	cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{

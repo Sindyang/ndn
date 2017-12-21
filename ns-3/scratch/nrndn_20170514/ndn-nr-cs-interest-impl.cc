@@ -214,17 +214,20 @@ NrCsInterestImpl::Next (Ptr<cs::Entry>)
 std::map<uint32_t,Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
+	uint32_t size = GetSize();
+	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::vector<std::string> routes = interest->GetRoutes();
+		std::cout<<"(NrCsInterestImpl.cc-GetInterest) 兴趣包下一行驶路段为 "<<routes.front()<<std::endl;
 		if(routes.front() == lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			m_csInterestContainer.erase(it++);
+			it = m_csInterestContainer.erase(it);
 		}
 		else
 		{
@@ -232,7 +235,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		}
 			
 	}
-	uint32_t size = GetSize();
+	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
 	return InterestCollection;
 }
