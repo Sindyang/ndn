@@ -1721,6 +1721,63 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	getchar();
 	
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	
+	uint32_t nums_car_current = 0;
+	for(;nb != m_nb.getNb().end();++nb)
+	{
+		//判断车辆与RSU的位置关系
+		if(nb->first >= numsofvehicles)
+		{
+			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
+			{
+				nums_car_current += 1;
+			}
+			//getchar();
+		}
+		//判断车辆与其他车辆的位置关系
+		else
+		{
+			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
+			{
+				nums_car_current += 1;
+			}
+		}
+	}
+	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	
+	uint32_t nums_car_pre = 0;
+	for(;prenb != m_preNB.getNb().end();++prenb)
+	{
+		//判断车辆与RSU的位置关系
+		if(prenb->first >= numsofvehicles)
+		{
+			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(prenb->second.m_x,prenb->second.m_y,prenb->first);
+			cout<<"("<<prenb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
+			{
+				nums_car_pre += 1;
+			}
+			//getchar();
+		}
+		//判断车辆与其他车辆的位置关系
+		else
+		{
+			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(prenb->second.m_x,prenb->second.m_y);
+			cout<<"("<<prenb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			if(result.first && result.second > 0)
+			{
+				nums_car_pre += 1;
+			}
+		}
+	}
+	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
+	getchar();
+	
 	//uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
 	//cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
 	//uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
