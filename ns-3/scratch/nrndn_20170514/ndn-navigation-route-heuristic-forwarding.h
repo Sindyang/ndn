@@ -234,7 +234,7 @@ private:
 	
 	
 	// 2017.12.20 获取前方邻居数目
-	uint32_t GetNumberofVehiclesInFront(Neighbors m_nb);
+	uint32_t GetNumberofVehiclesInFront(const std::unordered_map<uint32_t, Neighbor> neighbors);
 	
 	// 2017.12.21 发送缓存的兴趣包
 	void SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection);
