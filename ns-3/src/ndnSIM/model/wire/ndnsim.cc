@@ -42,7 +42,7 @@ Interest::Interest (Ptr<ndn::Interest> interest)
 {
 	std::string routes = interest->GetRoutes();
 	std::cout<<"(ndnsim.cc-Interest) interest-routes "<<routes<<std::endl;
-	std::string routes = m_interest->GetRoutes();
+	routes = m_interest->GetRoutes();
 	std::cout<<"(ndnsim.cc-Interest) m_interest-routes "<<routes<<std::endl;
 }
 
