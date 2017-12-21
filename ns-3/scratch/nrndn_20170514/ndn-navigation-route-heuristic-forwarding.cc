@@ -1679,10 +1679,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 	
 	uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
-	uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
+	//uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
 	
 	//前方道路从无车辆到有车辆
-	if(nums_car_pre == 0 && nums_car_current > 0)
+	/*if(nums_car_pre == 0 && nums_car_current > 0)
 	{
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
@@ -1692,10 +1692,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 			SendInterestInCache(interestcollection);
 		}
-	}
+	}*/
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
+	
 	
 	
 	if(m_preNB.getNb().size()<m_nb.getNb().size())
@@ -1730,7 +1731,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	prenb = m_preNB.getNb().begin();
 	nb = m_nb.getNb().begin();
-	/*cout<<"原来的邻居：";
+	cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
 		cout<<prenb->first<<" ";
@@ -1739,7 +1740,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		cout<<nb->first<<" ";
-	}*/
+	}
+	getchar();
 	
 	//判断心跳包的来源方向
 	pair<bool, double> msgdirection = packetFromDirection(interest);
