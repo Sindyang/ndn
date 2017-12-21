@@ -129,6 +129,9 @@ Face::SendInterest (Ptr<const Interest> interest)
       return false;
     }
 
+	std::string routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
+	getchar();
   return Send (Wire::FromInterest (interest));
 }
 
