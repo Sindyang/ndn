@@ -202,7 +202,7 @@ void nrConsumer::SendPacket()
 
 	//2017.12.13 added by sy 
 	//这里需要得到兴趣路线
-	//std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
+	std::vector<std::string> routes = ExtractActualRouteFromName(*nameWithSequence);
 	std::string forwardingroutes = "";
 	std::cout<<"(nrConsumer.cc-SendPacket) 兴趣路线为 ";
 	for(int i = 0;i < (signed)routes.size();i++)

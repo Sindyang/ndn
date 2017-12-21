@@ -185,13 +185,13 @@ public:
   *\brief Set actual forwarding route
   */
   void 
-  SetRoutes (std::vector<std::string> routes);
+  SetRoutes (std::string routes);
   
   /**
   *added by wsy
   \brief Get actual forwarding route
   */
-  std::vector<std::string>
+  std::string
   GetRoutes () const;
 
   /**
