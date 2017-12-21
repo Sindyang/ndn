@@ -1778,11 +1778,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
 	//getchar();
 	
-	//uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
-	//cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
-	//uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
-	//cout<<"(forwarding.cc-nums_car_pre) nums_car_pre "<<nums_car_pre<<endl;
-	//getchar();
+	nums_car_current = GetNumberofVehiclesInFront(m_nb.getNb());
+	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	nums_car_pre = GetNumberofVehiclesInFront(m_preNB.getNb());
+	cout<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
+	getchar();
 	
 	//前方道路从无车辆到有车辆
 	if(nums_car_pre == 0 && nums_car_current > 0)
@@ -1879,14 +1879,15 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//cout<<endl;
 }
 
+
 //获取前方邻居数目
-uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
+uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(const std::unordered_map<uint32_t, Neighbor> neighbors)
 {
 	cout<<"(进入forwarding.cc-GetNumberofVehiclesInFront)"<<endl;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	uint32_t num = 0;
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
+	for(nb = neighbors.begin();nb != neighbors.end();++nb)
 	{
 		//判断车辆与RSU的位置关系
 		if(nb->first >= numsofvehicles)
