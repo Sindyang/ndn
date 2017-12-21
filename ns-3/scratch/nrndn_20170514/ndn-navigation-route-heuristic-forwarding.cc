@@ -1531,6 +1531,15 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
+	
+	vector<string> routes = interest->GetRoutes();
+	std::cout<<"(forwarding.cc-SendInterestPacket) 兴趣路线为 ";
+	for(int i = 0;i < (signed)routes.size();i++)
+	{
+		std::cout<<routes[i]<<" ";
+	}
+	std::cout<<std::endl;
+	getchar();
 
 	//added by sy
     //ndn::nrndn::nrHeader nrheader;
