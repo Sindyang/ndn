@@ -1627,7 +1627,6 @@ NavigationRouteHeuristic::SendHello()
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
 	
-	uint32_t num = m_sensor->getNumsofVehicles();
 	//cout<<"(forwarding.cc-SendHello) 普通车辆的数目为 "<<num<<endl;
 	//getchar();
 	//1.setup name
@@ -1648,12 +1647,6 @@ NavigationRouteHeuristic::SendHello()
 
 	//4. send the hello message
 	SendInterestPacket(interest);
-	if(m_node->GetId() >= num)
-	{
-		std::string junctionid = m_sensor->getJunctionId(m_node->GetId());
-		cout<<"(forwarding.cc-SendHello) ID "<<m_node->GetId()<<" x "<<x<<" y "<<y<<" junctionid "<<junctionid<<" 时间 "<<Simulator::Now().GetSeconds()<<endl;	
-	}
-	//getchar();
 }
 
 //2017.12.13 这部分也要修改，不用那么复杂
@@ -1728,10 +1721,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	getchar();
 	
-	uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
-	cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
-	uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
-	cout<<"(forwarding.cc-nums_car_pre) nums_car_pre "<<nums_car_pre<<endl;
+	//uint32_t nums_car_current = GetNumberofVehiclesInFront(m_nb);
+	//cout<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	//uint32_t nums_car_pre = GetNumberofVehiclesInFront(m_preNB);
+	//cout<<"(forwarding.cc-nums_car_pre) nums_car_pre "<<nums_car_pre<<endl;
 	
 	//前方道路从无车辆到有车辆
 	/*if(nums_car_pre == 0 && nums_car_current > 0)
@@ -1859,6 +1852,7 @@ uint32_t NavigationRouteHeuristic::GetNumberofVehiclesInFront(Neighbors m_nb)
 			}
 		}
 	}
+	cout<<endl;
 	return num;
 }
 
