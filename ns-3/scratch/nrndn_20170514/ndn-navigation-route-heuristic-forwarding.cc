@@ -405,7 +405,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		std::cout<<routes[i]<<" ";
 	}
 	std::cout<<std::endl;
-	getchar();
+	//getchar();
 		
 	if(nodeId == myNodeId)
 	{
