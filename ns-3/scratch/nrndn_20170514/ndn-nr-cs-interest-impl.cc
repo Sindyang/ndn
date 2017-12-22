@@ -227,7 +227,11 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
-		//std::vector<std::string> routes = interest->GetRoutes();
+		std::string routes = interest->GetRoutes(); 
+		std::cout<<"(cs-interest.cc-GetInterest) routes "<<routes<<std::endl;
+		std::string currentroute = routes.substr(0,lane.length());
+		std::cout<<"(cs-interest.cc-GetInterest) currentroute "<<currentroute<<std::endl;
+		
 		std::cout<<"(NrCsInterestImpl.cc-GetInterest) 兴趣包下一行驶路段为 "<<std::endl;
 		//if(routes.front() == lane)
 		//{
