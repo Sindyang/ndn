@@ -82,7 +82,7 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
 	PrintEntryInterest(nonce);
-	//getchar();
+	getchar();
 	return true;
 }
 

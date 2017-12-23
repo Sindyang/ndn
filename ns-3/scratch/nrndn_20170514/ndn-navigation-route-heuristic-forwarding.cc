@@ -1373,7 +1373,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 		NS_ASSERT_MSG(result == false,"该兴趣包已经位于缓存中");
 	}
-	//getchar();
+	getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
