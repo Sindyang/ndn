@@ -42,7 +42,7 @@ public:
 	 * @brief Remove all the timeout event in the timeout event list
 	 *
 	 */
-	//void RemoveAllTimeoutEvent();
+	void RemoveAllTimeoutEvent();
 
 	//删除PIT中指定id的邻居
 	void CleanPITNeighbors(uint32_t id);
@@ -64,11 +64,11 @@ public:
 	}
 
 private:
-	//void AddNeighborTimeoutEvent(uint32_t id);
+	void AddNeighborTimeoutEvent(uint32_t id);
 	//当时间超时，自动清除邻居
-	//void CleanExpiredIncomingNeighbors(uint32_t id);
+	void CleanExpiredIncomingNeighbors(uint32_t id);
 private:
-	//std::unordered_map< uint32_t,EventId>  m_nbTimeoutEvent;    ///< @brief it is a hashmap that record the timeout event of each neighbor id
+	std::unordered_map< uint32_t,EventId>  m_nbTimeoutEvent;    ///< @brief it is a hashmap that record the timeout event of each neighbor id
 	//2017.12.23 changed by sy
 	std::unordered_set< uint32_t > m_incomingnbs;///< @brief container for incoming neighbors 
 	std::string m_interest_name;	
