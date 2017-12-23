@@ -81,8 +81,7 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 兴趣包已经添加到了缓存中"<<std::endl;
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
-	PrintEntryInterest(nonce);
-	getchar();
+	//PrintEntryInterest(nonce);
 	return true;
 }
 
@@ -221,10 +220,10 @@ NrCsInterestImpl::GetInterest(std::string lane)
 {
 	uint32_t size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
-	PrintCache();
+	//PrintCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
-	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();it++)
+	for(it = m_csInterestContainer.begin();it != m_csInterestContainer.end();)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes(); 
@@ -235,7 +234,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		getchar();
 		if(currentroute == lane)
 		{
-			PrintEntryInterest(interest->GetNonce());
+			//PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
 			m_csInterestContainer.erase(it++);
 	  	}
