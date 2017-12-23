@@ -682,6 +682,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 
 	//If it is not a stop message, prepare to forward:
+	//这里需要修改 ！！！！！！！！！！！！！！！
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
@@ -712,12 +713,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
-		//changed by sy:这里需要判断当前节点为RSU还是普通车辆
 		// Update the PIT here
-		
 		cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		m_nrpit->UpdateCarPit(remoteRoute, nodeId);
-		
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -725,7 +723,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		vector<uint32_t>::const_iterator idit;
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
 		idIsInPriorityList = (idit != pri.end());
-
 		//evaluate end
 
 		if (idIsInPriorityList)
@@ -775,7 +772,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
-/*void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
+void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
@@ -832,7 +829,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 	//Deal with the stop message first
 	//避免回环
-	//2017.12.12 
+	//2017.12.23 按理来说，若RSU收到的兴趣包为NACK_LOOP，RSU应该为该兴趣包所在路段的起点处 TEST IT
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
 		cout<<"(forwarding.cc-OnInterest) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
@@ -843,6 +840,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//If it is not a stop message, prepare to forward:
 	//pair<bool, double> msgdirection = packetFromDirection(interest);
 	//2017.12.12 增加函数：判断兴趣包上一跳所在路段是否为以RSU为终点的路段 若是：可以处理该兴趣包；若否：丢弃该兴趣包
+	//获取上一跳所在路段
+	//查找对应的Junction
+	
 	if()// or from front
 	{
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
@@ -1017,7 +1017,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 		//cout<<endl;
 	}
-}*/
+}
 
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
