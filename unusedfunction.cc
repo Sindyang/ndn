@@ -804,3 +804,45 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 		NS_ASSERT_MSG(count <= 2,"notifyUpperOnInterest:Face数量大于2！");
 	}
 }
+
+void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
+{
+	if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
+	{
+		m_nbTimeoutEvent[id].Cancel();
+		Simulator::Remove (m_nbTimeoutEvent[id]); // slower, but better for memory
+	}
+	//Schedule a new cleaning event
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc)m_infaceTimeout "<<m_infaceTimeout<<std::endl;
+	m_nbTimeoutEvent[id]
+	                   = Simulator::Schedule(m_infaceTimeout,
+	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);
+}
+
+//删除超时的邻居
+void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
+{
+	std::unordered_set< uint32_t >::iterator it;
+
+	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
+
+	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
+	
+	if (incomingnb != m_incomingnbs.end())
+	{
+		m_incomingnbs.erase(incomingnb);
+		std::cout<<"删除邻居 "<<id<<std::endl;
+	}	
+	listPitEntry();
+}
+
+void EntryNrImpl::RemoveAllTimeoutEvent()
+{
+	//std::cout<<"(forwarding.cc-RemoveAllTimeoutEvent)"<<std::endl;
+	std::unordered_map< uint32_t,EventId>::iterator it;
+	for(it=m_nbTimeoutEvent.begin();it!=m_nbTimeoutEvent.end();++it)
+	{
+		it->second.Cancel();
+		Simulator::Remove (it->second); // slower, but better for memory
+	}
+}

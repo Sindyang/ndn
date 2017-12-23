@@ -25,8 +25,6 @@ EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header,Ptr<fib::Ent
 	:Entry(container,header,fibEntry),
 	 m_infaceTimeout(cleanInterval)
 {
-	//std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) cleanInterval "<<cleanInterval<<std::endl;
-	//std::cout<<"(ndn-pit-entry-nrimpl.cc-EntryNrImpl) m_infaceTimeout "<<m_infaceTimeout<<std::endl;
 	NS_ASSERT_MSG(header->GetName().size()<2,"In EntryNrImpl, "
 			"each name of interest should be only one component, "
 			"for example: /routeSegment, do not use more than one slash, "
@@ -43,7 +41,7 @@ EntryNrImpl::~EntryNrImpl ()
 std::unordered_set< uint32_t >::iterator
 EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 {
-	AddNeighborTimeoutEvent(id);
+	//AddNeighborTimeoutEvent(id);
 	std::unordered_set< uint32_t >::iterator incomingnb = m_incomingnbs.find(id);
 
 	if(incomingnb==m_incomingnbs.end())
@@ -58,36 +56,6 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 	}
 }
 
-void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
-{
-	/*if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
-	{
-		m_nbTimeoutEvent[id].Cancel();
-		Simulator::Remove (m_nbTimeoutEvent[id]); // slower, but better for memory
-	}
-	//Schedule a new cleaning event
-	//std::cout<<"(ndn-pit-entry-nrimpl.cc)m_infaceTimeout "<<m_infaceTimeout<<std::endl;
-	m_nbTimeoutEvent[id]
-	                   = Simulator::Schedule(m_infaceTimeout,
-	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);*/
-}
-
-//删除超时的邻居
-void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
-{
-	std::unordered_set< uint32_t >::iterator it;
-
-	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
-
-	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
-	
-	if (incomingnb != m_incomingnbs.end())
-	{
-		m_incomingnbs.erase(incomingnb);
-		std::cout<<"删除邻居 "<<id<<std::endl;
-	}	
-	listPitEntry();
-}
 
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
@@ -145,16 +113,6 @@ void EntryNrImpl::listPitEntry1(uint32_t node)
 	std::cout<<std::endl;
 }
 
-void EntryNrImpl::RemoveAllTimeoutEvent()
-{
-	//std::cout<<"(forwarding.cc-RemoveAllTimeoutEvent)"<<std::endl;
-	std::unordered_map< uint32_t,EventId>::iterator it;
-	for(it=m_nbTimeoutEvent.begin();it!=m_nbTimeoutEvent.end();++it)
-	{
-		it->second.Cancel();
-		Simulator::Remove (it->second); // slower, but better for memory
-	}
-}
 
 } // namespace nrndn
 } // namespace pit

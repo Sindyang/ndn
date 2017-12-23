@@ -775,50 +775,21 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
-/*void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
+void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
-	//2017.12.12 这部分不需要，RSU不会收到自己发送的兴趣包
-	/*if(Face::APPLICATION==face->GetFlags())
+	// RSU不会收到自己发送的兴趣包
+	if(Face::APPLICATION==face->GetFlags())
 	{
-		//消费者产生兴趣包，在路由层进行转发
-		cout << "(forwarding.cc-OnInterest)该兴趣包来自应用层" <<endl;
-		NS_LOG_DEBUG("Get interest packet from APPLICATION");
-		// This is the source interest from the upper node application (eg, nrConsumer) of itself
-		// 1.Set the payload
-		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
-        
-        //added by sy 用于输出源节点信息
-        ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t nodeId = nrheader.getSourceId();
-
-		// 2. record the Interest Packet
-		m_interestNonceSeen.Put(interest->GetNonce(),true);
-		//cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
-
-		// 3. Then forward the interest packet directly
-		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
-				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		
-	    //cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
-		
+		NS_ASSERT_MSG(false,"RSU收到了自己发送的兴趣包");
 		return;
-	}*/
+	}
 	
 	//收到心跳包
-/*	if(HELLO_MESSAGE==interest->GetScope())
+	if(HELLO_MESSAGE==interest->GetScope())
 	{		
-		//cout << "(forwarding.cc-OnInterest) 心跳包" <<endl;
-		//if(m_sensor->getType() == "RSU")
-		//{
-			ProcessHelloRSU(interest);
-		//}
-		//else
-		//{
-			//ProcessHello(interest);
-		//}
+		ProcessHelloRSU(interest);
 		return;
 	}
 	
@@ -840,16 +811,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	//2017.12.12这部分没有必要保留了 因为车辆不用重复发送兴趣包
-	/*if(nodeId == myNodeId)
-	{
-		ForwardNodeList.insert(forwardId);
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
-		//getchar();
-	} */
 
 	//If the interest packet has already been sent, do not proceed the packet
-/*	if(m_interestNonceSeen.Get(interest->GetNonce()))
+	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
@@ -1053,7 +1017,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 		//cout<<endl;
 	}
-}*/
+}
 
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
