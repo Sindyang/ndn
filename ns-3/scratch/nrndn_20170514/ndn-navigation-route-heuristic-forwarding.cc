@@ -1793,6 +1793,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(nums_car_pre == 0 && nums_car_current > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
+		getchar();
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
 		{
