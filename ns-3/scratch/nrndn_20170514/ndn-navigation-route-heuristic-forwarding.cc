@@ -1776,41 +1776,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
 	
-	// 2017.12.21 获取上一时间点前方邻居数目
-	uint32_t nums_car_pre = 0;
-	for(;prenb != m_preNB.getNb().end();++prenb)
-	{
-		//判断车辆与RSU的位置关系
-		if(prenb->first >= numsofvehicles)
-		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(prenb->second.m_x,prenb->second.m_y,prenb->first);
-			cout<<"("<<prenb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second > 0)
-			{
-				nums_car_pre += 1;
-			}
-			//getchar();
-		}
-		//判断车辆与其他车辆的位置关系
-		else
-		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(prenb->second.m_x,prenb->second.m_y);
-			cout<<"("<<prenb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-			if(result.first && result.second > 0)
-			{
-				nums_car_pre += 1;
-			}
-		}
-	}
-	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_pre "<<nums_car_pre<<endl;
-	//getchar();
 	
-	
-	//前方道路从无车辆到有车辆
-	if(nums_car_pre == 0 && nums_car_current > 0)
+	//前方道路有车辆
+	if(nums_car_current > 0)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 前方道路从无车辆到有车辆"<<endl;
-		getchar();
+		cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
 		{
