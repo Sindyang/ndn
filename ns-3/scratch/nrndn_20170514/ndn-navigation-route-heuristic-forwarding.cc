@@ -1723,11 +1723,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
+	//std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
 	
 	
-	if(m_preNB.getNb().size()<m_nb.getNb().size())
+	/*if(m_preNB.getNb().size()<m_nb.getNb().size())
 	{   
 		m_nbChange_mode = 2;
 		//cout<<"邻居增加"<<endl;
@@ -1755,10 +1755,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			m_nbChange_mode = 3;
 			//cout<<"邻居变化"<<endl;
 		}
-	}
+	}*/
 	
-	prenb = m_preNB.getNb().begin();
-	nb = m_nb.getNb().begin();
+	//prenb = m_preNB.getNb().begin();
+	//nb = m_nb.getNb().begin();
 	/*cout<<"原来的邻居：";
 	for(; prenb!=m_preNB.getNb().end();++prenb)
 	{
@@ -1824,12 +1824,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	
 	//判断心跳包的来源方向
-	pair<bool, double> msgdirection = packetFromDirection(interest);
+	//pair<bool, double> msgdirection = packetFromDirection(interest);
 	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
 	//added by sy
 	//发送心跳包的节点位于当前节点后方
-	if(msgdirection.first && msgdirection.second < 0)
+	/*if(msgdirection.first && msgdirection.second < 0)
 	{
 		overtake.insert(sourceId);
 	}
@@ -1850,10 +1850,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
-	}
+	}*/
 	
 	//判断转发列表是否为空 2017.9.10
-	if(ForwardNodeList.size() == 0)
+	/*if(ForwardNodeList.size() == 0)
 	{
 		//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
 		if(msgdirection.first && msgdirection.second >= 0)
@@ -1861,10 +1861,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			notifyUpperOnInterest();
 			//cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
 		}
-	}
+	}*/
 	
 	//判断转发节点是否丢失
-	std::unordered_set<uint32_t>::iterator it;
+	/*std::unordered_set<uint32_t>::iterator it;
 	bool lostforwardnode = false;
 	bool resend = false;
 	//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
@@ -1898,9 +1898,9 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
 			notifyUpperOnInterest();
 		}
-	}
+	}*/
 	
-	m_preNB = m_nb;
+	//m_preNB = m_nb;
 	//cout<<endl;
 }
 
@@ -1997,7 +1997,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//cout<<endl;
 }
 
-void NavigationRouteHeuristic::notifyUpperOnInterest()
+/*void NavigationRouteHeuristic::notifyUpperOnInterest()
 {
 	//增加一个时间限制，超过1s才进行转发
 	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
@@ -2026,7 +2026,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
 		NS_ASSERT_MSG(count <= 2,"notifyUpperOnInterest:Face数量大于2！");
 	}
-}
+}*/
 
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)

@@ -773,3 +773,34 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	m_preNB = m_nb;
 	//cout<<endl;
 }
+
+void NavigationRouteHeuristic::notifyUpperOnInterest()
+{
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+    if(interval >= 1)
+	{
+		m_resendInterestTime =  Simulator::Now().GetSeconds();	
+		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
+	}
+	else
+	{
+		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
+		return;
+	}
+	vector<Ptr<Face> >::iterator fit;
+	Ptr<Interest> interest = Create<Interest> ();
+	int count=0;
+	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
+	{   //只有一个Face？有两个，一个是consumer，一个是producer
+		//App::OnInterest() will be executed,
+		//including nrProducer::OnInterest.
+		count++;
+		//(*fit)->SendInterest(interest);
+	}
+	if(count>2)
+	{
+		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
+		NS_ASSERT_MSG(count <= 2,"notifyUpperOnInterest:Face数量大于2！");
+	}
+}
