@@ -233,7 +233,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		std::cout<<"(cs-interest.cc-GetInterest) currentroute "<<currentroute<<std::endl;
 		std::cout<<"(cs-interest.cc-GetInterest) lane "<<lane<<std::endl;
 		getchar();
-		if(routes.front() == lane)
+		if(currentroute == lane)
 		{
 			PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
