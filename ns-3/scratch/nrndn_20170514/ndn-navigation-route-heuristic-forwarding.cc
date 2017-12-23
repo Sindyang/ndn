@@ -336,9 +336,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         uint32_t nodeId = nrheader.getSourceId();
 		
 		//2017.12.13 输出兴趣包实际转发路线
-		std::string routes = interest->GetRoutes();
-		std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
-		getchar();
+		//std::string routes = interest->GetRoutes();
+		//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
+		//getchar();
 	 
 		
 		//cout<<"(forwarding.cc-OnInterest) 兴趣包序列号为 "<<interest->GetNonce()<<endl;
@@ -393,11 +393,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	cout<<endl<<"(forwarding.cc-OnInterest)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	std::string routes = interest->GetRoutes();
-	std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
-	std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
+	//std::string routes = interest->GetRoutes();
+	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
+	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
 	
-	getchar();
+	//getchar();
 		
 	if(nodeId == myNodeId)
 	{
@@ -1523,12 +1523,12 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 	uint32_t myNodeId = m_node->GetId();
-	cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
+	//cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
 	std::string routes = interest->GetRoutes();
-	std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
+	//std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
 	uint32_t nonce = interest->GetNonce();
-	std::cout<<"(forwarding.cc-SendInterestPacket) nonce "<<nonce<<std::endl;
-	getchar();
+	//std::cout<<"(forwarding.cc-SendInterestPacket) nonce "<<nonce<<std::endl;
+	//getchar();
 
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
@@ -1628,7 +1628,7 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 void
 NavigationRouteHeuristic::SendHello()
 {
-	cout<<"进入(forwarding.cc-SendHello)"<<endl;
+	//cout<<"进入(forwarding.cc-SendHello)"<<endl;
 	if(!m_running) return;
 
 	if (m_HelloLogEnable)
