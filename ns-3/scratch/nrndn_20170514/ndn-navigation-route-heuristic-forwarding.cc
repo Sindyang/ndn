@@ -354,6 +354,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		
 	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		getchar();
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
@@ -531,7 +532,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		//getchar();
+		getchar();
 		//cout<<endl;
 	}
 }
@@ -1792,19 +1793,24 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//前方道路从无车辆到有车辆
 	if(nums_car_pre == 0 && nums_car_current > 0)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 前方道路从无车辆到有车辆"<<endl;
 		getchar();
 		//有兴趣包在缓存中
 		if(m_csinterest->GetSize() > 0)
 		{
+			cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
 			cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 			cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
-			getchar();
 		}
+		else
+		{
+			cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
+		}
+		getchar();
 	}
 	
 	
