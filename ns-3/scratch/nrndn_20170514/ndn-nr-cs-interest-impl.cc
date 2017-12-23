@@ -231,7 +231,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		std::string currentroute = routes.substr(0,lane.length());
 		std::cout<<"(cs-interest.cc-GetInterest) currentroute "<<currentroute<<std::endl;
 		std::cout<<"(cs-interest.cc-GetInterest) lane "<<lane<<std::endl;
-		getchar();
+		//getchar();
 		if(currentroute == lane)
 		{
 			//PrintEntryInterest(interest->GetNonce());
@@ -246,7 +246,7 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	}
 	size = GetSize();
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
-	getchar();
+	//getchar();
 	return InterestCollection;
 }
 

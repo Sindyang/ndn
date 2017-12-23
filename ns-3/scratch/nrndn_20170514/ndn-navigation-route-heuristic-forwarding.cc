@@ -340,7 +340,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			getchar();
+			//getchar();
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
@@ -364,7 +364,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		
 		
 	    cout<<"(forwarding.cc-OnInterest)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
-		getchar();
+		//getchar();
 		
 		//判断RSU是否发送兴趣包
 		const std::string& currentType = m_sensor->getType();
@@ -542,7 +542,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
-		getchar();
+		//getchar();
 		//cout<<endl;
 	}
 }
@@ -1384,7 +1384,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 		NS_ASSERT_MSG(result == false,"该兴趣包已经位于缓存中");
 	}
-	getchar();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
@@ -1796,7 +1796,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
-		getchar();
+		//getchar();
 	}
 	
 	

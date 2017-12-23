@@ -103,7 +103,6 @@ bool
 NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
 	//std::cout<<"UpdateCarPit"<<std::endl;
-	showPit();
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
@@ -140,6 +139,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 	//showPit();
 	//getchar();
 	//NS_LOG_UNCOND("update pit:"<<os.str());
+	showPit();
 	NS_LOG_DEBUG("update Carpit:"<<os.str());
 	return true;
 }
