@@ -231,18 +231,18 @@ NrCsInterestImpl::GetInterest(std::string lane)
 		std::cout<<"(cs-interest.cc-GetInterest) routes "<<routes<<std::endl;
 		std::string currentroute = routes.substr(0,lane.length());
 		std::cout<<"(cs-interest.cc-GetInterest) currentroute "<<currentroute<<std::endl;
-		
-		std::cout<<"(NrCsInterestImpl.cc-GetInterest) 兴趣包下一行驶路段为 "<<std::endl;
-		//if(routes.front() == lane)
-		//{
-			//PrintEntryInterest(interest->GetNonce());
-			//InterestCollection[interest->GetNonce()] = interest;
-			//m_csInterestContainer.erase(it++);
-	  //	}
-		//else
-		//{
-		//	++it;
-		//}
+		std::cout<<"(cs-interest.cc-GetInterest) lane "<<lane<<std::endl;
+		getchar();
+		if(routes.front() == lane)
+		{
+			PrintEntryInterest(interest->GetNonce());
+			InterestCollection[interest->GetNonce()] = interest;
+			m_csInterestContainer.erase(it++);
+	  	}
+		else
+		{
+			++it;
+		}
 			
 	}
 	size = GetSize();
