@@ -775,7 +775,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
-void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
+/*void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
@@ -1017,7 +1017,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 		//cout<<endl;
 	}
-}
+}*/
 
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
