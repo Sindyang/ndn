@@ -1996,7 +1996,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest()
 		//App::OnInterest() will be executed,
 		//including nrProducer::OnInterest.
 		count++;
-		//(*fit)->SendInterest(interest);
+		(*fit)->SendInterest(interest);
 	}
 	if(count>2)
 	{
