@@ -96,7 +96,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_resendInterestTime(0),
+	//m_resendInterestTime(0),
 	gap_mode(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
@@ -653,13 +653,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
 	
 	//getchar();
-		
-	/*if(nodeId == myNodeId)
-	{
-		ForwardNodeList.insert(forwardId);
-		cout<<"(forwarding.cc-OnInterest) 源节点 "<<nodeId <<" 收到了自己发送的兴趣包,转发节点 "<<forwardId<<endl;
-		//getchar();
-	} */
 
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -721,18 +714,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 		//changed by sy:这里需要判断当前节点为RSU还是普通车辆
 		// Update the PIT here
-		//const std::string& currentType = m_sensor->getType();
 		
-		//if(currentType == "DEFAULT_VEHTYPE")
-		//{
 		cout<<"(forwarding.cc-OnInterest) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
 		m_nrpit->UpdateCarPit(remoteRoute, nodeId);
-		//}
-		/*else if(currentType == "RSU")
-		{
-			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 当前RSU "<<myNodeId<<" 的PIT为："<<endl;
-			m_nrpit->UpdateRSUPit(remoteRoute,nodeId);
-		}*/
 		
 		// Update finish
 
@@ -1699,7 +1683,6 @@ NavigationRouteHeuristic::SendHello()
 	SendInterestPacket(interest);
 }
 
-//2017.12.13 这部分也要修改，不用那么复杂
 void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 {
 	if(!m_running){
@@ -1714,7 +1697,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	nrPayload->PeekHeader(nrheader);
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
-	int m_nbChange_mode = 0;
 	
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
@@ -1723,53 +1705,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
-	//std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
-	
-	
-	/*if(m_preNB.getNb().size()<m_nb.getNb().size())
-	{   
-		m_nbChange_mode = 2;
-		//cout<<"邻居增加"<<endl;
-	}
-	else if(m_preNB.getNb().size()>m_nb.getNb().size())
-	{
-		m_nbChange_mode = 1;
-		//cout<<"邻居减少"<<endl;f
-	}
-	else
-	{
-		bool nbChange=false;
-		for(prenb = m_preNB.getNb().begin();nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end();++prenb,++nb)
-		{
-			//寻找上次的邻居，看看能不能找到，找不到证明变化了
-			if(m_nb.getNb().find(prenb->first) == m_nb.getNb().end())
-			{  
-				nbChange=true;
-				break;
-				
-			}
-		}
-		if(nbChange)
-		{   //邻居变化，发送兴趣包
-			m_nbChange_mode = 3;
-			//cout<<"邻居变化"<<endl;
-		}
-	}*/
-	
-	//prenb = m_preNB.getNb().begin();
-	//nb = m_nb.getNb().begin();
-	/*cout<<"原来的邻居：";
-	for(; prenb!=m_preNB.getNb().end();++prenb)
-	{
-		cout<<prenb->first<<" ";
-	}
-	cout<<"\n现在的邻居：";
-	for(;nb != m_nb.getNb().end();++nb)
-	{
-		cout<<nb->first<<" ";
-	}*/
-	//getchar();
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	
@@ -1821,87 +1757,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		//getchar();
 	}
-	
-	
-	//判断心跳包的来源方向
-	//pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"(forwarding.cc-ProcessHello) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-	
-	//added by sy
-	//发送心跳包的节点位于当前节点后方
-	/*if(msgdirection.first && msgdirection.second < 0)
-	{
-		overtake.insert(sourceId);
-	}
-	else if(msgdirection.first && msgdirection.second >0)
-	{
-		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
-		//该车辆超车
-		if(it != overtake.end())
-		{
-			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
-			//获取心跳包所在路段
-			string remoteroute = remoteroutes.front();
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"DEFAULT_VEHTYPE");
-			overtake.erase(it);
-			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
-		}
-		else
-		{
-			//cout<<"(forwarding.cc-ProcessHello) 车辆 "<<sourceId<<"一直位于前方"<<endl;
-		}
-	}*/
-	
-	//判断转发列表是否为空 2017.9.10
-	/*if(ForwardNodeList.size() == 0)
-	{
-		//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点个数为0"<<endl;
-		if(msgdirection.first && msgdirection.second >= 0)
-		{
-			notifyUpperOnInterest();
-			//cout<<"(forwarding.cc-ProcessHello) notifyUpperOnInterest"<<endl;
-		}
-	}*/
-	
-	//判断转发节点是否丢失
-	/*std::unordered_set<uint32_t>::iterator it;
-	bool lostforwardnode = false;
-	bool resend = false;
-	//cout<<"(forwarding.cc-ProcessHello) ForwardNodeList中的节点为 ";
-	for(it = ForwardNodeList.begin();it != ForwardNodeList.end();)
-	{
-		//cout<<*it<<endl;
-		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator itnb = m_nb.getNb().find(*it);
-		if(itnb == m_nb.getNb().end())
-		{
-			//cout<<"转发节点丢失 "<<*it<<endl;
-			it = ForwardNodeList.erase(it);
-			lostforwardnode = true;
-		}
-		else
-		{
-			//cout<<"转发节点存在"<<endl;
-			it++;
-		}
-	}
-	
-	//转发节点丢失
-	if(lostforwardnode)
-	{
-		if(ForwardNodeList.empty() && msgdirection.first && msgdirection.second)
-		{
-			//cout<<"转发节点全部丢失"<<endl;
-			notifyUpperOnInterest();
-		}
-		else if(msgdirection.first && msgdirection.second && m_nbChange_mode > 1)
-		{
-			//cout<<"转发节点部分丢失，但有新的邻居进入"<<endl;
-			notifyUpperOnInterest();
-		}
-	}*/
-	
-	//m_preNB = m_nb;
-	//cout<<endl;
 }
 
 

@@ -509,9 +509,8 @@ private:
 
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
 	
-	double m_resendInterestTime;//added by siukwan
+	//double m_resendInterestTime;//added by siukwan
 	
-	std::unordered_set<uint32_t> ForwardNodeList;//added by sy
 	
 	/*
 	* gap_mode = 0 初始值
