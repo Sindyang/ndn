@@ -335,6 +335,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t nodeId = nrheader.getSourceId();
 		
+		// 2017.12.23 added by sy
+		const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+		if(pri.empty())
+		{
+			cout<<"(forwarding.cc-OnInterest) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
+			Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			return;
+		}
+		
 		//2017.12.13 输出兴趣包实际转发路线
 		//std::string routes = interest->GetRoutes();
 		//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
@@ -1445,7 +1454,13 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	SendInterestPacket(interest);
 	
 	// 4. record the forward times
-	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
+	// 2017.12.23 added by sy
+	// 若源节点与当前节点相同，则不需要记录转发次数
+	uint32_t nodeId = m_node->GetId();
+	if(nodeId != sourceId)
+	{
+		ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
+	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
 	//if(m_node->GetId()>=101)
@@ -2053,7 +2068,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		{
 			//cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = VehicleGetPriorityListOfInterest();
-			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
+			cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
 			break;
 		}
