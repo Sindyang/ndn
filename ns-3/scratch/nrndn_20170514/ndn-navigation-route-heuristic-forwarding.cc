@@ -271,7 +271,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		//判断车辆与RSU的位置关系
 		if(nb->first >= numsofvehicles)
 		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
@@ -282,7 +282,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		//判断车辆与其他车辆的位置关系
 		else
 		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
+			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
 			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			//若result.second >= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second > 0)
@@ -1314,13 +1314,13 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	if(forwardId >= numsofvehicles)
 	{
-		std::pair<bool,double> result = m_sensor->getDistanceWithRSU(x,y,forwardId);
+		std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(x,y,forwardId);
 		return result;
 	}
 	//判断车辆与其他车辆的位置关系
 	else
 	{
-		std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(x,y);
+		std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(x,y);
 		return result;
 	}
 }
@@ -1689,7 +1689,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(nb->first >= numsofvehicles)
 		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
@@ -1699,7 +1699,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
+			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{

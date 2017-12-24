@@ -649,7 +649,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(nb->first >= numsofvehicles)
 		{
-			std::pair<bool,double> result = m_sensor->getDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
@@ -659,7 +659,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		}
 		else
 		{
-			std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
+			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{

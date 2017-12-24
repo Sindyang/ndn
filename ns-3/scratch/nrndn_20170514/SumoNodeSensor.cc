@@ -365,7 +365,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 }
 
 //2017.12.13 判断车辆与其他车辆(及其发送消息包)的位置关系
-std::pair<bool, double> SumoNodeSensor::getDistanceWithVehicle(const double& x,const double& y)
+std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithVehicle(const double& x,const double& y)
 {
 	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
 	//当前节点所在路段和位置
@@ -394,7 +394,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWithVehicle(const double& x,c
 }
 
 //2017.12.16 判断车辆与RSU(及其发送心跳包)的位置关系
-std::pair<bool, double> SumoNodeSensor::getDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID)
+std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID)
 {
 	//当前节点所在路段和位置
 	const string& localLane = getLane();
@@ -408,10 +408,10 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWithRSU(const double& x,const
 	std::string to = eit->second.to;
 	//当前节点所在路段的长度
 	double length = eit->second.lane.length;
-	//cout<<"(SumoNodeSensor.cc-getDistanceWithRSU) localLane "<<localLane<<" from "<<from<<" to "<<to<<" length "<<length<<endl;
+	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithRSU) localLane "<<localLane<<" from "<<from<<" to "<<to<<" length "<<length<<endl;
 	//RSU所在交点
 	std::string junction = getJunctionId(RSUID);
-	//cout<<"(SumoNodeSensor.cc-getDistanceWithRSU) junction "<<junction<<endl;
+	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithRSU) junction "<<junction<<endl;
 	//RSU位于车辆所在路段起点
 	if(from == junction)
 	{
