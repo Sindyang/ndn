@@ -1316,13 +1316,14 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	if(forwardId >= numsofvehicles)
 	{
 		std::pair<bool,double> result = m_sensor->getDistanceWithRSU(x,y,forwardId);
+		return result;
 	}
 	//判断车辆与其他车辆的位置关系
 	else
 	{
 		std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(x,y);
+		return result;
 	}
-	return result;
 }
 
 bool NavigationRouteHeuristic::isDuplicatedInterest(
