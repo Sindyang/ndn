@@ -559,7 +559,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	const std::string& currentType = m_sensor->getType();
 	if(currentType == "RSU")
 	{
-		//
+		OnInterest_Car(face,interest);
 	}
 	else if(currentType == "DEFAULT_VEHTYPE")
 	{
