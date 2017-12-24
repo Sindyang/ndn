@@ -772,7 +772,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
-void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
+/*void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
@@ -1017,7 +1017,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 		//cout<<endl;
 	}
-}
+}*/
 
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
@@ -1297,7 +1297,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//getchar();
 }
 
-
+// 2017.12.24 changed by sy
 pair<bool, double>
 NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 {
@@ -1305,13 +1305,23 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
+	//获取兴趣包的转发节点id
+	uint32_t forwardId = nrheader.getForwardId();
+	const double x = nrheader.getX();
+	const double y = nrheader.getY();
+	
 	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
-	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	//cout <<"(forwarding.cc-packetFromDirection)"<< m_running << " route.size:" << route.size() <<endl;
-	//getchar();
-	pair<bool, double> result =
-			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
+	
+	if(forwardId >= numsofvehicles)
+	{
+		std::pair<bool,double> result = m_sensor->getDistanceWithRSU(x,y,forwardId);
+	}
+	//判断车辆与其他车辆的位置关系
+	else
+	{
+		std::pair<bool, double> result = m_sensor->getDistanceWithVehicle(x,y);
+	}
 	return result;
 }
 
