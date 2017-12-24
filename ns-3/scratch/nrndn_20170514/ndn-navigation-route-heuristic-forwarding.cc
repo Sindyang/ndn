@@ -681,8 +681,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		return;
 	}
 
-	//If it is not a stop message, prepare to forward:
-	//这里需要修改 ！！！！！！！！！！！！！！！
+	//If it is not a stop message, prepare to forward
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
@@ -1221,7 +1220,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 				cout<<"当前节点为 "<<myNodeId<<endl;
 				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
-				entry->listPitEntry1(myNodeId);
+				//entry->listPitEntry1(myNodeId);
 				if (interestNodes.empty())
 				{
 					cout<<"(forwarding.cc-OnData) 当前节点对该数据包感兴趣，但其PIT为空，因此停止转发该数据包"<<endl;

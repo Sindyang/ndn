@@ -212,6 +212,77 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 	return true;
 }
 
+/*
+ * 2017.12.24 added by sy
+ * 更新主待处理兴趣列表
+ * route:兴趣包的兴趣路线
+ * id:兴趣包的源节点
+ * lane:兴趣包的源节点所对应的车辆在未来会经过的路段
+ */
+bool 
+NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& route, const uint32_t& id,const std::string CurrentRoute)
+{
+	std::ostringstream os;
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆未来会经过的路段为 "<<CurrentRoute<<std::endl;
+	
+	//判断当前路段是否出现在兴趣包的兴趣路线中
+	std::vector<std::string>::const_iterator it = std::find(route.begin(),route.end(),CurrentRoute);
+	
+	//找不到
+	if(it == route.end())
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 该兴趣包不该在主PIT中更新"<<std::endl;
+		return false;
+	}
+	
+	//将剩余的路线及节点加入PIT中
+	for(++it;it != route.end();++it)
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
+		//寻找PIT中是否有该路段
+		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				pitEntry->AddIncomingNeighbors(CurrentRoute,id);
+				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+				break;
+			}
+		}
+		//route不在PIT中
+		if(pit == m_pitContainer.end())
+		{
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) route "<<*it<<"不在PIT中"<<std::endl;
+			//创建一个新的表项
+			Ptr<Name> name = ns3::Create<Name>('/'+*it);
+			Ptr<Interest> interest = ns3::Create<Interest>();
+			interest->SetName(name);
+			interest->SetInterestLifetime(Time::Max());//never expire
+			
+			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
+		    Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
+			
+			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
+		    m_pitContainer.push_back(entry);
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
+			pitEntry->AddIncomingNeighbors(CurrentRoute,id);
+			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+		    std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//getchar();
+		}
+	}
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 对应的路段为 "<<CurrentRoute<<std::endl;
+	showPit();
+	//getchar();
+	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
+	return true;
+}
+
 void 
 NrPitImpl::showPit()
 {
@@ -224,7 +295,7 @@ NrPitImpl::showPit()
 	std::cout<<std::endl;
 }
 
-//added by sy
+
 void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string type)
 {
@@ -270,6 +341,58 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string
 	}
 	showPit();
 }
+
+/*
+ * 2017.12.24
+ * added by sy
+ * lane为车辆当前所在路段
+ */
+void 
+NrPitImpl::DeleteFrontNode(const std::string lane)
+{
+	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
+	std::vector<Ptr<Entry> >::iterator pit;
+	//找到lane在PIT表项中的位置
+	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
+	{
+		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+		if(pitName.toUri() == lane)
+		{
+			break;
+		}
+	}
+	
+	if(pit != m_pitContainer.end())
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+		for(;pit != m_pitContainer.end();)
+		{
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			pitEntry->CleanPITNeighbors(id);
+			//若PIT的表项为空，可以删除该表项
+			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
+			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
+			if(interestNodes.empty())
+			{
+				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
+				std::string pitname = pitName.toUri();
+				std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
+				pit = m_pitContainer.erase(pit);
+			}
+			else
+			{
+				pit++;
+			}
+		}
+	}
+	else
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
+	}
+	showPit();
+}
+
 
 void
 NrPitImpl::DoDispose ()
