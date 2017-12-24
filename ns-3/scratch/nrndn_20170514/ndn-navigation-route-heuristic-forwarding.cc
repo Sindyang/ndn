@@ -1312,7 +1312,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	
 	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
-	
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	if(forwardId >= numsofvehicles)
 	{
 		std::pair<bool,double> result = m_sensor->getDistanceWithRSU(x,y,forwardId);
