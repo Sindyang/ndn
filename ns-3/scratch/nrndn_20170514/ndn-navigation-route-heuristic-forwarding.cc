@@ -1302,13 +1302,13 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		if(remoteId >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(remoteId,currentroute);
-			getchar();
+			//getchar();
 			return result;
 		}
 		else
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),x,y);
-			getchar();
+			//getchar();
 			return result;
 		}
 	}
