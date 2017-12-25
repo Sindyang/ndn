@@ -1302,7 +1302,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		{
 			NS_ASSERT_MSG(false,"在仿真地图中不会进入该函数");
 			std::cout<<"(forwarding.cc-packetFromDirection) 在仿真地图中不会进入该函数"<<std::endl;
-			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(forwardId,currentroute);
+			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(remoteId,currentroute);
 			return result;
 		}
 		else
@@ -1657,7 +1657,7 @@ NavigationRouteHeuristic::SendHello()
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
-
+	interest->SetRoutes(LaneName);//2017.12.25 added by sy
 	//4. send the hello message
 	SendInterestPacket(interest);
 }
