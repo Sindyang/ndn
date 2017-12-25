@@ -832,8 +832,25 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
+		//检查
+		if(!isDuplicatedInterest(nodeId,seq))
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 新兴趣包"<<endl;
+		}
+		else
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 旧兴趣包"<<endl;
+		}
 		getchar();
 		ExpireInterestPacketTimer(nodeId,seq);
+		if(!isDuplicatedInterest(nodeId,seq))
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 新兴趣包"<<endl;
+		}
+		else
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 旧兴趣包"<<endl;
+		}
 		return;
 	}
 
