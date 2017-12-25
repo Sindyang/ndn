@@ -1280,7 +1280,8 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//获取兴趣包的转发节点id
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t forwardId = nrheader.getForwardId();
-	uint32_t remoteId = forwardId == 999999999 ? sourceId:forwardId;
+	cout<<"sourceId"<<sourceId<<" forwardId "<<forwardId<<endl;
+	uint32_t remoteId = (forwardId == 999999999) ? sourceId:forwardId;
 	const double x = nrheader.getX();
 	const double y = nrheader.getY();
 	
