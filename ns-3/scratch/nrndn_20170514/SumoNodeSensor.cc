@@ -442,22 +442,22 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 	//另一节点所在路段和位置
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段为 "<<remoteLane<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段为 "<<remoteLane<<std::endl;
 	
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	eit = edges.find(remoteLane);
 	std::string from = eit->second.from;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的起点为 "<<from<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的起点为 "<<from<<std::endl;
 	
 	std::string to = eit->second.to;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的终点为 "<<to<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的终点为 "<<to<<std::endl;
 	
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
 	std::string junction = RSUGetJunctionId(RSUID);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) RSU所在的交点为 "<<junction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) RSU所在的交点为 "<<junction<<std::endl;
 	if(from == junction)
 	{
 		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU前方 距离为 "<<remotePos<<std::endl;
@@ -485,21 +485,21 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	eit = edges.find(lane);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
 	std::string from = eit->second.from;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
 	
 	std::string to = eit->second.to;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
 	
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
 	std::string remotejunction = RSUGetJunctionId(remoteid);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
 	
 	std::string localjunction = RSUGetJunctionId(getNodeId());
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
 	
 	if(remotejunction == localjunction)
 	{
