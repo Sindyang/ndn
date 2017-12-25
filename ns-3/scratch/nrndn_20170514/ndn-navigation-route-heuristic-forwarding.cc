@@ -806,13 +806,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t forwardId = nrheader.getForwardId();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
-	getchar();
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
-		getchar();
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -833,7 +831,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
-		getchar();
 		return;
 	}
 
