@@ -496,8 +496,16 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	double length = eit->second.lane.length;
 	
 	std::string remotejunction = RSUGetJunctionId(remoteid);
-	std::string localjunction = RSUGetJunctionId(getNodeId());
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
 	
+	std::string localjunction = RSUGetJunctionId(getNodeId());
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
+	
+	if(remotejunction == localjunction)
+	{
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 两个节点属于同一节点"<<std::endl;
+		return std::pair<bool,double>(true,0);
+	}
 	if(from == remotejunction && to == localjunction)
 	{
 		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点位于路段起点，当前节点位于路段终点"<<std::endl;

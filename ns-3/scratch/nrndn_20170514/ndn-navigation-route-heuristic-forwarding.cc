@@ -1300,7 +1300,6 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	{
 		if(remoteId >= numsofvehicles)
 		{
-			std::cout<<"(forwarding.cc-packetFromDirection) 在仿真地图中不会进入该函数"<<std::endl;
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(remoteId,currentroute);
 			return result;
 		}
