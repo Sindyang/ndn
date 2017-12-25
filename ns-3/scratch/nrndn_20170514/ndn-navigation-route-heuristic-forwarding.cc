@@ -841,7 +841,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		{
 			cout<<"(forwarding.cc-OnInterest_RSU) 旧兴趣包"<<endl;
 		}
-		getchar();
 		ExpireInterestPacketTimer(nodeId,seq);
 		if(!isDuplicatedInterest(nodeId,seq))
 		{
@@ -851,6 +850,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		{
 			cout<<"(forwarding.cc-OnInterest_RSU) 旧兴趣包"<<endl;
 		}
+		getchar();
 		return;
 	}
 
