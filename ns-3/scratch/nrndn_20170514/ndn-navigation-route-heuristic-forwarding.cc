@@ -1284,7 +1284,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	
 	std::string routes = interest->GetRoutes(); 
 	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
-	std::size_t found = str.find(" ");
+	std::size_t found = routes.find(" ");
 	std::string currentroute = routes.substr(0,found);
 	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
 	

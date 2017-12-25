@@ -81,8 +81,8 @@ public:
 	virtual void 
 	OnInterest_Car(Ptr<Face> face,Ptr<Interest> interest);
 	
-	//virtual void 
-	//OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
+	virtual void 
+	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects

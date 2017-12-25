@@ -480,7 +480,7 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 /*2017.12.25 判断RSU与RSU的位置关系 (仿真地图中不会进入此函数)
  * lane代表兴趣包当前经过的路段
  */
-std::pair<bool,double> SuNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
+std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
 {
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
@@ -495,8 +495,8 @@ std::pair<bool,double> SuNodeSensor::RSUGetDistanceWithRSU(const uint32_t remote
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
-	std::string remotejunction = getJunctionId(remoteid);
-	std::string localjunction = getJunctionId(getNodeId());
+	std::string remotejunction = RSUGetJunctionId(remoteid);
+	std::string localjunction = RSUGetJunctionId(getNodeId());
 	
 	if(from == remotejunction && to == localjunction)
 	{
