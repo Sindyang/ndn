@@ -23,6 +23,7 @@
 #include <vector>
 #include <set>
 #include <queue>
+#include <algorithm>
 
 
 namespace ns3

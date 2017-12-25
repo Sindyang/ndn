@@ -60,7 +60,7 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
  * 添加邻居信息
  * lane为兴趣包来时的路段,id为兴趣包的源节点
  */
-std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
+/*std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
 EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 {
 	std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
@@ -95,7 +95,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 			return incominglane;
 		}
 	}
-}
+}*/
 
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
@@ -114,7 +114,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 }
 
 // 2017.12.24 added by sy
-void EntryNrImpl::CleanPITNeighbors(uint32_t id)
+/*void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 {
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
 	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
@@ -133,7 +133,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 			std::cout<<<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在该表项对应的路段 "<<it->first<<" 中"<<std::endl;
 		}	
 	}
-}
+}*/
 
 //删除所有节点
 void EntryNrImpl::CleanAllNodes()
@@ -152,7 +152,7 @@ void EntryNrImpl::listPitEntry()
 	std::cout<<std::endl;
 }
 
-void EntryNrImpl::listPitEntry()
+/*void EntryNrImpl::listPitEntry()
 {
 	std::cout<<"(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name："<<m_interest_name<<std::endl;
 	for(std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
@@ -166,7 +166,7 @@ void EntryNrImpl::listPitEntry()
 		}
 		std::cout<<std::endl;
 	}
-}
+}*/
 
 /*void EntryNrImpl::listPitEntry1(uint32_t node)
 {

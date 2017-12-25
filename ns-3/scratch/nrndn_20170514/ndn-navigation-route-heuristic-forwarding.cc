@@ -559,7 +559,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	const std::string& currentType = m_sensor->getType();
 	if(currentType == "RSU")
 	{
-		OnInterest_Car(face,interest);
+		OnInterest_RSU(face,interest);
 	}
 	else if(currentType == "DEFAULT_VEHTYPE")
 	{
@@ -824,7 +824,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		cout<<*it<<" ";
 	}
 	cout<<endl;
-	//getchar();
+	getchar();
 
 	//Deal with the stop message first
 	//避免回环
@@ -863,12 +863,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
-		//getchar();
+		getchar();
 		
-		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
+		//const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
 
 		// Update the PIT here
-		m_nrpit->UpdateRSUPit(forwardRoute,interestRoute,nodeId);
+		//m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -881,7 +881,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 
 		if (idIsInPriorityList)
 		{
-			cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
+			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
 			//判断主待处理兴趣列表是否有增加新的表项
@@ -977,7 +977,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
 				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-			}
+			}*/
 		}
 		else
 		{
@@ -1284,7 +1284,8 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	
 	std::string routes = interest->GetRoutes(); 
 	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
-	std::string currentroute = routes.substr(0,8);
+	std::size_t found = str.find(" ");
+	std::string currentroute = routes.substr(0,found);
 	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
@@ -1304,6 +1305,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(x,y);
+			getchar();
 			return result;
 		}
 	}

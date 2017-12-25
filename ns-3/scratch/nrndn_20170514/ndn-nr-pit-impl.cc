@@ -146,101 +146,146 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 
 
 /* 2017.12.25 added by sy
+ * junction为RSU所在交点的ID
  * forwardRoute:兴趣包的实际转发路线
- * interestRoute: 
+ * interestRoute:兴趣包的兴趣路线（包含已走完的兴趣路线）
+ * id为兴趣包源节点
  */
-bool 
-NrPitImpl::UpdateRSUPit(const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
+/*bool 
+NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
 {
-	std::ostringstream os;
-	std::vector<Ptr<Entry>>::iterator pit;
-	//获取RSU当前所在路线
-	const std::string& CurrentRoute = m_sensor->getLane();
-	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) RSU所在路段为 "<<CurrentRoute<<std::endl;
-	
-	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
-	std::vector<std::string>::const_iterator it = std::find(route.begin(),route.end(),CurrentRoute);
-	
-	//找不到
-	if(it == route.end())
+	std::size_t found = forwardRoute.find(" ");
+	std::string currentroute = routes.substr(0,found);
+	std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包当前所在路段为 "<<currentroute<<std::endl;
+	std::vector<std::string>::iterator it = find(interestRoute.begin(),interestRoute.end(),currentroute);
+	//该兴趣包来时的路段为兴趣路段
+	if(it != interestRoute.end())
 	{
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) RSU不该收到该兴趣包"<<std::endl;
-		return false;
+		bool result = UpdatePrimaryPit(interestRoute,id,currentroute);
+		return result;
 	}
-	
-	//将剩余的路线及节点加入PIT中
-	for(;it != route.end();++it)
+	//该兴趣包来时的路段不是兴趣路段，RSU为借路RSU
+	else
 	{
-		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
-		//寻找PIT中是否有该路段
-		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
+		//更新副待处理兴趣列表 这个函数还没写
+		// update secondary pit
+		// 其实我觉得这里应该只有一条路
+		std::vector<std::string> unpassedRoutes = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
+		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
-			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
-			//PIT中已经有该路段
-			if(pitName.toUri() == *it)
-			{
-				//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) PIT中有该路段"<<std::endl;
-				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				pitEntry->AddIncomingNeighbors(id);
-				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-				break;
-			}
+			bool result = UpdatePrimaryPit(interestRoute,id,*it);
+			result &= result;
 		}
-		//route不在PIT中
-		if(pit == m_pitContainer.end())
+		return result;
+	}
+}*/
+
+/*
+ * 2017.12.25 added by sy
+ * 得到未行驶且会通过当前RSU的兴趣路线
+ */
+/*std::vector<std::string> 
+NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute)
+{
+	std::vector<std::string> forwardRoutes;
+	std::vector<std::string> unpassedRoutes;
+	std::vector<std::string>::iterator itforward;
+	std::vector<std::string>::iterator itinterest;
+	SplitString(forwardRoute,forwardRoutes," "); 
+	//从实际转发路线中寻找第一条未行驶的兴趣路段
+	for(itforward = forwardRoutes.begin();itforward != forwardRoutes.end();itforward++)
+	{
+		itinterest = find(interestRoute.begin(),interestRoute.end(),*itforward);
+		if(itinterest != interestRoute.end())
 		{
-			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) route "<<*it<<"不在PIT中"<<std::endl;
-			//创建一个新的表项
-			Ptr<Name> name = ns3::Create<Name>('/'+*it);
-			Ptr<Interest> interest = ns3::Create<Interest>();
-			interest->SetName(name);
-			interest->SetInterestLifetime(Time::Max());//never expire
-			
-			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
-		    Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
-			
-			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
-		    m_pitContainer.push_back(entry);
-			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
-			pitEntry->AddIncomingNeighbors(id);
-			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-		    //std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
-			//getchar();
+			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 从实际转发路线中找到了第一条未行驶的兴趣路段 "<<*itinterest<<std::endl;
+			break;
 		}
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdateRSUPit)添加后 NodeId "<<id<<std::endl;
-	showPit();
-	//getchar();
-	NS_LOG_DEBUG("update RSUpit:"<<os.str());
-	return true;
-}
+	//加入未行驶的兴趣路段
+	std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 未行驶的兴趣路线为 ";
+	for(;itforward != forwardRoutes.end() && itinterest != interestRoute.end();itforward++,ininterest++)
+	{
+		if(*itforward == *itinterest)
+		{
+			unpassedRoutes.push_back(*itforward);
+			std::cout<<*itforward<<" ";
+		}
+		else
+		{
+			//TEST IT
+			NS_ASSERT_MSG(false,"不知道为啥会进入这部分");
+		}
+	}
+	std::cout<<std::endl;
+	//判断未行驶的兴趣路段的终点是否为junction
+	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
+	{
+		const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+		eit = edges.find(*itunpassed);
+		//当前节点所在路段的终点
+		std::string to = eit->second.to;
+		if(junction == to)
+		{
+			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 路段 "<<*itunpassed<<" 的终点为 "<<junction<<std::endl;
+			itunpassed++;
+		}
+		else
+		{
+			unpassedRoutes.erase(itunpassed++);
+		}
+	}
+	return unpassedRoutes;
+}*/
+
+/*
+ * 2017.12 25 added by sy
+ * 分割字符串
+ */
+/*void
+NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const string& c)
+{
+	std::size_t pos1,pos2;
+	pos2 = s.find(c);
+	pos1 = 0;
+	while(std::string::npos != pos2)
+	{
+		v.push_back(s.substr(pos1,pos2-pos1));
+		pos1 = pos2+c.size();
+		pos2 = s.find(c,pos1);
+	}
+	if(pos1 != s.length())
+		v.push_back(s.substr(pos1));
+}*/
+
 
 /*
  * 2017.12.24 added by sy
  * 更新主待处理兴趣列表
- * route:兴趣包的兴趣路线
+ * interestRoute:兴趣包的兴趣路线
  * id:兴趣包的源节点
  * lane:兴趣包的源节点所对应的车辆在未来会经过的路段
  */
-bool 
-NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& route, const uint32_t& id,const std::string CurrentRoute)
+/*bool 
+NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆未来会经过的路段为 "<<CurrentRoute<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆未来会经过的路段为 "<<currentRoute<<std::endl;
 	
 	//判断当前路段是否出现在兴趣包的兴趣路线中
-	std::vector<std::string>::const_iterator it = std::find(route.begin(),route.end(),CurrentRoute);
+	std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),currentRoute);
 	
 	//找不到
-	if(it == route.end())
+	if(it == interestRoute.end())
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 该兴趣包不该在主PIT中更新"<<std::endl;
 		return false;
 	}
 	
 	//将剩余的路线及节点加入PIT中
-	for(++it;it != route.end();++it)
+	for(++it;it != interestRoute.end();++it)
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
 		//寻找PIT中是否有该路段
@@ -252,15 +297,15 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& route, const uint32_
 			{
 				std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				pitEntry->AddIncomingNeighbors(CurrentRoute,id);
+				pitEntry->AddIncomingNeighbors(currentRoute,id);
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 				break;
 			}
 		}
-		//route不在PIT中
+		//interestRoute不在PIT中
 		if(pit == m_pitContainer.end())
 		{
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) route "<<*it<<"不在PIT中"<<std::endl;
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
 			Ptr<Interest> interest = ns3::Create<Interest>();
@@ -273,18 +318,18 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& route, const uint32_
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		    m_pitContainer.push_back(entry);
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
-			pitEntry->AddIncomingNeighbors(CurrentRoute,id);
+			pitEntry->AddIncomingNeighbors(currentRoute,id);
 			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 		    std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 对应的路段为 "<<CurrentRoute<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 对应的路段为 "<<currentRoute<<std::endl;
 	showPit();
 	//getchar();
 	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
 	return true;
-}
+}*/
 
 void 
 NrPitImpl::showPit()
@@ -350,7 +395,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string
  * added by sy
  * lane为车辆当前所在路段
  */
-void 
+/*void 
 NrPitImpl::DeleteFrontNode(const std::string lane)
 {
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
@@ -394,7 +439,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane)
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 	}
 	showPit();
-}
+}*/
 
 
 void

@@ -70,8 +70,8 @@ private:
 private:
 	std::unordered_map< uint32_t,EventId>  m_nbTimeoutEvent;    ///< @brief it is a hashmap that record the timeout event of each neighbor id
 	//2017.12.23 changed by sy
-	std::unordered_map<std::string,std::unordered_set< uint32_t > > m_incomingnbs;///< @brief container for incoming neighbors 
-	//std::unordered_set<uint32_t> m_incomingnbs;
+	//std::unordered_map<std::string,std::unordered_set< uint32_t > > m_incomingnbs;///< @brief container for incoming neighbors 
+	std::unordered_set<uint32_t> m_incomingnbs;
 	std::string m_interest_name;	
 	Time m_infaceTimeout; 
 };
