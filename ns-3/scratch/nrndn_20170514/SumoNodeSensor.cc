@@ -477,7 +477,7 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 	}
 }
 
-/*2017.12.25 判断RSU与RSU的位置关系 (仿真地图中不会进入此函数)
+/*2017.12.25 判断RSU与RSU的位置关系 
  * lane代表兴趣包当前经过的路段
  */
 std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
