@@ -773,7 +773,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
-	cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
+	//cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
 	
 	// RSU不会收到自己发送的兴趣包
 	if(Face::APPLICATION==face->GetFlags())
@@ -806,6 +806,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t forwardId = nrheader.getForwardId();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	getchar();
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
