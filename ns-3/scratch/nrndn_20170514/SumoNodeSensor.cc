@@ -456,7 +456,7 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
-	std::string junction = getJunctionId(RSUID);
+	std::string junction = RSUGetJunctionId(RSUID);
 	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) RSU所在的交点为 "<<junction<<std::endl;
 	if(from == junction)
 	{

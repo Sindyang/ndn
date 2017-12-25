@@ -1304,7 +1304,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		}
 		else
 		{
-			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(x,y);
+			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),x,y);
 			getchar();
 			return result;
 		}
