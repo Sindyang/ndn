@@ -17,7 +17,8 @@ namespace nrndn
 nrHeader::nrHeader():
 		m_sourceId(0),
 		m_x(0),
-		m_y(0)
+		m_y(0),
+		m_forwardId(999999999)
 {
 	// TODO Auto-generated constructor stub
 
@@ -25,7 +26,7 @@ nrHeader::nrHeader():
 
 nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,const std::vector<uint32_t>& priorityList):
 		m_sourceId(sourceId),
-		m_forwardId(9999999),
+		m_forwardId(999999999),
 		m_x(x),
 		m_y(y),
 		//added by sy
