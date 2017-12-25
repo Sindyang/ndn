@@ -230,7 +230,7 @@ const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()
 }
 
 
-const std::string SumoNodeSensor::getJunctionId(uint32_t id)
+const std::string SumoNodeSensor::RSUGetJunctionId(uint32_t id)
 {
 	std::vector<std::string> route = m_sumodata->getVl().getVehicles()[id].route.edgesID;
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
@@ -410,7 +410,7 @@ std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithRSU(const double& 
 	double length = eit->second.lane.length;
 	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithRSU) localLane "<<localLane<<" from "<<from<<" to "<<to<<" length "<<length<<endl;
 	//RSU所在交点
-	std::string junction = getJunctionId(RSUID);
+	std::string junction = RSUGetJunctionId(RSUID);
 	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithRSU) junction "<<junction<<endl;
 	//RSU位于车辆所在路段起点
 	if(from == junction)
@@ -432,7 +432,84 @@ std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithRSU(const double& 
 	}
 }
 
-//还需要判断RSU与消息包或车辆的位置关系
+/*2017.12.25 判断RSU与车辆的位置关系
+ * x,y为另一节点的坐标
+ */
+std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t RSUID,const double& x,const double& y)
+{
+	std::pair<std::string, double> remoteInfo = convertCoordinateToLanePos(x,y);
+
+	//另一节点所在路段和位置
+	const string& remoteLane = remoteInfo.first;
+	const double& remotePos  = remoteInfo.second;
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段为 "<<remoteLane<<std::endl;
+	
+	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	eit = edges.find(remoteLane);
+	std::string from = eit->second.from;
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的起点为 "<<from<<std::endl;
+	
+	std::string to = eit->second.to;
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 另一节点所在路段的终点为 "<<to<<std::endl;
+	
+	//另一节点所在路段的长度
+	double length = eit->second.lane.length;
+	
+	std::string junction = getJunctionId(RSUID);
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) RSU所在的交点为 "<<junction<<std::endl;
+	if(from == junction)
+	{
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU前方 距离为 "<<remotePos<<std::endl;
+		return pair<bool,double>(true,remotePos);
+	}
+	else if(to == junction)
+	{
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU后方 距离为 "<<length-remotePos<<std::endl;
+		return pair<bool,double>(true,-(length-remotePos));
+	}
+	else
+	{
+		Vector localPos = GetObject<MobilityModel>()->GetPosition();
+		localPos.z=0;//Just in case
+		Vector remotePos(x,y,0);
+		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
+	}
+}
+
+/*2017.12.25 判断RSU与RSU的位置关系 (仿真地图中不会进入此函数)
+ * lane代表兴趣包当前经过的路段
+ */
+std::pair<bool,double> SuNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
+{
+	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	eit = edges.find(lane);
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
+	std::string from = eit->second.from;
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
+	
+	std::string to = eit->second.to;
+	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
+	
+	//另一节点所在路段的长度
+	double length = eit->second.lane.length;
+	
+	std::string remotejunction = getJunctionId(remoteid);
+	std::string localjunction = getJunctionId(getNodeId());
+	
+	if(from == remotejunction && to == localjunction)
+	{
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点位于路段起点，当前节点位于路段终点"<<std::endl;
+		return std::pair<bool,double>(true,-length);
+	}
+	else if(from == localjunction && to == remotejunction)
+	{
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点位于路段起点，另一节点位于路段终点"<<std::endl;
+		return std::pair<bool,double>(true,length);
+	}
+	NS_ASSERT_MSG(false,"路段的起始点与RSU的交点ID不相同");
+}
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(
 		const double& x, const double& y)

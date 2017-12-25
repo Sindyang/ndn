@@ -165,6 +165,11 @@ public:
 	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double& x,const double& y)=0;
 	
 	virtual std::pair<bool, double> VehicleGetDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID)=0;
+	
+	//2017.12.25 added by sy
+	virtual std::pair<bool,double> RSUGetDistanceWithVehicle(const uint32_t RSUID,const double& x,const double& y)=0;
+	//2017.12.25 added by sy
+	virtual std::pair<bool,double> RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)=0;
 
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
 	

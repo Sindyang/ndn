@@ -145,9 +145,12 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 }
 
 
-//added by sy
+/* 2017.12.25 added by sy
+ * forwardRoute:兴趣包的实际转发路线
+ * interestRoute: 
+ */
 bool 
-NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& id)
+NrPitImpl::UpdateRSUPit(const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
