@@ -807,10 +807,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	//If it is not a stop message, prepare to forward:
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
-
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
@@ -840,6 +836,9 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		return;
 	}
 
+	//If it is not a stop message, prepare to forward:
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
@@ -1282,7 +1281,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//获取兴趣包的转发节点id
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t forwardId = nrheader.getForwardId();
-	cout<<"sourceId"<<sourceId<<" forwardId "<<forwardId<<endl;
+	cout<<"sourceId "<<sourceId<<" forwardId "<<forwardId<<endl;
 	uint32_t remoteId = (forwardId == 999999999) ? sourceId:forwardId;
 	const double x = nrheader.getX();
 	const double y = nrheader.getY();
