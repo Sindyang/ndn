@@ -1278,7 +1278,9 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//获取兴趣包的转发节点id
+	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t forwardId = nrheader.getForwardId();
+	uint32_t remoteId = forwardId == 999999999 ? sourceId:forwardId;
 	const double x = nrheader.getX();
 	const double y = nrheader.getY();
 	
@@ -1295,7 +1297,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//当前节点为RSU
 	if(currentType == "RSU")
 	{
-		if(forwardId >= numsofvehicles)
+		if(remoteId >= numsofvehicles)
 		{
 			NS_ASSERT_MSG(false,"在仿真地图中不会进入该函数");
 			std::cout<<"(forwarding.cc-packetFromDirection) 在仿真地图中不会进入该函数"<<std::endl;
@@ -1312,7 +1314,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//当前节点为普通车辆
 	else
 	{
-		if(forwardId >= numsofvehicles)
+		if(remoteId >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(x,y,forwardId);
 			return result;
