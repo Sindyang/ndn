@@ -157,7 +157,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	std::size_t found = forwardRoute.find(" ");
 	std::string currentroute = forwardRoute.substr(0,found);
 	std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包当前所在路段为 "<<currentroute<<std::endl;
-	std::vector<std::string>::iterator it = find(interestRoute.begin(),interestRoute.end(),currentroute);
+	std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),currentroute);
 	//该兴趣包来时的路段为兴趣路段
 	if(it != interestRoute.end())
 	{
@@ -196,7 +196,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	//从实际转发路线中寻找第一条未行驶的兴趣路段
 	for(itforward = forwardRoutes.begin();itforward != forwardRoutes.end();itforward++)
 	{
-		itinterest = find(interestRoute.begin(),interestRoute.end(),*itforward);
+		itinterest = std::find(interestRoute.begin(),interestRoute.end(),*itforward);
 		if(itinterest != interestRoute.end())
 		{
 			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 从实际转发路线中找到了第一条未行驶的兴趣路段 "<<*itinterest<<std::endl;
@@ -222,8 +222,8 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	//判断未行驶的兴趣路段的终点是否为junction
 	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
 	{
-		const std::map<string,ns3::vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
-		std::map<std::string,ns3::vanetmobility::sumomobility::Edge>::const_iterator eit;
+		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 		eit = edges.find(*itunpassed);
 		//当前节点所在路段的终点
 		std::string to = eit->second.to;
