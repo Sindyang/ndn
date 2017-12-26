@@ -1024,7 +1024,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
 
-		uint32_t myNodeId = m_node->GetId();
+		//uint32_t myNodeId = m_node->GetId();
 		//cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
 		return;
@@ -1192,7 +1192,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				NotifyUpperLayer(data);
 				// 3. Is there any interested nodes behind?
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-			    const std::unordered_map<std::string,std::unordered_set<uint32_t> >& interestNodes = entry->getIncomingnbs();
+			    const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 				cout<<"当前节点为 "<<myNodeId<<endl;
 				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
 				//entry->listPitEntry1(myNodeId);
@@ -1522,14 +1522,14 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
 	//added by sy
-    ndn::nrndn::nrHeader nrheader;
-    interest->GetPayload()->PeekHeader(nrheader);
-    uint32_t nodeId = nrheader.getSourceId();
-	uint32_t myNodeId = m_node->GetId();
+    //ndn::nrndn::nrHeader nrheader;
+   // interest->GetPayload()->PeekHeader(nrheader);
+  //  uint32_t nodeId = nrheader.getSourceId();
+	//uint32_t myNodeId = m_node->GetId();
 	//cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
-	std::string routes = interest->GetRoutes();
+	//std::string routes = interest->GetRoutes();
 	//std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
-	uint32_t nonce = interest->GetNonce();
+	//uint32_t nonce = interest->GetNonce();
 	//std::cout<<"(forwarding.cc-SendInterestPacket) nonce "<<nonce<<std::endl;
 	//getchar();
 

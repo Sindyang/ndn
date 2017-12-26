@@ -72,8 +72,10 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 		std::unordered_set<uint32_t> neighbors;
 		//添加邻居信息
 		neighbors.insert(id);
-		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >,bool> ret = 
-		m_incomingnbs.insert(std::pair<std::string,std::unordered_set<uint32_t> >(lane,neighbors));
+		
+		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >,bool> ret;
+		ret = m_incomingnbs.insert(std::pair<std::string,std::unordered_set<uint32_t>>(lane,neighbors));
+		
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
 		return ret.first;
 	}

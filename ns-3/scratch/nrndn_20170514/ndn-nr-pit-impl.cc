@@ -191,12 +191,13 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	std::vector<std::string> forwardRoutes;
 	std::vector<std::string> unpassedRoutes;
 	std::vector<std::string>::iterator itforward;
-	std::vector<std::string>::iterator itinterest;
+	std::vector<std::string>::const_iterator itinterest;
 	SplitString(forwardRoute,forwardRoutes," "); 
 	//从实际转发路线中寻找第一条未行驶的兴趣路段
 	for(itforward = forwardRoutes.begin();itforward != forwardRoutes.end();itforward++)
 	{
-		itinterest = std::find(interestRoute.begin(),interestRoute.end(),*itforward);
+		std::string lane = *itforward;
+		itinterest = std::find(interestRoute.begin(),interestRoute.end(),lane);
 		if(itinterest != interestRoute.end())
 		{
 			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 从实际转发路线中找到了第一条未行驶的兴趣路段 "<<*itinterest<<std::endl;
@@ -397,7 +398,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string
  * lane为车辆当前所在路段
  */
 void 
-NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t id)
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
