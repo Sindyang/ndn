@@ -146,7 +146,7 @@ private:
     Ptr<ForwardingStrategy>		                   m_forwardingStrategy;
     std::vector<Ptr<Entry> >		               m_pitContainer;
     Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
-    Ptr<ns3::vanetmobility::sumomobility::SumoMobility> m_sumodata;
+    Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
     friend class EntryNrImpl;
     
     
