@@ -503,7 +503,7 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	
 	if(remotejunction == localjunction)
 	{
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 两个节点属于同一节点"<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 两个节点属于同一节点"<<std::endl;
 		return std::pair<bool,double>(true,0);
 	}
 	if(from == remotejunction && to == localjunction)

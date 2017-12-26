@@ -161,12 +161,14 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	//该兴趣包来时的路段为兴趣路段
 	if(it != interestRoute.end())
 	{
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段为兴趣路段"<<std::endl;
 		bool result = UpdatePrimaryPit(interestRoute,id,currentroute);
 		return result;
 	}
 	//该兴趣包来时的路段不是兴趣路段，RSU为借路RSU
 	else
 	{
+		NS_ASSERT_MSG(false,"该兴趣包来时的路段不是兴趣路段");
 		//更新副待处理兴趣列表 这个函数还没写
 		// update secondary pit
 		// 其实我觉得这里应该只有一条路
