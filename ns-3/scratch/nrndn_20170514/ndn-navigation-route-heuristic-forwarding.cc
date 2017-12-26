@@ -883,6 +883,20 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 
 		if (idIsInPriorityList)
 		{
+			//查看下一路段是否为兴趣路段
+			std::vector<std::string> routes;
+			SplitString(forwardRoute,routes," ");
+			if(routes.size() <= 1)
+			{
+				std::cout<<"(forwarding.cc-OnInterest) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
+				BroadcastStopMessage(interest);
+				return;
+			}
+			std::string nextroute = routes[1];
+			
+			std::vector<std::string>::iterator it = find(interestRoute.begin(),interestRoute.end(),nextroute);
+			
+			
 			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
@@ -993,6 +1007,25 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
+/*
+ * 2017.12 25 added by sy
+ * 分割字符串
+ */
+void
+NavigationRouteHeuristic::SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c)
+{
+	std::size_t pos1,pos2;
+	pos2 = s.find(c);
+	pos1 = 0;
+	while(std::string::npos != pos2)
+	{
+		v.push_back(s.substr(pos1,pos2-pos1));
+		pos1 = pos2+c.size();
+		pos2 = s.find(c,pos1);
+	}
+	if(pos1 != s.length())
+		v.push_back(s.substr(pos1));
+}
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {

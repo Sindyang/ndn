@@ -327,8 +327,9 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 		    std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
+		std::cout<<std::endl;
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 对应的路段为 "<<currentRoute<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
 	showPit();
 	getchar();
 	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());

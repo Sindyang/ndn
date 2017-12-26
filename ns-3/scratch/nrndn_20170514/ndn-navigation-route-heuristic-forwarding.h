@@ -83,6 +83,9 @@ public:
 	
 	virtual void 
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
+	
+	void
+	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
