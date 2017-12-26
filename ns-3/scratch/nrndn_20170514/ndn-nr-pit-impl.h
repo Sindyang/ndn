@@ -17,6 +17,7 @@
 #include "ns3/ndn-data.h"
 #include "ns3/ndn-forwarding-strategy.h"
 #include "ns3/ndn-name.h"
+#include "ns3/SumoMobility.h"
 
 #include "NodeSensor.h"
 
@@ -145,7 +146,7 @@ private:
     Ptr<ForwardingStrategy>		                   m_forwardingStrategy;
     std::vector<Ptr<Entry> >		               m_pitContainer;
     Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
-    Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
+    Ptr<ns3::vanetmobility::sumomobility::SumoMobility> m_sumodata;
     friend class EntryNrImpl;
     
     
