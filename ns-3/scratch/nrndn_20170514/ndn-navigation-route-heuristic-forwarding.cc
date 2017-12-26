@@ -714,7 +714,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 		// Update the PIT here
 		cout<<"(forwarding.cc-OnInterest_Car) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
-		m_nrpit->UpdateCarPit(remoteRoute, nodeId);
+		//m_nrpit->UpdateCarPit(remoteRoute, nodeId);
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -804,6 +804,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
+	//获取兴趣包的实际转发路线
+	std::string forwardRoute = interest->GetRoutes();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
@@ -864,10 +866,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
 		getchar();
 		
-		//const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
+		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
 
+		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
 		// Update the PIT here
-		//m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
+		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -1803,7 +1806,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			const vector<string> remoteroutes = ExtractRouteFromName(interest->GetName());
 			//获取心跳包所在路段
 			string remoteroute = remoteroutes.front();
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId,"RSU");
+			//m_nrpit->DeleteFrontNode(remoteroute,sourceId,"RSU");
 			overtake.erase(it);
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"超车，从PIT中删除该表项"<<endl;
 		}

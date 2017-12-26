@@ -99,7 +99,7 @@ std::string NrPitImpl::getCurrentLane()
 }
 
 //更新普通车辆的PIT表
-bool 
+/*bool 
 NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
 {
 	//std::cout<<"UpdateCarPit"<<std::endl;
@@ -142,7 +142,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
 	showPit();
 	NS_LOG_DEBUG("update Carpit:"<<os.str());
 	return true;
-}
+}*/
 
 
 /* 2017.12.25 added by sy
@@ -151,7 +151,7 @@ NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id
  * interestRoute:兴趣包的兴趣路线（包含已走完的兴趣路线）
  * id为兴趣包源节点
  */
-/*bool 
+bool 
 NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
 {
 	std::size_t found = forwardRoute.find(" ");
@@ -178,13 +178,13 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		}
 		return result;
 	}
-}*/
+}
 
 /*
  * 2017.12.25 added by sy
  * 得到未行驶且会通过当前RSU的兴趣路线
  */
-/*std::vector<std::string> 
+std::vector<std::string> 
 NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute)
 {
 	std::vector<std::string> forwardRoutes;
@@ -237,13 +237,13 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		}
 	}
 	return unpassedRoutes;
-}*/
+}
 
 /*
  * 2017.12 25 added by sy
  * 分割字符串
  */
-/*void
+void
 NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const string& c)
 {
 	std::size_t pos1,pos2;
@@ -257,7 +257,7 @@ NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const st
 	}
 	if(pos1 != s.length())
 		v.push_back(s.substr(pos1));
-}*/
+}
 
 
 /*
@@ -267,12 +267,12 @@ NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const st
  * id:兴趣包的源节点
  * lane:兴趣包的源节点所对应的车辆在未来会经过的路段
  */
-/*bool 
+bool 
 NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆未来会经过的路段为 "<<currentRoute<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆当前经过的路段为 "<<currentRoute<<std::endl;
 	
 	//判断当前路段是否出现在兴趣包的兴趣路线中
 	std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),currentRoute);
@@ -326,10 +326,10 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 对应的路段为 "<<currentRoute<<std::endl;
 	showPit();
-	//getchar();
+	getchar();
 	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
 	return true;
-}*/
+}
 
 void 
 NrPitImpl::showPit()
@@ -344,7 +344,7 @@ NrPitImpl::showPit()
 }
 
 
-void 
+/*void 
 NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string type)
 {
 	std::cout<<"(DeleteFrontNode)"<<std::endl;
@@ -388,15 +388,15 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 	}
 	showPit();
-}
+}*/
 
 /*
  * 2017.12.24
  * added by sy
  * lane为车辆当前所在路段
  */
-/*void 
-NrPitImpl::DeleteFrontNode(const std::string lane)
+void 
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t id)
 {
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
@@ -439,7 +439,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane)
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 	}
 	showPit();
-}*/
+}
 
 
 void
