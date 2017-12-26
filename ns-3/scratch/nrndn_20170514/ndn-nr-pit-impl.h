@@ -24,6 +24,7 @@
 #include <set>
 #include <queue>
 #include <algorithm>
+#include <string>
 
 
 namespace ns3
@@ -119,7 +120,7 @@ public:
     
     std::vector<std::string> getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
     
-    void SplitString(const std::string& s,std::vector<std::string>& v,const string& c);
+    void SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	
 	bool UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
 	
@@ -141,10 +142,10 @@ protected:
     
 private:
     Time m_cleanInterval;
-    Ptr<ForwardingStrategy>		m_forwardingStrategy;
-    std::vector<Ptr<Entry> >		m_pitContainer;
-    Ptr<ndn::nrndn::NodeSensor>	m_sensor;
-    
+    Ptr<ForwardingStrategy>		                   m_forwardingStrategy;
+    std::vector<Ptr<Entry> >		               m_pitContainer;
+    Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
+    Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
     friend class EntryNrImpl;
     
     
