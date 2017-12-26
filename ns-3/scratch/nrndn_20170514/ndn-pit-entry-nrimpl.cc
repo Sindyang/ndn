@@ -73,7 +73,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 		//添加邻居信息
 		neighbors.insert(id);
 		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >,bool> ret = 
-		m_incomingnbs.insert(std::make_pair<std::string,std::unordered_set<uint32_t>>(lane,neighbors));
+		m_incomingnbs.insert(std::make_pair<std::string,std::unordered_set<uint32_t> >(lane,neighbors));
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
 		return ret.first;
 	}
@@ -81,8 +81,8 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 	{
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors = incominglane->second;
-		std::unordered_set<uint32_t>::iterator itcomingnb = neighbor.find(id);
-		if(incomingnb == neighbors.end())
+		std::unordered_set<uint32_t>::iterator itcomingnb = neighbors.find(id);
+		if(itcomingnb == neighbors.end())
 		{
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
 			incominglane->second.insert(id);
@@ -95,6 +95,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 			return incominglane;
 		}
 	}
+	return incominglane;
 }
 
 //删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
