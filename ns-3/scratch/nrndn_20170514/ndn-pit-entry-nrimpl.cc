@@ -64,24 +64,24 @@ std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
 EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 {
 	std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
-	std::unordered_map<std::string,unordered_set<uint32_t> > ::iterator incominglane = m_incomingnbs.find(lane);
+	std::unordered_map<std::string,std::unordered_set<uint32_t> > ::iterator incominglane = m_incomingnbs.find(lane);
 	//未找到该路段
 	if(incominglane == m_incomingnbs.end())
 	{
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未在表项中找到该路段"<<std::endl;
-		unordered_set<uint32_t> neighbors;
+		std::unordered_set<uint32_t> neighbors;
 		//添加邻居信息
 		neighbors.insert(id);
 		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >,bool> ret = 
-		m_incomingnbs.insert(std::make_pair<std::string,unordered_set<uint32_t>>(lane,neighbors));
+		m_incomingnbs.insert(std::make_pair<std::string,std::unordered_set<uint32_t>>(lane,neighbors));
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
 		return ret.first;
 	}
 	else
 	{
 		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 在表项中找到该路段"<<std::endl;
-		unordered_set<uint32_t> neighbors = incominglane->second;
-		unordered_set<uint32_t>::iterator itcomingnb = neighbor.find(id);
+		std::unordered_set<uint32_t> neighbors = incominglane->second;
+		std::unordered_set<uint32_t>::iterator itcomingnb = neighbor.find(id);
 		if(incomingnb == neighbors.end())
 		{
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
@@ -130,7 +130,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		}
 		else
 		{
-			std::cout<<<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在该表项对应的路段 "<<it->first<<" 中"<<std::endl;
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在该表项对应的路段 "<<it->first<<" 中"<<std::endl;
 		}	
 	}
 }

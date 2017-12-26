@@ -245,7 +245,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
  * 分割字符串
  */
 void
-NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const string& c)
+NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c)
 {
 	std::size_t pos1,pos2;
 	pos2 = s.find(c);
@@ -530,8 +530,8 @@ NrPitImpl::InitializeNrPitEntry()
 		NS_LOG_DEBUG("Initialize pit:Push_back"<<name->toUri());
 		//std::cout<<"(ndn-nr-pit-impl.cc-InitializeNrPitEntry) name: "<<uriConvertToString(name->toUri())<<std::endl;
 	}
-	//std::cout<<std::endl;
-	return true;*/
+	//std::cout<<std::endl;*/
+	return true;
 }
   
 
