@@ -67,7 +67,7 @@ public:
 	}*/
 	
 	//需要修改
-	const std::unordered_set<uint32_t> >& getIncomingnbs() const
+	const std::unordered_set<uint32_t>& getIncomingnbs() const
 	{
 		std::unordered_set<uint32_t> result;
 		return result;
