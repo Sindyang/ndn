@@ -808,6 +808,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	std::string forwardRoute = interest->GetRoutes();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -893,9 +894,37 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				return;
 			}
 			std::string nextroute = routes[1];
-			
 			std::vector<std::string>::iterator it = find(interestRoute.begin(),interestRoute.end(),nextroute);
-			
+		
+			//下一路段为兴趣路段
+			if(it != interestRoute.end())
+			{
+				double index = distance(pri.begin(), idit);
+				double random = m_uniformRandomVariable->GetInteger(0, 20);
+				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+				//构造转发优先级列表，并判断前方邻居是否为空
+				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+				if(newPriorityList.empty())
+				{
+					forwardRoute = forwardRoute.substr(nextroute.size());
+					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+					interest->SetRoutes(forwardRoute);
+					cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+					//重新选择路线发送兴趣包
+				}
+				else
+				{
+					forwardRoute = forwardRoute.substr(nextroute.size());
+					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+					interest->SetRoutes(forwardRoute);
+					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+				}
+				
+			}
+			else
+			{
+			}
 			
 			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is in PriorityList");
