@@ -1192,7 +1192,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				NotifyUpperLayer(data);
 				// 3. Is there any interested nodes behind?
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-				const std::unordered_map<std::string,std::unordered_set<uint32_t> >& interestNodes = entry->getIncomingnbs();
+			    const std::unordered_map<std::string,std::unordered_set<uint32_t> >& interestNodes = entry->getIncomingnbs();
 				cout<<"当前节点为 "<<myNodeId<<endl;
 				cout<<"The size of interestNodes is "<<interestNodes.size()<<endl;
 				//entry->listPitEntry1(myNodeId);
@@ -1202,7 +1202,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					BroadcastStopMessage(data);
 					return;
 				}
-				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);
+				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);*/
 				cout<<"The size of PriorityList is "<<newPriorityList.size()<<endl;
 				for(int i = 0;i < (signed)newPriorityList.size();i++)
 				{

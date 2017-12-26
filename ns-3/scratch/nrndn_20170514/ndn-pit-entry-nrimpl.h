@@ -66,9 +66,11 @@ public:
 		return m_incomingnbs;
 	}*/
 	
-	const std::unordered_map<std::string,std::unordered_set<uint32_t> >& getIncomingnbs() const
+	//需要修改
+	const std::unordered_set<uint32_t> >& getIncomingnbs() const
 	{
-		return m_incomingnbs;
+		std::unordered_set<uint32_t> result;
+		return result;
 	}
 
 private:
