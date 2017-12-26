@@ -1696,7 +1696,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				nums_car_current += 1;
@@ -1706,7 +1706,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				nums_car_current += 1;
@@ -1776,8 +1776,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	uint32_t sourceId = nrheader.getSourceId();
-	uint32_t nodeId = m_node->GetId();
-	const std::string& lane = m_sensor->getLane();
+	//uint32_t nodeId = m_node->GetId();
+	//const std::string& lane = m_sensor->getLane();
 	
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//std::string junctionid = m_sensor->getJunctionId(nodeId);
