@@ -1202,7 +1202,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					BroadcastStopMessage(data);
 					return;
 				}
-				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);*/
+				newPriorityList = GetPriorityListOfDataForwarderInterestd(interestNodes,pri);
 				cout<<"The size of PriorityList is "<<newPriorityList.size()<<endl;
 				for(int i = 0;i < (signed)newPriorityList.size();i++)
 				{
@@ -1949,7 +1949,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 		return priorityList;
 	}
 	
-	const std::unordered_map<std::string,std::unordered_set<uint32_t> >& interestNodes = entry->getIncomingnbs();
+	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
 	const vector<string>& route = m_sensor->getNavigationRoute();
 	
 	//added by sy
