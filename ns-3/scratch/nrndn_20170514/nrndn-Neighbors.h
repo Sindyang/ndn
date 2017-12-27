@@ -34,7 +34,7 @@ public:
 		std::string m_lane;
 	    Time m_expireTime;
 	    Neighbor (const double& x, const double& y,const std::string& lane,const Time& t) :
-	    	m_x (x),m_y(y),lane(""),m_expireTime (t)
+	    	m_x (x),m_y(y),m_lane(""),m_expireTime (t)
 	    {
 	    }
 	};
