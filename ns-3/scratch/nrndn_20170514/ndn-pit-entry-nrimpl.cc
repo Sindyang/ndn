@@ -63,12 +63,12 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
 EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 {
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
 	std::unordered_map<std::string,std::unordered_set<uint32_t> > ::iterator incominglane = m_incomingnbs.find(lane);
 	//未找到该路段
 	if(incominglane == m_incomingnbs.end())
 	{
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未在表项中找到该路段"<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors;
 		//添加邻居信息
 		neighbors.insert(id);
@@ -76,24 +76,24 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator,bool> ret;
 		ret = m_incomingnbs.insert(std::pair<std::string,std::unordered_set<uint32_t>>(lane,neighbors));
 		
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
 		return ret.first;
 	}
 	else
 	{
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 在表项中找到该路段"<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors = incominglane->second;
 		std::unordered_set<uint32_t>::iterator itcomingnb = neighbors.find(id);
 		if(itcomingnb == neighbors.end())
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
 			incominglane->second.insert(id);
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该节点"<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该节点"<<std::endl;
 			return incominglane;
 		}
 		else
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已找到源节点"<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已找到源节点"<<std::endl;
 			return incominglane;
 		}
 	}

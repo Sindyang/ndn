@@ -276,7 +276,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆当前经过的路段为 "<<currentRoute<<std::endl;
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 车辆当前经过的路段为 "<<currentRoute<<std::endl;
 	
 	//判断当前路段是否出现在兴趣包的兴趣路线中
 	std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),currentRoute);
@@ -284,14 +284,14 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	//找不到
 	if(it == interestRoute.end())
 	{
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 该兴趣包不该在主PIT中更新"<<std::endl;
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 该兴趣包不该在主PIT中更新"<<std::endl;
 		return false;
 	}
 	
 	//将剩余的路线及节点加入PIT中
 	for(++it;it != interestRoute.end();++it)
 	{
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
 		//寻找PIT中是否有该路段
 		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
 		{
@@ -299,7 +299,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 			//PIT中已经有该路段
 			if(pitName.toUri() == *it)
 			{
-				std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
+				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 				pitEntry->AddIncomingNeighbors(currentRoute,id);
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
@@ -309,7 +309,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 		//interestRoute不在PIT中
 		if(pit == m_pitContainer.end())
 		{
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
 			Ptr<Interest> interest = ns3::Create<Interest>();
@@ -324,7 +324,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
 			pitEntry->AddIncomingNeighbors(currentRoute,id);
 			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-		    std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 		std::cout<<std::endl;

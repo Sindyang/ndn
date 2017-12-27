@@ -251,14 +251,14 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	return PriorityList;
 }*/
 
-//获取转发优先级列表
+//车辆获取转发优先级列表
 std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest()
 {
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	//cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) numsofvehicles "<<numsofvehicles<<endl;
-	//cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-VehicleGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
@@ -272,7 +272,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -283,7 +283,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		else
 		{
 			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			//若result.second >= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second > 0)
 			{
@@ -291,23 +291,23 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 			}
 		}
 	}
-	//cout<<endl<<"加入RSU：";
+	cout<<endl<<"加入RSU：";
 	// step 2. Sort By Distance Descending
 	std::multimap<double,uint32_t>::iterator it;
 	// 加入RSU
 	for(it=sortlistRSU.begin();it!=sortlistRSU.end();++it)
 	{
 		PriorityList.push_back(it->second);
-		//cout<<" "<<it->second;
+		cout<<" "<<it->second;
 	}
-	//cout<<endl<<"加入普通车辆：";
+	cout<<endl<<"加入普通车辆：";
 	// 加入普通车辆
 	for(it=sortlistVehicle.begin();it!=sortlistVehicle.end();++it)
 	{
 		PriorityList.push_back(it->second);
-		//cout<<" "<<it->second;
+		cout<<" "<<it->second;
 	}	
-	//cout<<endl;
+	cout<<endl;
 	//getchar();
 	return PriorityList;
 } 
@@ -1742,7 +1742,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
