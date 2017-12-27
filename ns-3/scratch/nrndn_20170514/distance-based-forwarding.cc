@@ -336,7 +336,8 @@ void DistanceBasedForwarding::ProcessHello(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	// 2017.12.27 添加interest->GetRoutes()
+	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
 }
 
 void DistanceBasedForwarding::HelloTimerExpire()
@@ -375,6 +376,7 @@ void DistanceBasedForwarding::SendHello()
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
+	interest->SetRoutes(LaneName);//2017.12.25 added by sy
 
 	//4. send the hello message
 	SendInterestPacket(interest);

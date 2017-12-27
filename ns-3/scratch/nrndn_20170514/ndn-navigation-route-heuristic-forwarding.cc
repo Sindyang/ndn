@@ -894,7 +894,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				return;
 			}
 			std::string nextroute = routes[1];
-			std::vector<std::string>::iterator it = std::find(interestRoute.begin(),interestRoute.end(),nextroute);
+			std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),nextroute);
 		
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
