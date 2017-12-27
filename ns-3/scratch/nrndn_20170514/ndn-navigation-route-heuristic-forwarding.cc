@@ -312,6 +312,56 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 	return PriorityList;
 } 
 
+std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(const std::string lane)
+{
+	std::vector<uint32_t> PriorityList;
+	//节点中的车辆数目
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
+	std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(lane);
+	cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 道路的起点为 "<<junctions.first<<" 终点为 "<<junctions.second<<endl;
+	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
+	{
+		//判断RSU与RSU的位置关系
+		if(nb->first >= numsofvehicles)
+		{
+			//获取RSU所在的交点id
+			std::string junction = m_sensor->RSUGetJunctionId(nb->first);
+			cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) RSU所在的交点为 "<<junction<<endl;
+			if(junction == junctions.second)
+			{
+				PriorityList.push_back(nb->first);
+				cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 加入RSU "<<nb->first<<endl;
+			}
+		}
+		//判断RSU与其他车辆的位置关系
+		else
+		{
+			if(lane == nb->second.m_lane)
+			{
+				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
+				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				if(result.first && result.second > 0)
+				{
+					sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				}
+			}
+		}
+	}
+	cout<<endl<<"加入普通车辆：";
+	for(std::multimap<double,uint32_t>::iterator it=sortlistVehicle.begin();it!=sortlistVehicle.end();++it)
+	{
+		PriorityList.push_back(it->second);
+		cout<<" "<<it->second;
+	}	
+	cout<<endl;
+	getchar();
+	return PriorityList;
+}
+
 /*void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
 {
@@ -904,7 +954,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				//构造转发优先级列表，并判断前方邻居是否为空
-				std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
 				if(newPriorityList.empty())
 				{
 					forwardRoute = forwardRoute.substr(nextroute.size());

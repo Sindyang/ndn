@@ -477,7 +477,7 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 	}
 }
 
-/*2017.12.25 判断RSU与RSU的位置关系 
+/* 2017.12.25 判断RSU与RSU的位置关系 
  * lane代表兴趣包当前经过的路段
  */
 std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
@@ -518,6 +518,23 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	}
 	NS_ASSERT_MSG(false,"路段的起始点与RSU的交点ID不相同");
 }
+
+/*
+ * 2017.12.27 
+ * 获取路段的起点和终点
+ */
+std::pair<std::string,std::string> SumoNodeSensor::GetLaneJunction(const std::string lane)
+{
+	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	eit = edges.find(lane);
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
+	std::string from = eit->second.from;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
+	std::string to = eit->second.to;
+	return std::pair<std::string,std::string>(from,to);
+}
+
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(
 		const double& x, const double& y)

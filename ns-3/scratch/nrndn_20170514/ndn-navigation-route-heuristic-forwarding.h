@@ -178,10 +178,18 @@ private:
 	/**
 	 * 2017.12.16 
 	 * added by sy
-	 * @brief Get priority list of interest packet. default route is the local node's navigation route
+	 * @brief Get priority list of interest packet from vehicle. 
 	 * \return priority list
 	 */
 	std::vector<uint32_t> VehicleGetPriorityListOfInterest();
+	
+	/**
+	 * 2017.12.27
+	 * added by sy
+	 * @brief Get priority list of interest packet from RSU.
+	 * \return priority list
+	 */
+	std::vector<uint32_t> RSUGetPriorityListOfInterest(const std::string lane);
 
 	/**
 	 * @brief Get priority list of data packet from the source node
