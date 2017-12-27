@@ -120,6 +120,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 {
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
+	std::cout<<"(进入ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)"<<std::endl;
 	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
 	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
 	{
