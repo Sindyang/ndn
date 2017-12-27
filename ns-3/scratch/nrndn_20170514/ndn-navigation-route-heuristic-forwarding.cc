@@ -891,6 +891,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			{
 				std::cout<<"(forwarding.cc-OnInterest) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
 				BroadcastStopMessage(interest);
+				getchar();
 				return;
 			}
 			std::string nextroute = routes[1];
@@ -1436,7 +1437,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 		NS_ASSERT_MSG(result,"该兴趣包已经位于缓存中");
 	}
-	getchar();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
