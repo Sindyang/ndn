@@ -958,7 +958,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
 				if(newPriorityList.empty())
 				{
-					forwardRoute = forwardRoute.substr(nextroute.size());
+					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
@@ -968,7 +968,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				}
 				else
 				{
-					forwardRoute = forwardRoute.substr(nextroute.size());
+					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
