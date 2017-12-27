@@ -1643,7 +1643,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
 		std::vector<std::string> routes;
 		SplitString(interest->GetRoutes(),routes," ");
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
 		
 		std::vector<uint32_t> newPriorityList;
 		if(m_sensor->getType() == "RSU")
@@ -1752,11 +1752,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
 		{
+			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(*itroutes);
 		    cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
+			getchar();
 		}
-		getchar();
 	}
 	else
 	{
