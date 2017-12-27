@@ -128,7 +128,8 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
 		if(incomingnb != neighbors.end())
 		{
-			it->second.erase(incomingnb);
+			neighbors.erase(incomingnb);
+			it->second = neighbors;
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
 			<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
 		}
