@@ -317,9 +317,9 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 	std::vector<uint32_t> PriorityList;
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
 	std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(lane);
-	cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 道路的起点为 "<<junctions.first<<" 终点为 "<<junctions.second<<endl;
+	//cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) 道路的起点为 "<<junctions.first<<" 终点为 "<<junctions.second<<endl;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	
@@ -502,7 +502,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	cout<<"(forwarding.cc-OnInterest) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	if(!msgdirection.first || // from other direction
-			msgdirection.second > 0)// or from front
+			msgdirection.second >= 0)// or from front
 	{
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
@@ -661,7 +661,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	if(!msgdirection.first || // from other direction
-			msgdirection.second > 0)// or from front
+			msgdirection.second >= 0)// or from front
 	{
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
