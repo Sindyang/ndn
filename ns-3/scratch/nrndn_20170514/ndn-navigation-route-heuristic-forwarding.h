@@ -525,7 +525,7 @@ private:
 	**/
 	uint32_t gap_mode;//added by sy 
 	
-	std::unordered_set<uint32_t> overtake;
+	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 };
 } /* namespace nrndn */
 } /* namespace fw */

@@ -56,7 +56,7 @@ bool Neighbors::IsNeighbor(uint32_t id)
 	  return false;
 }
 
-void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const Time& expire)
+void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const std::string& lane,const Time& expire)
 {
 	//std::cout<<"进入(Neighbors.cc-Update)"<<std::endl;
 	//std::cout<<"(Neighbors.cc-Update)发送该心跳包的NodeId为: "<<id<<std::endl;
@@ -72,6 +72,10 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 		 it->second.m_x = x;
 		 // setp 3. update the y coordinate
 		 it->second.m_y = y;
+		 // setp 4. update the lane 
+		 // 2017.12.27 added by sy
+		 it->second.m_lane = lane;
+		 
 		 // Finish update
 		 return ;
 	}

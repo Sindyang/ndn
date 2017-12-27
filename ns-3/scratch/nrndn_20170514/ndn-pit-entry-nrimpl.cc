@@ -127,7 +127,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
 		if(incomingnb != neighbors.end())
 		{
-			neighbors.erase(incomingnb);
+			it->second.erase(incomingnb);
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
 			<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
 		}
@@ -135,6 +135,19 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		{
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在该表项对应的路段 "<<it->first<<" 中"<<std::endl;
 		}	
+	}
+	//删除节点为空的路段
+	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();)
+	{
+		if(it->second.empty())
+		{
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
+			m_incomingnbs.erase(it++);
+		}
+		else
+		{
+			++it;
+		}
 	}
 }
 

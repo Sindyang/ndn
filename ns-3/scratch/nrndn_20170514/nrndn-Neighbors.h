@@ -31,9 +31,10 @@ public:
 	{
 		double m_x;
 		double m_y;
+		std::string m_lane;
 	    Time m_expireTime;
-	    Neighbor (const double& x, const double& y,const Time& t) :
-	    	m_x (x),m_y(y),m_expireTime (t)
+	    Neighbor (const double& x, const double& y,const std::string& lane,const Time& t) :
+	    	m_x (x),m_y(y),lane(""),m_expireTime (t)
 	    {
 	    }
 	};
@@ -49,7 +50,7 @@ public:
 	// Check that node with identifier id  is neighbor
 	bool IsNeighbor (uint32_t id);
 	// Update expire time for entry with identifier id, if it exists, else add new entry
-	void Update(const uint32_t& id, const double& x,const double& y,const Time& expire);
+	void Update(const uint32_t& id, const double& x,const double& y,const std::string& lane,const Time& expire);
 	// Remove all expired entries
 	void Purge ();
 	// Schedule m_ntimer.
