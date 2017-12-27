@@ -1910,7 +1910,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	getchar();
+	//getchar();
 	
 	if(routes.size() > 0 && m_csinterest->GetSize() > 0)
 	{
@@ -1920,6 +1920,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		    cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
 		}
+		getchar();
 	}
 	else
 	{
