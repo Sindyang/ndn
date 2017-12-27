@@ -219,6 +219,7 @@ std::map<uint32_t,Ptr<const Interest> >
 NrCsInterestImpl::GetInterest(std::string lane)
 {
 	uint32_t size = GetSize();
+	std::cout<<"(cs-interest.cc-GetInterest) 该路段有车辆 "<<lane<<std::endl;
 	std::cout<<"(NrCsInterestImpl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
 	//PrintCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
@@ -227,10 +228,9 @@ NrCsInterestImpl::GetInterest(std::string lane)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes(); 
-		std::cout<<"(cs-interest.cc-GetInterest) 兴趣包实际导航路线 "<<routes<<std::endl;
+		//std::cout<<"(cs-interest.cc-GetInterest) 兴趣包实际导航路线 "<<routes<<std::endl;
 		std::string currentroute = routes.substr(0,lane.length());
 		std::cout<<"(cs-interest.cc-GetInterest) 兴趣包下一行驶路段 "<<currentroute<<std::endl;
-		std::cout<<"(cs-interest.cc-GetInterest) 该路段有车辆 "<<lane<<std::endl;
 		//getchar();
 		if(currentroute == lane)
 		{

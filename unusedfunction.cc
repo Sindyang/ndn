@@ -870,3 +870,209 @@ NrPitImpl::UpdateRSUPit(const std::vector<std::string>& route, const uint32_t& i
 	NS_LOG_DEBUG("update RSUpit:"<<os.str());
 	return true;
 }
+
+//更新普通车辆的PIT表
+bool 
+NrPitImpl::UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id)
+{
+	//std::cout<<"UpdateCarPit"<<std::endl;
+	std::ostringstream os;
+	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
+	Ptr<Entry> entry = *pit;
+	//head->toUri()为车辆当前所在的路段
+	Name::const_iterator head=entry->GetInterest()->GetName().begin();
+	//Can name::Component use "=="?
+	std::vector<std::string>::const_iterator it=
+			std::find(route.begin(),route.end(),head->toUri());
+			
+	//当前路段为：uriConvertToString(head->toUri())
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)节点当前所在路段 "<<uriConvertToString(head->toUri())<<std::endl;
+	
+	//判断当前路段是否出现在收到的兴趣包的兴趣路线中
+	//找不到
+	if(it==route.end())
+		return false;
+	//找到，把后面的添加进去
+	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
+	{
+		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) pitName: "<<uriConvertToString(pitName.toUri())<<std::endl;
+		if(pitName.toUri() == *it)
+		{
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			pitEntry->AddIncomingNeighbors(id);
+			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit) 兴趣的名字: "<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//getchar();
+		}
+		else
+			break;
+	}
+	//std::cout<<"(ndn-nr-pit-impl.cc-UpdateCarPit)添加后 NodeId "<<id<<std::endl;
+	//showPit();
+	//getchar();
+	//NS_LOG_UNCOND("update pit:"<<os.str());
+	showPit();
+	NS_LOG_DEBUG("update Carpit:"<<os.str());
+	return true;
+}
+
+void 
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id,std::string type)
+{
+	std::cout<<"(DeleteFrontNode)"<<std::endl;
+	std::vector<Ptr<Entry> >::iterator pit;
+	//找到lane在PIT表项中的位置
+	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
+	{
+		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+		if(pitName.toUri() == lane)
+		{
+			break;
+		}
+	}
+	
+	if(pit != m_pitContainer.end())
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+		for(;pit != m_pitContainer.end();)
+		{
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			pitEntry->CleanPITNeighbors(id);
+			//若PIT的表项为空，可以删除该表项
+			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
+			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
+			if(interestNodes.empty() && type == "RSU" && pit!=m_pitContainer.begin())
+			{
+				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
+				std::string pitname = pitName.toUri();
+				std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
+				pit = m_pitContainer.erase(pit);
+			}
+			else
+			{
+				pit++;
+			}
+		}
+	}
+	else
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
+	}
+	showPit();
+}
+
+//添加邻居信息
+std::unordered_set< uint32_t >::iterator
+EntryNrImpl::AddIncomingNeighbors(uint32_t id)
+{
+	//AddNeighborTimeoutEvent(id);
+	std::unordered_set< uint32_t >::iterator incomingnb = m_incomingnbs.find(id);
+
+	if(incomingnb==m_incomingnbs.end())
+	{   //Not found
+		std::pair<std::unordered_set< uint32_t >::iterator,bool> ret =
+				m_incomingnbs.insert (id);
+		return ret.first;
+	}
+	else
+	{
+		return incomingnb;
+	}
+}
+
+//删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
+void EntryNrImpl::CleanPITNeighbors(uint32_t id)
+{
+	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
+	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
+	if (incomingnb != m_incomingnbs.end())
+	{
+		m_incomingnbs.erase(incomingnb);
+		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<".At time "<<Simulator::Now().GetSeconds()<<std::endl;
+	}
+	else
+	{
+		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT该表项中"<<std::endl;
+	}
+}
+
+//cout表项内容
+void EntryNrImpl::listPitEntry()
+{
+	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<": ";
+	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
+	{
+		std::cout<<*ite<<" ";
+	}
+	std::cout<<std::endl;
+}
+
+void EntryNrImpl::listPitEntry1(uint32_t node)
+{
+	std::cout<<"(pit-entry.cc-listPitEntry1) interest_name："<<m_interest_name<<": ";
+	uint32_t temp;
+	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
+	{
+		std::cout<<*ite<<" ";
+		temp = *ite;
+	}
+	if(m_incomingnbs.size() == 1)
+	{
+		if(node == temp)
+		{
+			std::cout<<"当前节点在PIT列表中"<<std::endl;
+		}
+		else
+		{
+			std::cout<<"当前节点不在PIT列表中"<<std::endl;
+		}
+	}
+	std::cout<<std::endl;
+}
+
+//获取优先列表
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
+{
+	//NS_LOG_FUNCTION (this);
+	std::vector<uint32_t> PriorityList;
+	std::ostringstream str;
+	str<<"PriorityList is";
+	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
+
+	// The default order of multimap is ascending order,
+	// but I need a descending order
+	std::multimap<double,uint32_t,std::greater<double> > sortlist;
+
+	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	
+	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
+	{
+		std::pair<bool, double> result=
+				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
+		//cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
+		
+		// Be careful with the order, increasing or descending?
+		if(result.first && result.second >= 0)
+		{
+			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
+			//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
+		}
+	}
+	cout<<endl;
+	// step 2. Sort By Distance Descending
+	std::multimap<double,uint32_t>::iterator it;
+	for(it=sortlist.begin();it!=sortlist.end();++it)
+	{
+		PriorityList.push_back(it->second);
+
+		str<<" "<<it->second;
+		//cout<<" "<<it->second;
+	}
+	NS_LOG_DEBUG(str.str());
+	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//getchar();
+	return PriorityList;
+}

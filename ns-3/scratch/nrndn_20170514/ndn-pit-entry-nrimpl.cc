@@ -37,25 +37,6 @@ EntryNrImpl::~EntryNrImpl ()
   
 }
 
-//添加邻居信息
-/*std::unordered_set< uint32_t >::iterator
-EntryNrImpl::AddIncomingNeighbors(uint32_t id)
-{
-	//AddNeighborTimeoutEvent(id);
-	std::unordered_set< uint32_t >::iterator incomingnb = m_incomingnbs.find(id);
-
-	if(incomingnb==m_incomingnbs.end())
-	{   //Not found
-		std::pair<std::unordered_set< uint32_t >::iterator,bool> ret =
-				m_incomingnbs.insert (id);
-		return ret.first;
-	}
-	else
-	{
-		return incomingnb;
-	}
-}*/
-
 /* 2017.12.24 added by sy 
  * 添加邻居信息
  * lane为兴趣包来时的路段,id为兴趣包的源节点
@@ -100,22 +81,6 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 	return incominglane;
 }
 
-//删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
-/*void EntryNrImpl::CleanPITNeighbors(uint32_t id)
-{
-	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
-	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
-	if (incomingnb != m_incomingnbs.end())
-	{
-		m_incomingnbs.erase(incomingnb);
-		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除邻居 "<<id<<".At time "<<Simulator::Now().GetSeconds()<<std::endl;
-	}
-	else
-	{
-		std::cout<<std::endl<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 邻居 "<<id<<" 并不在PIT该表项中"<<std::endl;
-	}
-}*/
-
 // 2017.12.24 added by sy
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 {
@@ -159,16 +124,6 @@ void EntryNrImpl::CleanAllNodes()
 	m_incomingnbs.clear();
 }
 
-//cout表项内容
-/*void EntryNrImpl::listPitEntry()
-{
-	std::cout<<"(pit-entry.cc-listPitEntry) interest_name："<<m_interest_name<<": ";
-	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
-	{
-		std::cout<<*ite<<" ";
-	}
-	std::cout<<std::endl;
-}*/
 
 void EntryNrImpl::listPitEntry()
 {
@@ -185,29 +140,6 @@ void EntryNrImpl::listPitEntry()
 		std::cout<<std::endl;
 	}
 }
-
-/*void EntryNrImpl::listPitEntry1(uint32_t node)
-{
-	std::cout<<"(pit-entry.cc-listPitEntry1) interest_name："<<m_interest_name<<": ";
-	uint32_t temp;
-	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
-	{
-		std::cout<<*ite<<" ";
-		temp = *ite;
-	}
-	if(m_incomingnbs.size() == 1)
-	{
-		if(node == temp)
-		{
-			std::cout<<"当前节点在PIT列表中"<<std::endl;
-		}
-		else
-		{
-			std::cout<<"当前节点不在PIT列表中"<<std::endl;
-		}
-	}
-	std::cout<<std::endl;
-}*/
 
 void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 {

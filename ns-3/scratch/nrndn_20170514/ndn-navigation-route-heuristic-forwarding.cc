@@ -20,7 +20,6 @@
 #include "ns3/node.h"
 #include "ns3/ndnSIM/utils/ndn-fw-hop-count-tag.h"
 
-
 #include <algorithm>    // std::find
 
 NS_LOG_COMPONENT_DEFINE ("ndn.fw.NavigationRouteHeuristic");
@@ -101,7 +100,6 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
-
 }
 
 NavigationRouteHeuristic::~NavigationRouteHeuristic ()
@@ -205,51 +203,6 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	 NS_LOG_FUNCTION (this);
 	 NS_LOG_UNCOND(this <<" is in unused function");
 }
-
-//获取优先列表
-/*std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<string>& route)
-{
-	//NS_LOG_FUNCTION (this);
-	std::vector<uint32_t> PriorityList;
-	std::ostringstream str;
-	str<<"PriorityList is";
-	//cout<<"(forwarding.cc-GetPriorityList)节点 "<<m_node->GetId()<<" 的转发优先级列表为 ";
-
-	// The default order of multimap is ascending order,
-	// but I need a descending order
-	std::multimap<double,uint32_t,std::greater<double> > sortlist;
-
-	// step 1. Find 1hop Neighbors In Front Of Route,m_nb为邻居列表
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	
-	for(nb = m_nb.getNb().begin() ; nb != m_nb.getNb().end();++nb)
-	{
-		std::pair<bool, double> result=
-				m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
-		//cout<<nb->first<<" ("<<result.first<<" "<<result.second<<") ";
-		
-		// Be careful with the order, increasing or descending?
-		if(result.first && result.second >= 0)
-		{
-			sortlist.insert(std::pair<double,uint32_t>(result.second,nb->first));
-			//cout<<"("<<nb->first<<" "<<result.second<<")"<<" ";
-		}
-	}
-	cout<<endl;
-	// step 2. Sort By Distance Descending
-	std::multimap<double,uint32_t>::iterator it;
-	for(it=sortlist.begin();it!=sortlist.end();++it)
-	{
-		PriorityList.push_back(it->second);
-
-		str<<" "<<it->second;
-		//cout<<" "<<it->second;
-	}
-	NS_LOG_DEBUG(str.str());
-	//cout<<endl<<"(forwarding.cc-GetPriorityList) 邻居数目为 "<<m_nb.getNb().size()<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	//getchar();
-	return PriorityList;
-}*/
 
 //车辆获取转发优先级列表
 std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest()
@@ -383,8 +336,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 	else
 	{
-		cout<<"(forwarding.cc-OnInterest) 车辆类型出错"<<endl;
-		getchar();
+		NS_ASSERT_MSG(false,"车辆类型出错");
 	}	
 }
 
@@ -526,14 +478,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		cout<<"(forwarding.cc-OnInterest_Car) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
-		//getchar();
-		const vector<string> remoteRoute=
-							ExtractRouteFromName(interest->GetName());
-
-		// Update the PIT here
-		cout<<"(forwarding.cc-OnInterest_Car) 当前节点 "<<myNodeId<<" 的PIT为："<<endl;
-		//m_nrpit->UpdateCarPit(remoteRoute, nodeId);
-		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
 		bool idIsInPriorityList;
@@ -1168,7 +1112,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//获取兴趣包的转发节点id
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t forwardId = nrheader.getForwardId();
-	cout<<"sourceId "<<sourceId<<" forwardId "<<forwardId<<endl;
+	//cout<<"sourceId "<<sourceId<<" forwardId "<<forwardId<<endl;
 	uint32_t remoteId = (forwardId == 999999999) ? sourceId:forwardId;
 	const double x = nrheader.getX();
 	const double y = nrheader.getY();
@@ -1612,6 +1556,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
 		//	cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
+		    if(interestcollection.empty())
+				return;
 			SendInterestInCache(interestcollection);
 		}
 		else
