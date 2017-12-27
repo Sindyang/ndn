@@ -239,7 +239,7 @@ CDSBasedForwarding::ProcessHello(Ptr<Interest> interest)
 	NS_LOG_INFO("MPR list size:" << mprheader.getPriorityList().size());
 
 	//update neighbor list
-	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
 	m_2hopNb[nrheader.getSourceId()]	=  nrheader.getPriorityList();
 	m_nbMPRList[nrheader.getSourceId()] = mprheader.getPriorityList();
 }
@@ -317,6 +317,7 @@ CDSBasedForwarding::SendHello()
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
+	interest->SetRoutes(LaneName);//2017.12.25 added by sy
 
 	//4. send the hello message
 	SendInterestPacket(interest);
