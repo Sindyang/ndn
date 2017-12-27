@@ -88,7 +88,7 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	//Use insert instead:
 	//std::cout<<"(Neighbors.cc-Update)将该节点添加至邻居列表中"<<std::endl;
 	m_nb.insert(std::unordered_map<uint32_t,Neighbor>::
-			value_type(id,Neighbor(x, y,expire + Simulator::Now ())));
+			value_type(id,Neighbor(x, y,lane,expire + Simulator::Now ())));
 
 	Purge ();
 }

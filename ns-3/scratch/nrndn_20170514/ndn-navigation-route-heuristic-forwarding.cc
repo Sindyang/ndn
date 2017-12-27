@@ -894,7 +894,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				return;
 			}
 			std::string nextroute = routes[1];
-			std::vector<std::string>::iterator it = find(interestRoute.begin(),interestRoute.end(),nextroute);
+			std::vector<std::string>::iterator it = std::find(interestRoute.begin(),interestRoute.end(),nextroute);
 		
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
@@ -1744,7 +1744,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
-	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
+	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
 	
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -1840,14 +1840,14 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	uint32_t sourceId = nrheader.getSourceId();
-	//uint32_t nodeId = m_node->GetId();
+	uint32_t nodeId = m_node->GetId();
 	//const std::string& lane = m_sensor->getLane();
 	//获取心跳包所在路段
-	string remoteroute = interest.GetRoutes();
+	string remoteroute = interest->GetRoutes();
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
-	std::string junctionid = m_sensor->getJunctionId(nodeId);
+	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
 	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	
 	//更新邻居列表
@@ -1878,7 +1878,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 	}
 	
-	uint32_t nums_car_current = 0;
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
@@ -1907,7 +1906,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if(result.first && result.second > 0)
 			{
 				cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
-				routes.insert(it,nb->second.m_lane);
+				routes.insert(itroutes,nb->second.m_lane);
 			}
 		}
 	}
