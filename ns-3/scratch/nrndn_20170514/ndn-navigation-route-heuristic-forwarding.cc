@@ -1865,10 +1865,24 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		uint32_t nonce = it->first;
 		uint32_t nodeId = m_node->GetId();
 		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<endl;
+		
+		//added by sy
 		Ptr<const Interest> interest = it->second;
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 ";
-		std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
+        ndn::nrndn::nrHeader nrheader;
+        interest->GetPayload()->PeekHeader(nrheader);
+        uint32_t sourceId = nrheader.getSourceId();
+		
+		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
+		std::vector<std::string> routes;
+		SplitString(interest->GetRoutes(),routes," ");
+		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
+		
+		std::vector<uint32_t> newPriorityList;
+		if(m_sensor->getType() == "RSU")
+			newPriorityList = RSUGetPriorityListOfInterest(routes[0]);
+		else
+		    newPriorityList = VehicleGetPriorityListOfInterest();
+		
 		for(uint32_t i = 0;i < newPriorityList.size();i++)
 		{
 			cout<<newPriorityList[i]<<" ";
@@ -1970,7 +1984,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
 		{
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(*itroutes);
-		    cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
+		    cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
 		}
 		getchar();
