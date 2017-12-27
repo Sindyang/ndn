@@ -330,7 +330,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 		{
 			//获取RSU所在的交点id
 			std::string junction = m_sensor->RSUGetJunctionId(nb->first);
-			cout<<"(forwarding.cc-RSUGetPriorityListOfInterest) RSU所在的交点为 "<<junction<<endl;
+			cout<<endl<<"(forwarding.cc-RSUGetPriorityListOfInterest) RSU所在的交点为 "<<junction<<endl;
 			if(junction == junctions.second)
 			{
 				PriorityList.push_back(nb->first);
@@ -734,6 +734,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 	//If it is not a stop message, prepare to forward
 	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"(forwarding.cc-OnInterest) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
@@ -1883,14 +1884,15 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		else
 		    newPriorityList = VehicleGetPriorityListOfInterest();
 		
-		for(uint32_t i = 0;i < newPriorityList.size();i++)
-		{
-			cout<<newPriorityList[i]<<" ";
-		}
-		cout<<endl;
+		//for(uint32_t i = 0;i < newPriorityList.size();i++)
+		//{
+			//cout<<newPriorityList[i]<<" ";
+		//}
+		//cout<<endl;
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+		getchar();
 	}
 }
 

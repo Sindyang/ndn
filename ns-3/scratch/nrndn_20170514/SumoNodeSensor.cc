@@ -460,12 +460,12 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithVehicle(const uint32_t 
 	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) RSU所在的交点为 "<<junction<<std::endl;
 	if(from == junction)
 	{
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU前方 距离为 "<<remotePos<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU前方 距离为 "<<remotePos<<std::endl;
 		return pair<bool,double>(true,remotePos);
 	}
 	else if(to == junction)
 	{
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU后方 距离为 "<<length-remotePos<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithVehicle) 车辆在RSU后方 距离为 "<<length-remotePos<<std::endl;
 		return pair<bool,double>(true,-(length-remotePos));
 	}
 	else
