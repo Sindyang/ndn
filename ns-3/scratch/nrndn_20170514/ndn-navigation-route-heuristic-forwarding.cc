@@ -358,7 +358,8 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
-	getchar();
+	if(!PriorityList.empty())
+		getchar();
 	return PriorityList;
 }
 
@@ -915,7 +916,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
-		getchar();
+		//getchar();
 		
 		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
 

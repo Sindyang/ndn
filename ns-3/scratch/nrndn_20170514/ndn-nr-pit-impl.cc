@@ -331,7 +331,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
 	showPit();
-	getchar();
+	//getchar();
 	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
 	return true;
 }
