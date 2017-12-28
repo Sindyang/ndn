@@ -1247,7 +1247,6 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	//2017.6.16
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(newPriorityList);
-	nrheader.setGapMode(0);
 	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(nrheader);
 
@@ -1790,8 +1789,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
-	//added by sy
-	nrheader.setGapMode(gap_mode);
 	nrPayload->AddHeader(nrheader);
 	//cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
@@ -1885,12 +1882,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(cons
 			//getchar();
 		}
 		
-		gap_mode = 0;
-		if(sortInterest.size() == 0)
-		{
-			gap_mode = 1;
-		}
-		//cout<<"(forwarding.cc-GetPriorityListOfDataSource) gap_mode "<<gap_mode<<endl;
 		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
 		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
 		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
@@ -2081,11 +2072,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderIn
 	uint32_t FrontSize = sortInterestFront.size();
 	uint32_t DisInterestSize = sortDisinterest.size();
 	
-	gap_mode = 0;
-	if(BackSize == 0 && FrontSize == 0)
-	{
-		gap_mode = 2;
-	}
 	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) gap_mode "<<gap_mode<<endl;
 	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
 	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
