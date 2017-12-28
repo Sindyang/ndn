@@ -1076,3 +1076,221 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(const vector<str
 	//getchar();
 	return PriorityList;
 }
+
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataSource(const Name& dataName)
+{
+	NS_LOG_INFO("GetPriorityListOfDataSource");
+	//cout<<"进入(forwarding.cc-GetPriorityListOfDataSource)"<<endl;
+	std::vector<uint32_t> priorityList;
+	std::multimap<double,uint32_t,std::greater<double> > sortInterest;
+	std::multimap<double,uint32_t,std::greater<double> > sortNotInterest;
+	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::GetPriorityListOfDataFw");
+	
+	//added by sy
+	cout<<"(forwarding.cc-GetPriorityListOfDataSource) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<" 的PIT为："<<endl;
+	m_nrpit->showPit();
+	
+	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
+	NS_ASSERT_MSG(entry != 0,"该数据包不在PIT中");
+	if(entry == 0)
+	{
+		cout<<"该数据包并不在PIT中"<<endl;
+		return priorityList;
+	}
+	
+	const std::unordered_set<uint32_t>& interestNodes = entry->getIncomingnbs();
+	const vector<string>& route = m_sensor->getNavigationRoute();
+	
+	//added by sy
+	//cout<<"(forwarding.cc-GetPriorityListOfDataSource) the size of interestNodes: "<<interestNodes.size()<<endl;
+	//getchar();
+	
+	// There is interested nodes behind
+	if(!interestNodes.empty())
+	{
+		//cout<<"(forwarding.cc-GetPriorityListOfDataSource) 存在对该数据包感兴趣的节点"<<endl;
+		//getchar();
+		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+		for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)//O(n) complexity
+		{
+			//判断邻居节点与当前节点的位置关系
+			std::pair<bool, double> result = m_sensor->getDistanceWith(nb->second.m_x,nb->second.m_y,route);
+			//O(1) complexity
+			if(interestNodes.count(nb->first))
+			{
+				//from other direction, maybe from other lane behind
+				if(!result.first)
+				{
+					NS_LOG_DEBUG("At "<<Simulator::Now().GetSeconds()<<", "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" do not on its route, but in its interest list.Check!!");
+					//cout<<"At "<<Simulator::Now().GetSeconds()<<", 源节点 "<<m_node->GetId()<<"'s neighbor "<<nb->first<<" does not on it's route, but in its interest list.Check!!"<<endl;
+					sortInterest.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				}
+				// from local route behind
+				else{
+					//Question 当result.second == 0时，是否需要加入sortInterest中
+					//modified by sy:result.second < 0 => result.second <= 0
+					if(result.second <= 0)
+						sortInterest.insert(std::pair<double,uint32_t> (-result.second,nb->first));
+					else
+					{
+						//otherwise it is in front of route.No need to forward, simply do nothing
+					}
+				}
+			}
+			else
+			{
+				if(!result.first)//from other direction, maybe from other lane behind
+					sortNotInterest.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				else
+				{
+					if(result.second <= 0)
+						sortNotInterest.insert(std::pair<double,uint32_t> (-result.second,nb->first));
+				}
+			}
+		}
+		
+		std::multimap<double,uint32_t,std::greater<double> >::iterator it;
+		//setp 1. push the interested nodes
+		for(it = sortInterest.begin();it!=sortInterest.end();++it)
+			priorityList.push_back(it->second);
+
+		//step 2. push the not interested nodes
+		for(it = sortNotInterest.begin();it!=sortNotInterest.end();++it)
+			priorityList.push_back(it->second);
+		
+		//added by sy
+		if(priorityList.empty())
+		{
+			cout<<"(GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()<<" 转发优先级列表为空"<<endl;
+			//getchar();
+		}
+		
+		cout<<"(forwarding.cc-GetPriorityListOfDataSource) 源节点 "<<m_node->GetId()
+		<<" 感兴趣的邻居个数为 "<<sortInterest.size()
+		<<" 不感兴趣的邻居个数为 "<<sortNotInterest.size()<<endl;
+		//getchar();
+	}
+	return priorityList;
+}
+
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderInterestd(
+		const std::unordered_set<uint32_t>& interestNodes,
+		const std::vector<uint32_t>& recPri)
+{
+	NS_LOG_INFO("GetPriorityListOfDataForwarderInterestd");
+	std::vector<uint32_t> priorityList;
+	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);
+
+	std::multimap<double,uint32_t,std::greater<double> > sortInterestFront;
+	std::multimap<double,uint32_t,std::greater<double> > sortInterestBack;
+	std::multimap<double,uint32_t,std::greater<double> > sortDisinterest;
+	const vector<string>& route = m_sensor->getNavigationRoute();
+
+	NS_ASSERT (!interestNodes.empty());	// There must be interested nodes behind
+
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	for (nb = m_nb.getNb().begin(); nb != m_nb.getNb().end(); ++nb)	//O(n) complexity
+	{
+		//获取邻居节点与当前节点的位置关系
+		std::pair<bool, double> result = m_sensor->getDistanceWith(nb->second.m_x, nb->second.m_y, route);
+		//邻居是感兴趣的节点
+		if (interestNodes.count(nb->first))	//O(1) complexity
+		{
+			//from other direction, maybe from other lane behind
+			if (!result.first)
+			{
+				sortInterestBack.insert(std::pair<double, uint32_t>(result.second, nb->first));
+			}
+			else
+			{	//邻居节点位于后方
+		        if(result.second < 0)
+				{	
+					//不在之前的优先级列表中
+					if(!LookupPri.count(nb->first))
+					{
+						sortInterestBack.insert(std::pair<double, uint32_t>(-result.second,nb->first));
+					}
+				}
+				else
+				{
+					// otherwise it is in front of route, add to sortInterestFront
+					sortInterestFront.insert(std::pair<double, uint32_t>(-result.second,nb->first));
+				}
+			}
+		}
+		else
+		{
+			//from other direction, maybe from other lane behind
+			if (!result.first)
+			{
+				sortDisinterest.insert(std::pair<double, uint32_t>(result.second, nb->first));
+			}
+			else
+			{
+				if(result.second>0// nodes in front
+						||!LookupPri.count(nb->first))//if it is not in front, need to not appear in priority list of last hop
+				sortDisinterest.insert(
+					std::pair<double, uint32_t>(-result.second, nb->first));
+			}
+		}
+	}
+	
+	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
+	//setp 1. push the interested nodes from behind
+	for (it = sortInterestBack.begin(); it != sortInterestBack.end(); ++it)
+		priorityList.push_back(it->second);
+
+	//step 2. push the disinterested nodes
+	for (it = sortDisinterest.begin(); it != sortDisinterest.end(); ++it)
+		priorityList.push_back(it->second);
+
+	//step 3. push the interested nodes from front
+	for (it = sortInterestFront.begin(); it != sortInterestFront.end(); ++it)
+		priorityList.push_back(it->second);
+	
+	uint32_t BackSize = sortInterestBack.size();
+	uint32_t FrontSize = sortInterestFront.size();
+	uint32_t DisInterestSize = sortDisinterest.size();
+	
+	//cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) gap_mode "<<gap_mode<<endl;
+	cout<<"(forwarding.cc-GetPriorityListOfDataForwarderInterestd) At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()
+	<<" 后方感兴趣的邻居个数 "<<BackSize<<" 前方感兴趣的邻居个数 "<<FrontSize<<" 不感兴趣的邻居个数 "<<DisInterestSize<<endl;
+	//getchar();
+	
+	return priorityList;
+}
+
+std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri)
+{
+	NS_LOG_INFO("GetPriorityListOfDataForwarderDisinterestd");
+	std::vector<uint32_t> priorityList;
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	std::unordered_set<uint32_t> LookupPri=converVectorList(recPri);
+	const vector<string>& route  = m_sensor->getNavigationRoute();
+	std::multimap<double,uint32_t,std::greater<double> > sortDisinterest;
+
+	for (nb = m_nb.getNb().begin(); nb != m_nb.getNb().end(); ++nb)	//O(n) complexity
+	{
+		std::pair<bool, double> result = m_sensor->getDistanceWith(
+				nb->second.m_x, nb->second.m_y, route);
+
+		if (!result.first)	//from other direction, maybe from other lane behind
+			sortDisinterest.insert(
+					std::pair<double, uint32_t>(result.second, nb->first));
+		else
+		{
+			if (result.second > 0	// nodes in front
+			|| !LookupPri.count(nb->first))	//if it is not in front, need to not appear in priority list of last hop
+				sortDisinterest.insert(
+						std::pair<double, uint32_t>(-result.second, nb->first));
+		}
+	}
+
+	std::multimap<double, uint32_t, std::greater<double> >::iterator it;
+	//step 1. push the unknown interest nodes
+	for (it = sortDisinterest.begin(); it != sortDisinterest.end(); ++it)
+		priorityList.push_back(it->second);
+	
+
+	return priorityList;
+}

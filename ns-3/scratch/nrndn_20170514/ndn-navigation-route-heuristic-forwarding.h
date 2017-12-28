@@ -196,7 +196,7 @@ private:
 	 * @param dataName	the name of the data packet
 	 * \return priority list
 	 */
-	std::vector<uint32_t> GetPriorityListOfDataSource(const Name& dataName);
+	//std::vector<uint32_t> GetPriorityListOfDataSource(const Name& dataName);
 
 
 	/**
@@ -214,10 +214,10 @@ private:
 	 * @param recPri 		priority list from last hop
 	 * \return priority list
 	 */
-	std::vector<uint32_t>
-	GetPriorityListOfDataForwarderInterestd(
-			const std::unordered_set<uint32_t>& interestNodes,
-			const std::vector<uint32_t>& recPri);
+	//std::vector<uint32_t>
+	//GetPriorityListOfDataForwarderInterestd(
+		//	const std::unordered_set<uint32_t>& interestNodes,
+			//const std::vector<uint32_t>& recPri);
 
 	/**
 	 * @brief	Get priority list of data packet from the forwarding node which is disinterested about the data
@@ -231,7 +231,7 @@ private:
 	 *@param recPri 		priority list from last hop
 	 * \return priority list
 	 */
-	std::vector<uint32_t> GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri);
+	//std::vector<uint32_t> GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri);
 
 	/**
 	 * @brief Get Customize data for navigation route heuristic forwarding
