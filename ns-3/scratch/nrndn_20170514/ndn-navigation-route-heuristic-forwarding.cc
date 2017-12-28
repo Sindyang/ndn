@@ -94,9 +94,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_HelloLogEnable(true),
 	m_gap(20),
 	m_TTLMax(3),
-	NoFwStop(false),
+	NoFwStop(false)
 	//m_resendInterestTime(0),
-	gap_mode(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -871,10 +870,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
-	//判断收到的数据包是否需要增加延迟
-	uint32_t received_gap_mode = nrheader.getGapMode();
 	
-	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" gap_mode "<<received_gap_mode<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	
 	
 	std::vector<uint32_t> newPriorityList;
@@ -1012,7 +1009,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					}
 				}
 				newPriorityList=GetPriorityListOfDataForwarderDisinterestd(pri);
-				gap_mode = 0;
 			}
 			else
 			{
@@ -1078,22 +1074,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				}
 				else
 				{
-					if(received_gap_mode == 1 || received_gap_mode == 2)
-					{
-						sendInterval = (MilliSeconds(random) + index * m_timeSlot);
-					    //cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且不需要增加m_gap。"<<endl;
-					}
-					else
-					{
-						sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
-					    //cout<<"(forwarding.cc-OnData) 当前节点对该数据包不感兴趣且需要增加m_gap。"<<endl;
-					}
+					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 				}
 			}
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList,gap_mode,IsClearhopCountTag);
+					newPriorityList,IsClearhopCountTag);
 			return;
 		}
 	}
@@ -1965,7 +1952,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,uint32_t mode,bool IsClearhopCountTag)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");
@@ -1990,7 +1977,6 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
-	nrheader.setGapMode(mode);
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setLane(m_sensor->getLane());
 	//cout<<"(forward.cc-ForwardDataPacket) 转发数据包，当前道路为"<<nrheader.getLane()<<endl;
