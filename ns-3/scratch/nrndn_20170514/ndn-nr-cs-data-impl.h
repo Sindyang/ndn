@@ -1,7 +1,7 @@
 /*
  * ndn-nr-cs-impl.h
  *
- *  Created on: Dec. 19, 2017
+ *  Created on: Dec. 29, 2017
  *      Author: WSY
  */
 
@@ -20,7 +20,7 @@
 
 #include "NodeSensor.h"
 
-#include <vector>
+#include <map>
 
 
 namespace ns3
@@ -57,11 +57,9 @@ public:
    */
   virtual ~NrCsImpl();
 
-
-  //This prefix is different from the format of interest's name
+  // 2017.12.29 added by sy
   virtual Ptr<Entry>
-  Find (const Name &prefix);
-
+  Find (const uint32_t nonce);
 
   virtual Ptr<Data>
   Lookup (Ptr<const Interest> interest);
@@ -96,6 +94,18 @@ public:
   
   virtual uint32_t
   GetSize () const;
+  
+  // 2017.12.29 added by sy
+  std::unordered_set<std::string> GetDataName() const;
+  
+  // 2017.12.29 added by sy
+  void PrintCache () const;
+  
+  // 2017.12.29 added by sy
+  void PrintEntry(uint32_t nonce);
+  
+  // 2017.12.29 added by sy
+  std::map<uint32_t,Ptr<const Data> > GetData(const Name &prefix);
 
 protected:
   // inherited from Object class
@@ -105,8 +115,8 @@ protected:
 
 
 private:
-  Ptr<ForwardingStrategy>		m_forwardingStrategy;
-  std::vector<Ptr<Entry> >		m_csContainer;
+  Ptr<ForwardingStrategy>		        m_forwardingStrategy;
+  std::map<uint32_t,Ptr<cs::Entry> >	m_csContainer;
 };
 
 

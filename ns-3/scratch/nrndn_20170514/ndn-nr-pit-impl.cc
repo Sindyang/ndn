@@ -330,9 +330,8 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->CleanPITNeighbors(id);
 			//若PIT的表项为空，可以删除该表项
-			//只有RSU的PIT才有为空的可能性，因为普通车辆的PIT表项中含有自身节点
-			const std::unordered_set<uint32_t>& interestNodes = pitEntry->getIncomingnbs();
-			if(interestNodes.empty())
+			const std::unordered_set<std::string>& interestroutes = pitEntry->getIncomingnbs();
+			if(interestroutes.empty())
 			{
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
 				std::string pitname = pitName.toUri();

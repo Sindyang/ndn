@@ -1093,6 +1093,73 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	//getchar();
 }
 
+void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
+{
+	NS_LOG_FUNCTION (this);
+	if(!m_running) 
+		return;
+	
+	//2017.12.29 added by sy
+	//分情况处理普通车辆和RSU
+	const std::string& currentType = m_sensor->getType();
+	if(currentType == "RSU")
+	{
+		OnData_RSU(face,data);
+	}
+	else if(currentType == "DEFAULT_VEHTYPE")
+	{
+		OnData_Car(face,data);
+	}
+	else
+	{
+		NS_ASSERT_MSG(false,"车辆类型出错");
+	}	
+}
+
+void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
+{
+	NS_LOG_FUNCTION (this);
+	//收到了来自应用层的数据包
+	if(Face::APPLICATION & face->GetFlags())
+	{
+		// This is the source data from the upper node application (eg, nrProducer) of itself
+		NS_LOG_DEBUG("Get data packet from APPLICATION");
+		
+		// 1.Set the payload
+		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
+		
+		data->SetPayload(payload);
+		
+		ndn::nrndn::nrheader nrheader;
+		data->GetPayload()->PeekHeader(nrheader);
+		const std::vector<uint32_t>& pri = nrheader.getPriorityList();
+		if(pri.empty())
+		{
+			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
+			//getchar();
+			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			return;
+		}
+
+		// 2. record the Data Packet(only record the forwarded packet)
+		m_dataSignatureSeen.Put(data->GetSignature(),true);
+
+		// 3. Then forward the data packet directly
+		Simulator::Schedule(
+				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
+				&NavigationRouteHeuristic::SendDataPacket, this, data);
+						
+		// 4. Although it is from itself, include into the receive record
+		NotifyUpperLayer(data);
+
+		//uint32_t myNodeId = m_node->GetId();
+		//cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		//getchar();
+		return;
+	}
+}
+
+
 // 2017.12.25 changed by sy
 pair<bool, double>
 NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
@@ -1193,6 +1260,25 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		NS_ASSERT_MSG(result,"该兴趣包已经位于缓存中");
 	}
 	//getchar();
+}
+
+/*
+ * 2017.12.29
+ * added by sy
+ */
+void NavigationRouteHeuristic::CachingDataPacket(uint32_t nonce,Ptr<Data> data)
+{
+	bool result = m_csdata->Add(nonce,data);
+	if(result)
+	{
+		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
+		BroadcastStopMessage(data);
+	}
+	else
+	{
+		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
+		NS_ASSERT_MSG(result,"该数据包已经位于缓存中");
+	}
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
@@ -1763,7 +1849,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	{
 		case HeaderHelper::INTEREST_NDNSIM:
 		{
-			//cout<<"(forwarding.cc-GetNrPayload)"<<endl;
 			priorityList = VehicleGetPriorityListOfInterest();
 			//cout<<"(forwarding.cc-GetNrPayload)Node "<<m_node->GetId()<<"的兴趣包转发优先级列表大小为 "<<priorityList.size()<<endl;
 			//getchar();
@@ -1771,16 +1856,15 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 		case HeaderHelper::CONTENT_OBJECT_NDNSIM:
 		{
-			priorityList = GetPriorityListOfDataSource(dataName);
+			priorityList = VehicleGetPriorityListOfData();
 			//There is no interested nodes behind
-			if(priorityList.empty())
+			// 2017.12.29 changed by sy
+			/*if(priorityList.empty())
 			{
 				//added by sy
 				cout<<"(forwarding.cc-GetNrPayload) NodeId: "<<m_node->GetId()<<" 的数据包转发优先级列表为空"<<endl;
 				return Create<Packet>();
-			}		
-		    //cout<<"(forwarding.cc-GetNrPayload) 源节点 "<<m_node->GetId()<<" 发送的数据包的gap_mode为 "<<gap_mode<<endl;
-	        //getchar();			
+			}*/			
 			break;
 		}
 		default:
@@ -1795,7 +1879,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
 	nrPayload->AddHeader(nrheader);
-	//cout<<"(forwarding.cc-GetNrPayload) forwardId "<<forwardId<<endl;
 	return nrPayload;
 }
 
@@ -1978,19 +2061,134 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
-	//getchar();
+	getchar();
 	return PriorityList;
 }
 
 /*
- * 2017.12.28
+ * 2017.12.29
  * added by sy
+ * interestRoutes代表对该数据感兴趣的路段集合
+ * dataName为数据包的名字
  * RSU获取数据包转发优先级列表
  */
-std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfData(const std::unordered_set<uint32_t>& interestNodes)
+std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRouteHeuristic::RSUGetPriorityListOfData(const Name& dataName,const std::unordered_set<std::string>& interestRoutes)
 {
+	std::vector<uint32_t> priorityList;
+	std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection;
+	std::unordered_set<std::string> remainroutes(interestRoutes);
+	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > sortvehicles;
 	
+	//added by sy
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<" 的PIT为："<<endl;
+	m_nrpit->showPit();
+	
+	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
+	NS_ASSERT_MSG(entry != 0,"该数据包不在PIT中");
+	if(entry == 0)
+	{
+		cout<<"该数据包并不在PIT中"<<endl;
+		return collection;
+	}
+	
+	
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
+	{
+		//判断RSU与RSU的位置关系
+		if(nb->first >= numsofvehicles)
+		{
+			//获取另一RSU所在的交点id
+			std::string junction = m_sensor->RSUGetJunctionId(nb->first);
+			std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();
+			//遍历路段集合，查看RSU是否为路段终点
+			for(;it != interestRoutes.end();it++)
+			{
+				//获得路段的起点和终点
+				std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(*it);
+				//感兴趣路段的终点ID和另一RSU的交点ID相同
+				if(junctions.second == junction)
+				{
+					cout<<"(forwarding.cc-RSUGetPriorityListOfData) 感兴趣路段为 "<<*it<<" RSU交点ID为 "<<junction<<endl;
+					std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
+					cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+					std::multimap<double,uint32_t,std::greater<double> > distance;
+					distance.insert(std::pair<double,uint32_t>(result.second,nb->first));
+					sortvehicles[*it] = distance; 
+				}
+			}
+		}
+		//判断RSU与其他车辆的位置关系
+		else
+		{
+			//获得邻居车辆当前所在路段
+			std::string lane = nb->second.m_lane;
+			std::unordered_set<std::string>::const_iterator it = interestRoutes.find(lane);
+			//车辆位于兴趣包下一行驶路段
+			if(it != interestRoutes.end())
+			{
+				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
+				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				if(result.first && result.second > 0)
+				{
+					std::multimap<double,uint32_t,std::greater<double> > distance;
+					distance.insert(std::pair<double,uint32_t>(result.second,nb->first));
+					sortvehicles[*it] = distance; 
+				}
+			}
+			else
+			{
+				cout<<"(forwarding.cc-RSUGetPriorityListOfData) 车辆 "<<nb->first<<" 所在路段为 "<<nb->second.m_lane<<" 不在感兴趣路段中"<<endl;
+			}
+		}
+	}
+	
+	
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) 输出各路段以及对应的车辆和距离"<<endl;
+	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > ::iterator itvehicles = sortvehicles.begin();
+	std::unordered_set<std::string>::iterator itroutes;
+	
+	//加入每个路段距离最远的节点
+	cout<<"(forwrading.cc-RSUGetPriorityListOfData) 每个路段距离最远的节点为"<<endl;
+	for(;itvehicles != sortvehicles.end();itvehicles++)
+	{
+		//从remainroutes中删除存在车辆的路段
+		itroutes = remainroutes.find(itvehicles->first);
+		if(itroutes != remainroutes.end())
+		{
+			remainroutes.erase(itroutes);
+		}
+		
+		std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
+		std::multimap<double,uint32_t,std::greater<double> >::iterator itdis = distance.begin();
+		cout<<"("<<itdis->second<<" "<<itdis->first<<")"<<" ";
+		priorityList.push_back(itdis->second);
+	}
+	cout<<endl<<"(forwarding.cc-RSUGetPriorityListOfData) 加入每个路段剩余节点"<<endl;
+	//加入剩余节点
+	std::multimap<double,uint32_t,std::greater<double> >remainnodes;
+	for(itvehicles = sortvehicles.begin();itvehicles != sortvehicles.end();itvehicles++)
+	{
+		
+		cout<<itvehicles->first<<endl;
+		std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
+		std::multimap<double,uint32_t,std::greater<double> >::iterator itdis = distance.begin();
+		for(++itdis;itdis != distance.end();itdis++)
+		{
+			cout<<"("<<itdis->first<<" "<<itdis->second<<")"<<" ";
+			remainnodes.insert(std::pair<double,uint32_t>(result.second,nb->first));
+		}
+	}
+	
+	//将剩余节点加入转发优先级列表中
+	std::multimap<double,uint32_t,std::greater<double> >::iterator itremain = remainnodes.begin();
+	for(itremain != remainnodes.end();itremain++)
+	{
+		priorityList.push_back(itremain->second);
+	}
+	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
 }
+
 
 std::unordered_set<uint32_t> NavigationRouteHeuristic::converVectorList(
 		const std::vector<uint32_t>& list)

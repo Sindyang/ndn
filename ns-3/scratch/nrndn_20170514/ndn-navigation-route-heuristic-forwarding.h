@@ -190,7 +190,22 @@ private:
 	 * \return priority list
 	 */
 	std::vector<uint32_t> RSUGetPriorityListOfInterest(const std::string lane);
+	
+	/**
+	 * 2017.12.28
+	 * added by sy
+	 * @brief Get priority list of data packet from vehicle.
+	 * \return priority list
+	 */
+	std::vector<uint32_t> VehicleGetPriorityListOfData();
 
+	/**
+	 * 2017.12.29
+	 * added by sy
+	 * @brief Get priority list of data packet from RSU.
+	 * \return priority list
+	 */
+	std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> RSUGetPriorityListOfData(const Name& dataName,const std::unordered_set<std::string>& interestRoutes);
 	/**
 	 * @brief Get priority list of data packet from the source node
 	 * @param dataName	the name of the data packet

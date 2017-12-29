@@ -65,7 +65,7 @@ bool NrCsInterestImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	Ptr<cs::EntryInterest> csEntryInterest = Find(nonce);
 	if(csEntryInterest != 0)
 	{
-		std::cout<<"()"<<std::endl;
+		std::cout<<"(cs-interest.cc-AddInterest) 该兴趣包已经被加入到缓存中"<<std::endl;
 		PrintEntryInterest(nonce);
 		return false;
 	}
@@ -102,14 +102,11 @@ NrCsInterestImpl::DoDispose ()
 Ptr<cs::EntryInterest>
 NrCsInterestImpl::Find(const uint32_t nonce)
 {
-	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it = m_csInterestContainer.find(nonce);
 	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
-	for(it=m_csInterestContainer.begin();it!=m_csInterestContainer.end();++it)
+	if(it != m_csInterestContainer.end())
 	{
-		if(it->first == nonce)
-		{
-			return it->second;
-		}
+		return it->second;
 	}
 	return 0;
 }

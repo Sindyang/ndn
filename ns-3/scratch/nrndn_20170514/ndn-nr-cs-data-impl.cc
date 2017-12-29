@@ -1,7 +1,7 @@
 /*
  * ndn-nr-cs-impl.cc
  *
- *  Created on: Dec 19, 2017
+ *  Created on: Dec 29, 2017
  *      Author: WSY
  */
 
@@ -58,18 +58,22 @@ NrCsImpl::NotifyNewAggregate ()
 }
 
 
-bool NrCsImpl::Add (Ptr<const Data> data)
+bool NrCsImpl::Add (uint32_t,Ptr<const Data> data)
 {
-	//std::cout<<"add CS Entry  name:"<<data->GetName().toUri()<<std::endl;
-	if(Find(data->GetName()))
+	std::cout<<"(cs-data.cc-Add) 添加数据包 "<<data->GetName().toUri()<<std::endl;
+	Ptr<cs::Entry> csEntry = Find(nonce);
+	if(csEntry != 0)
 	{
-		//this->Print(std::cout);
-		return true;
+		std::cout<<"(cs-data.cc-Add) 该数据包已经被加入到缓存中"<<std::endl;
+		return false;
 	}
-    Ptr<cs::Entry> csEntry = ns3::Create<cs::Entry>(this,data) ;
-    m_csContainer.push_back(csEntry);
-
-    //this->Print(std::cout);
+	uint32_t size = GetSize();
+	std::cout<<"(NrCsImpl.cc-Add) 加入该数据包前的缓存大小为 "<<size<<std::endl;
+    csEntry = ns3::Create<cs::Entry>(this,data) ;
+    m_csContainer[nonce] = csEntry;
+	
+	size = GetSize();
+	std::cout<<"(NrCsImpl.cc-Add) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	return true;
 }
 
@@ -77,28 +81,18 @@ void
 NrCsImpl::DoDispose ()
 {
 	m_forwardingStrategy = 0;
-	//m_fib = 0;
-  
 	ContentStore::DoDispose ();
 }
   
-  
+    
 Ptr<Entry>
-NrCsImpl::Find (const Name &prefix)
+NrCsImpl::Find (const uint32_t nonce)
 {
-	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Find (const Name &prefix) should not be invoked");
-	 NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
-	 std::vector<Ptr<Entry> >::iterator it;
-	 //NS_ASSERT_MSG(m_csContainer.size()!=0,"Empty cs container. No initialization?");
-	 for(it=m_csContainer.begin();it!=m_csContainer.end();++it)
-	 {
-		 if((*it)->GetName()==prefix)
-			 return *it;
-	 }
+	std map<uint32_t,Ptr<cs::Entry>>::iterator it = m_csContainer.find(nonce);
+	if(it != m_csContainer.end())
+		return it->second;
 	return 0;
 }
-  
-
   
 Ptr<Data>
 NrCsImpl::Lookup (Ptr<const Interest> interest)
@@ -127,6 +121,48 @@ NrCsImpl::Print (std::ostream& os) const
 	return;
 }
 
+void
+NrCsImpl::PrintEntry(uint32_t nonce) 
+{
+	Ptr<cs::Entry> csEntry = Find(nonce);
+	Ptr<const Data> data = csEntry->GetData();
+	Ptr<const Packet> nrPayload	= data->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送数据包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	std::cout<<"(cs-data.cc-PrintEntry) 数据包的nonce为 "<<data->GetNonce()<<" 源节点为 "<<nodeId
+	<<" 数据包的名字为 "<<csEntry->GetName().toUri()<<std::endl;
+}
+
+std::map<uint32_t,Ptr<const Data> >
+NrCsImpl::GetData(const Name &prefix)
+{
+	uint32_t size = GetSize();
+	std::cout<<"(NrCsImpl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
+	std::map<uint32_t,Ptr<const Data> > DataCollection;
+	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
+	for(it = m_csContainer.begin();it != m_csContainer.end();)
+	{
+		
+		if(it->second->GetName() == prefix)
+		{
+			Ptr<const Data> data = it->second->GetData();
+			DataCollection[data->GetNonce()] = data;
+			m_csInterestContainer.erase(it++);
+	  	}
+		else
+		{
+			++it;
+		}
+			
+	}
+	size = GetSize();
+	std::cout<<"(NrCsImpl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
+	return DataCollection;
+}
+
+
 uint32_t
 NrCsImpl::GetSize () const
 {
@@ -134,6 +170,25 @@ NrCsImpl::GetSize () const
 }
 
   
+void
+NrCsImpl::PrintCache () const
+{
+	std::cout<<"(NrCsImpl.cc-PrintCache.cc)"<<std::endl;
+	std::map<uint32_t,Ptr<cs::Entry> >::const_iterator it; 
+	for(it=m_csContainer.begin();it!=m_csContainer.end();++it)
+	{
+		Ptr<const Data> data = it->second->GetData();
+		Ptr<const Packet> nrPayload	= data->GetPayload();
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader(nrheader);
+		//获取发送兴趣包节点的ID
+		uint32_t nodeId = nrheader.getSourceId();
+		std::cout<<"数据包的nonce为 "<<data->GetNonce()<<" 源节点为 "<<nodeId
+		<<" 数据包的名字为 "<<it->second->GetName().toUri()<<std::endl;
+	}
+	std::cout<<std::endl;
+}
+
 Ptr<Entry>
 NrCsImpl::Begin ()
 {
@@ -174,6 +229,23 @@ NrCsImpl::Next (Ptr<Entry> from)
 	}
 }
 
+/*
+ * 2017.12.29 added by sy
+ * 获得缓存中数据包的名字
+ */
+std::unordered_set<std::string> 
+NrCsImpl::GetDataName() const
+{
+	std::unordered_set<std::string> collection;
+	std::vector<Ptr<Entry>>::iteratot it;
+	for(it = m_csContainer.begin();it != m_csContainer.end();it++)
+	{
+		collection.insert((*it)->GetName());
+	}
+	return collection;
+}
+
+std
 
 void NrCsImpl::DoInitialize(void)
 {
