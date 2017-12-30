@@ -92,6 +92,10 @@ public:
   virtual bool
   Add (Ptr<const Data> data);
   
+  //added by sy
+  virtual bool
+  Add (uint32_t signature,Ptr<const Data> data);
+  
   virtual uint32_t
   GetSize () const;
   
@@ -102,7 +106,7 @@ public:
   void PrintCache () const;
   
   // 2017.12.29 added by sy
-  void PrintEntry(uint32_t nonce);
+  void PrintEntry(uint32_t signature);
   
   // 2017.12.29 added by sy
   std::map<uint32_t,Ptr<const Data> > GetData(const Name &prefix);

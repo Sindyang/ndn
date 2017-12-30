@@ -57,11 +57,15 @@ NrCsImpl::NotifyNewAggregate ()
   ContentStore::NotifyNewAggregate ();
 }
 
+bool NrCsImpl::Add(Ptr<const Data> data)
+{
+	return false;
+}
 
-bool NrCsImpl::Add (uint32_t,Ptr<const Data> data)
+bool NrCsImpl::Add (uint32_t signature,Ptr<const Data> data)
 {
 	std::cout<<"(cs-data.cc-Add) 添加数据包 "<<data->GetName().toUri()<<std::endl;
-	Ptr<cs::Entry> csEntry = Find(nonce);
+	Ptr<cs::Entry> csEntry = Find(signature);
 	if(csEntry != 0)
 	{
 		std::cout<<"(cs-data.cc-Add) 该数据包已经被加入到缓存中"<<std::endl;
@@ -70,7 +74,7 @@ bool NrCsImpl::Add (uint32_t,Ptr<const Data> data)
 	uint32_t size = GetSize();
 	std::cout<<"(NrCsImpl.cc-Add) 加入该数据包前的缓存大小为 "<<size<<std::endl;
     csEntry = ns3::Create<cs::Entry>(this,data) ;
-    m_csContainer[nonce] = csEntry;
+    m_csContainer[signature] = csEntry;
 	
 	size = GetSize();
 	std::cout<<"(NrCsImpl.cc-Add) 加入该数据包后的缓存大小为 "<<size<<std::endl;
@@ -86,9 +90,9 @@ NrCsImpl::DoDispose ()
   
     
 Ptr<Entry>
-NrCsImpl::Find (const uint32_t nonce)
+NrCsImpl::Find (const uint32_t signature)
 {
-	std map<uint32_t,Ptr<cs::Entry>>::iterator it = m_csContainer.find(nonce);
+	std map<uint32_t,Ptr<cs::Entry>>::iterator it = m_csContainer.find(signature);
 	if(it != m_csContainer.end())
 		return it->second;
 	return 0;
@@ -122,16 +126,16 @@ NrCsImpl::Print (std::ostream& os) const
 }
 
 void
-NrCsImpl::PrintEntry(uint32_t nonce) 
+NrCsImpl::PrintEntry(uint32_t signature) 
 {
-	Ptr<cs::Entry> csEntry = Find(nonce);
+	Ptr<cs::Entry> csEntry = Find(signature);
 	Ptr<const Data> data = csEntry->GetData();
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//获取发送数据包节点的ID
 	uint32_t nodeId = nrheader.getSourceId();
-	std::cout<<"(cs-data.cc-PrintEntry) 数据包的nonce为 "<<data->GetNonce()<<" 源节点为 "<<nodeId
+	std::cout<<"(cs-data.cc-PrintEntry) 数据包的signature为 "<<data->GetSignature()<<" 源节点为 "<<nodeId
 	<<" 数据包的名字为 "<<csEntry->GetName().toUri()<<std::endl;
 }
 
@@ -148,7 +152,7 @@ NrCsImpl::GetData(const Name &prefix)
 		if(it->second->GetName() == prefix)
 		{
 			Ptr<const Data> data = it->second->GetData();
-			DataCollection[data->GetNonce()] = data;
+			DataCollection[data->GetSignature()] = data;
 			m_csInterestContainer.erase(it++);
 	  	}
 		else
@@ -183,7 +187,7 @@ NrCsImpl::PrintCache () const
 		nrPayload->PeekHeader(nrheader);
 		//获取发送兴趣包节点的ID
 		uint32_t nodeId = nrheader.getSourceId();
-		std::cout<<"数据包的nonce为 "<<data->GetNonce()<<" 源节点为 "<<nodeId
+		std::cout<<"数据包的signature为 "<<data->GetSignature()<<" 源节点为 "<<nodeId
 		<<" 数据包的名字为 "<<it->second->GetName().toUri()<<std::endl;
 	}
 	std::cout<<std::endl;
@@ -237,7 +241,7 @@ std::unordered_set<std::string>
 NrCsImpl::GetDataName() const
 {
 	std::unordered_set<std::string> collection;
-	std::vector<Ptr<Entry>>::iteratot it;
+	std::vector<Ptr<Entry>>::iterator it;
 	for(it = m_csContainer.begin();it != m_csContainer.end();it++)
 	{
 		collection.insert((*it)->GetName());

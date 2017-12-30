@@ -529,8 +529,10 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		else
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) Node id is not in PriorityList"<<endl;
+			
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
+			getchar();
 		}
 		//getchar();
 		//cout<<endl;
@@ -1133,11 +1135,13 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 		ndn::nrndn::nrheader nrheader;
 		data->GetPayload()->PeekHeader(nrheader);
 		const std::vector<uint32_t>& pri = nrheader.getPriorityList();
+		
+		//若转发优先级列表为空，缓存数据包
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
-			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
 			return;
 		}
 
@@ -1157,6 +1161,139 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 		//getchar();
 		return;
 	}
+	
+	Ptr<const Packet> nrPayload	= data->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取数据包源节点
+	uint32_t nodeId=nrheader.getSourceId();
+	//获取数据包的随机编码
+	uint32_t signature=data->GetSignature();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	//获取兴趣包的转发节点id
+	uint32_t forwardId = nrheader.getForwardId();
+	
+	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	
+	std::vector<uint32_t> newPriorityList;
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
+	//If the data packet has already been sent, do not proceed the packet
+	//该数据包已经被转发过
+	// 车辆应该不会重复转发数据包，但是RSU有可能重复转发数据包 
+	if(m_dataSignatureSeen.Get(data->GetSignature()))
+	{
+		cout<<"该数据包已经被发送"<<endl;
+		//getchar();
+		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
+		return;
+	}
+	
+	//Deal with the stop message first. Stop message contains an empty priority list
+	if(pri.empty())
+	{
+		if(!WillInterestedData(data))// if it is interested about the data, ignore the stop message)
+			ExpireDataPacketTimer(nodeId,signature);
+		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
+		return;
+	}
+	
+	//If it is not a stop message, prepare to forward:
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	pair<bool, double> msgdirection;
+	if(forwardId >= numsofvehicles)
+	{
+		msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
+	}
+	else
+	{
+		msgdirection = m_sensor->VehicleGetDistanceWithVehicle(nrheader.getX(),nrheader.getY());
+	}
+	
+	std::vector<uint32_t>::const_iterator priorityListIt;
+	//找出当前节点是否在优先级列表中
+	priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
+	
+	if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
+	{
+		//第一次收到该数据包
+		if(!isDuplicatedData(nodeId,signature))
+		{
+			if(WillInterestedData(data))
+			{
+				// 1.Buffer the data in ContentStore
+				ToContentStore(data);
+				// 2. Notify upper layer
+				NotifyUpperLayer(data);
+				cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
+				getchar();
+				return;
+			}
+			else
+			{
+				cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
+				DropDataPacket(data);
+				return;
+			}
+		}
+		else // duplicated data
+		{
+			//cout<<"(forwarding.cc-OnData) 该数据包从后方得到且为重复数据包"<<endl<<endl;
+			ExpireDataPacketTimer(nodeId,signature);
+			return;
+		}
+	}
+	//数据包来源于当前路段前方
+	else
+	{
+		//该数据包为重复数据包
+		// TEST 何时会出现这样的情况
+		if(isDuplicatedData(nodeId,signature))
+		{
+			cout<<"(forwarding.cc-OnData) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
+			getchar();
+			//不在优先级列表中
+			if(priorityListIt==pri.end())
+			{
+				ExpireDataPacketTimer(nodeId,signature);
+				cout<<"(forwarding.cc-OnData_Car) 数据包不在转发优先级列表中，取消转发"<<endl;
+				return;
+			}
+			//在优先级列表中
+			else
+			{
+				//Question 能否替换为ExpireDataPacketTimer
+				DropDataPacket(data);
+				//ExpireDataPacketTimer(nodeId,signature);
+				cout<<"(forwarding.cc-OnData_Car) 数据包在转发优先级列表中，丢掉该数据包"<<endl;
+				return;
+			}
+		}
+		else
+		{
+			//判断车辆对该数据包是否感兴趣
+			Ptr<pit::Entry> Will = WillInterestedData(data);
+			if(Will)
+			{
+				// 1.Buffer the data in ContentStore
+				ToContentStore(data);
+				// 2. Notify upper layer
+				NotifyUpperLayer(data);
+				cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
+			}
+	
+			//不在优先级列表中
+			if (priorityListIt == pri.end())
+			{
+				DropDataPacket(data);
+				cout<<"(forwarding.cc-OnData_Car) 车辆不在数据包转发优先级列表中"<<endl;
+				getchar();
+				return;
+			}
+		}
+	}
+	
 }
 
 
