@@ -264,12 +264,13 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	//找出当前时刻，感兴趣节点的总数
+	//找出当前时刻，活跃节点数目和对该数据包感兴趣节点数目
 	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),data->GetSignature(), m_prefix.get(0).toUri());
-	//设置节点数量，感兴趣的节点总数
+	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
 	cout<<"(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 "<<size_InterestSize.first<<" 感兴趣的节点总数为 "<<size_InterestSize.second<<std::endl<<std::endl;
 	//getchar();
+	//当前对该数据包感兴趣节点总数
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 	m_face->ReceiveData(data);
 	m_transmittedDatas(data, this, m_face);

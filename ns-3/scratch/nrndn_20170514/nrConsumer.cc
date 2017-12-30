@@ -273,7 +273,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	//getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
-	//延迟为从数据包发出到Consumer收到的时间
+	//延迟为数据包从发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
