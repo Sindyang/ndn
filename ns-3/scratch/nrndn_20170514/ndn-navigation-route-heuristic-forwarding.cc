@@ -1914,9 +1914,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(*itroutes);
-		    cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
+			if(interestcollection.empty())
+				return;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
-			getchar();
+			//getchar();
 		}
 	}
 	else
