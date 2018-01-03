@@ -1378,7 +1378,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t nonce,Ptr<Data> data)
 	bool result = m_csdata->Add(nonce,data);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
+		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
 		BroadcastStopMessage(data);
 	}
 	else
@@ -2305,7 +2305,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		for(++itdis;itdis != distance.end();itdis++)
 		{
 			cout<<"("<<itdis->first<<" "<<itdis->second<<")"<<" ";
-			remainnodes.insert(std::pair<double,uint32_t>(itdis->first,itdis->second);
+			remainnodes.insert(std::pair<double,uint32_t>(itdis->first,itdis->second));
 		}
 	}
 	
