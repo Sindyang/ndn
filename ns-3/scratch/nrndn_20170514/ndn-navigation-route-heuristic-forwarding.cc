@@ -891,7 +891,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		NotifyUpperLayer(data);
 
 		//uint32_t myNodeId = m_node->GetId();
-		//cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
 		getchar();
 		return;
