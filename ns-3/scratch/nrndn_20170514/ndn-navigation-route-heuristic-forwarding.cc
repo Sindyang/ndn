@@ -927,7 +927,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
-		if(!IsInterestData(data))// if it is interested about the data, ignore the stop message)
+		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		return;
@@ -952,7 +952,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 		//第一次收到该数据包
 		if(!isDuplicatedData(nodeId,signature))
 		{
-			if(IsInterestData(data))
+			if(IsInterestData(data->GetName()))
 			{
 				// 1.Buffer the data in ContentStore
 				ToContentStore(data);
@@ -998,7 +998,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 		}
 		//这个函数需要重写，因为车辆没有PIT列表
 		//Ptr<pit::Entry> Will = WillInterestedData(data);
-		if(!IsInterestData(data))
+		if(!IsInterestData(data->GetName()))
 		{
 			DropDataPacket(data);
 		}
@@ -1033,7 +1033,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 				m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList,IsClearhopCountTag);
+					newPriorityList);
 			}
 		}
 		else
@@ -1085,7 +1085,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
-		if(!IsInterestData(data))// if it is interested about the data, ignore the stop message)
+		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		return;
@@ -1114,7 +1114,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		}
 			
 		Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-		const std::unordered_set<uint32_t>& interestRoutes =entry->getIncomingnbs();
+		const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 		NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣路段不该为0");
 		
 		bool idIsInPriorityList;
@@ -1140,7 +1140,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				m_sendingDataEvent[nodeId][signature]=
 				Simulator::Schedule(sendInterval,
 				&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-				newPriorityList,IsClearhopCountTag);
+				newPriorityList);
 			}
 		}
 		else
@@ -1196,7 +1196,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				// 我觉得在本算法中，不会进入这个函数
 				cout<<"(forwarding.cc-OnData) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
 				getchar();
-				if(priorityListIt==pri.end())
+				/*if(priorityListIt==pri.end())
 				{
 					ExpireDataPacketTimer(nodeId,signature);
 					return;
@@ -1206,7 +1206,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				{
 					DropDataPacket(data);
 					return;
-				}
+				}*/
 			}
 			
 			Ptr<pit::Entry> Will = WillInterestedData(data);
@@ -1226,14 +1226,15 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			}
 			
 			Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-			const std::unordered_set<uint32_t>& interestRoutes =entry->getIncomingnbs();
+			const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 			NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣路段不该为0");
 		
 			bool idIsInPriorityList;
 			std::vector<uint32_t>::const_iterator priorityListIt;
 			//找出当前节点是否在优先级列表中
 			priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
-		
+			idIsInPriorityList = (idit != pri.end());
+			
 			if(idIsInPriorityList)
 			{
 				cout<<"(forwarding.cc-OnData_Car) 车辆在数据包转发优先级列表中"<<endl;
@@ -1252,7 +1253,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList,IsClearhopCountTag);
+					newPriorityList);
 				}
 			}
 			else
@@ -1260,7 +1261,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				cout<<"(forwarding.cc-OnData_Car) Node id is not in PriorityList"<<endl;
 				NS_LOG_DEBUG("Node id is not in PriorityList");
 				NS_ASSERT_MSG(false,"RSU具有处理数据包的最高优先级");
-				DropDataPacket(interest);
+				DropDataPacket(data);
 				getchar();
 			}
 		}
@@ -2064,7 +2065,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");

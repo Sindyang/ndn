@@ -100,7 +100,8 @@ public:
 	virtual void
 	OnData_RSU(Ptr<Face> face, Ptr<Data> data);
 	
-	
+	virtual void
+	OnData_Car(Ptr<Face> face, Ptr<Data> data);
 
 
 	/**
@@ -321,6 +322,9 @@ private:
 	 */
 	Ptr<pit::Entry>
 	WillInterestedData(Ptr<const Data> data);
+	
+	//2018.1.3
+	bool IsInterestData(const Name& name);
 
 	/**
 	 * \brief	drop the data
@@ -450,7 +454,7 @@ private:
 	 * @param	IsClearhopCountTag  indicating that whether to reset the hop count tag to 0
 	 *                              True means needs to reset to 0;
 	 */
-	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag);
+	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList);
 
 	/**
 	 * \brief	Send the interest packet immediately,

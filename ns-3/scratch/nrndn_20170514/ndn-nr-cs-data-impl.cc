@@ -6,6 +6,7 @@
  */
 
 #include "ndn-nr-cs-data-impl.h"
+#include "nrHeader.h"
 #include "ns3/log.h"
 
 NS_LOG_COMPONENT_DEFINE ("ndn.cs.NrCsImpl");
@@ -92,7 +93,7 @@ NrCsImpl::DoDispose ()
 Ptr<Entry>
 NrCsImpl::Find (const uint32_t signature)
 {
-	std map<uint32_t,Ptr<cs::Entry>>::iterator it = m_csContainer.find(signature);
+	std::map<uint32_t,Ptr<cs::Entry>>::iterator it = m_csContainer.find(signature);
 	if(it != m_csContainer.end())
 		return it->second;
 	return 0;
@@ -116,12 +117,6 @@ void
 NrCsImpl::Print (std::ostream& os) const
 {
 	os<<"CS Content Data Names:  ";
-	std::vector<Ptr<Entry> >::const_iterator it = m_csContainer.begin();
-	for( ; it!=m_csContainer.end(); ++it)
-	{
-		os<<(*it)->GetName().toUri()<<" ";
-	}
-	os<<std::endl;
 	return;
 }
 
@@ -153,7 +148,7 @@ NrCsImpl::GetData(const Name &prefix)
 		{
 			Ptr<const Data> data = it->second->GetData();
 			DataCollection[data->GetSignature()] = data;
-			m_csInterestContainer.erase(it++);
+			m_csContainer.erase(it++);
 	  	}
 		else
 		{
@@ -197,12 +192,6 @@ Ptr<Entry>
 NrCsImpl::Begin ()
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Begin () should not be invoked");
-
-	if(m_csContainer.begin() == m_csContainer.end())
-		return End();
-	else
-		return *(m_csContainer.begin());
-	
 	return 0;
 }
 
@@ -219,20 +208,8 @@ Ptr<Entry>
 NrCsImpl::Next (Ptr<Entry> from)
 {
 	//NS_ASSERT_MSG(false,"In NrCsImpl,NrCsImpl::Next () should not be invoked");
-	if (from == 0) return 0;
-
-	std::vector<Ptr<Entry> >::iterator it;
-	it = find(m_csContainer.begin(),m_csContainer.end(),from);
-	if(it==m_csContainer.end())
-		return End();
-	else
-	{
-		++it;
-		if(it==m_csContainer.end())
-			return End();
-		else
-			return *it;
-	}
+	if (from == 0) 
+		return 0;
 	return 0;
 }
 
@@ -244,10 +221,11 @@ std::unordered_set<std::string>
 NrCsImpl::GetDataName() const
 {
 	std::unordered_set<std::string> collection;
-	std::vector<Ptr<Entry>>::iterator it;
+	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 	for(it = m_csContainer.begin();it != m_csContainer.end();it++)
 	{
-		collection.insert((*it)->GetName());
+		
+		collection.insert(it->second->GetName().toUri());
 	}
 	return collection;
 }
