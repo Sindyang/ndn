@@ -316,7 +316,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 	}	
 	cout<<endl;
 	if(!PriorityList.empty())
-		getchar();
+		//getchar();
 	return PriorityList;
 }
 
@@ -1865,7 +1865,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
 			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
-			getchar();
+			//getchar();
 		}
 		else
 		{
