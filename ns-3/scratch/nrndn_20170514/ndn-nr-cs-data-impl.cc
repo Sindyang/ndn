@@ -69,7 +69,7 @@ bool NrCsImpl::Add (uint32_t signature,Ptr<const Data> data)
 	Ptr<cs::Entry> csEntry = Find(signature);
 	if(csEntry != 0)
 	{
-		std::cout<<"(cs-data.cc-Add) 该数据包已经被加入到缓存中"<<std::endl;
+		std::cout<<"(cs-data.cc-Add) 该数据包已经在缓存中"<<std::endl;
 		return false;
 	}
 	uint32_t size = GetSize();
