@@ -891,7 +891,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		NotifyUpperLayer(data);
 
 		uint32_t myNodeId = m_node->GetId();
-		cout<<"(forwarding.cc-OnData) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		cout<<"(forwarding.cc-OnData_Car) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
 		getchar();
 		return;
@@ -943,9 +943,13 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	//If it is not a stop message, prepare to forward:
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	pair<bool, double> msgdirection;
-	if(forwardId >= numsofvehicles)
+	
+	//获取车辆上一跳节点
+	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
+	
+	if(remoteId >= numsofvehicles)
 	{
-		msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
+		msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),remoteId);
 	}
 	else
 	{
@@ -1110,7 +1114,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//If it is not a stop message, prepare to forward:
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	pair<bool, double> msgdirection;
-	if(forwardId >= numsofvehicles)
+	
+	//获取车辆上一跳节点
+	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
+	
+	if(remoteId >= numsofvehicles)
 	{
 		//msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
 		Ptr<pit::Entry> Will = WillInterestedData(data);
