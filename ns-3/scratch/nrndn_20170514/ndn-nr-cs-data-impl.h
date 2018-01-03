@@ -96,7 +96,7 @@ public:
   
   //added by sy
   virtual bool
-  Add (uint32_t signature,Ptr<const Data> data);
+  AddData (uint32_t signature,Ptr<const Data> data);
   
   virtual uint32_t
   GetSize () const;

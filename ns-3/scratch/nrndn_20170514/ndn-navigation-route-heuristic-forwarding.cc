@@ -1414,7 +1414,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data)
 {
 	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
-	bool result = m_csdata->Add(signature,data);
+	bool result = m_csdata->AddData(signature,data);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
@@ -1617,12 +1617,12 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   
     if (m_csdata == 0)
     {
-		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
+		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
    	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
    	    if(csdata)
 		{
 			m_csdata = DynamicCast<cs::nrndn::NrCsImpl>(csdata);
-			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 		}
     }
 	

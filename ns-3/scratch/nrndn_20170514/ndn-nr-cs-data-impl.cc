@@ -63,7 +63,7 @@ bool NrCsImpl::Add(Ptr<const Data> data)
 	return false;
 }
 
-bool NrCsImpl::Add (uint32_t signature,Ptr<const Data> data)
+bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 {
 	std::cout<<"(cs-data.cc-Add) 添加数据包 "<<data->GetName().toUri()<<std::endl;
 	Ptr<cs::Entry> csEntry = Find(signature);
