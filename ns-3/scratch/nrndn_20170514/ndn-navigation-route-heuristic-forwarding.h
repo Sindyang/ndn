@@ -475,6 +475,9 @@ private:
 	
 	//利用face通知上层应用调用OnInterest
 	//void notifyUpperOnInterest();
+	
+	//2018.1.2 
+	bool IsInterestData(const Name& name);
 
 private:
 	typedef GreenYellowRed super;
