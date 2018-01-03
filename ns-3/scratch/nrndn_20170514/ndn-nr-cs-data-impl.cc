@@ -230,8 +230,6 @@ NrCsImpl::GetDataName() const
 	return collection;
 }
 
-std
-
 void NrCsImpl::DoInitialize(void)
 {
 	ContentStore::DoInitialize();

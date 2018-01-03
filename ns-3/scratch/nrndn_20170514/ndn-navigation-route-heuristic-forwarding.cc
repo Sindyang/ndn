@@ -867,7 +867,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		
 		data->SetPayload(payload);
 		
-		ndn::nrndn::nrheader nrheader;
+		ndn::nrndn::nrHeader nrheader;
 		data->GetPayload()->PeekHeader(nrheader);
 		const std::vector<uint32_t>& pri = nrheader.getPriorityList();
 		
@@ -1128,8 +1128,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			double index = distance(pri.begin(),priorityListIt);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-			std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-			if(newPriorityList.empty())
+			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
+			std::vector<uint32_t> newPriorityList = collection->first;
+			std::unordered_set<std::string> remainroutes = collection->second;
+			
+			if(remainroutes.size() > 0)
 			{
 				cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				//getchar();
@@ -1241,8 +1244,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				double index = distance(pri.begin(),priorityListIt);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-				if(newPriorityList.empty())
+				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
+				std::vector<uint32_t> newPriorityList = collection->first;
+				std::unordered_set<std::string> remainroutes = collection->second;
+			
+				if(remainroutes.size() > 0)
 				{
 					cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					//getchar();
