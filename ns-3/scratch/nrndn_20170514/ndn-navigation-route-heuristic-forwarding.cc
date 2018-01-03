@@ -529,10 +529,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		else
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) Node id is not in PriorityList"<<endl;
-			
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
-			getchar();
+			//getchar();
 		}
 		//getchar();
 		//cout<<endl;
@@ -658,7 +657,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			SplitString(forwardRoute,routes," ");
 			if(routes.size() <= 1)
 			{
-				std::cout<<"(forwarding.cc-OnInterest) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
+				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
 				BroadcastStopMessage(interest);
 				getchar();
 				return;
@@ -680,7 +679,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
-					cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 					//重新选择路线发送兴趣包
 				}
@@ -1289,6 +1288,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				cout<<"(forwarding.cc-OnData_Car) Node id is not in PriorityList"<<endl;
 				NS_LOG_DEBUG("Node id is not in PriorityList");
 				NS_ASSERT_MSG(false,"RSU具有处理数据包的最高优先级");
+				//还不确定这里是否需要DropDataPacket(data) RSU有可能不需要向上层发送数据包
 				DropDataPacket(data);
 				getchar();
 			}
