@@ -659,7 +659,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			{
 				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
 				BroadcastStopMessage(interest);
-				getchar();
+				//getchar();
 				return;
 			}
 			std::string nextroute = routes[1];
@@ -1617,12 +1617,12 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   
     if (m_csdata == 0)
     {
-		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
+		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
    	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
    	    if(csdata)
 		{
 			m_csdata = DynamicCast<cs::nrndn::NrCsImpl>(csdata);
-			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 		}
     }
 	
