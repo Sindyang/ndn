@@ -1129,8 +1129,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-			std::vector<uint32_t> newPriorityList = collection->first;
-			std::unordered_set<std::string> remainroutes = collection->second;
+			std::vector<uint32_t> newPriorityList = collection.first;
+			std::unordered_set<std::string> remainroutes = collection.second;
 			
 			if(remainroutes.size() > 0)
 			{
@@ -1245,8 +1245,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
 				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-				std::vector<uint32_t> newPriorityList = collection->first;
-				std::unordered_set<std::string> remainroutes = collection->second;
+				std::vector<uint32_t> newPriorityList = collection.first;
+				std::unordered_set<std::string> remainroutes = collection.second;
 			
 				if(remainroutes.size() > 0)
 				{
