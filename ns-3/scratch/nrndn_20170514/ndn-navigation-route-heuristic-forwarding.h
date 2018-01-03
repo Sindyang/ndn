@@ -323,9 +323,6 @@ private:
 	Ptr<pit::Entry>
 	WillInterestedData(Ptr<const Data> data);
 	
-	//2018.1.3
-	bool IsInterestData(const Name& name);
-
 	/**
 	 * \brief	drop the data
 	 * 			Simply do nothing

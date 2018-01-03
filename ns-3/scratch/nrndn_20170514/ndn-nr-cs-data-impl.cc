@@ -221,7 +221,7 @@ std::unordered_set<std::string>
 NrCsImpl::GetDataName() const
 {
 	std::unordered_set<std::string> collection;
-	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
+	std::map<uint32_t,Ptr<cs::Entry> >::const_iterator it;
 	for(it = m_csContainer.begin();it != m_csContainer.end();it++)
 	{
 		

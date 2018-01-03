@@ -853,7 +853,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	}	
 }
 
-void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
+void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 {
 	NS_LOG_FUNCTION (this);
 	//收到了来自应用层的数据包
@@ -984,7 +984,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 			// 我觉得在本算法中，不会进入这个函数
 			cout<<"(forwarding.cc-OnData) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
 			getchar();
-			if(priorityListIt==pri.end())
+			/*if(priorityListIt==pri.end())
 			{
 				ExpireDataPacketTimer(nodeId,signature);
 				return;
@@ -994,7 +994,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face>,Ptr<Data> data)
 			{
 				DropDataPacket(data);
 				return;
-			}
+			}*/
 		}
 		//这个函数需要重写，因为车辆没有PIT列表
 		//Ptr<pit::Entry> Will = WillInterestedData(data);
@@ -1233,7 +1233,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			std::vector<uint32_t>::const_iterator priorityListIt;
 			//找出当前节点是否在优先级列表中
 			priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
-			idIsInPriorityList = (idit != pri.end());
+			idIsInPriorityList = (priorityListIt != pri.end());
 			
 			if(idIsInPriorityList)
 			{
