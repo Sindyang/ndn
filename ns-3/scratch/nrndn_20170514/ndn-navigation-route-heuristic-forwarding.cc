@@ -2192,9 +2192,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			//忽略自身节点
-			if(m_node->GetId() == nb->first)
-				continue;
 			
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second < 0)
@@ -2206,8 +2203,11 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 		//判断车辆与其他车辆的位置关系
 		else
 		{
+			//忽略自身节点
+			if(m_node->GetId() == nb->first)
+				continue;
+			
 			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			cout<<nb->first<<" "<<nb->second.m_x<<" "<<nb->second.m_y<<endl;
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			//若result.second <= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second < 0)
