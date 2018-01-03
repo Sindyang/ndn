@@ -909,7 +909,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	//获取数据包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnData) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData_Car) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	cout<<"(forwarding.cc-OnData_Car) 数据包的转发优先级列表为 ";
@@ -996,7 +996,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		if(isDuplicatedData(nodeId,signature))
 		{
 			// 我觉得在本算法中，不会进入这个函数
-			cout<<"(forwarding.cc-OnData) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
+			cout<<"(forwarding.cc-OnData_Car) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
 			NS_ASSERT_MSG(false,"该数据包从前方或其他路段得到，重复，丢弃");
 			getchar();
 			/*if(priorityListIt==pri.end())
@@ -1413,6 +1413,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
  */
 void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data)
 {
+	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
 	bool result = m_csdata->Add(signature,data);
 	if(result)
 	{
