@@ -202,6 +202,8 @@ NrCsImpl::Begin ()
 		return End();
 	else
 		return *(m_csContainer.begin());
+	
+	return 0;
 }
 
 
@@ -231,6 +233,7 @@ NrCsImpl::Next (Ptr<Entry> from)
 		else
 			return *it;
 	}
+	return 0;
 }
 
 /*

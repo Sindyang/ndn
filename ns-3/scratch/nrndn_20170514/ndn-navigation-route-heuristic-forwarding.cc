@@ -2013,13 +2013,12 @@ NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 bool NavigationRouteHeuristic::IsInterestData(const Name& name)
 {
 	std::vector<std::string> result;
-	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	//获取当前路段
-	const std::string& currentLane = sensor->getLane();
+	const std::string& currentLane = m_sensor->getLane();
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	//获取导航路线
-	const std::vector<std::string>& route = sensor->getNavigationRoute();
+	const std::vector<std::string>& route = m_sensor->getNavigationRoute();
 
 	//当前路段在导航路线中的位置
 	it =std::find(route.begin(),route.end(),currentLane);
@@ -2204,6 +2203,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 {
 	std::vector<uint32_t> priorityList;
 	std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection;
+	//无车辆的感兴趣路段
 	std::unordered_set<std::string> remainroutes(interestRoutes);
 	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > sortvehicles;
 	
@@ -2219,7 +2219,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		return collection;
 	}
 	
-	
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
@@ -2287,6 +2287,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 			remainroutes.erase(itroutes);
 		}
 		
+		//位于该条路段的车辆集合
 		std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
 		std::multimap<double,uint32_t,std::greater<double> >::iterator itdis = distance.begin();
 		cout<<"("<<itdis->second<<" "<<itdis->first<<")"<<" ";
@@ -2297,20 +2298,20 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	std::multimap<double,uint32_t,std::greater<double> >remainnodes;
 	for(itvehicles = sortvehicles.begin();itvehicles != sortvehicles.end();itvehicles++)
 	{
-		
+		//输出路段名
 		cout<<itvehicles->first<<endl;
 		std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
 		std::multimap<double,uint32_t,std::greater<double> >::iterator itdis = distance.begin();
 		for(++itdis;itdis != distance.end();itdis++)
 		{
 			cout<<"("<<itdis->first<<" "<<itdis->second<<")"<<" ";
-			remainnodes.insert(std::pair<double,uint32_t>(result.second,nb->first));
+			remainnodes.insert(std::pair<double,uint32_t>(itdis->first,itdis->second);
 		}
 	}
 	
 	//将剩余节点加入转发优先级列表中
 	std::multimap<double,uint32_t,std::greater<double> >::iterator itremain = remainnodes.begin();
-	for(itremain != remainnodes.end();itremain++)
+	for(;itremain != remainnodes.end();itremain++)
 	{
 		priorityList.push_back(itremain->second);
 	}

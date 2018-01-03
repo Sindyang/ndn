@@ -21,6 +21,8 @@
 #include "NodeSensor.h"
 
 #include <map>
+#include <unordered_set>
+
 
 
 namespace ns3
@@ -59,7 +61,7 @@ public:
 
   // 2017.12.29 added by sy
   virtual Ptr<Entry>
-  Find (const uint32_t nonce);
+  Find (const uint32_t signature);
 
   virtual Ptr<Data>
   Lookup (Ptr<const Interest> interest);

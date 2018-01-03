@@ -96,6 +96,11 @@ public:
 	 */
 	virtual void
 	OnData(Ptr<Face> face, Ptr<Data> data);
+	
+	virtual void
+	OnData_RSU(Ptr<Face> face, Ptr<Data> data);
+	
+	
 
 
 	/**
@@ -425,6 +430,13 @@ private:
 	 *          2017.12.18 added by sy
 	 */
 	void CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest);
+	
+	/**
+	 * \brief   Cache Data Packet
+	 *          Broadcast stop message
+	 *          2018.1.3 added by sy
+	 */
+	void CachingDataPacket(uint32_t nonce,Ptr<Data> data);
 
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire

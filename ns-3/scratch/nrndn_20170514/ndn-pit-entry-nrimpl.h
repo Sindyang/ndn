@@ -69,6 +69,8 @@ public:
 	//需要修改
 	const std::unordered_set<std::string>& getIncomingnbs() const
 	{
+		// 2017.12.29 added by sy 节点上一跳所在路段的集合
+	    std::unordered_set<std::string> interestroutes;
 		std::unordered_map<std::string,std::unordered_set< uint32_t > >::iterator it = m_incomingnbs.begin();
 		for(;it != m_incomingnbs.end();it++)
 		{
@@ -87,8 +89,6 @@ private:
 	std::unordered_map<std::string,std::unordered_set< uint32_t > > m_incomingnbs;///< @brief container for incoming neighbors 
 	//std::unordered_set<uint32_t> m_incomingnbs;
 	std::string m_interest_name;	
-	// 2017.12.29 added by sy 节点上一跳所在路段的集合
-	std::unordered_set<std::string> interestroutes;
 	Time m_infaceTimeout; 
 };
 
