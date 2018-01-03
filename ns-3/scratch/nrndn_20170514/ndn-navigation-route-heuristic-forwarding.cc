@@ -2172,7 +2172,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 	//节点中的车辆数目
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	cout<<"(forwarding.cc-VehicleGetPriorityListOfData) 当前节点为 "<<m_node->GetId()<<" 时间为 "<<Simulator::Now().GetSeconds()<<endl;
-	cout<<"getpos "<<m_sensor->getPos()<<endl;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistRSU;
 	std::multimap<double,uint32_t,std::greater<double> > sortlistVehicle;
 
