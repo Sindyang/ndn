@@ -1137,7 +1137,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		std::vector<uint32_t>::const_iterator priorityListIt;
 		//找出当前节点是否在优先级列表中
 		priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
-		idIsInPriorityList = (idit != pri.end());
+		idIsInPriorityList = (priorityListIt != pri.end());
 		
 		if(idIsInPriorityList)
 		{
