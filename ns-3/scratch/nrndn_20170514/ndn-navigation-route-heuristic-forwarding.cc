@@ -1852,6 +1852,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
+			
+			if(m_node->GetId() == 106)
+				getchar();
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
 		}
