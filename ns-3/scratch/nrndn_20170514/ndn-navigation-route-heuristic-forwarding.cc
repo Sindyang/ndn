@@ -1425,6 +1425,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
 		NS_ASSERT_MSG(result,"该数据包已经位于缓存中");
 	}
+	getchar();
 }
 
 void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
@@ -1570,19 +1571,9 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
-	if(!m_running) return;
-	//added by sy
-    //ndn::nrndn::nrHeader nrheader;
-   // interest->GetPayload()->PeekHeader(nrheader);
-  //  uint32_t nodeId = nrheader.getSourceId();
-	//uint32_t myNodeId = m_node->GetId();
-	//cout<<"(forwarding.cc-SendInterestPacket) 兴趣包的源节点为 "<<nodeId<<",转发该兴趣包的节点为 "<<myNodeId<<endl;
-	//std::string routes = interest->GetRoutes();
-	//std::cout<<"(forwarding.cc-SendInterestPacket) routes "<<routes<<std::endl;
-	//uint32_t nonce = interest->GetNonce();
-	//std::cout<<"(forwarding.cc-SendInterestPacket) nonce "<<nonce<<std::endl;
-	//getchar();
-
+	if(!m_running) 
+		return;
+	
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
 
@@ -1623,10 +1614,6 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 		{
 			m_cs = DynamicCast<ns3::ndn::cs::nrndn::NrCsImpl>(cs);
 			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
-			if(m_cs != 0)
-			{
-				cout<<"m_cs建立成功"<<endl;
-			}
 		}
     }
 	
@@ -1843,7 +1830,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetRoutes();
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
@@ -1852,7 +1839,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),remoteroute,Time (AllowedHelloLoss * HelloInterval));
 	
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
 	//发送心跳包的节点位于当前节点后方
 	if(msgdirection.first && msgdirection.second < 0)
@@ -1867,12 +1854,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
 		}
 	}
 	
@@ -1926,44 +1913,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else
 	{
-		cout<<"(forwarding.cc-ProcessHelloRSU) routes.size "<<routes.size()<<endl;
-		cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) routes.size "<<routes.size()<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	m_preNB = m_nb;
 	
 }
-
-/*void NavigationRouteHeuristic::notifyUpperOnInterest()
-{
-	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
-    if(interval >= 1)
-	{
-		m_resendInterestTime =  Simulator::Now().GetSeconds();	
-		cout<<"源节点 "<<m_node->GetId() << " 允许发送兴趣包。间隔" <<interval << " 时间 "<<Simulator::Now().GetSeconds() << endl;
-	}
-	else
-	{
-		//cout<<"源节点 "<<m_node->GetId()<< " 禁止发送兴趣包。间隔 " <<interval << " 时间 "<<Simulator::Now().GetSeconds() <<endl;
-		return;
-	}
-	vector<Ptr<Face> >::iterator fit;
-	Ptr<Interest> interest = Create<Interest> ();
-	int count=0;
-	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
-	{   //只有一个Face？有两个，一个是consumer，一个是producer
-		//App::OnInterest() will be executed,
-		//including nrProducer::OnInterest.
-		count++;
-		//(*fit)->SendInterest(interest);
-	}
-	if(count>2)
-	{
-		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
-		NS_ASSERT_MSG(count <= 2,"notifyUpperOnInterest:Face数量大于2！");
-	}
-}*/
-
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 {

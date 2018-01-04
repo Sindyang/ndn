@@ -48,17 +48,23 @@ public:
 
 	std::string uriConvertToString(std::string str);
 	//std::vector <double> split(const std::string & s, const std::string & d);
-	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
+	//virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route);
+	
 	//2017.12.16 added by sy
 	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double& x,const double& y);
+	
 	//2017.12.16 added by sy
 	virtual std::pair<bool, double> VehicleGetDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID);
+	
 	//2017.12.25 added by sy
 	virtual std::pair<bool,double> RSUGetDistanceWithVehicle(const uint32_t RSUID,const double& x,const double& y);
+	
 	//2017.12.25 added by sy
 	virtual std::pair<bool,double> RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane);
+	
 	//2017.12.27 added by sy
 	virtual std::pair<std::string,std::string> GetLaneJunction(const std::string lane);
+	
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
 private:
