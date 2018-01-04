@@ -346,7 +346,7 @@ bool nrConsumer::IsInterestData(const Name& name)
 	//name是否会出现在未来的导航路线中
 	//如是，则证明该节点对该数据感兴趣；否则不感兴趣
 	it2=std::find(it,route.end(),name.get(0).toUri());
-	std::cout<<"(nrConsumer.cc-IsInterestData) name "<<name.get(0).toUri<<std::endl;
+	std::cout<<"(nrConsumer.cc-IsInterestData) name "<<name.get(0).toUri()<<std::endl;
 
 	return (it2!=route.end());
 }
