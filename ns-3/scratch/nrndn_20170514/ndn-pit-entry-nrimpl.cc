@@ -100,7 +100,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		}
 		else
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在该表项对应的路段 "<<it->first<<" 中"<<std::endl;
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在表项 "<<it->first<<" 中"<<std::endl;
 		}	
 	}
 	//删除节点为空的路段
