@@ -1393,7 +1393,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	//std::cout<<"(forwarding.cc-CachingInterestPacket) routes "<<routes<<std::endl;
 	//getchar();
 	
-	bool result = m_csinterest->AddInterest(nonce,interest);
+	bool result = m_cs->AddInterest(nonce,interest);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包"<<endl;
@@ -1414,7 +1414,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data)
 {
 	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
-	bool result = m_csdata->AddData(signature,data);
+	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
@@ -1615,35 +1615,21 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
     }
   
   
-    if (m_csdata == 0)
+    if (m_cs == 0)
     {
 		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
-   	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
-   	    if(csdata)
+   	    Ptr<ContentStore> cs=GetObject<ContentStore>();
+   	    if(cs)
 		{
-			m_csdata = DynamicCast<ns3::ndn::cs::nrndn::NrCsImpl>(csdata);
+			m_cs = DynamicCast<ns3::ndn::cs::nrndn::NrCsImpl>(cs);
 			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
-			if(m_csdata != 0)
+			if(m_cs != 0)
 			{
-				cout<<"m_csdata建立成功"<<endl;
+				cout<<"m_cs建立成功"<<endl;
 			}
 		}
     }
 	
-	if (m_csinterest == 0)
-	{
-		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Interest"<<endl;
-   	    Ptr<ContentStore> csinterest=GetObject<ContentStore>();
-   	    if(csinterest)
-		{
-			m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
-			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
-			if(m_csinterest != 0)
-			{
-				cout<<"m_csinterest建立成功"<<endl;
-			}
-		}
-	}
   
     if(m_node==0)
     {
@@ -1779,13 +1765,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		//cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
 		//有兴趣包在缓存中
-		if(m_csinterest->GetSize() > 0)
+		if(m_cs->GetInterestSize() > 0)
 		{
 		//	cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
 		//	cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
-			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(localLane);
+			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(localLane);
 		//	cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(interestcollection.empty())
 				return;
@@ -1925,12 +1911,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	cout<<endl;
 	//getchar();
 	
-	if(routes.size() > 0 && m_csinterest->GetSize() > 0)
+	if(routes.size() > 0 && m_cs->GetInterestSize() > 0)
 	{
 		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
 		{
 			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
-			map<uint32_t,Ptr<const Interest> > interestcollection = m_csinterest->GetInterest(*itroutes);
+			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes);
 			if(interestcollection.empty())
 				return;
 			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;

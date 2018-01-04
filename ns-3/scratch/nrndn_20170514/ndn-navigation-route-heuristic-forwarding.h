@@ -20,8 +20,7 @@
 #include "NodeSensor.h"
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
-#include "ndn-nr-cs-data-impl.h"
-#include "ndn-nr-cs-interest-impl.h"
+#include "ndn-nr-cs-impl.h"
 
 #include <vector>
 #include <map>
@@ -522,6 +521,8 @@ private:
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_csdata;
 	
 	Ptr<ndn::cs::nrndn::NrCsInterestImpl> m_csinterest;
+	
+	Ptr<ndn::cs::nrndn::NrCsImpl> m_cs;
 
 	uint32_t				m_CacheSize;
 
