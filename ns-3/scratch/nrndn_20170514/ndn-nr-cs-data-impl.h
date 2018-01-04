@@ -9,7 +9,6 @@
 #define NDN_NR_CS_IMPL_H_
 
 #include "ns3/ndn-content-store.h"
-
 #include "ns3/log.h"
 #include "ns3/simulator.h"
 
@@ -39,7 +38,7 @@ namespace nrndn
  * @brief Class implementing Content Store,
  * 		  with navigation route customize
  */
-class NrCsImpl	: public ContentStore
+class NrCsImpl: public ContentStore
 {
 public:
   /**

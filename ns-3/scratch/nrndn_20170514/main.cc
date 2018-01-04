@@ -704,7 +704,7 @@ nrndnExample::InstallNrNdnStack()
 	//cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
 	//cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
-	ndnHelper.SetContentStore ("ns3::ndn::cs::Lru", "MaxSize", "1000");
+	ndnHelper.SetContentStore("ns3::ndn::cs::Lru", "MaxSize", "1000");
 	ndnHelper.SetContentStore("ns3::ndn::cs::nrndn::NrCsImpl");
 	ndnHelper.SetContentStore("ns3::ndn::cs::nrndn::NrCsInterestImpl");
 	//cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
