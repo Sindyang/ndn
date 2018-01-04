@@ -1417,7 +1417,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
+		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
 		BroadcastStopMessage(data);
 	}
 	else
@@ -2036,6 +2036,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	//cout<<"进入(forwarding.cc-BroadcastStopMessage)"<<endl;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
+	cout<<"(forwarding.cc-BroadcastStopMessage) 节点 "<<m_node->GetId()<<" 广播停止转发数据包的消息 "<<src->GetSignature()<<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the interest packet
 	Ptr<Data> data = Create<Data> (*src);
@@ -2146,7 +2147,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second < 0)
 			{
-				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				sortlistRSU.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 			}
 			//getchar();
 		}
@@ -2162,7 +2163,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 			//若result.second <= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second < 0)
 			{
-				sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
+				sortlistVehicle.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 			}
 		}
 	}
@@ -2236,7 +2237,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 					std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
 					cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 					std::multimap<double,uint32_t,std::greater<double> > distance;
-					distance.insert(std::pair<double,uint32_t>(result.second,nb->first));
+					distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 					sortvehicles[*it] = distance; 
 				}
 			}
@@ -2252,10 +2253,10 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 			{
 				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
 				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
-				if(result.first && result.second > 0)
+				if(result.first && result.second < 0)
 				{
 					std::multimap<double,uint32_t,std::greater<double> > distance;
-					distance.insert(std::pair<double,uint32_t>(result.second,nb->first));
+					distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 					sortvehicles[*it] = distance; 
 				}
 			}
