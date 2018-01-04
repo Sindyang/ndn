@@ -1617,12 +1617,16 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
   
     if (m_csdata == 0)
     {
-		//cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
+		cout<<"(forwarding.cc-NotifyNewAggregate)新建CS-Data"<<endl;
    	    Ptr<ContentStore> csdata=GetObject<ContentStore>();
    	    if(csdata)
 		{
 			m_csdata = DynamicCast<cs::nrndn::NrCsImpl>(csdata);
-			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			if(m_csdata != 0)
+			{
+				cout<<"建立成功"<<endl;
+			}
 		}
     }
 	
