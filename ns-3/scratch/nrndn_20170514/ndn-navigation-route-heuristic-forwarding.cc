@@ -315,8 +315,6 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
-	if(!PriorityList.empty())
-		//getchar();
 	return PriorityList;
 }
 
