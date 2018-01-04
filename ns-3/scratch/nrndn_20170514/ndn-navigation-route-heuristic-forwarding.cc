@@ -1622,7 +1622,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
    	    if(csdata)
 		{
 			m_csdata = DynamicCast<ns3::ndn::cs::nrndn::NrCsImpl>(csdata);
-			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 			if(m_csdata != 0)
 			{
 				cout<<"m_csdata建立成功"<<endl;
