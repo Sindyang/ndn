@@ -160,7 +160,7 @@ public:
 	 *			(false,straight_line_distance)
 	 *					otherwise. Notice the straight line distance is always positive(+)
 	 */
-	//virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)=0;
+	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)=0;
 	
 	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double& x,const double& y)=0;
 	
