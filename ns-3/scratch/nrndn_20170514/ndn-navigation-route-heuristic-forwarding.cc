@@ -1625,7 +1625,7 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 			cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
 			if(m_csdata != 0)
 			{
-				cout<<"建立成功"<<endl;
+				cout<<"m_csdata建立成功"<<endl;
 			}
 		}
     }
@@ -1638,6 +1638,10 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 		{
 			m_csinterest = DynamicCast<cs::nrndn::NrCsInterestImpl>(csinterest);
 			//cout<<"(forwarding.cc-NotifyNewAggregate)建立完毕"<<endl;
+			if(m_csinterest != 0)
+			{
+				cout<<"m_csinterest建立成功"<<endl;
+			}
 		}
 	}
   
