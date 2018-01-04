@@ -106,7 +106,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	//删除节点为空的路段
 	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();)
 	{
-		if(it->second.empty())
+		if((it->second).empty())
 		{
 			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
 			m_incomingnbs.erase(it++);
