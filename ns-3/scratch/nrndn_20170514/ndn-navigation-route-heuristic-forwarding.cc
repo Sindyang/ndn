@@ -2310,6 +2310,8 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		priorityList.push_back(itremain->second);
 	}
 	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
+	
+	getchar();
 }
 
 
