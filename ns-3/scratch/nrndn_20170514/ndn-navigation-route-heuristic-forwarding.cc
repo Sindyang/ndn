@@ -1590,7 +1590,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
     uint32_t nodeId = nrheader.getSourceId();
 	if(nodeId == 22)
 	{
-		cout<<"(forwarding.cc-sendInterestPacket)"<<endl;
+		cout<<"(forwarding.cc-sendInterestPacket) 收到了源节点为22的兴趣包"<<endl;
 		getchar();
 	}
 		
@@ -1602,6 +1602,12 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
+	}
+	
+	if(nodeId == 22)
+	{
+		cout<<"(forwarding.cc-sendInterestPacket) 源节点为22的兴趣包已经全部发送"<<endl;
+		getchar();
 	}
 }
 
