@@ -20,6 +20,7 @@
 #include "ns3/object.h"
 #include "ns3/node.h"
 #include "ns3/ndnSIM/utils/ndn-fw-hop-count-tag.h"
+#include "ns3/application"
 
 #include <algorithm>    // std::find
 
@@ -1809,7 +1810,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(ndn::nrndn::nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"]);
-		Ptr<nrndn::nrConsumer> consumer = DynamicCast<nrndn::nrConsumer>(app);
+		Ptr<ns3::ndn::nrndn::nrConsumer> consumer = DynamicCast<ns3::ndn::nrndn::nrConsumer>(app);
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(consumer);
 		if(!consumer->IsActive())
