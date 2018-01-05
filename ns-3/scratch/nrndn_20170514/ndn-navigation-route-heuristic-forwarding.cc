@@ -448,11 +448,12 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	{
 		cout<<"(forwarding.cc-OnInterest_Car) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
+		if(myNodeId == 5 && nodeId == 22)
+		getchar();
 		return;
 	}
 	
-	if(myNodeId == 5 && nodeId == 22)
-		getchar();
+	
 
 	//If it is not a stop message, prepare to forward
 	pair<bool, double> msgdirection = packetFromDirection(interest);
