@@ -24,10 +24,18 @@ class nrConsumer: public ndn::ConsumerCbr
 {
 public:
 
+    //2018.1.5 
+    bool IsActive();
+
 	static TypeId GetTypeId ();
 
 	nrConsumer();
 	virtual ~nrConsumer();
+	
+	/**
+	 * @brief Actually send packet, it will take place in Consumer::SendPacket
+	 */
+	void SendPacket ();
 
 protected:
 	  // inherited from App base class. Originally they were private
@@ -57,11 +65,6 @@ protected:
 	   * 		However, I change some details of it, so use this function to replace it.
 	   */
 	  void  doConsumerCbrScheduleNextPacket();
-
-	  /**
-	   * @brief Actually send packet, it will take place in Consumer::SendPacket
-	   */
-	  void SendPacket ();
 	  
 	  /**
 	  * 2017.12.13 added by sy

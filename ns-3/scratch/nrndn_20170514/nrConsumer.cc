@@ -76,6 +76,11 @@ void nrConsumer::StopApplication()
 	super::StopApplication();
 }
 
+bool nrProducer::IsActive()
+{
+	return m_active;
+}
+
 //计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {

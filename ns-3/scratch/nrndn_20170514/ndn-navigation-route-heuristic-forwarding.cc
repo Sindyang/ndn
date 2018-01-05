@@ -1806,7 +1806,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 {
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
-	int idx = 0;
+	uint32_t idx = 0;
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(ndn::nrndn::nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"]);
