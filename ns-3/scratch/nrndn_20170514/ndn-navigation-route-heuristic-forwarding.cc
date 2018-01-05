@@ -416,8 +416,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t forwardId = nrheader.getForwardId();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
-	if(myNodeId == 5 && nodeId == 22)
-		getchar();
+	
 	//std::string routes = interest->GetRoutes();
 	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
@@ -451,6 +450,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
+	
+	if(myNodeId == 5 && nodeId == 22)
+		getchar();
 
 	//If it is not a stop message, prepare to forward
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -1507,8 +1509,6 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	if(m_node->GetId() == 5 && sourceId == 22)
-		getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
