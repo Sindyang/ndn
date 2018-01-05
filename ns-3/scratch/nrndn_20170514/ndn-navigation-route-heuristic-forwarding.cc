@@ -1754,23 +1754,23 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//前方道路有车辆
 	if(nums_car_current > 0)
 	{
-		//cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
+		cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
 		//有兴趣包在缓存中
 		if(m_cs->GetInterestSize() > 0)
 		{
-		//	cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
-		//	cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(localLane);
-		//	cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(interestcollection.empty())
 				return;
 			SendInterestInCache(interestcollection);
 		}
 		else
 		{
-		//	cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
+			cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
 	}
@@ -1814,6 +1814,8 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//getchar();
+		if(sourceId == 22)
+			getchar();
 	}
 }
 
