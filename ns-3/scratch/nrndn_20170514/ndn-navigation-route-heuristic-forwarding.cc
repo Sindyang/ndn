@@ -1828,7 +1828,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetRoutes();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
@@ -1852,9 +1852,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			
-			if(m_node->GetId() == 106)
-				getchar();
+			getchar();
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
 		}
@@ -1999,6 +1997,7 @@ NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::isInterestedData");
 	return m_pit->Find(data->GetName());
+	cout<<"(该数据包不在PIT中)"<<endl;
 }
 
 bool NavigationRouteHeuristic::IsInterestData(const Name& name)
