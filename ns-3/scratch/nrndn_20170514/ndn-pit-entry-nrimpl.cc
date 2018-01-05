@@ -117,7 +117,7 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
 			++it;
 		}
 	}
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 }
 
 //删除所有节点

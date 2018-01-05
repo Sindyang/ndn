@@ -1457,7 +1457,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
-	cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
+	//cout<<"进入(forwarding.cc-ForwardInterestPacket)"<<endl;
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
@@ -1503,6 +1503,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+	if(sourceId == 24)
+		getchar();
 	//getchar();
 }
 
@@ -1766,23 +1768,23 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//前方道路有车辆
 	if(nums_car_current > 0)
 	{
-		cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
+		//cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
 		//有兴趣包在缓存中
 		if(m_cs->GetInterestSize() > 0)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
-			cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
+		//	cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(localLane);
-			cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(interestcollection.empty())
 				return;
 			SendInterestInCache(interestcollection);
 		}
 		else
 		{
-			cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
 	}
@@ -1798,7 +1800,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	{
 		uint32_t nonce = it->first;
 		uint32_t nodeId = m_node->GetId();
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<endl;
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<endl;
 		
 		//added by sy
 		Ptr<const Interest> interest = it->second;
@@ -1806,7 +1808,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t sourceId = nrheader.getSourceId();
 		
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
 		std::vector<std::string> routes;
 		SplitString(interest->GetRoutes(),routes," ");
 		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
