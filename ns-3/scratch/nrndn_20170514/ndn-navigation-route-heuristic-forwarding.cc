@@ -1459,7 +1459,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	interest->SetPayload(newPayload);
 
 	//4. send the payload
-	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,15)),
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 }
 
