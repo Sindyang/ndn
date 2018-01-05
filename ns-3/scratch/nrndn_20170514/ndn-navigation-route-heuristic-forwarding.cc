@@ -448,8 +448,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	{
 		cout<<"(forwarding.cc-OnInterest_Car) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
-		if(myNodeId == 5 && nodeId == 22)
-		getchar();
 		return;
 	}
 	
@@ -518,8 +516,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-				if(myNodeId == 5 && nodeId == 22)
-					getchar();
 				//getchar();
 				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 			}
@@ -809,9 +805,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//getchar();
 		//cout<<endl;
-		
-		if(nodeId == 22)
-			getchar();
 	}
 }
 
@@ -1585,7 +1578,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		NS_LOG_FUNCTION (this);
 	
 	//added by sy
-    ndn::nrndn::nrHeader nrheader;
+  /*  ndn::nrndn::nrHeader nrheader;
     interest->GetPayload()->PeekHeader(nrheader);
     uint32_t nodeId = nrheader.getSourceId();
 	if(nodeId == 22)
@@ -1596,7 +1589,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 		if(Interest::NACK_LOOP == interest->GetNack())
 			cout<<"该消息包为NACK包"<<endl;
 		//getchar();
-	}
+	}*/
 	
 		
 
@@ -1607,12 +1600,6 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
-	}
-	
-	if(nodeId == 22)
-	{
-		cout<<"(forwarding.cc-sendInterestPacket) 源节点为22的兴趣包已经全部发送"<<endl;
-		getchar();
 	}
 }
 
@@ -1835,8 +1822,6 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 			cout<<newPriorityList[i]<<" ";
 		}
 		cout<<endl;
-		if(sourceId == 22)
-			getchar();
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
