@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
 		
@@ -1835,7 +1835,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 			cout<<newPriorityList[i]<<" ";
 		}
 		cout<<endl;
-		double random = m_uniformRandomVariable->GetInteger(0, 50);
+		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//getchar();
