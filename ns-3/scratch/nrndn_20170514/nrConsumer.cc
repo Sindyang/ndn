@@ -76,7 +76,7 @@ void nrConsumer::StopApplication()
 	super::StopApplication();
 }
 
-bool nrProducer::IsActive()
+bool nrConsumer::IsActive()
 {
 	return m_active;
 }
