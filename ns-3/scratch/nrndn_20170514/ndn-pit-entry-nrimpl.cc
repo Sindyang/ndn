@@ -85,7 +85,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 {
 	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 感兴趣路段为 "<<m_interest_name<<std::endl;
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 感兴趣路段为 "<<m_interest_name<<std::endl;
 	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
 	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
 	{
@@ -95,12 +95,12 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		{
 			neighbors.erase(incomingnb);
 			it->second = neighbors;
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
-			<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
+			//<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
 		}
 		else
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在上一条路段 "<<it->first<<" 中"<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在上一条路段 "<<it->first<<" 中"<<std::endl;
 		}	
 	}
 	//删除节点为空的路段
@@ -108,7 +108,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	{
 		if((it->second).empty())
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 上一跳路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 上一跳路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
 			m_incomingnbs.erase(it++);
 		}
 		else
