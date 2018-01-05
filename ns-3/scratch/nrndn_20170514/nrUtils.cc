@@ -68,7 +68,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		if(producer->IsInterestLane(lane))
 		{
 			++interestSize;
-			//cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<" ";
+			cout<< "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx "<<idx<<endl;
 		}
 		idx++;
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
