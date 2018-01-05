@@ -306,7 +306,7 @@ NrPitImpl::showPit()
  * lane为车辆当前所在路段
  */
 void 
-NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
+std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	showPit();
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
@@ -349,7 +349,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 		if(flag == false)
 		{
 			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"不在PIT中"<<std::endl;
-			getchar();
+			return std::pair<bool,uint32_t>(false,id);
 		}
 	}
 	else
@@ -358,6 +358,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	}
 	showPit();
 	//getchar();
+	return std::pair<bool,uint32_t>(true,id);
 }
 
 

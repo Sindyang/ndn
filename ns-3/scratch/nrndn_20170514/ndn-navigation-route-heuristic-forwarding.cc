@@ -1800,6 +1800,31 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 }
 
+void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
+{
+	NodeContainer c =NodeContainer::GetGlobal();
+	NodeContainer::Iterator it;
+	int idx = 0;
+	for(it=c.Begin();it!=c.End();++it)
+	{
+		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrConsumer"]);
+		Ptr<nrndn::nrConsumer> consumer = DynamicCast<nrndn::nrConsumer>(app);
+		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
+		NS_ASSERT(consumer);
+		if(!consumer->IsActive())
+		{   //非活跃节点直接跳过，避免段错误
+	        idx++;
+			continue;
+		}
+		if(idx == id)
+		{
+			consumer->SendPacket();
+			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
+			break;
+		}
+		idx++;
+	}
+}
 
 // 2017.12.21 发送缓存的兴趣包
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
@@ -1881,11 +1906,13 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//该车辆超车
 		if(it != overtake.end())
 		{
-			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			std::pair<bool,uint32_t> resend = m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
 			//getchar();
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
+			if(resend.first == false)
+				notifyUpperOnInterest(resend.second);
 		}
 		else
 		{

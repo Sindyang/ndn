@@ -126,7 +126,7 @@ public:
 	bool UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
 	
     //added by sy
-    void DeleteFrontNode(const std::string lane,const uint32_t& id);
+    std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
     
     void showPit();
     void laneChange(std::string oldLane, std::string newLane);

@@ -486,7 +486,7 @@ private:
 	void NotifyUpperLayer(Ptr<Data> data);
 	
 	//利用face通知上层应用调用OnInterest
-	//void notifyUpperOnInterest();
+	void notifyUpperOnInterest(uint32_t id);
 	
 	//2018.1.2 
 	bool IsInterestData(const Name& name);
