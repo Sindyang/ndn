@@ -331,7 +331,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			pitEntry->CleanPITNeighbors(id);
 			//若PIT的表项为空，可以删除该表项
 			const std::unordered_set<std::string>& interestroutes = pitEntry->getIncomingnbs();
-			std::cout<<"(pit-impl.cc-DeleteFrontNode) 上一跳路段数目 "<<interestroutes.size()<<std::endl<<std::endl;
+			std::cout<<"(pit-impl.cc-DeleteFrontNode) 上一跳路段数目 "<<interestroutes.size()<<std::endl;
 			if(interestroutes.empty())
 			{
 				const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
@@ -343,6 +343,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 			{
 				pit++;
 			}
+			std::cout<<std::endl;
 		}
 	}
 	else

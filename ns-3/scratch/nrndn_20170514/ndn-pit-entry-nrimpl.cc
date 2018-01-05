@@ -116,6 +116,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 			++it;
 		}
 	}
+	listPitEntry();
 }
 
 //删除所有节点
