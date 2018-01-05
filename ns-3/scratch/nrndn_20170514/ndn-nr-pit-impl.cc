@@ -349,7 +349,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 		if(flag == false)
 		{
 			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"不在PIT中"<<std::endl;
-			NS_ASSERT_MSG(false,"节点不在PIT中");
+			getchar();
 		}
 	}
 	else
