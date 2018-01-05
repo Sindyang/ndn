@@ -305,7 +305,6 @@ NrPitImpl::showPit()
  * added by sy
  * lane为车辆当前所在路段
  */
-void 
 std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	showPit();
