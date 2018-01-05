@@ -11,6 +11,7 @@
 #include "nrndn-Neighbors.h"
 #include "ndn-pit-entry-nrimpl.h"
 #include "nrUtils.h"
+#include "nrConsumer.h"
 
 #include "ns3/core-module.h"
 #include "ns3/ptr.h"
