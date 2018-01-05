@@ -367,7 +367,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		const string& localLane = m_sensor->getLane();
 		cout<<"(forwarding.cc-OnInterest_Car) localLane "<<localLane<<endl;
 		std::size_t found = routes.find(localLane);
-		std::string newroutes = routes.substr(found+localLane.length()+1);
+		std::string newroutes = routes.substr(found);
 		cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
 		getchar();
         
