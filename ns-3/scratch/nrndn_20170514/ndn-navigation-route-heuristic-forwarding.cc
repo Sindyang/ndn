@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,20)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
 		
@@ -388,7 +388,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
 
 		// 3. Then forward the interest packet directly
-		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,20)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
@@ -1591,9 +1591,11 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	if(nodeId == 22)
 	{
 		cout<<"(forwarding.cc-sendInterestPacket) 收到了源节点为22的兴趣包"<<endl;
-		getchar();
 		if(HELLO_MESSAGE == interest->GetScope())
 			cout<<"该消息包为心跳包"<<endl;
+		if(Interest::NACK_LOOP == interest->GetNack())
+			cout<<"该消息包为NACK包"<<endl;
+		getchar();
 	}
 	
 		
