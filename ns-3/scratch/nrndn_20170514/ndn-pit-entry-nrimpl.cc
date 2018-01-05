@@ -100,7 +100,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 		}
 		else
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在表项 "<<it->first<<" 中"<<std::endl;
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在上一条路段 "<<it->first<<" 中"<<std::endl;
 		}	
 	}
 	//删除节点为空的路段
@@ -108,7 +108,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	{
 		if((it->second).empty())
 		{
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 上一跳路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
 			m_incomingnbs.erase(it++);
 		}
 		else

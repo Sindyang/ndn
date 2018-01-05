@@ -229,27 +229,6 @@ const std::vector<std::string>& SumoNodeSensor::getNavigationRoute()
 	return m_navigationRoute;
 }
 
-//
-const std::pair<std::string,std::vector<std::string> >& SumoNodeSensor::getOtherNodesLastandFutureNavigationRoute(uint32_t id,std::string currentLane)
-{
-	std::string lastroute;
-	std::vector<std::string> futureroute;
-	const std::vector<std::string> navigationRoute = m_sumodata->getVl().getVehicles()[id].route.edgesID;
-	std::vector<std::string>::const_iterator it;
-	it = std::find(navigationRoute.begin(),navigationRoute.end(),currentLane);
-	std::vector<std::string>::const_iterator it2 = it;
-	if(it != navigationRoute.begin())
-	{
-		--it;
-		lastroute = *it;
-	}
-	for(;it2 != navigationRoute.end();it2++)
-	{
-		futureroute.push_back(*it2);
-	}
-	return std::pair<std::string,std::vector<std::string>>(lastroute,futureroute);
-}
-
 const std::string SumoNodeSensor::RSUGetJunctionId(uint32_t id)
 {
 	std::vector<std::string> route = m_sumodata->getVl().getVehicles()[id].route.edgesID;
