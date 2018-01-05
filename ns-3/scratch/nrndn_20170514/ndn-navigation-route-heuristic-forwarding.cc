@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(0),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
 		
@@ -884,7 +884,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
+			Simulator::Schedule(MilliSeconds(0),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
 			return;
 		}
 
@@ -1883,7 +1883,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		{
 			m_nrpit->DeleteFrontNode(remoteroute,sourceId);
 			overtake.erase(it);
-			getchar();
+			//getchar();
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
 		}
