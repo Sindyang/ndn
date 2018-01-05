@@ -370,8 +370,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			if(m_node->GetId() == 22)
-				getchar();
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
@@ -1508,6 +1506,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+	if(sourceId == 22)
+		getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
@@ -2317,9 +2317,8 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	{
 		priorityList.push_back(itremain->second);
 	}
-	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
-	
 	getchar();
+	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
 }
 
 
