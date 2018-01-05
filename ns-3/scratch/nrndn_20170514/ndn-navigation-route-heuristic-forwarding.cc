@@ -881,7 +881,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,20)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
 			return;
 		}
 
@@ -890,7 +890,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 
 		// 3. Then forward the data packet directly
 		Simulator::Schedule(
-				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
+				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 20)),
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
 						
 		// 4. Although it is from itself, include into the receive record
@@ -1510,7 +1510,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	getchar();
+	//getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
@@ -1595,7 +1595,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 			cout<<"该消息包为心跳包"<<endl;
 		if(Interest::NACK_LOOP == interest->GetNack())
 			cout<<"该消息包为NACK包"<<endl;
-		getchar();
+		//getchar();
 	}
 	
 		
