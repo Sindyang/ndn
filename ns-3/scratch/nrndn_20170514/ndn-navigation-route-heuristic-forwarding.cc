@@ -369,6 +369,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		std::size_t found = routes.find(localLane);
 		std::string newroutes = routes.substr(found);
 		cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
+		interest->SetRoutes(newroutes);
 		//getchar();
         
         //added by sy
