@@ -116,6 +116,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 			++it;
 		}
 	}
+	std::cout<<std::endl;
 	listPitEntry();
 }
 
