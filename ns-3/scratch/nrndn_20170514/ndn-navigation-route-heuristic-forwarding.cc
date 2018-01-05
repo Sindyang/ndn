@@ -20,7 +20,7 @@
 #include "ns3/object.h"
 #include "ns3/node.h"
 #include "ns3/ndnSIM/utils/ndn-fw-hop-count-tag.h"
-#include "ns3/application"
+#include "ns3/application.h"
 
 #include <algorithm>    // std::find
 
