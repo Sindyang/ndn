@@ -1808,7 +1808,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(ndn::nrndn::nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"]);
-		Ptr<ns3::ndn::nrndn::nrConsumer> consumer = DynamicCast<ns3::ndn::nrndn::nrConsumer>(app);
+		Ptr<nrndn::nrConsumer> consumer = DynamicCast<nrndn::nrConsumer>(app);
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(consumer);
 		if(!consumer->IsActive())
