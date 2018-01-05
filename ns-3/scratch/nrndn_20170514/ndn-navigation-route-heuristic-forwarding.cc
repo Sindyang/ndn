@@ -1592,7 +1592,10 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		cout<<"(forwarding.cc-sendInterestPacket) 收到了源节点为22的兴趣包"<<endl;
 		getchar();
+		if(HELLO_MESSAGE == interest->GetScope())
+			cout<<"该消息包为心跳包"<<endl;
 	}
+	
 		
 
 	//    if the node has multiple out Netdevice face, send the interest package to them all
