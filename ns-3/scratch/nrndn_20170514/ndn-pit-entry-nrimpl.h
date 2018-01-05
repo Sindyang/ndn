@@ -45,7 +45,7 @@ public:
 	void RemoveAllTimeoutEvent();
 
 	//删除PIT中指定id的邻居
-	void CleanPITNeighbors(uint32_t id);
+	void CleanPITNeighbors(bool& flag,uint32_t id);
 	void listPitEntry();
 	//void listPitEntry1(uint32_t node);
 	void CleanAllNodes();

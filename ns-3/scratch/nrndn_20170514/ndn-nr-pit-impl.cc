@@ -325,10 +325,11 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+		bool flag = false;
 		for(;pit != m_pitContainer.end();)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-			pitEntry->CleanPITNeighbors(id);
+			pitEntry->CleanPITNeighbors(flag,id);
 			//若PIT的表项为空，可以删除该表项
 			const std::unordered_set<std::string>& interestroutes = pitEntry->getIncomingnbs();
 			//std::cout<<"(pit-impl.cc-DeleteFrontNode) 上一跳路段数目 "<<interestroutes.size()<<std::endl;
@@ -344,6 +345,11 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 				pit++;
 			}
 			std::cout<<std::endl;
+		}
+		if(flag == false)
+		{
+			std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 节点 "<<id<<"不在PIT中"<<std::endl;
+			NS_ASSERT_MSG(false,"节点不在PIT中");
 		}
 	}
 	else

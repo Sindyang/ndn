@@ -394,6 +394,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		
 		
 	    cout<<"(forwarding.cc-OnInterest_Car)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+		if(nodeId == 22)
+			getchar();
 		//getchar();
 		return;
 	}
@@ -533,6 +535,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//getchar();
 		//cout<<endl;
+		if(nodeId == 22)
+			getchar();
 	}
 }
 
@@ -804,6 +808,9 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//getchar();
 		//cout<<endl;
+		
+		if(nodeId == 22)
+			getchar();
 	}
 }
 
