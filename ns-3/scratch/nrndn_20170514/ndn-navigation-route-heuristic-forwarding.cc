@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,120)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
 		
@@ -388,7 +388,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//cout<<"(forwarding.cc-OnInterest) 记录兴趣包 nonce "<<interest->GetNonce()<<" from NodeId "<<nodeId<<endl;
 
 		// 3. Then forward the interest packet directly
-		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,120)),
+		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
@@ -1459,7 +1459,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	interest->SetPayload(newPayload);
 
 	//4. send the payload
-	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,15)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 }
 
