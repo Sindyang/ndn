@@ -1509,6 +1509,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+	getchar();
 }
 
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
