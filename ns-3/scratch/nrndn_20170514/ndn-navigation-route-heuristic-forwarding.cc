@@ -416,7 +416,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t forwardId = nrheader.getForwardId();
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
-	
+	if(myNodeId == 5 && nodeId == 22)
+		getchar();
 	//std::string routes = interest->GetRoutes();
 	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
@@ -435,11 +436,11 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//获取优先列表
 	//cout << "(forwarding.cc-OnInterest) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-   /* for(auto it = pri.begin();it != pri.end();it++)
+    for(auto it = pri.begin();it != pri.end();it++)
 	{
 		cout<<*it<<" ";
 	}
-	cout<<endl;*/
+	cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -514,7 +515,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-				//getchar();
+				if(myNodeId == 5 && nodeId == 22)
+					getchar();
+				getchar();
 				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 			}
 			else
@@ -532,8 +535,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//getchar();
 		//cout<<endl;
-		if(nodeId == 22)
-			getchar();
 	}
 }
 
@@ -1506,7 +1507,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	if(sourceId == 22)
+	if(m_node->GetId() == 5 && sourceId == 22)
 		getchar();
 }
 
@@ -1805,11 +1806,11 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		else
 		    newPriorityList = VehicleGetPriorityListOfInterest();
 		
-		//for(uint32_t i = 0;i < newPriorityList.size();i++)
-		//{
-			//cout<<newPriorityList[i]<<" ";
-		//}
-		//cout<<endl;
+		for(uint32_t i = 0;i < newPriorityList.size();i++)
+		{
+			cout<<newPriorityList[i]<<" ";
+		}
+		cout<<endl;
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
