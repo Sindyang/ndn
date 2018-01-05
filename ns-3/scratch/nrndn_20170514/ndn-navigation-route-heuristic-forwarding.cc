@@ -360,6 +360,16 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
+		
+		//更新兴趣包的实际转发路线
+		std::string routes = interest->GetRoutes();
+		cout<<"(forwarding.cc-OnInterest_Car) routes "<<routes<<endl;
+		const string& localLane = m_sensor->getLane();
+		cout<<"(forwarding.cc-OnInterest_Car) localLane "<<localLane<<endl;
+		std::size_t found = routes.find(localLane);
+		std::string newroutes = routes.substr(found+localLane.length()+1);
+		cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
+		getchar();
         
         //added by sy
         ndn::nrndn::nrHeader nrheader;
@@ -2056,8 +2066,8 @@ Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::isInterestedData");
-	return m_pit->Find(data->GetName());
 	cout<<"(该数据包不在PIT中)"<<endl;
+	return m_pit->Find(data->GetName());
 }
 
 bool NavigationRouteHeuristic::IsInterestData(const Name& name)
