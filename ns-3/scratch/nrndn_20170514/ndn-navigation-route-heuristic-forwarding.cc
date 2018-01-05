@@ -1583,9 +1583,20 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
+	
+	//added by sy
+    ndn::nrndn::nrHeader nrheader;
+    interest->GetPayload()->PeekHeader(nrheader);
+    uint32_t nodeId = nrheader.getSourceId();
+	if(nodeId == 22)
+	{
+		cout<<"(forwarding.cc-sendInterestPacket)"<<endl;
+		getchar();
+	}
+		
 
 	//    if the node has multiple out Netdevice face, send the interest package to them all
-	//    makde sure this is a NetDeviceFace!!!!!!!!!!!1
+	//    makde sure this is a NetDeviceFace!!!!!!!!!!!
 	vector<Ptr<Face> >::iterator fit;
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
