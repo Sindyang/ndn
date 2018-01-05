@@ -370,7 +370,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,50)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,20)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			return;
 		}
 		
