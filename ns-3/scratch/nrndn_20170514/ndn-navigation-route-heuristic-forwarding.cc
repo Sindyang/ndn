@@ -1206,7 +1206,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	}
 	else
 	{
-		msgdirection = m_sensor->RSUGetDistanceWithVehicle(forwardId,nrheader.getX(),nrheader.getY());
+		msgdirection = m_sensor->RSUGetDistanceWithVehicle(remoteId,nrheader.getX(),nrheader.getY());
 		cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
 		if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
