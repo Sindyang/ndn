@@ -1167,12 +1167,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 		NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
 		
-		cout<<"(forwarding.cc-OnData_RSU) 感兴趣的上一跳路段为 "<<endl;
-		for(uint32_t i = 0;i < interestRoutes.size();i++)
-		{
-			cout<<interestRoutes[i]<<" ";
-		}
-		cout<<endl;
+		cout<<"(forwarding.cc-OnData_RSU) 感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
 		
 		
 		bool idIsInPriorityList;
@@ -1293,12 +1288,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 			NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
 			
-			cout<<"(forwarding.cc-OnData_RSU) 感兴趣的上一跳路段为 "<<endl;
-			for(uint32_t i = 0;i < interestRoutes.size();i++)
-			{
-				cout<<interestRoutes[i]<<" ";
-			}
-			cout<<endl;
+			cout<<"(forwarding.cc-OnData_RSU) 感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+		
 		
 			bool idIsInPriorityList;
 			std::vector<uint32_t>::const_iterator priorityListIt;
