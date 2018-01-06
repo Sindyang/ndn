@@ -1133,6 +1133,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		return;
 	}
 	
+	m_nrpit->showPit();
+	
 	//If it is not a stop message, prepare to forward:
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	pair<bool, double> msgdirection;
@@ -1835,6 +1837,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		{
 			consumer->SendPacket();
 			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
+			getchar();
 			break;
 		}
 		idx++;
@@ -2278,7 +2281,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	
 	//added by sy
 	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<" 的PIT为："<<endl;
-	m_nrpit->showPit();
+	//m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
 	NS_ASSERT_MSG(entry != 0,"该数据包不在PIT中");
