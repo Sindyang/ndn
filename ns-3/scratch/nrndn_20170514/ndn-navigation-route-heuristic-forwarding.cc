@@ -1267,6 +1267,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				//或者改为广播停止转发数据包
 				BroadcastStopMessage(data);
+				cout<<"PIT列表中没有该数据包对应的表项"<<endl;
+				getchar();
 				return;
 			}
 			else
