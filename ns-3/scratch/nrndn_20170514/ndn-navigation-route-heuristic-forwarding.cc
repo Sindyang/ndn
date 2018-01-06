@@ -915,7 +915,6 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		uint32_t myNodeId = m_node->GetId();
 		cout<<"(forwarding.cc-OnData_Car) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
-		getchar();
 		return;
 	}
 	
@@ -947,7 +946,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		cout<<"该数据包已经被发送"<<endl;
-		getchar();
+		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
@@ -958,7 +957,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl;
-		getchar();
+		//getchar();
 		return;
 	}
 	
@@ -979,7 +978,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	}
 	
 	cout<<"(forwarding.cc-OnData_Car) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-	getchar();
+	//getchar();
 	
 	if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
 	{
@@ -992,15 +991,15 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 				ToContentStore(data);
 				// 2. Notify upper layer
 				NotifyUpperLayer(data);
-				cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
-				getchar();
+				cout<<"(forwarding.cc-OnData_Car) 该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
+				//getchar();
 				return;
 			}
 			else
 			{
-				cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
+				cout<<"(forwarding.cc-OnData_Car) 该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
 				DropDataPacket(data);
-				getchar();
+				//getchar();
 				return;
 			}
 		}
@@ -1008,7 +1007,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) 该数据包从后方得到且为重复数据包"<<endl<<endl;
 			ExpireDataPacketTimer(nodeId,signature);
-			getchar();
+			//getchar();
 			return;
 		}
 	}
@@ -1020,7 +1019,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			// 我觉得在本算法中，不会进入这个函数
 			cout<<"(forwarding.cc-OnData_Car) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
 			NS_ASSERT_MSG(false,"该数据包从前方或其他路段得到，重复，丢弃");
-			getchar();
+			//getchar();
 			/*if(priorityListIt==pri.end())
 			{
 				ExpireDataPacketTimer(nodeId,signature);
@@ -1047,7 +1046,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			NotifyUpperLayer(data);
 			cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
 		}
-		getchar();
+		//getchar();
 		
 		bool idIsInPriorityList;
 		std::vector<uint32_t>::const_iterator priorityListIt;
@@ -1075,14 +1074,14 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
 					newPriorityList);
 			}
-			getchar();
+			//getchar();
 		}
 		else
 		{
 			cout<<"(forwarding.cc-OnData_Car) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropDataPacket(data);
-			getchar();
+			//getchar();
 		}
 	}
 }
@@ -1117,7 +1116,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		cout<<"该数据包已经被发送"<<endl;
-		getchar();
+		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		//2018.1.2 RSU有可能重复转发数据包
 		//return;
@@ -1129,7 +1128,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 			ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
-		getchar();
+		//getchar();
 		return;
 	}
 	
@@ -1223,14 +1222,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					// 2. Notify upper layer
 					NotifyUpperLayer(data);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
-					getchar();
+					//getchar();
 					return;
 				}
 				else
 				{
 					cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
 					DropDataPacket(data);
-					getchar();
+					//getchar();
 					return;
 				}
 			}
@@ -1248,20 +1247,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		{
 			if(isDuplicatedData(nodeId,signature))
 			{
-				// 我觉得在本算法中，不会进入这个函数
 				cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
-				getchar();
-				/*if(priorityListIt==pri.end())
-				{
-					ExpireDataPacketTimer(nodeId,signature);
-					return;
-				}
-				//在优先级列表中
-				else
-				{
-					DropDataPacket(data);
-					return;
-				}*/
+				//getchar();
+				return;
 			}
 			
 			Ptr<pit::Entry> Will = WillInterestedData(data);
@@ -1270,7 +1258,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//或者改为广播停止转发数据包
 				BroadcastStopMessage(data);
 				cout<<"PIT列表中没有该数据包对应的表项"<<endl;
-				getchar();
+				//getchar();
 				return;
 			}
 			else
@@ -2260,7 +2248,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 		cout<<" "<<it->second;
 	}	
 	cout<<endl;
-	getchar();
+	//getchar();
 	return PriorityList;
 }
 
