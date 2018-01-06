@@ -957,8 +957,8 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
 		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 		ExpireDataPacketTimer(nodeId,signature);
-		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl;
-		getchar();
+		cout<<"该数据包停止转发 "<<"signature "<<data->GetSignature()<<endl;
+		//getchar();
 		return;
 	}
 	
@@ -1128,8 +1128,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	{
 		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 		ExpireDataPacketTimer(nodeId,signature);
-		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
-		getchar();
+		cout<<"该数据包停止转发 "<<"signature "<<data->GetSignature()<<endl<<endl;
+		//getchar();
 		return;
 	}
 	
