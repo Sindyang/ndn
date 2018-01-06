@@ -897,7 +897,8 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data);
+			std::unordered_set<std::string> lastroutes;
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data,lastroutes);
 			return;
 		}
 
@@ -1066,7 +1067,8 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				//getchar();
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data);
+				std::unordered_set<std::string> lastroutes;
+				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,lastroutes);
 			}
 			else
 			{
@@ -1185,7 +1187,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				//getchar();
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data);
+				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,remainroutes);
 				getchar();
 			}
 			else
@@ -1207,7 +1209,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	}
 	else
 	{
-		msgdirection = m_sensor->RSUGetDistanceWithVehicle(remoteId,nrheader.getX(),nrheader.getY());
+		msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nrheader.getX(),nrheader.getY());
 		cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
 		if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
@@ -1216,14 +1218,21 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			if(!isDuplicatedData(nodeId,signature))
 			{
 				//这部分不一定需要 
-				if(WillInterestedData(data))
+				Ptr<pit::Entry> Will = WillInterestedData(data);
+				if(Will)
 				{
 					// 1.Buffer the data in ContentStore
 					ToContentStore(data);
 					// 2. Notify upper layer
 					NotifyUpperLayer(data);
+					
+					Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
+					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+					// 2018.1.6 added by sy
+					CachingDataPacket(data->GetSignature(),data,);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
-					//getchar();
+					cout<<"缓存该数据包"<<endl;
+					getchar();
 					return;
 				}
 				else
@@ -1295,7 +1304,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				{
 					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					//getchar();
-					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data);
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,remainroutes);
 					getchar();
 				}
 				else
@@ -1426,10 +1435,10 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
  * 2017.12.29
  * added by sy
  */
-void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data)
+void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data,std::unordered_set<std::string> lastroutes)
 {
 	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
-	bool result = m_cs->AddData(signature,data);
+	bool result = m_cs->AddData(signature,data,lastroutes);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;

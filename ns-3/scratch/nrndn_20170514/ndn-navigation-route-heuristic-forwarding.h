@@ -436,7 +436,7 @@ private:
 	 *          Broadcast stop message
 	 *          2018.1.3 added by sy
 	 */
-	void CachingDataPacket(uint32_t nonce,Ptr<Data> data);
+	void CachingDataPacket(uint32_t nonce,Ptr<Data> data,std::unordered_set<std::string> lastroutes);
 
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire

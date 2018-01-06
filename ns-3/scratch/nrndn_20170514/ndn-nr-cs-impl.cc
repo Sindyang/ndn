@@ -139,7 +139,7 @@ bool NrCsImpl::Add(Ptr<const Data> data)
 
 
 /*数据包部分*/
-bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
+bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes)
 {
 	std::cout<<"(cs-impl.cc-AddData) 添加数据包 "<<data->GetName().get(0).toUri()<<std::endl;
 	Ptr<cs::Entry> csEntry = FindData(signature);
@@ -152,6 +152,12 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;
     csEntry = ns3::Create<cs::Entry>(this,data) ;
     m_data[signature] = csEntry;
+	
+	//RSU需要加入未被满足的上一跳路段
+	if(lastroutes.size() > 0)
+	{
+		m_lastroutes[signature] = lastroutes;
+	}
 	
 	size = GetDataSize();
 	std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
