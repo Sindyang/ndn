@@ -2416,7 +2416,8 @@ void NavigationRouteHeuristic::NotifyUpperLayer(Ptr<Data> data)
 	
 	//cout<<"进入(forwarding.cc-NotifyUpperLayer)"<<endl;
 	// 1. record the Data Packet received
-	m_dataSignatureSeen.Put(data->GetSignature(),true);
+	//2018.1.6 m_dataSignatureSeen用于记录转发过的数据包，而转发到上层的数据包并不一定会转发给其他节点
+	//m_dataSignatureSeen.Put(data->GetSignature(),true);
 
 	// 2. notify upper layer
 	vector<Ptr<Face> >::iterator fit;
