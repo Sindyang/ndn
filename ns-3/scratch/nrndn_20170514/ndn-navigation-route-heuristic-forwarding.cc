@@ -1437,7 +1437,6 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	else
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
-		NS_ASSERT_MSG(result,"该数据包已经位于缓存中");
 	}
 	getchar();
 }
