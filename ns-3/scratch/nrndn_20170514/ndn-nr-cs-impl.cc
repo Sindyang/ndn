@@ -157,7 +157,8 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_se
 	if(lastroutes.size() > 0)
 	{
 		m_lastroutes[signature] = lastroutes;
-	}
+		std::cout<<"(cs-impl.cc-AddData) 对该数据包感兴趣的路段大小为 "<<lastroutes.size()<<std::endl;
+	} 
 	
 	size = GetDataSize();
 	std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
