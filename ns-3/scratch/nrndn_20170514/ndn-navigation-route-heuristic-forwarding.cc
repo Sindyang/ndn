@@ -954,8 +954,9 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
-		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
-			ExpireDataPacketTimer(nodeId,signature);
+		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
+		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
+		ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl;
 		//getchar();
 		return;
@@ -1125,8 +1126,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
-		if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
-			ExpireDataPacketTimer(nodeId,signature);
+		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
+		ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包的转发优先级列表为空 "<<"signature "<<data->GetSignature()<<endl<<endl;
 		//getchar();
 		return;
