@@ -1229,7 +1229,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
-					CachingDataPacket(data->GetSignature(),data,);
+					CachingDataPacket(data->GetSignature(),data,interestRoutes);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
 					cout<<"缓存该数据包"<<endl;
 					getchar();

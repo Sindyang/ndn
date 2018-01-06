@@ -102,7 +102,7 @@ public:
 	
     // 添加数据包进入缓存中
     bool
-    AddData (uint32_t signature,Ptr<const Data> data，std::unordered_set<std::string> lastroutes);
+    AddData (uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes);
 	
 	// 得到相同名字的数据包
 	std::map<uint32_t,Ptr<const Data> > 
