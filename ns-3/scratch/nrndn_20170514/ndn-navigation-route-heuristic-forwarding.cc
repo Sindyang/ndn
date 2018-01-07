@@ -1089,7 +1089,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
-			DropDataPacket(data);
+			//DropDataPacket(data);
 			//getchar();
 		}
 	}

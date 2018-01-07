@@ -307,7 +307,7 @@ NrPitImpl::showPit()
  */
 std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
-	showPit();
+	//showPit();
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
 	std::vector<Ptr<Entry> >::iterator pit;
 	//找到lane在PIT表项中的位置
