@@ -644,7 +644,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	
 	// 2017.12.21 获取当前前方邻居数目
-	uint32_t nums_car_current = 0;
+	uint32_t nums_car_front = 0;
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		if(nb->first >= numsofvehicles)
@@ -653,7 +653,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
-				nums_car_current += 1;
+				nums_car_front += 1;
 			}
 			//getchar();
 		}
@@ -663,15 +663,15 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
-				nums_car_current += 1;
+				nums_car_front += 1;
 			}
 		}
 	}
-	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_current "<<nums_car_current<<endl;
+	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_front "<<nums_car_front<<endl;
 	
 	
 	//前方道路有车辆
-	if(nums_car_current > 0)
+	if(nums_car_front > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHello) 前方道路有车辆"<<endl;
 		//有兴趣包在缓存中
