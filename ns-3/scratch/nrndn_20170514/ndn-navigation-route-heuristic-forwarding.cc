@@ -1087,6 +1087,9 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			//getchar();
 		}
 	}
+	//查看上一跳节点为RSU的情况
+	if(remoteId >= 101)
+		getchar();
 }
 
 void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
@@ -1146,6 +1149,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	
 	if(remoteId >= numsofvehicles)
 	{
+		//忽略自身节点
+		if(remoteId == m_node->GetId())
+			return;
+		
 		//msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		if(!Will)
@@ -1200,6 +1207,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				Simulator::Schedule(sendInterval,
 				&NavigationRouteHeuristic::ForwardDataPacket, this, data,
 				newPriorityList);
+				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备发送数据包 "<<signature<<endl;
 				getchar();
 			}
 		}
@@ -2423,6 +2431,13 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	{
 		priorityList.push_back(itremain->second);
 	}
+	
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) 数据包转发优先级列表为 "<<endl;
+	for(uint32_t i = 0;i < priorityList.size();i++)
+	{
+		cout<<priorityList[i]<<" ";
+	}
+	cout<<endl;
 	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
 }
 
