@@ -2282,6 +2282,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	//无车辆的感兴趣路段
 	std::unordered_set<std::string> remainroutes(interestRoutes);
 	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > sortvehicles;
+	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > ::iterator itvehicles;
 	
 	//added by sy
 	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<endl;
@@ -2320,9 +2321,21 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 					cout<<"(forwarding.cc-RSUGetPriorityListOfData) 上一跳路段为 "<<*it<<" RSU交点ID为 "<<junction<<endl;
 					std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
 					cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<endl;
-					std::multimap<double,uint32_t,std::greater<double> > distance;
-					distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
-					sortvehicles[*it] = distance; 
+					
+					itvehicles = sortvehicles.find(sortvehicles.begin(),sortvehicles.end(),*it);
+					//sortvehicles中已经有该路段
+					if(itvehicles != sortvehicles.end())
+					{
+						std::multimap<double,uint32_t,std::greater<double> > distance = sortvehicles->second;
+						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
+						sortvehicles[*it] = distance; 
+					}
+					else
+					{
+						std::multimap<double,uint32_t,std::greater<double> > distance;
+						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
+						sortvehicles[*it] = distance; 
+					}
 				}
 			}
 		}
@@ -2332,16 +2345,28 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 			//获得邻居车辆当前所在路段
 			std::string lane = nb->second.m_lane;
 			std::unordered_set<std::string>::const_iterator it = interestRoutes.find(lane);
-			//车辆位于兴趣包下一行驶路段
+			//车辆位于数据包下一行驶路段
 			if(it != interestRoutes.end())
 			{
 				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
 				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<endl;
 				if(result.first && result.second < 0)
 				{
-					std::multimap<double,uint32_t,std::greater<double> > distance;
-					distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
-					sortvehicles[*it] = distance; 
+					itvehicles = sortvehicles.find(sortvehicles.begin(),sortvehicles.end(),*it);
+					//sortvehicles中已经有该路段
+					if(itvehicles != sortvehicles.end())
+					{
+						std::multimap<double,uint32_t,std::greater<double> > distance = sortvehicles->second;
+						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
+						sortvehicles[*it] = distance; 
+					}
+					//sortvehicles中无该路段
+					else
+					{
+						std::multimap<double,uint32_t,std::greater<double> > distance;
+						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
+						sortvehicles[*it] = distance; 
+					}
 				}
 			}
 			else
@@ -2353,12 +2378,11 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	
 	
 	cout<<"(forwarding.cc-RSUGetPriorityListOfData) 输出各路段以及对应的车辆和距离"<<endl;
-	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > ::iterator itvehicles = sortvehicles.begin();
 	std::unordered_set<std::string>::iterator itroutes;
 	
 	//加入每个路段距离最远的节点
 	cout<<"(forwrading.cc-RSUGetPriorityListOfData) 每个路段距离最远的节点为"<<endl;
-	for(;itvehicles != sortvehicles.end();itvehicles++)
+	for(itvehicles = sortvehicles.begin();itvehicles != sortvehicles.end();itvehicles++)
 	{
 		//从remainroutes中删除存在车辆的路段
 		itroutes = remainroutes.find(itvehicles->first);
