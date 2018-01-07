@@ -1031,9 +1031,9 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
-			// 我觉得在本算法中，不会进入这个函数
 			cout<<"(forwarding.cc-OnData_Car) 该数据包从前方或其他路段得到，重复，丢弃"<<endl;
-			NS_ASSERT_MSG(false,"该数据包从前方或其他路段得到，重复，丢弃");
+			ExpireDataPacketTimer(nodeId,signature);
+			return;
 			//getchar();
 			/*if(priorityListIt==pri.end())
 			{
@@ -1863,7 +1863,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		{
 			consumer->SendPacket();
 			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
-			getchar();
+			//getchar();
 			break;
 		}
 		idx++;
