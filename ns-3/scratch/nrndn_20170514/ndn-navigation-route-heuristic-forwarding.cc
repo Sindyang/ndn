@@ -384,6 +384,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			if(m_node->GetId() == 97)
+				getchar();
 			return;
 		}
 		
@@ -468,7 +470,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 	//If it is not a stop message, prepare to forward
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second >= 0)// or from front
 	{
@@ -531,6 +533,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 				//getchar();
 				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+				
+				if(nodeId == 97)
+					getchar();
 			}
 			else
 			{
@@ -1900,6 +1905,8 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+		if(sourceId == 97)
+			getchar();
 		//getchar();
 	}
 }
