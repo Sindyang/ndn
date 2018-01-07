@@ -384,8 +384,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
-			if(m_node->GetId() == 97)
-				getchar();
+			//if(m_node->GetId() == 97)
+				//getchar();
 			return;
 		}
 		
@@ -432,8 +432,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
-	if(nodeId == 97)
-		getchar();
+	//if(nodeId == 97)
+		//getchar();
 	//std::string routes = interest->GetRoutes();
 	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
@@ -536,8 +536,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				//getchar();
 				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				
-				if(nodeId == 97)
-					getchar();
+				//if(nodeId == 97)
+					//getchar();
 			}
 			else
 			{
@@ -1556,8 +1556,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	if(sourceId == 97)
-		getchar();
+	//if(sourceId == 97)
+		//getchar();
 	//getchar();
 }
 
@@ -1907,8 +1907,8 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-		if(sourceId == 97)
-			getchar();
+		//if(sourceId == 97)
+			//getchar();
 		//getchar();
 	}
 }
