@@ -1007,6 +1007,12 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		}
 		else // duplicated data
 		{
+			if(!msgdirection.first)
+			{
+				cout<<"(forwarding.cc-OnData_Car) 该数据包从其他路段得到，且为重复数据包，不作处理"<<endl;
+				getchar();
+				return;
+			}
 			cout<<"(forwarding.cc-OnData_Car) 该数据包从后方得到且为重复数据包"<<endl<<endl;
 			ExpireDataPacketTimer(nodeId,signature);
 			//getchar();
