@@ -1904,7 +1904,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 			cout<<newPriorityList[i]<<" ";
 		}
 		cout<<endl;
-		double random = m_uniformRandomVariable->GetInteger(0,100);
+		double random = m_uniformRandomVariable->GetInteger(0,50);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//if(sourceId == 97)
@@ -2008,7 +2008,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes);
 			if(interestcollection.empty())
 				return;
