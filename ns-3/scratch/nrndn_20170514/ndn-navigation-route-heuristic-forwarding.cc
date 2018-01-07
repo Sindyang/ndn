@@ -2408,6 +2408,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	
 	//加入每个路段距离最远的节点
 	cout<<"(forwrading.cc-RSUGetPriorityListOfData) 每个路段距离最远的节点为"<<endl;
+	std::multimap<double,uint32_t,std::greater<double> > farthest;
 	for(itvehicles = sortvehicles.begin();itvehicles != sortvehicles.end();itvehicles++)
 	{
 		//从remainroutes中删除存在车辆的路段
@@ -2422,7 +2423,14 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		//位于该条路段距离最远的车辆
 		std::multimap<double,uint32_t,std::greater<double> >::iterator itdis = distance.begin();
 		cout<<"上一跳路段为 "<<itvehicles->first<<" 最远车辆为 ("<<itdis->second<<" "<<itdis->first<<")"<<endl;
-		priorityList.push_back(itdis->second);
+		farthest.insert(std::pair<double,uint32_t>(itdis->first,itdis->second));
+	}
+	
+	//将每个路段最远节点加入转发优先级列表中
+	std::multimap<double,uint32_t,std::greater<double> >::iterator itfarthest = farthest.begin();
+	for(;itfarthest != farthest.end();farthest++)
+	{
+		priorityList.push_back(itfarthest->second);
 	}
 	
 	cout<<endl<<"(forwarding.cc-RSUGetPriorityListOfData) 加入每个路段剩余节点"<<endl;
