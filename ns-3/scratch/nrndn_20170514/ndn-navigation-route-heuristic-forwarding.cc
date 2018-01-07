@@ -2428,7 +2428,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	
 	//将每个路段最远节点加入转发优先级列表中
 	std::multimap<double,uint32_t,std::greater<double> >::iterator itfarthest = farthest.begin();
-	for(;itfarthest != farthest.end();farthest++)
+	for(;itfarthest != farthest.end();itfarthest++)
 	{
 		priorityList.push_back(itfarthest->second);
 	}
