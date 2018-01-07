@@ -432,6 +432,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
 	
+	if(nodeId == 97)
+		getchar();
 	//std::string routes = interest->GetRoutes();
 	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
 	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
