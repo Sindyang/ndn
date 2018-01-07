@@ -1556,8 +1556,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
-	//if(sourceId == 24)
-		//getchar();
+	if(sourceId == 97)
+		getchar();
 	//getchar();
 }
 
