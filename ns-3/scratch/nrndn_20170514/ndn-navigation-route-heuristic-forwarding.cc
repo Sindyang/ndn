@@ -1455,7 +1455,6 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	else
 	{
 		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
-		NS_ASSERT_MSG(result,"该兴趣包已经位于缓存中");
 	}
 	//getchar();
 }
