@@ -2322,11 +2322,11 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 					std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
 					cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<endl;
 					
-					itvehicles = sortvehicles.find(sortvehicles.begin(),sortvehicles.end(),*it);
+					itvehicles = sortvehicles.find(*it);
 					//sortvehicles中已经有该路段
 					if(itvehicles != sortvehicles.end())
 					{
-						std::multimap<double,uint32_t,std::greater<double> > distance = sortvehicles->second;
+						std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
 						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 						sortvehicles[*it] = distance; 
 					}
@@ -2352,11 +2352,11 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<endl;
 				if(result.first && result.second < 0)
 				{
-					itvehicles = sortvehicles.find(sortvehicles.begin(),sortvehicles.end(),*it);
+					itvehicles = sortvehicles.find(*it);
 					//sortvehicles中已经有该路段
 					if(itvehicles != sortvehicles.end())
 					{
-						std::multimap<double,uint32_t,std::greater<double> > distance = sortvehicles->second;
+						std::multimap<double,uint32_t,std::greater<double> > distance = itvehicles->second;
 						distance.insert(std::pair<double,uint32_t>(-result.second,nb->first));
 						sortvehicles[*it] = distance; 
 					}
