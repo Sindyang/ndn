@@ -1432,7 +1432,7 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	//cout<<"(forwarding.cc-ExpireInterestPacketTimer) nodeId"<<nodeId<<"sequence "<<seq<<endl;
 	NS_LOG_FUNCTION (this<< "ExpireInterestPacketTimer id"<<nodeId<<"sequence"<<seq);
 	//1. Find the waiting timer
-	if(!isDuplicatedInterest)
+	if(!isDuplicatedInterest(nodeId,seq))
 	{
 		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
 	}
@@ -1442,7 +1442,7 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	//2. cancel the timer if it is still running
 	eventid.Cancel();
 	
-	if(!isDuplicatedInterest)
+	if(!isDuplicatedInterest(nodeId,seq))
 	{
 		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
 	}
