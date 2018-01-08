@@ -48,7 +48,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (2),
+	            UintegerValue (3),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 
@@ -83,7 +83,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
-	AllowedHelloLoss (2),//changed by sy 车辆会在2s<间隔<3s的时间内接收到同一车辆发送的心跳包
+	AllowedHelloLoss (3),
 	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
@@ -1273,7 +1273,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//RSU应该不会进入该函数
 				cout<<"(forwarding.cc-OnData_RSU) 该数据包从后方得到且为重复数据包"<<endl<<endl;
 				ExpireDataPacketTimer(nodeId,signature);
-				getchar();
+				//getchar();
 				return;
 			}
 		}
