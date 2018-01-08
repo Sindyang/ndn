@@ -1432,10 +1432,25 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	//cout<<"(forwarding.cc-ExpireInterestPacketTimer) nodeId"<<nodeId<<"sequence "<<seq<<endl;
 	NS_LOG_FUNCTION (this<< "ExpireInterestPacketTimer id"<<nodeId<<"sequence"<<seq);
 	//1. Find the waiting timer
+	if(!isDuplicatedInterest)
+	{
+		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
+	}
+	
 	EventId& eventid = m_sendingInterestEvent[nodeId][seq];
 	
 	//2. cancel the timer if it is still running
 	eventid.Cancel();
+	
+	if(!isDuplicatedInterest)
+	{
+		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
+	}
+	else
+	{
+		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 重复收到该兴趣包"<<endl;
+	}
+	getchar();
 }
 
 void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest)
@@ -2010,9 +2025,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
 	// 2017.12.27 added by sy
-	// routes代表有车辆的路段集合
-	std::unordered_set<std::string> routes;
-	std::unordered_set<std::string>::iterator itroutes;
+	// routes_front代表有车辆的前方路段集合
+	std::unordered_set<std::string> routes_front;
+	std::unordered_set<std::string>::iterator itroutes_front;
+	
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		if(nb->first >= numsofvehicles)
@@ -2022,7 +2038,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
-				routes.insert(itroutes,nb->second.m_lane);
+				routes_front.insert(itroutes_front,nb->second.m_lane);
 			}
 		//getchar();
 		}
@@ -2033,19 +2049,19 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
-				routes.insert(itroutes,nb->second.m_lane);
+				routes_front.insert(itroutes_front,nb->second.m_lane);
 			}
 		}
 	}
 	cout<<endl;
 	//getchar();
 	
-	if(routes.size() > 0 && m_cs->GetInterestSize() > 0)
+	if(routes_front.size() > 0 && m_cs->GetInterestSize() > 0)
 	{
-		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
+		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
-			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes<<"有车辆"<<endl;
-			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes);
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
 			if(interestcollection.empty())
 				return;
 			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
@@ -2055,7 +2071,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else
 	{
-		//cout<<"(forwarding.cc-ProcessHelloRSU) routes.size "<<routes.size()<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_front.size "<<routes_front.size()<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	m_preNB = m_nb;
