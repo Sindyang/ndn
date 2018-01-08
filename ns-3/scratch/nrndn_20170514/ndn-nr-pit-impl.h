@@ -26,6 +26,8 @@
 #include <queue>
 #include <algorithm>
 #include <string>
+#include <multimap>
+#include <unordered_set>
 
 
 namespace ns3
@@ -127,6 +129,9 @@ public:
 	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
+	
+	// 2017.1.8 
+	std::multimap<std::string,std::string> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
     
     void showPit();
     void laneChange(std::string oldLane, std::string newLane);

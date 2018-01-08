@@ -49,6 +49,11 @@ public:
 	void listPitEntry();
 	//void listPitEntry1(uint32_t node);
 	void CleanAllNodes();
+	
+	// 2018.1.8
+	std::string GetDataName();
+	
+	bool IsRouteInEntry(std::string route);
 	/**
 	 * @brief Add `id` to the list of incoming neighbor list(m_incomingnbs)
 	 *

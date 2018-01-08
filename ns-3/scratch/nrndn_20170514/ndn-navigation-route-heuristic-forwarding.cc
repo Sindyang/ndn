@@ -2020,6 +2020,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	std::unordered_set<std::string> routes_front;
 	std::unordered_set<std::string>::iterator itroutes_front;
 	
+	//2018.1.8 added by sy
+	// routes_behind代表有车辆的后方路段集合
+	std::unordered_set<std::string> routes_behind;
+	std::unordered_set<std::string>::iterator itroutes_behind;
+	
 	for(;nb != m_nb.getNb().end();++nb)
 	{
 		if(nb->first >= numsofvehicles)
@@ -2031,6 +2036,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
 				routes_front.insert(itroutes_front,nb->second.m_lane);
 			}
+			else if(result.first && result.second <0)
+			{
+				routes_behind.insert(itroutes_behind,nb->second.m_lane);
+			}
 		//getchar();
 		}
 		else
@@ -2041,6 +2050,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
 				routes_front.insert(itroutes_front,nb->second.m_lane);
+			}
+			else if(result.first && result.second <0)
+			{
+				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		}
 	}
@@ -2064,6 +2077,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_front.size "<<routes_front.size()<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
+	}
+	
+	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
+	{
+		std::multimap<std::string,std::string> = m_nrpit->GetDataNameandLastRoute(routes_behind);
 	}
 	m_preNB = m_nb;
 	

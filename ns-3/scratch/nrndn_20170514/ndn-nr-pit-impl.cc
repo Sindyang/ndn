@@ -361,6 +361,33 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 	return std::pair<bool,uint32_t>(true,id);
 }
 
+std::multimap<std::string,std::unordered_set<std::string> >
+NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
+{
+	showPit();
+	
+	std::vector<Ptr<Entry> >::iterator pit;
+	std::multimap<std::string,std::unordered_set<std::string> > dataandroutes;
+	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
+	{
+		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+		std::string dataname = pitEntry->GetDataName();
+		std::unordered_set<std::string>::iterator itroutes;
+		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
+		{
+			std::unordered_set<std::string> collection;
+			if(pitEntry->IsRouteInEntry(*itroutes))
+			{
+				collection.insert(*itroutes);
+				std::cout<<"(ndn-nr-pit-impl.cc-GetDataNameandLastRoute) 数据名为 "<<dataname<<" 上一跳路段为 "<<*itroutes<<std::endl;
+			}
+		}
+		if(collection.size() >0)
+			dataandroutes[dataname] = collection;
+	}
+	return dataandroutes;
+}
+
 
 void
 NrPitImpl::DoDispose ()
