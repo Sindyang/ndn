@@ -1842,7 +1842,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(interestcollection.empty())
 			{
-				cout<<"有兴趣包在缓存中但未全部取出"<<endl;
+				cout<<"(forwarding.cc-ProcessHello)有兴趣包在缓存中但未全部取出"<<endl;
 				getchar();
 				return;
 			}
@@ -1865,6 +1865,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataname_route);
 			if(datacollection.empty())
 			{
+				cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中但未全部取出"<<endl;
 				getchar();
 				return;
 			}
