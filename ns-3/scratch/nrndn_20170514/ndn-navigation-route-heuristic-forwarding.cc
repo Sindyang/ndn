@@ -1799,7 +1799,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				nums_car_front += 1;
@@ -1813,7 +1813,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				nums_car_front += 1;
@@ -1824,7 +1824,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 		}
 	}
-	//cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_front "<<nums_car_front<<endl;
+	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_behind "<<nums_car_behind<<endl;
 	
 	
 	//前方道路有车辆
@@ -1858,6 +1858,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	// 2018.1.7
 	if(nums_car_behind > 0)
 	{
+		cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 		if(m_cs->GetDataSize() > 0)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
