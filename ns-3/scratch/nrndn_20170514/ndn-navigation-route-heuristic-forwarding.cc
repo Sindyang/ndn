@@ -1796,9 +1796,14 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t nums_car_behind = 0;
 	for(;nb != m_nb.getNb().end();++nb)
 	{
+		//跳过自身节点
+		if(nb->first == m_node->GetId())
+			continue;
+		
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
+			
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
