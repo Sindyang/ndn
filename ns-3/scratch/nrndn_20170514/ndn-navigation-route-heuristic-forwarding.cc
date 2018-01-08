@@ -1435,22 +1435,13 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	if(!isDuplicatedInterest(nodeId,seq))
 	{
 		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
+		return;
 	}
 	
 	EventId& eventid = m_sendingInterestEvent[nodeId][seq];
 	
 	//2. cancel the timer if it is still running
 	eventid.Cancel();
-	
-	if(!isDuplicatedInterest(nodeId,seq))
-	{
-		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
-	}
-	else
-	{
-		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 重复收到该兴趣包"<<endl;
-	}
-	getchar();
 }
 
 void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest)
@@ -2145,6 +2136,11 @@ void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId,uint32_t si
 	NS_LOG_FUNCTION (this<< "ExpireDataPacketTimer id\t"<<nodeId<<"\tsignature:"<<signature);
 	//cout<<"(forwarding.cc-ExpireDataPacketTimer) NodeId: "<<nodeId<<" signature: "<<signature<<endl;
 	//1. Find the waiting timer
+	if(!isDuplicatedData(nodeId,signature))
+	{
+		cout<<"(forwarding.cc-ExpireDataPacketTimer) 第一次收到该数据包"<<endl;
+	}
+	
 	EventId& eventid = m_sendingDataEvent[nodeId][signature];
 
 	//2. cancel the timer if it is still running
