@@ -2139,6 +2139,7 @@ void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId,uint32_t si
 	if(!isDuplicatedData(nodeId,signature))
 	{
 		cout<<"(forwarding.cc-ExpireDataPacketTimer) 第一次收到该数据包"<<endl;
+		return;
 	}
 	
 	EventId& eventid = m_sendingDataEvent[nodeId][signature];
