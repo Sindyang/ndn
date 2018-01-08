@@ -166,7 +166,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_se
 }
     
 std::map<uint32_t,Ptr<const Data> >
-NrCsImpl::GetData(std::pair<std::string,std::string>(dataname,lastroute))
+NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
 {
 	uint32_t size = GetSize();
 	std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
@@ -174,7 +174,7 @@ NrCsImpl::GetData(std::pair<std::string,std::string>(dataname,lastroute))
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 		
-	if(lastroute.size() == 0)
+	if(dataname_route.first.size() == 0)
 	{
 		std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
 		for(it = m_data.begin();it != m_data.end();it++)
