@@ -2044,7 +2044,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				return;
 			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 			SendInterestInCache(interestcollection);
-			getchar();
+			//getchar();
 		}
 	}
 	else
