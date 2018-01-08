@@ -378,8 +378,8 @@ std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithVehicle(const doub
 	//另一节点所在路段和位置
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;
-	cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithVehicle) remoteLane "<<remoteLane<<endl;
-	cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithVehicle) remotePos "<<remotePos<<endl;
+	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithVehicle) remoteLane "<<remoteLane<<endl;
+	//cout<<"(SumoNodeSensor.cc-VehicleGetDistanceWithVehicle) remotePos "<<remotePos<<endl;
 	
 	//位于同一路段
 	if(remoteLane == localLane)
