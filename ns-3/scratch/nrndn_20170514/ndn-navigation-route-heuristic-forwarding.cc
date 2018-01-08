@@ -48,7 +48,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (3),
+	            UintegerValue (2),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 
@@ -83,7 +83,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 
 NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
-	AllowedHelloLoss (3),
+	AllowedHelloLoss (2),
 	m_htimer (Timer::CANCEL_ON_DESTROY),
 	m_timeSlot(Seconds (0.05)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
