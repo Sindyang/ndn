@@ -1868,9 +1868,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				getchar();
 				return;
 			}
-			
+			getchar();
 		}
-		getchar();
 	}
 }
 
