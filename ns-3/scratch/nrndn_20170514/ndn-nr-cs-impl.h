@@ -19,6 +19,7 @@
 #include "NodeSensor.h"
 
 #include <map>
+#include <pair>
 #include <unordered_set>
 
 
@@ -106,7 +107,7 @@ public:
 	
 	// 得到相同名字的数据包
 	std::map<uint32_t,Ptr<const Data> > 
-	GetData(const Name &prefix);
+	GetData(std::pair<std::string,std::string>(dataname,lastroute));
     
 	// 获取数据包缓存大小
 	uint32_t

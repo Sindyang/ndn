@@ -165,30 +165,45 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_se
 	return true;
 }
     
-
 std::map<uint32_t,Ptr<const Data> >
-NrCsImpl::GetData(const Name &prefix)
+NrCsImpl::GetData(std::pair<std::string,std::string>(dataname,lastroute))
 {
 	uint32_t size = GetSize();
 	std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
+	
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
-	for(it = m_data.begin();it != m_data.end();)
-	{
 		
-		if(it->second->GetName() == prefix)
+	if(lastroute.size() == 0)
+	{
+		std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
+		for(it = m_data.begin();it != m_data.end();it++)
 		{
 			Ptr<const Data> data = it->second->GetData();
 			DataCollection[data->GetSignature()] = data;
-			m_data.erase(it++);
-	  	}
-		else
+		}
+		m_data.clear();
+	}
+	else
+	{
+		for(it = m_data.begin();it != m_data.end();)
 		{
-			++it;
+			if(it->second->GetName().get(0).toUri() == dataname)
+			{
+				cout<<"(cs-impl.cc-GetData) 数据包的名字为 "<<dataname<<endl;
+				Ptr<const Data> data = it->second->GetData();
+				DataCollection[data->GetSignature()] = data;
+				m_data.erase(it++);
+			}
+			else
+			{
+				++it;
+			}
 		}
 	}
 	size = GetDataSize();
 	std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
+	
 	return DataCollection;
 }
 

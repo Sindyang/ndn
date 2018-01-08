@@ -1841,7 +1841,10 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(localLane);
 			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(interestcollection.empty())
+			{
+				getchar();
 				return;
+			}
 			SendInterestInCache(interestcollection);
 		}
 		else
@@ -1856,8 +1859,16 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(m_cs->GetDataSize() > 0)
 		{
+			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
+			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
+			if(datacollection.empty())
+			{
+				getchar();
+				return;
+			}
 			
 		}
+		getchar();
 	}
 }
 
