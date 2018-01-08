@@ -188,9 +188,9 @@ NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
 	{
 		for(it = m_data.begin();it != m_data.end();)
 		{
-			if(it->second->GetName().get(0).toUri() == dataname)
+			if(it->second->GetName().get(0).toUri() == dataname_route.first)
 			{
-				cout<<"(cs-impl.cc-GetData) 数据包的名字为 "<<dataname<<endl;
+				std::cout<<"(cs-impl.cc-GetData) 数据包的名字为 "<<dataname_route.first<<std::endl;
 				Ptr<const Data> data = it->second->GetData();
 				DataCollection[data->GetSignature()] = data;
 				m_data.erase(it++);

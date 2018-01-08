@@ -1861,7 +1861,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(m_cs->GetDataSize() > 0)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
-			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
+			std::pair<std::string,std::string> dataname_route;
+			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataname_route);
 			if(datacollection.empty())
 			{
 				getchar();
