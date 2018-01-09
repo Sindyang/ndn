@@ -1956,7 +1956,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	}
 }
 
-void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datatcollection)
+void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datacollection)
 {
 	std::map<uint32_t,Ptr<const Data>>::iterator it;
 	for(it = datacollection.begin();it != datacollection.end();it++)
