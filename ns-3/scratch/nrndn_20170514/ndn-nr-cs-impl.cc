@@ -238,7 +238,7 @@ NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> ro
 	}
 	if(itlastroutes == lastroutes.end())
 	{
-		std::map<uint32_t,std::unordered_set<std::string> > it = m_lastroutes.find(signature);
+		std::map<uint32_t,std::unordered_set<std::string> >::iterator it = m_lastroutes.find(signature);
 		m_lastroutes.erase(it);
 		std::cout<<"(cs-impl.cc-IsLastRoutesLeft) 数据包 "<<signature<<" 未被满足的上一跳路段全部有车辆"<<std::endl;
 		return true;

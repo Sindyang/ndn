@@ -105,8 +105,8 @@ public:
     AddData (uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes);
 	
 	// 得到相同名字的数据包
-	std::map<uint32_t,Ptr<const Data> > 
-	GetData(std::pair<std::string,std::string> dataname_route);
+	std::map<uint32_t,Ptr<const Data> >
+    GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
     
 	// 获取数据包缓存大小
 	uint32_t
