@@ -272,6 +272,8 @@ private:
 	// 2017.12.21 发送缓存的兴趣包
 	void SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection);
 
+	// 2018.1.9 发送缓存的数据包
+	void SendDataInCache(std::map<uint32_t,Ptr<const Data> > datatcollection);
 	
 	/**
 	 * \brief	Tell the direction of the Packet from
