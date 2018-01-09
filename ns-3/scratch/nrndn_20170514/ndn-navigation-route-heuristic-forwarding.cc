@@ -1477,6 +1477,8 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
 		BroadcastStopMessage(data);
+		if(m_node->GetId() >= 101)
+			getchar();
 	}
 	else
 	{
@@ -2113,6 +2115,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		
 		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		
+		getchar();
+	}
+	else
+	{
+		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<<routes_behind.size()<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) 缓存中的数据包大小为 "<<m_cs->GetDataSize()<<endl;
 		getchar();
 	}
 	m_preNB = m_nb;
