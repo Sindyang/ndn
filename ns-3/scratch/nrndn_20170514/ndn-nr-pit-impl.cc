@@ -373,9 +373,9 @@ NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		std::string dataname = pitEntry->GetDataName();
 		std::unordered_set<std::string>::iterator itroutes;
+		std::unordered_set<std::string> collection;
 		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
 		{
-			std::unordered_set<std::string> collection;
 			if(pitEntry->IsRouteInEntry(*itroutes))
 			{
 				collection.insert(*itroutes);
@@ -383,7 +383,7 @@ NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
 			}
 		}
 		if(collection.size() >0)
-			dataandroutes[dataname] = collection;
+			dataandroutes.insert(std::pair<std::string,std::unordered_set<std::string>>(dataname,collection));
 	}
 	return dataandroutes;
 }
