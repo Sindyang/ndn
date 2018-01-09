@@ -2081,6 +2081,13 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
+	cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
