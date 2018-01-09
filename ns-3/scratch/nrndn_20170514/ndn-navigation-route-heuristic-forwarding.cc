@@ -2081,12 +2081,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
-		std::multimap<std::string,std::unordered_set<std::string>> dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
+		std::multimap<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
 		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为"<<endl;
 		for(std::multimap<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
 		{
 			cout<<"数据包名称为 "<<it->first<<endl;
-			cout<"对应的上一跳节点为 ";
+			cout<<"对应的上一跳节点为 ";
 			std::unordered_set<std::string> collection = it->second;
 			for(std::unordered_set<std::string>::iterator itcollect = collection.begin();itcollect != collection.end();itcollect++)
 			{
