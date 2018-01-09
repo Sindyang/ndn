@@ -2081,18 +2081,20 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
-	{
-		cout<<*it<<" ";
-	}
-	cout<<endl;
-	cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 		cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+		
+		cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
+		for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
+	
 		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为"<<endl;
 		
 		std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
