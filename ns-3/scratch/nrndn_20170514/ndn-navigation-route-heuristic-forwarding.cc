@@ -2087,6 +2087,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		cout<<*it<<" ";
 	}
 	cout<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
