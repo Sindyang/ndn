@@ -2306,7 +2306,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
-void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList)
+void NavigationRouteHeuristic::ForwardDataPacket(Ptr<const Data> src,std::vector<uint32_t> newPriorityList)
 {
 	if(!m_running) return;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::ForwardDataPacket");
