@@ -361,26 +361,24 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 	return std::pair<bool,uint32_t>(true,id);
 }
 
-std::multimap<std::string,std::unordered_set<std::string> >
+std::unordered_map<std::string,std::unordered_set<std::string> >
 NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes_behind)
 {
-	showPit();
-	
 	std::vector<Ptr<Entry> >::iterator pit;
-	std::multimap<std::string,std::unordered_set<std::string> > dataandroutes;
+	std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes;
 	for(pit = m_pitContainer.begin();pit != m_pitContainer.end();pit++)
 	{
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		std::string dataname = pitEntry->GetDataName();
 		std::unordered_set<std::string>::iterator itroutes;
 		std::unordered_set<std::string> collection;
-		std::cout<<"routes_behind的大小为 "<<routes_behind.size()<<std::endl;
+		//std::cout<<"routes_behind的大小为 "<<routes_behind.size()<<std::endl;
 		for(itroutes = routes_behind.begin();itroutes != routes_behind.end();itroutes++)
 		{
 			if(pitEntry->IsRouteInEntry(*itroutes))
 			{
 				collection.insert(*itroutes);
-				std::cout<<"(ndn-nr-pit-impl.cc-GetDataNameandLastRoute) 数据名为 "<<dataname<<" 上一跳路段为 "<<*itroutes<<std::endl;
+				//std::cout<<"(ndn-nr-pit-impl.cc-GetDataNameandLastRoute) 数据名为 "<<dataname<<" 上一跳路段为 "<<*itroutes<<std::endl;
 			}
 		}
 		std::cout<<std::endl;

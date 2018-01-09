@@ -166,7 +166,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_se
 }
     
 std::map<uint32_t,Ptr<const Data> >
-NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
+NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route)
 {
 	uint32_t size = GetDataSize();
 	std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
@@ -174,7 +174,7 @@ NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 		
-	if(dataname_route.first.size() == 0)
+	if(dataname_route.empty())
 	{
 		std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
 		for(it = m_data.begin();it != m_data.end();it++)
@@ -186,18 +186,29 @@ NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
 	}
 	else
 	{
-		for(it = m_data.begin();it != m_data.end();)
+		std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
+		std::unordered_map<std::string,std::unordered_set<std::string> >::iterator itdataroute = dataname_route.begin();
+		//从缓存中取出对应的数据包
+		for(;itdataroute != dataname_route.end();itdataroute++)
 		{
-			if(it->second->GetName().get(0).toUri() == dataname_route.first)
+			for(it = m_data.begin();it != m_data.end();)
 			{
-				std::cout<<"(cs-impl.cc-GetData) 数据包的名字为 "<<dataname_route.first<<std::endl;
-				Ptr<const Data> data = it->second->GetData();
-				DataCollection[data->GetSignature()] = data;
-				m_data.erase(it++);
-			}
-			else
-			{
-				++it;
+				std::string dataname = it->second->GetName().get(0).toUri();
+				if(itdataroute->first == dataname)
+				{
+					std::cout<<"(cs-impl.cc-GetData) 从缓存中得到了对应名字的数据包 "<<dataname<<std::endl;
+					Ptr<const Data> data = it->second->GetData();
+					DataCollection[data->GetSignature()] = data;
+					if(IsLastRoutesLeft(data->GetSignature(),itdataroute->second))
+					{
+						m_data.erase(it++);
+						std::cout<<"(cs-impl.cc-GetData) 从缓存中删除数据包 "<<signature<<std::endl;
+					}
+				}
+				else
+				{
+					++it;
+				}
 			}
 		}
 	}
@@ -207,6 +218,33 @@ NrCsImpl::GetData(std::pair<std::string,std::string> dataname_route)
 	return DataCollection;
 }
 
+// routes为有车辆的上一跳路段
+bool
+NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> routes)
+{
+	// lastroutes为未被满足的上一跳路段
+	std::unordered_set<std::string> lastroutes = m_lastroutes[signature];
+	std::unordered_set<std::string>::iterator itlastroutes;
+	for(std::unordered_set<std::string>::iterator itroutes = routes.begin();itroutes != routes.end();itroutes++)
+	{
+		//从未满足的路段中删除存在车辆的路段
+		itlastroutes = lastroutes.find(*itroutes);
+		if(itlastroutes != lastroutes.end())
+		{
+			lastroutes.erase(itlastroutes);
+			std::cout<<"(cs-impl.cc-IsLastRoutesLeft) 路段 "<<*itlastroutes<<" 有车辆"<<std::endl;
+		}
+			
+	}
+	if(itlastroutes == lastroutes.end())
+	{
+		std::map<uint32_t,std::unordered_set<std::string> > it = m_lastroutes.find(signature);
+		m_lastroutes.erase(it);
+		std::cout<<"(cs-impl.cc-IsLastRoutesLeft) 数据包 "<<signature<<" 未被满足的上一跳路段全部有车辆"<<std::endl;
+		return true;
+	}
+	return false;
+}
 
 uint32_t
 NrCsImpl::GetDataSize () const

@@ -129,11 +129,11 @@ EntryNrImpl::GetDataName()
 bool 
 EntryNrImpl::IsRouteInEntry(std::string route)
 {
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 上一跳路段为 "<<route<<std::endl;
+	//std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 上一跳路段为 "<<route<<std::endl;
 	std::unordered_map<std::string,std::unordered_set< uint32_t > >::iterator it = m_incomingnbs.find(route);
 	if(it != m_incomingnbs.end())
 	{
-		std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 已找到上一跳路段"<<std::endl;
+		//std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 已找到上一跳路段"<<std::endl;
 		return true;
 	}
 	return false;

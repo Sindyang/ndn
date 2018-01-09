@@ -112,6 +112,8 @@ public:
 	uint32_t
 	GetDataSize () const;
 	
+	bool IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> routes);
+	
 	// 获取缓存中的数据包名字
     std::unordered_set<std::string> 
 	GetDataName() const;

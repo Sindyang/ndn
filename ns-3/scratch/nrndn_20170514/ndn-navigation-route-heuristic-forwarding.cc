@@ -1872,7 +1872,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(m_cs->GetDataSize() > 0)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
-			std::pair<std::string,std::string> dataname_route;
+			std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route;
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataname_route);
 			if(datacollection.empty())
 			{
@@ -2038,7 +2038,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			else if(result.first && result.second <0)
 			{
-				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		//getchar();
@@ -2054,7 +2054,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			else if(result.first && result.second <0)
 			{
-				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		}
@@ -2095,9 +2095,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为"<<endl;
 		
-		std::multimap<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
+		std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
 		
-		for(std::multimap<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
+		for(std::unordered_map<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
 		{
 			cout<<"数据包名称为 "<<it->first<<endl;
 			cout<<"对应的上一跳节点为 ";
@@ -2108,6 +2108,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			cout<<endl;
 		}
+		
+		
 		getchar();
 	}
 	m_preNB = m_nb;
