@@ -2083,6 +2083,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
+	if(routes_behind.size() > 0 || m_cs->GetDataSize() > 0)
+	{
+		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<routes_behind.size()<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) 缓存中的数据包大小为 "<<m_cs->GetDataSize()<<endl;
+		getchar();
+	}
 	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
@@ -2115,12 +2121,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		
 		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		
-		getchar();
-	}
-	else
-	{
-		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<routes_behind.size()<<endl;
-		cout<<"(forwarding.cc-ProcessHelloRSU) 缓存中的数据包大小为 "<<m_cs->GetDataSize()<<endl;
 		getchar();
 	}
 	m_preNB = m_nb;
