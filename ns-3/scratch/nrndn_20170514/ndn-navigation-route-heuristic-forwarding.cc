@@ -2082,7 +2082,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes.end();it++)
+	for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
 	{
 		cout<<*it<<" ";
 	}
