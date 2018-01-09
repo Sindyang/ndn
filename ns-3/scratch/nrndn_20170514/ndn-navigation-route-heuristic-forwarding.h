@@ -452,7 +452,7 @@ private:
 	 * @param	IsClearhopCountTag  indicating that whether to reset the hop count tag to 0
 	 *                              True means needs to reset to 0;
 	 */
-	void ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList);
+	void ForwardDataPacket(Ptr<const Data> src,std::vector<uint32_t> newPriorityList);
 
 	/**
 	 * \brief	Send the interest packet immediately,
