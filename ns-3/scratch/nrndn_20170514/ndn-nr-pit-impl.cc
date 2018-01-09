@@ -362,7 +362,7 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 }
 
 std::multimap<std::string,std::unordered_set<std::string> >
-NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
+NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes_behind)
 {
 	showPit();
 	
@@ -374,7 +374,8 @@ NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
 		std::string dataname = pitEntry->GetDataName();
 		std::unordered_set<std::string>::iterator itroutes;
 		std::unordered_set<std::string> collection;
-		for(itroutes = routes.begin();itroutes != routes.end();itroutes++)
+		std::cout<<"routes_behind的大小为 "<<routes_behind.size()<<std::endl;
+		for(itroutes = routes_behind.begin();itroutes != routes_behind.end();itroutes++)
 		{
 			if(pitEntry->IsRouteInEntry(*itroutes))
 			{
@@ -382,6 +383,7 @@ NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes)
 				std::cout<<"(ndn-nr-pit-impl.cc-GetDataNameandLastRoute) 数据名为 "<<dataname<<" 上一跳路段为 "<<*itroutes<<std::endl;
 			}
 		}
+		std::cout<<std::endl;
 		if(collection.size() >0)
 			dataandroutes.insert(std::pair<std::string,std::unordered_set<std::string>>(dataname,collection));
 	}
