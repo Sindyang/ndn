@@ -1434,7 +1434,7 @@ void NavigationRouteHeuristic::ExpireInterestPacketTimer(uint32_t nodeId,uint32_
 	//1. Find the waiting timer
 	if(!isDuplicatedInterest(nodeId,seq))
 	{
-		cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
+		//cout<<"(forwarding.cc-ExpireInterestPacketTimer) 第一次收到该兴趣包"<<endl;
 		return;
 	}
 	
@@ -2083,13 +2083,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
-	if(routes_behind.size() > 0 || m_cs->GetDataSize() > 0)
-	{
-		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<routes_behind.size()<<endl;
-		cout<<"(forwarding.cc-ProcessHelloRSU) 缓存中的数据包大小为 "<<m_cs->GetDataSize()<<endl;
-		getchar();
-	}
-	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
@@ -2196,7 +2189,7 @@ void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId,uint32_t si
 	//1. Find the waiting timer
 	if(!isDuplicatedData(nodeId,signature))
 	{
-		cout<<"(forwarding.cc-ExpireDataPacketTimer) 第一次收到该数据包"<<endl;
+		//cout<<"(forwarding.cc-ExpireDataPacketTimer) 第一次收到该数据包"<<endl;
 		return;
 	}
 	
