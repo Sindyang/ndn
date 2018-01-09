@@ -131,7 +131,7 @@ public:
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
 	
 	// 2017.1.8 
-	std::multimap<std::string,std::unordered_set<std::string> > GetDataNameandLastRoute(std::unordered_set<std::string> routes);
+	std::unordered_map<std::string,std::unordered_set<std::string> > GetDataNameandLastRoute(std::unordered_set<std::string> routes);
     
     void showPit();
     void laneChange(std::string oldLane, std::string newLane);
