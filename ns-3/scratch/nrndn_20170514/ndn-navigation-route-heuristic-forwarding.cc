@@ -2038,6 +2038,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			else if(result.first && result.second <0)
 			{
+				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		//getchar();
@@ -2053,6 +2054,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			else if(result.first && result.second <0)
 			{
+				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		}
