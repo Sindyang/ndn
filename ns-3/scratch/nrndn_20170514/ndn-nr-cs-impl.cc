@@ -202,7 +202,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 					if(IsLastRoutesLeft(data->GetSignature(),itdataroute->second))
 					{
 						m_data.erase(it++);
-						std::cout<<"(cs-impl.cc-GetData) 从缓存中删除数据包 "<<signature<<std::endl;
+						std::cout<<"(cs-impl.cc-GetData) 从缓存中删除数据包 "<<data->GetSignature()<<std::endl;
 					}
 				}
 				else
