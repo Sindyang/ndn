@@ -208,11 +208,10 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 		{
 			std::string dataname = it->second->GetName().toUri();
 			uint32_t signature = it->second->GetData()->GetSignature();
-			std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
 			itdataroute = dataname_route.find(dataname);
 			if(itdataroute != dataname_route.end())
 			{
-				std::cout<<"(cs-impl.cc-GetData) dataname_route中有该数据包"<<std::endl;
+				std::cout<<"(cs-impl.cc-GetData) dataname_route中有数据包 "<<dataname<<std::endl;
 				if(IsLastRoutesLeft(signature,itdataroute->second))
 				{
 					m_data.erase(it++);
@@ -253,7 +252,7 @@ NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> ro
 	{
 		std::map<uint32_t,std::unordered_set<std::string> >::iterator it = m_lastroutes.find(signature);
 		m_lastroutes.erase(it);
-		std::cout<<"(cs-impl.cc-IsLastRoutesLeft) 数据包 "<<signature<<" 未被满足的上一跳路段全部有车辆"<<std::endl;
+		std::cout<<"(cs-impl.cc-IsLastRoutesLeft) 数据包 "<<signature<<" 的上一跳路段全部有车辆"<<std::endl;
 		return true;
 	}
 	return false;
