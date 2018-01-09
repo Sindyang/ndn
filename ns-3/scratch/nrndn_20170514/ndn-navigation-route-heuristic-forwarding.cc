@@ -1097,7 +1097,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			cout<<"(forwarding.cc-OnData_Car) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			//DropDataPacket(data);
-			getchar();
+			//getchar();
 		}
 	}
 	//查看上一跳节点为RSU的情况
@@ -1475,8 +1475,6 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
 		BroadcastStopMessage(data);
-		if(m_node->GetId() >= 101)
-			getchar();
 	}
 	else
 	{
@@ -1964,6 +1962,15 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		uint32_t signature = it->first;
 		uint32_t nodeId = m_node->GetId();
 		Ptr<const Data> data = it->second;
+		
+		//added by sy
+		Ptr<const Data> data = it->second;
+        ndn::nrndn::nrHeader nrheader;
+        data->GetPayload()->PeekHeader(nrheader);
+        uint32_t sourceId = nrheader.getSourceId();
+		
+		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
+		
 		std::vector<uint32_t> newPriorityList;
 		
 		if(m_sensor->getType() == "RSU")
