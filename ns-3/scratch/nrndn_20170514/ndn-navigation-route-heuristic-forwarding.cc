@@ -2081,8 +2081,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
-		std::multimap<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
+		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为"<<endl;
+		
+		std::multimap<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
+		
 		for(std::multimap<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
 		{
 			cout<<"数据包名称为 "<<it->first<<endl;
