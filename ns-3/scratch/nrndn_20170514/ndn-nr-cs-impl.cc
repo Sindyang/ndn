@@ -194,7 +194,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 			std::cout<<"(cs-impl.cc-GetData) 想要获得的数据包名称为 "<<itdataroute->first<<std::endl;
 			for(it = m_data.begin();it != m_data.end();)
 			{
-				std::string dataname = it->second->GetName().get(0).toUri();
+				std::string dataname = it->second->GetName().toUri();
 				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
 				if(itdataroute->first == dataname)
 				{
