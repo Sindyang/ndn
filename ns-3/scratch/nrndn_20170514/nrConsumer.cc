@@ -275,7 +275,6 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
 	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature<<" forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
-	//getchar();
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
 	//延迟为数据包从发出到Consumer收到的时间
@@ -292,6 +291,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		std::cout<<"(nrConsumer.cc-OnData) 当前节点对该数据包不感兴趣"<<std::endl;
 	}
 	std::cout<<std::endl;
+	getchar();
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
 }
 
