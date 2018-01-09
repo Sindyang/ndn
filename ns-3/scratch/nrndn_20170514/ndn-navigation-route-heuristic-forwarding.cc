@@ -2119,7 +2119,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else
 	{
-		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<<routes_behind.size()<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind.size()="<<routes_behind.size()<<endl;
 		cout<<"(forwarding.cc-ProcessHelloRSU) 缓存中的数据包大小为 "<<m_cs->GetDataSize()<<endl;
 		getchar();
 	}
