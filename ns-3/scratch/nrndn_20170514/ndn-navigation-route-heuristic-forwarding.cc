@@ -1964,7 +1964,6 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		Ptr<const Data> data = it->second;
 		
 		//added by sy
-		Ptr<const Data> data = it->second;
         ndn::nrndn::nrHeader nrheader;
         data->GetPayload()->PeekHeader(nrheader);
         uint32_t sourceId = nrheader.getSourceId();
