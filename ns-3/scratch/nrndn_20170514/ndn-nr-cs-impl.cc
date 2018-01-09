@@ -192,7 +192,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 		for(;itdataroute != dataname_route.end();itdataroute++)
 		{
 			std::cout<<"(cs-impl.cc-GetData) 想要获得的数据包名称为 "<<itdataroute->first<<std::endl;
-			for(it = m_data.begin();it != m_data.end();)
+			for(it = m_data.begin();it != m_data.end();it++)
 			{
 				std::string dataname = it->second->GetName().toUri();
 				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
@@ -200,16 +200,29 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 				{
 					Ptr<const Data> data = it->second->GetData();
 					DataCollection[data->GetSignature()] = data;
-					if(IsLastRoutesLeft(data->GetSignature(),itdataroute->second))
-					{
-						m_data.erase(it++);
-						std::cout<<"(cs-impl.cc-GetData) 从缓存中删除数据包 "<<data->GetSignature()<<std::endl;
-					}
 				}
-				else
+			}
+		}
+		
+		//从缓存中删除已经满足的数据包
+		for(it = m_data.begin();it != m_data.end();)
+		{
+			std::string dataname = it->second->GetName().toUri();
+			uint32_t signature = it->second->GetData()->GetSignature();
+			std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
+			itdataroute = dataname_route.find(dataname);
+			if(itdataroute != dataname_route.end())
+			{
+				std::cout<<"(cs-impl.cc-GetData) dataname_route中有该数据包"<<std::endl;
+				if(IsLastRoutesLeft(signature,itdataroute->second))
 				{
-					++it;
+					m_data.erase(it++);
+					std::cout<<"(cs-impl.cc-GetData) 可以从缓存中删除该数据包"<<std::endl;
 				}
+			}
+			else
+			{
+				++it;
 			}
 		}
 	}
@@ -237,7 +250,7 @@ NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> ro
 		}
 			
 	}
-	if(itlastroutes == lastroutes.end())
+	if(lastroutes.empty())
 	{
 		std::map<uint32_t,std::unordered_set<std::string> >::iterator it = m_lastroutes.find(signature);
 		m_lastroutes.erase(it);
