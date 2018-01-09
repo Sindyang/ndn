@@ -381,7 +381,7 @@ NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes_behind
 				//std::cout<<"(ndn-nr-pit-impl.cc-GetDataNameandLastRoute) 数据名为 "<<dataname<<" 上一跳路段为 "<<*itroutes<<std::endl;
 			}
 		}
-		std::cout<<std::endl;
+		//std::cout<<std::endl;
 		if(collection.size() >0)
 			dataandroutes.insert(std::pair<std::string,std::unordered_set<std::string>>(dataname,collection));
 	}

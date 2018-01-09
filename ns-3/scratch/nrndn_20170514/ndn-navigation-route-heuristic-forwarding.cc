@@ -2095,7 +2095,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		cout<<endl;
 		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
-		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为"<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为 "<<endl;
 		
 		std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
 		
@@ -2111,6 +2111,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			cout<<endl;
 		}
 		
+		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		
 		getchar();
 	}
