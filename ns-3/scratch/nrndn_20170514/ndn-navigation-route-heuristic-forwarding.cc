@@ -1855,7 +1855,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				getchar();
 				return;
 			}
-			//SendInterestInCache(interestcollection);
+			SendInterestInCache(interestcollection);
 		}
 		else
 		{
@@ -2121,7 +2121,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if(interestcollection.empty())
 				return;
 			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
-			//SendInterestInCache(interestcollection);
+			SendInterestInCache(interestcollection);
 			//getchar();
 		}
 	}
