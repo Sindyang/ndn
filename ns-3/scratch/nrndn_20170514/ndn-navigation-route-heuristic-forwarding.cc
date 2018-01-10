@@ -2164,7 +2164,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		if(datacollection.empty())
 			return;
 		cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的数据包"<<endl;
-		//SendDataInCache(datacollection);
+		SendDataInCache(datacollection);
 		//getchar();
 	}
 	m_preNB = m_nb;
