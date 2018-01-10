@@ -1160,11 +1160,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//获取车辆上一跳节点
 	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
 	
+	//在仿真地图中不会进入这部分函数
 	if(remoteId >= numsofvehicles)
 	{
 		//忽略自身节点
 		if(remoteId == m_node->GetId())
 			return;
+		
+		NS_ASSERT_MSG(false,"仿真地图中不会进入该函数");
 		
 		//msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
 		Ptr<pit::Entry> Will = WillInterestedData(data);
@@ -1256,14 +1259,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					CachingDataPacket(data->GetSignature(),data,interestRoutes);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
 					cout<<"缓存该数据包"<<endl;
-					//getchar();
+					getchar();
 					return;
 				}
 				else
 				{
 					cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
 					DropDataPacket(data);
-					//getchar();
+					getchar();
 					return;
 				}
 			}
@@ -1332,7 +1335,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				{
 					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,remainroutes);
-					//getchar();
+					getchar();
 				}
 				else
 				{
@@ -1340,6 +1343,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
 					newPriorityList);
+					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备发送数据包 "<<signature<<endl;
 					//getchar();
 				}
 			}
