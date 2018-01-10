@@ -95,8 +95,8 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
 		{
 			neighbors.erase(incomingnb);
 			it->second = neighbors;
-			std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
-			<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
+			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors)删除节点 "<<id<<" 节点上一跳所在路段为 "<<it->first
+			//<<" .At time "<<Simulator::Now().GetSeconds()<<std::endl;
 			flag = true;
 		}
 		else

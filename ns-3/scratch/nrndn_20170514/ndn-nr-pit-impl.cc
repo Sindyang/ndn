@@ -343,7 +343,7 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 			{
 				pit++;
 			}
-			std::cout<<std::endl;
+			//std::cout<<std::endl;
 		}
 		if(flag == false)
 		{
