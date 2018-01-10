@@ -245,7 +245,8 @@ void nrProducer::OnSendingTrafficData()
 	m_sensor->getLane();
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
-	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()<<" 发送数据包:"<<m_prefix.toUri()<<std::endl;
+	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()
+	<<" 发送数据包:"<<m_prefix.toUri()<<" Signature "<<data->GetSignature()<<std::endl;
 	
 
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
