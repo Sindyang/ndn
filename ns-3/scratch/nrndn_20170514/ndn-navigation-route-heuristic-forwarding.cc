@@ -1878,7 +1878,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				getchar();
 				return;
 			}
-			//SendDataInCache(datacollection);
+			SendDataInCache(datacollection);
 			//getchar();
 		}
 	}
