@@ -1,8 +1,0 @@
-当前节点 108
-showPit
-(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name：/0-0to1-0
-上一跳路段为 0-1to0-0 对应的节点为 18 
-(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name：/1-0to2-0
-上一跳路段为 0-1to0-0 对应的节点为 18 
-(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name：/2-0to2-1
-上一跳路段为 0-1to0-0 对应的节点为 18 
