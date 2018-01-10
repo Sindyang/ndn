@@ -1904,7 +1904,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		{
 			consumer->SendPacket();
 			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
-			//getchar();
+			getchar();
 			break;
 		}
 		idx++;
@@ -1997,10 +1997,11 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		}
 		cout<<endl;
 		
+		getchar();
+		
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingDataEvent[nodeId][signature] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardDataPacket,this,data,newPriorityList);
-		//getchar();
 	}
 }
 
