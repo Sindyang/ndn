@@ -979,7 +979,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
 		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 		// 2018.1.11
-		if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName))
+		if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName()))
 		{
 			// 1.Buffer the data in ContentStore
 			ToContentStore(data);
