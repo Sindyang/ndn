@@ -905,7 +905,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
 			std::unordered_set<std::string> lastroutes;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data,lastroutes);
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			return;
 		}
 
@@ -1080,7 +1080,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				std::unordered_set<std::string> lastroutes;
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,lastroutes);
+				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,lastroutes*/);
 			}
 			else
 			{
@@ -1213,7 +1213,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			if(remainroutes.size() > 0)
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,remainroutes);
+				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 				//getchar();
 			}
 			else
@@ -1256,7 +1256,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
-					CachingDataPacket(data->GetSignature(),data,interestRoutes);
+					CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
 					cout<<"缓存该数据包"<<endl;
 					getchar();
@@ -1334,7 +1334,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				if(remainroutes.size() > 0)
 				{
 					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
-					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data,remainroutes);
+					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 					getchar();
 				}
 				else
@@ -1471,10 +1471,11 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
  * 2017.12.29
  * added by sy
  */
-void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data,std::unordered_set<std::string> lastroutes)
+void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data/*,std::unordered_set<std::string> lastroutes*/)
 {
 	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
-	bool result = m_cs->AddData(signature,data,lastroutes);
+	//bool result = m_cs->AddData1(signature,data,lastroutes);
+	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;

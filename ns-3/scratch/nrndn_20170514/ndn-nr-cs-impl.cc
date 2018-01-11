@@ -139,7 +139,7 @@ bool NrCsImpl::Add(Ptr<const Data> data)
 
 
 /*数据包部分*/
-bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes)
+bool NrCsImpl::AddData1(uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes)
 {
 	std::cout<<"(cs-impl.cc-AddData) 添加数据包 "<<data->GetName().get(0).toUri()<<std::endl;
 	Ptr<cs::Entry> csEntry = FindData(signature);
@@ -160,6 +160,24 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data,std::unordered_se
 		std::cout<<"(cs-impl.cc-AddData) 对该数据包感兴趣的路段大小为 "<<lastroutes.size()<<std::endl;
 	} 
 	
+	size = GetDataSize();
+	std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
+	return true;
+}
+
+bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
+{
+	std::cout<<"(cs-impl.cc-AddData) 添加数据包 "<<data->GetName().get(0).toUri()<<std::endl;
+	Ptr<cs::Entry> csEntry = FindData(signature);
+	if(csEntry != 0)
+	{
+		std::cout<<"(cs-impl.cc-AddData) 该数据包已经在缓存中"<<std::endl;
+		return false;
+	}
+	uint32_t size = GetDataSize();
+	std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;
+    csEntry = ns3::Create<cs::Entry>(this,data) ;
+    m_data[signature] = csEntry;
 	size = GetDataSize();
 	std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	return true;
