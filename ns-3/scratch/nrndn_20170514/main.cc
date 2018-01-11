@@ -914,9 +914,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	// 2017.12.29 added by sy
 	// RSU不产生数据包 在该地图中，RSU的数量为16
-	std::cout<<"(main.cc-InstallTraffics) 修改生产者的范围区间"<<endl;
 	UniformVariable rnd(0,nodes.GetN()-16);
-	getchar();
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
 	if(random_accident)
 	{

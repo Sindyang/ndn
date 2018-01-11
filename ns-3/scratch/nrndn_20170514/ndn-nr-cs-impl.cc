@@ -262,7 +262,7 @@ NrCsImpl::GetData(std::vector<std::string> interest)
 		std::cout<<"(cs-impl.cc-GetData) 想要得到的数据包为 "<<*itinterest<<std::endl;
 		for(it = m_data.begin();it != m_data.end();it++)
 		{
-			std::string dataname = it->second->GetName().toUri();
+			std::string dataname = it->second->GetName().get(0).toUri();
 			if(*itinterest == dataname)
 			{
 				std::cout<<"(cs-impl.cc-GetData) 缓存中有对应的数据包"<<std::endl;
