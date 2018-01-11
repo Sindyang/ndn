@@ -1015,7 +1015,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_Car) 该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
 				DropDataPacket(data);
-				/aaagetchar();
+				//aaagetchar();
 				return;
 			}
 		}
@@ -2010,7 +2010,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		}
 		cout<<endl;
 		
-		getchar();
+		//aaagetchar();
 		
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));

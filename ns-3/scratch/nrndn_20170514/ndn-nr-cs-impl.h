@@ -21,6 +21,7 @@
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
+#include <vector>
 
 
 namespace ns3
@@ -112,7 +113,10 @@ public:
     GetData1(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
 	
 	std::map<uint32_t,Ptr<const Data> >
-    GetData(std::unordered_set<std::string> interest);
+    GetData(std::vector<std::string> interest);
+	
+	std::map<uint32_t,Ptr<const Data> >
+    GetData();
     
 	// 获取数据包缓存大小
 	uint32_t

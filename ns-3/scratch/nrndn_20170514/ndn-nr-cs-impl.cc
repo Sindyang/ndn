@@ -250,12 +250,12 @@ NrCsImpl::GetData1(std::unordered_map<std::string,std::unordered_set<std::string
 
 
 std::map<uint32_t,Ptr<const Data> >
-NrCsImpl::GetData(std::unordered_set<std::string> interest)
+NrCsImpl::GetData(std::vector<std::string> interest)
 {
 	std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
 	
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
-	std::unordered_set<std::string>::iterator itinterest;
+	std::vector<std::string>::iterator itinterest;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 	for(itinterest = interest.begin();itinterest != interest.end();itinterest++)
 	{
