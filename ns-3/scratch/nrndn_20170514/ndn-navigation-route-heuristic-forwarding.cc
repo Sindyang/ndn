@@ -661,7 +661,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		    //getchar();
 		
 		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
-
+		
+		std::size_t found = forwardRoute.find(" ");
+		std::string currentroute = forwardRoute.substr(0,found);
+		//这里需要获取当前及之后的兴趣路线！！！！！！！！！！！！！
+		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
 		// Update the PIT here
 		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
@@ -2005,13 +2009,17 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if(!Will)
 			{
-				NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
+				//NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
+				continue;
 			}
-			Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-			const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-			NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
-			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-			newPriorityList = collection.first;
+			else
+			{
+				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
+				const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+				NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
+				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
+				newPriorityList = collection.first;
+			}
 		}
 		else
 		{
