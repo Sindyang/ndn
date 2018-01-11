@@ -915,6 +915,10 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			//getchar();
 			std::unordered_set<std::string> lastroutes;
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
+			
+			// 2018.1.11 added by sy
+			NotifyUpperLayer(data);
+			
 			return;
 		}
 
@@ -973,6 +977,15 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	{
 		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
 		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
+		// 2018.1.11
+		if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName))
+		{
+			// 1.Buffer the data in ContentStore
+			ToContentStore(data);
+			// 2. Notify upper layer
+			NotifyUpperLayer(data);
+			cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
+		}
 		ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包停止转发 "<<"signature "<<data->GetSignature()<<endl;
 		getchar();
@@ -1964,7 +1977,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//if(sourceId == 97)
 			//getchar();
-		//getchar();
+		getchar();
 	}
 }
 
