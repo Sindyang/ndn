@@ -667,6 +667,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
 
+		// 这里可以修改，RSU只缓存了之后路段的数据包
 		//查看缓存中是否有对应的数据包
 		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(interestRoute);
 		getchar();
