@@ -922,7 +922,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			
 			// 2018.1.11 added by sy
-			//NotifyUpperLayer(data);
+			NotifyUpperLayer(data);
 			
 			return;
 		}
@@ -983,14 +983,14 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
 		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 		// 2018.1.11
-		/*if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName()))
+		if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName()))
 		{
 			// 1.Buffer the data in ContentStore
 			ToContentStore(data);
 			// 2. Notify upper layer
 			NotifyUpperLayer(data);
 			cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
-		}*/
+		}
 		ExpireDataPacketTimer(nodeId,signature);
 		cout<<"该数据包停止转发 "<<"signature "<<data->GetSignature()<<endl;
 		getchar();
@@ -2335,17 +2335,27 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 
 	cout<<"(forwarding.cc-BroadcastStopMessage) 节点 "<<m_node->GetId()<<" 广播停止转发数据包的消息 "<<src->GetSignature()<<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
-	//1. copy the interest packet
-	Ptr<Data> data = Create<Data> (*src);
+	//1. copy the data packet
+	/*Ptr<Data> data = Create<Data> (*src);
 
 	//2.Remove the useless payload, save the bandwidth
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader srcheader,dstheader;
 	nrPayload->PeekHeader(srcheader);
+	
 	dstheader.setSourceId(srcheader.getSourceId());//Stop message contains an empty priority list
 	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(dstheader);
-	data->SetPayload(newPayload);
+	data->SetPayload(newPayload);*/
+	
+	Ptr<const Packet> nrPayload = src->GetPayload()->Copy();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->RemoveHeader(nrheader);
+	nrheader.setPriorityList("");
+	nrPayload->AddHeader(nrheader);
+	
+	Ptr<Data> data = Create<Data> (*src);
+	data->SetPayload(nrPayload);
 
 	//4. send the payload
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
