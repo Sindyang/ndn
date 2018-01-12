@@ -49,7 +49,8 @@ TypeId nrConsumer::GetTypeId()
 }
 
 nrConsumer::nrConsumer():
-		m_virtualPayloadSize(1024)
+		m_virtualPayloadSize(1024),
+		m_dataReceivedSeen(5000)
 {
 	// TODO Auto-generated constructor stub
 }
@@ -277,6 +278,15 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature<<" forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
 
+	// 2018.1.12 added by sy
+	if(m_dataReceivedSeen.Get(signature))
+	{
+		std::cout<<"(nrConsumer.cc-OnData) 车辆已经收到过该数据包"<<std::endl;
+		return;
+	}
+	
+	m_dataReceivedSeen.Put(signature,true);
+	
 	//延迟为数据包从发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);

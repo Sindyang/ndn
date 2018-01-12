@@ -9,6 +9,7 @@
 #define NRCONSUMER_H_
 
 #include "NodeSensor.h"
+#include "LRUCache.h"
 #include "ns3/ndnSIM/apps/ndn-consumer-cbr.h"
 #include <string>
 
@@ -95,6 +96,7 @@ private:
 	  Ptr<NodeSensor> m_sensor;
 	  Ptr<fw::nrndn::NavigationRouteHeuristic> m_forwardingStrategy;
 	  uint32_t m_virtualPayloadSize;
+	  ndn::nrndn::cache::LRUCache<uint32_t,bool> m_dataReceivedSeen;
 	  //Ptr<ForwardingStrategy>		m_forwardingStrategy;
 };
 
