@@ -2351,7 +2351,8 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	Ptr<const Packet> nrPayload = src->GetPayload()->Copy();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->RemoveHeader(nrheader);
-	nrheader.setPriorityList("");
+	std::vector<uint32_t> newPriorityList;
+	nrheader.setPriorityList(newPriorityList);
 	nrPayload->AddHeader(nrheader);
 	
 	Ptr<Data> data = Create<Data> (*src);
