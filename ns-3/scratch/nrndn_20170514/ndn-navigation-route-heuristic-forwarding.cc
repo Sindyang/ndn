@@ -922,7 +922,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			
 			// 2018.1.11 added by sy
-			NotifyUpperLayer(data);
+			//NotifyUpperLayer(data);
 			
 			return;
 		}
