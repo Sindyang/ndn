@@ -86,7 +86,7 @@ public:
 	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	
-	const vector<string> 
+	vector<string> 
 	GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute);
 
 	/**

@@ -673,7 +673,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		
 		//这里需要获取当前及之后的兴趣路线
-		const vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
+		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
 		cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)
@@ -884,7 +884,7 @@ NavigationRouteHeuristic::SplitString(const std::string& s,std::vector<std::stri
 }
 
 
-const vector<string> 
+vector<string> 
 NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute)
 {
 	string currentroute = forwardroute[0];
