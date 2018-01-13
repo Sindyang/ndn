@@ -890,7 +890,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	string currentroute = forwardroute[0];
 	vector<string>::iterator it = std::find(interestroute.begin(),interestroute.end(),currentroute);
 	
-	const vector<string> futureinterest;
+	vector<string> futureinterest;
 	if(it != interestroute.end())
 	{
 		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段为兴趣路段"<<endl;
