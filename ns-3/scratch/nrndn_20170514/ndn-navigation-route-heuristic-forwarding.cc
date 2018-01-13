@@ -2060,21 +2060,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if(!Will)
 			{
-				string name = data->GetName().get(0).toUri();
-				std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(name);
-				string junctionid = m_sensor->RSUGetJunctionId(m_node->GetId());
-				if(junctions.second == junctionid)
-				{
-					cout<<"(forwarding.cc-SendDataInCache) 该数据包来自于RSU后方"<<endl;
-					
-				    std::unordered_set<std::string> interestRoutes;
-					interestRoutes.insert(name);
-					NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
-					std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
-					newPriorityList = collection.first;
-				}
-				else
-				    NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
+				NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
 			}
 			else
 			{
