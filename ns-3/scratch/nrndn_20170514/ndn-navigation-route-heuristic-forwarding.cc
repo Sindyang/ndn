@@ -888,7 +888,7 @@ const vector<string>
 NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,const vector<string> interestroute)
 {
 	string currentroute = forwardroute[0];
-	vector<string>::iterator it = find(interestroute.begin(),interestroute.end(),currentroute);
+	vector<string>::iterator it = std::find(interestroute.begin(),interestroute.end(),currentroute);
 	
 	const vector<string> futureinterest;
 	if(it != interestroute.end())
