@@ -240,7 +240,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	}
 	
 	//将剩余的路线及节点加入PIT中
-	for(;it != interestRoute.end();++it)
+	for(it++;it != interestRoute.end();++it)
 	{
 		//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
 		//寻找PIT中是否有该路段
