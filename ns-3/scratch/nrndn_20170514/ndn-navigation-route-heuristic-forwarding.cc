@@ -2060,7 +2060,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if(!Will)
 			{
-				NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
+				//NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
 			}
 			else
 			{
