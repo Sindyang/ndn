@@ -660,7 +660,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//if(nodeId == 24)
 		    //getchar();
 		
-		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
+		vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
 		
 		// routes代表车辆的实际转发路线
 		vector<std::string> routes;
@@ -885,10 +885,10 @@ NavigationRouteHeuristic::SplitString(const std::string& s,std::vector<std::stri
 
 
 const vector<string> 
-NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,const vector<string> interestroute)
+NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute)
 {
 	string currentroute = forwardroute[0];
-	vector<string>::const_iterator it = std::find(interestroute.begin(),interestroute.end(),currentroute);
+	vector<string>::iterator it = std::find(interestroute.begin(),interestroute.end(),currentroute);
 	
 	const vector<string> futureinterest;
 	if(it != interestroute.end())
