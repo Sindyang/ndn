@@ -179,7 +179,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 		eit = edges.find(*itunpassed);
-		//当前节点所在路段的终点
+		//路段的终点
 		std::string to = eit->second.to;
 		if(junction == to)
 		{

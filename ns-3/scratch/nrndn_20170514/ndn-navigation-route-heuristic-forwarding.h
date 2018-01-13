@@ -85,6 +85,9 @@ public:
 	
 	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
+	
+	const vector<string> 
+	GetLocalandFutureInterest(vector<string> forwardroute,const vector<string> interestroute);
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects

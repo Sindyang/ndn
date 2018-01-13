@@ -662,18 +662,29 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		const vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
 		
-		std::size_t found = forwardRoute.find(" ");
-		std::string currentroute = forwardRoute.substr(0,found);
-		//这里需要获取当前及之后的兴趣路线！！！！！！！！！！！！！
+		// routes代表车辆的实际转发路线
+		vector<std::string> routes;
+		SplitString(forwardRoute,routes," ");
 		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
 		// Update the PIT here
 		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
+		
+		
+		//这里需要获取当前及之后的兴趣路线
+		const vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
+		
+		cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
+		for(uint32_t i = 0;i < futureinterest.size();i++)
+		{
+			cout<<futureinterest[i]<<" ";
+		}
+		cout<<endl;
+		getchar();
 
-		// 这里可以修改，RSU只缓存了之后路段的数据包
 		//查看缓存中是否有对应的数据包
-		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(interestRoute);
+		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(futureinterest);
 		getchar();
 		
 		if(!datacollection.empty())
@@ -871,6 +882,45 @@ NavigationRouteHeuristic::SplitString(const std::string& s,std::vector<std::stri
 	if(pos1 != s.length())
 		v.push_back(s.substr(pos1));
 }
+
+
+const vector<string> 
+NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,const vector<string> interestroute)
+{
+	string currentroute = forwardroute[0];
+	vector<string>::iterator it = find(interestroute.begin(),interestroute.end(),currentroute);
+	
+	const vector<string> futureinterest;
+	if(it != interestroute.end())
+	{
+		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段为兴趣路段"<<endl;
+		for(;it != interestroute.end();it++)
+		{
+			futureinterest.push_back(*it);
+		}
+	}
+	else
+	{
+		NS_ASSERT_MSG(false,"还未测试这部分代码");
+		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
+		for(uint32_t i = 0;i < forwardroute.size();i++)
+		{
+			string route = forwardroute[i];
+			it = find(interestroute.begin(),interestroute.end(),route);
+			if(it != interestroute.end())
+			{
+				cout<<"(forwarding.cc-GetLocalandFutureInterest) 在转发路线中找到了兴趣路段"<<endl;
+				break;
+			}
+		}
+		for(;it != interestroute.end();it++)
+		{
+			futureinterest.push_back(*it);
+		}
+	}
+	return futureinterest;
+}
+
 
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {
@@ -2009,8 +2059,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if(!Will)
 			{
-				//NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
-				continue;
+				NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
 			}
 			else
 			{
