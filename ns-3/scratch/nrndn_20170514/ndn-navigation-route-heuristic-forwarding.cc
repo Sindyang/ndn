@@ -1286,10 +1286,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			std::vector<uint32_t> newPriorityList = collection.first;
 			std::unordered_set<std::string> remainroutes = collection.second;
 			
-			if(remainroutes.size() > 0)
+			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
+				BroadcastStopMessage(data);
 				getchar();
 			}
 			else
@@ -1333,6 +1334,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
 					CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
+					BroadcastStopMessage(data);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
 					cout<<"缓存该数据包"<<endl;
 					getchar();
@@ -1373,7 +1375,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			if(!Will)
 			{
 				//或者改为广播停止转发数据包
-				//BroadcastStopMessage(data);
+				BroadcastStopMessage(data);
 				cout<<"PIT列表中没有该数据包对应的表项"<<endl;
 				getchar();
 				return;
@@ -1412,21 +1414,24 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				std::vector<uint32_t> newPriorityList = collection.first;
 				std::unordered_set<std::string> remainroutes = collection.second;
 			
-				//if(remainroutes.size() > 0)
-				//{
-				//	cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
+				// 2018.1.15 
+				if(newPriorityList.empty())
+				{
+					//cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 					//getchar();
-				//}
-			//	else
-				//{
+					BroadcastStopMessage(data);
+					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
+				}
+				else
+				{
 					m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
 					newPriorityList);
 					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备发送数据包 "<<signature<<endl;
 					getchar();
-				//}
+				}
 			}
 			else
 			{
@@ -1560,7 +1565,8 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
-		BroadcastStopMessage(data);
+		if(m_sensor->getType() != "RSU")
+			BroadcastStopMessage(data);
 	}
 	else
 	{
@@ -2563,7 +2569,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	std::unordered_map<std::string,std::multimap<double,uint32_t,std::greater<double> > > ::iterator itvehicles;
 	
 	//added by sy
-	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 源节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<endl;
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<endl;
 	//m_nrpit->showPit();
 	
 	Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(m_nrpit->Find(dataName));
