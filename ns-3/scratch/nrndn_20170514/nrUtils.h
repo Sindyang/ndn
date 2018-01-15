@@ -52,7 +52,7 @@ struct MsgAttribute
 	uint32_t NodeSize;
 	uint32_t InterestedNodeSize;
 	uint32_t InterestedNodeReceiveCounter;//节点收到感兴趣数据的数量
-	uint32_t DisinterestedNodeReceiveCounter; //节点收到不感兴趣数据的数量 ？？？？节点为什么会收到不感兴趣的数据
+	uint32_t DisinterestedNodeReceiveCounter; //节点收到不感兴趣数据的数量
 };
 
 class nrUtils

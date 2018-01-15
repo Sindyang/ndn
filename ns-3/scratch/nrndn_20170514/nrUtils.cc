@@ -50,8 +50,14 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer::Iterator it;
 	int idx = 0;
 	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
+	cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) 修改RSU数目"<<endl;
+	getchar();
+	
 	for(it=c.Begin();it!=c.End();++it)
 	{
+		// 2018.1.15 忽略RSU
+		if(idx >= 101)
+			continue;
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
 		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;

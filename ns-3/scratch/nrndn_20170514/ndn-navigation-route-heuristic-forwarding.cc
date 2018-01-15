@@ -1325,9 +1325,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				if(Will)
 				{
 					// 1.Buffer the data in ContentStore
-					ToContentStore(data);
+					//ToContentStore(data);
 					// 2. Notify upper layer
-					NotifyUpperLayer(data);
+					//NotifyUpperLayer(data);
 					
 					Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
@@ -1341,8 +1341,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				else
 				{
 					cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
-					DropDataPacket(data);
-					getchar();
+					//DropDataPacket(data);
+					//getchar();
 					return;
 				}
 			}
@@ -1382,9 +1382,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				//这部分不一定需要
 				// 1.Buffer the data in ContentStore
-				ToContentStore(data);
+				//ToContentStore(data);
 				// 2. Notify upper layer
-				NotifyUpperLayer(data);
+				//NotifyUpperLayer(data);
 			}
 			
 			
@@ -1434,8 +1434,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				NS_LOG_DEBUG("Node id is not in PriorityList");
 				NS_ASSERT_MSG(false,"RSU具有处理数据包的最高优先级");
 				//还不确定这里是否需要DropDataPacket(data) RSU有可能不需要向上层发送数据包
-				DropDataPacket(data);
-				getchar();
+				//DropDataPacket(data);
+				//getchar();
 			}
 		}
 	}
