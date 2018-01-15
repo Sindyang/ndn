@@ -2115,8 +2115,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetRoutes();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
+	
+	NS_ASSERT_MSG(remoteroute != "","心跳包所在路段为空");
+	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	
