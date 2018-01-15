@@ -689,7 +689,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		if(!datacollection.empty())
 		{
-			//SendDataInCache(datacollection);
+			SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
 		}
 		
@@ -1964,7 +1964,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
-				//SendDataInCache(datacollection);
+				SendDataInCache(datacollection);
 				cout<<"(forwarding.cc-ProcessHello) 从缓存中取出数据包"<<endl;
 			}
 			
