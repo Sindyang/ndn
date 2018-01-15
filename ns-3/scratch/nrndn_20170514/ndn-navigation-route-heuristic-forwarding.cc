@@ -2629,6 +2629,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		{
 			//获得邻居车辆当前所在路段
 			std::string lane = nb->second.m_lane;
+			NS_ASSERT_MSG(lane != "","lane的长度为空");
 			std::unordered_set<std::string>::const_iterator it = interestRoutes.find(lane);
 			//车辆位于数据包下一行驶路段
 			if(it != interestRoutes.end())
