@@ -2116,7 +2116,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	string remoteroute = interest->GetRoutes();
 	
 	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	cout<<"(forwarding.cc-ProcessHelloRSU) 车辆当前所在路段为 "<<remoteroute<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
@@ -2585,6 +2585,7 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
+		cout<<"(forwarding.cc-RSUGetPriorityListOfData) nb->second.lane "<<nb->second.lane<<endl;
 		//判断RSU与RSU的位置关系
 		if(nb->first >= numsofvehicles)
 		{
