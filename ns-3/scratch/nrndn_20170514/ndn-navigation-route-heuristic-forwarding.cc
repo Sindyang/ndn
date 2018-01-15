@@ -1038,7 +1038,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			// 1.Buffer the data in ContentStore
 			ToContentStore(data);
 			// 2. Notify upper layer
-			//NotifyUpperLayer(data);
+			NotifyUpperLayer(data);
 			cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
 		}
 		ExpireDataPacketTimer(nodeId,signature);
