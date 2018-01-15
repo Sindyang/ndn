@@ -689,7 +689,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		if(!datacollection.empty())
 		{
-			//SendDataInCache(datacollection);
+			SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
 		}
 		
@@ -1038,7 +1038,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			// 1.Buffer the data in ContentStore
 			ToContentStore(data);
 			// 2. Notify upper layer
-			NotifyUpperLayer(data);
+			//NotifyUpperLayer(data);
 			cout<<"(forwarding.cc-OnData_Car) 车辆对该数据包感兴趣"<<endl;
 		}
 		ExpireDataPacketTimer(nodeId,signature);
@@ -1964,7 +1964,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
-				//SendDataInCache(datacollection);
+				SendDataInCache(datacollection);
 				cout<<"(forwarding.cc-ProcessHello) 从缓存中取出数据包"<<endl;
 			}
 			
