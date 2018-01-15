@@ -87,7 +87,6 @@ void Neighbors::Update(const uint32_t& id, const double& x,const double& y,const
 	//m_nb[id]=Neighbor(lane, position,expire + Simulator::Now ());
 	// I think implementing default constructor will cause unnecessary copy and initialize
 
-	std::cout<<"(Neighbors.cc-Update) lane "<<lane<<std::endl;
 	//Use insert instead:
 	//std::cout<<"(Neighbors.cc-Update)将该节点添加至邻居列表中"<<std::endl;
 	m_nb.insert(std::unordered_map<uint32_t,Neighbor>::

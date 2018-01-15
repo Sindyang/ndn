@@ -2585,7 +2585,6 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
 	{
-		cout<<"(forwarding.cc-RSUGetPriorityListOfData) nb->second.lane "<<nb->second.m_lane<<endl;
 		//判断RSU与RSU的位置关系
 		if(nb->first >= numsofvehicles)
 		{
