@@ -1434,7 +1434,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					//cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 					//getchar();
-					CachingDataPacket(signature,data);
+					//CachingDataPacket(signature,data);
 					BroadcastStopMessage(data);
 					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
 				}
