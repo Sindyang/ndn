@@ -2096,7 +2096,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		
 		getchar();
 		
-		double random = m_uniformRandomVariable->GetInteger(0,100);
+		double random = m_uniformRandomVariable->GetInteger(0,200);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingDataEvent[nodeId][signature] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardDataPacket,this,data,newPriorityList);
 	}
