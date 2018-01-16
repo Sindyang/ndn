@@ -431,19 +431,22 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq"<<seq<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	
-	//if(nodeId == 97)
-		//getchar();
-	//std::string routes = interest->GetRoutes();
-	//std::cout<<"(forwarding.cc-OnInterest) routes "<<routes<<std::endl;
-	//std::cout<<"(forwarding.cc-OnInterest) seq "<<seq<<std::endl;
-	
-	//getchar();
 
 	//If the interest packet has already been sent, do not proceed the packet
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
+		//2018.1.16 从缓存中删除兴趣包
+		if(msgdirection.first && msgdirection.second)
+		{
+			m_cs->DeleteInterest(interest->GetNonce());
+			cout<<"(forwarding.cc-OnInterest_Car) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
+			getchar();
+		}
 		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		// 2017.12.27 
@@ -471,10 +474,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 	
 	
-
 	//If it is not a stop message, prepare to forward
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second >= 0)// or from front
 	{
@@ -602,10 +602,21 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	
 	//if(nodeId == 24)
 		//getchar();
+	//If it is not a stop message, prepare to forward:
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
+		//2018.1.16 从缓存中删除兴趣包
+		if(msgdirection.first && msgdirection.second)
+		{
+			m_cs->DeleteInterest(interest->GetNonce());
+			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
+			getchar();
+		}
+		
 		cout<<"(forwarding.cc-OnInterest_RSU) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		// 2017.12.27
@@ -633,9 +644,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		return;
 	}
 
-	//If it is not a stop message, prepare to forward:
-	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	if(!msgdirection.first || // from other direction
 			msgdirection.second >= 0)// or from front
@@ -1597,6 +1605,8 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	ndn::nrndn::nrHeader srcheader,dstheader;
 	nrPayload->PeekHeader(srcheader);
 	dstheader.setSourceId(srcheader.getSourceId());
+	//2018.1.16
+	dstheader.setForwardId(m_node->GetId());
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(dstheader);
 	interest->SetPayload(newPayload);
@@ -1996,7 +2006,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		}
 		if(idx == id)
 		{
-			consumer->SendPacket();
+			//consumer->SendPacket();
 			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
 			getchar();
 			break;

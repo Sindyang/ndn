@@ -153,6 +153,10 @@ public:
     std::map<uint32_t,Ptr<const Interest> >
     GetInterest(std::string lane);
 	
+	//删除指定的兴趣包
+	void
+    DeleteInterest(const uint32_t nonce);
+	
 	uint32_t
     GetInterestSize () const;
 	
