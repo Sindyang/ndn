@@ -1607,6 +1607,12 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	dstheader.setSourceId(srcheader.getSourceId());
 	//2018.1.16
 	dstheader.setForwardId(m_node->GetId());
+	
+	double x= m_sensor->getX();
+	double y= m_sensor->getY();
+	nrheader.setX(x);
+	nrheader.setY(y);
+	
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(dstheader);
 	interest->SetPayload(newPayload);
