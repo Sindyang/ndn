@@ -1436,9 +1436,6 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_RSU) Node id is not in PriorityList"<<endl;
 				NS_LOG_DEBUG("Node id is not in PriorityList");
-				NS_ASSERT_MSG(false,"RSU具有处理数据包的最高优先级");
-				//还不确定这里是否需要DropDataPacket(data) RSU有可能不需要向上层发送数据包
-				//DropDataPacket(data);
 				//getchar();
 			}
 		}
