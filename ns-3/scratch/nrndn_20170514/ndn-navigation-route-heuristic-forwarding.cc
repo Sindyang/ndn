@@ -2042,7 +2042,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t sourceId = nrheader.getSourceId();
 		
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
+		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
 		
 		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
 		std::vector<std::string> routes;
