@@ -556,7 +556,7 @@ private:
 
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
 	
-	//double m_resendInterestTime;//added by siukwan
+	double m_sendInterestTime;
 	
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 };

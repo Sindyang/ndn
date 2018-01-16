@@ -97,7 +97,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false)
-	//m_resendInterestTime(0),
+	m_sendInterestTime(0),
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -2024,6 +2024,12 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	if(interval < 1)
+		return;
+	
+	m_resendInterestTime = Simulator::Now().GetSeconds();	
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
