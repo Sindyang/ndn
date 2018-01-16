@@ -431,7 +431,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq"<<seq<<endl;
 	
 	//if(nodeId == 97)
 		//getchar();
@@ -466,6 +466,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	{
 		//cout<<"(forwarding.cc-OnInterest_Car) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
+		getchar();
 		return;
 	}
 	
