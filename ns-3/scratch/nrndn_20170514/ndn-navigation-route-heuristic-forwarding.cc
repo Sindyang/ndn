@@ -2404,11 +2404,11 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	data->SetPayload(newPayload);*/
 	
 	Ptr<Packet> nrPayload = src->GetPayload()->Copy();
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->RemoveHeader(nrheader);
+	ndn::nrndn::nrHeader srcheader,dstheader;
+	nrPayload->PeekHeader(srcheader);
 	std::vector<uint32_t> newPriorityList;
-	nrheader.setPriorityList(newPriorityList);
-	nrPayload->AddHeader(nrheader);
+	dstheader.setSourceId(srcheader.getSourceId());//Stop message contains an empty priority list
+	nrPayload->AddHeader(dstheader);
 	
 	Ptr<Data> data = Create<Data> (*src);
 	data->SetPayload(nrPayload);
