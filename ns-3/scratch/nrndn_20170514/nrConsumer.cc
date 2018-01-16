@@ -272,19 +272,19 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
-
-	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
-	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature<<" forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
-	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
-
+	
 	// 2018.1.12 added by sy
 	if(m_dataReceivedSeen.Get(signature))
 	{
 		std::cout<<"(nrConsumer.cc-OnData) 车辆已经收到过该数据包"<<std::endl;
 		return;
 	}
-	
+
+	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
+	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
+	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature<<" forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
+	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
+
 	m_dataReceivedSeen.Put(signature,true);
 	
 	//延迟为数据包从发出到Consumer收到的时间
