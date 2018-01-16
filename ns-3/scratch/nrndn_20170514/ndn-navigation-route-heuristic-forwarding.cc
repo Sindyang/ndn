@@ -975,8 +975,12 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			std::unordered_set<std::string> lastroutes;
 			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			
+			Simulator::Schedule(
+				MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+				&NavigationRouteHeuristic::SendDataPacket, this, data);
+				
 			CachingDataPacket(data->GetSignature(),data);
-			BroadcastStopMessage(data);
+			
 			// 2018.1.11 added by sy
 			NotifyUpperLayer(data);
 			
@@ -1571,7 +1575,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
+		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
 	else
 	{
