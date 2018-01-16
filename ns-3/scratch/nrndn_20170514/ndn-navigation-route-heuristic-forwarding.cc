@@ -2025,11 +2025,11 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 {
 	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
 	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 	if(interval < 1)
 		return;
 	
-	m_resendInterestTime = Simulator::Now().GetSeconds();	
+	m_sendInterestTime = Simulator::Now().GetSeconds();	
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
