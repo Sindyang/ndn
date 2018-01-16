@@ -1670,7 +1670,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 		ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	}
 	
-    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<endl<<endl;
+    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<endl;
 	//if(sourceId == 97)
 		//getchar();
 	//getchar();
