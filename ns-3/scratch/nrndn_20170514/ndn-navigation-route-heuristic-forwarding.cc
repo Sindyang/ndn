@@ -2054,7 +2054,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 			cout<<newPriorityList[i]<<" ";
 		}
 		cout<<endl;
-		double random = m_uniformRandomVariable->GetInteger(0,300);
+		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
 		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//if(sourceId == 97)
