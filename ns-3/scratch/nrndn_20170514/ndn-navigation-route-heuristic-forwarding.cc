@@ -712,7 +712,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			SplitString(forwardRoute,routes," ");
 			if(routes.size() <= 1)
 			{
-				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线"<<std::endl;
+				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线 "<<seq<<std::endl;
 				BroadcastStopMessage(interest);
 				//getchar();
 				return;
@@ -976,6 +976,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			
 			CachingDataPacket(data->GetSignature(),data);
+			BroadcastStopMessage(data);
 			// 2018.1.11 added by sy
 			NotifyUpperLayer(data);
 			
