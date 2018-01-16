@@ -854,7 +854,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		{
 			//不在转发优先级列表中
 			cout<<"(forwarding.cc-OnInterest) Node id is not in PriorityList"<<endl;
-			NS_ASSERT_MSG(false,"RSU的转发优先级列表应该最高");
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
@@ -1875,7 +1874,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
