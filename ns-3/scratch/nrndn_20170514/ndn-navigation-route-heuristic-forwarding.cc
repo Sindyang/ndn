@@ -1563,13 +1563,13 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
-		if(m_sensor->getType() != "RSU")
-			BroadcastStopMessage(data);
 	}
 	else
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
 	}
+	if(m_sensor->getType() != "RSU")
+		BroadcastStopMessage(data);
 	getchar();
 }
 
