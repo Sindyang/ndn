@@ -1558,7 +1558,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	bool result = m_cs->AddInterest(nonce,interest);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包"<<endl;
+		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
 	}
 	else
 	{
