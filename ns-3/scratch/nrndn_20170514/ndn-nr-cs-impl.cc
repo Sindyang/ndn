@@ -482,10 +482,8 @@ NrCsImpl::DeleteInterest(const uint32_t nonce)
 		m_interest.erase(it);
 		size = GetInterestSize();
 		std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
-		return true;
 	}
 	std::cout<<"(cs-impl.cc-DeleteInterest) 该兴趣包不在缓存中"<<std::endl;
-	return false;
 }
 
 void
