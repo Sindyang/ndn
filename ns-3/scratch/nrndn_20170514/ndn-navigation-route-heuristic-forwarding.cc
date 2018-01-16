@@ -96,8 +96,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_HelloLogEnable(true),
 	m_gap(20),
 	m_TTLMax(3),
-	NoFwStop(false)
-	m_sendInterestTime(0),
+	NoFwStop(false),
+	m_sendInterestTime(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
