@@ -444,7 +444,6 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(msgdirection.first && msgdirection.second)
 		{
 			m_cs->DeleteInterest(interest->GetNonce());
-			cout<<"(forwarding.cc-OnInterest_Car) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
 			getchar();
 		}
 		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
