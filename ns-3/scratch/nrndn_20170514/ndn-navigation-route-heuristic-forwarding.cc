@@ -972,11 +972,17 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		{
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
-			std::unordered_set<std::string> lastroutes;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
+			//std::unordered_set<std::string> lastroutes;
 			
 			// 2018.1.11 added by sy
 			NotifyUpperLayer(data);
+			
+			CachingDataPacket(data->GetSignature(),data);
+			
+			Simulator::Schedule(
+				MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+				&NavigationRouteHeuristic::SendDataPacket, this, data);
+			
 			
 			return;
 		}
