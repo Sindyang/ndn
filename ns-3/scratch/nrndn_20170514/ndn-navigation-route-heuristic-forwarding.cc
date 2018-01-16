@@ -383,7 +383,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
+			CachingInterestPacket(interest->GetNonce(),interest);
 			//if(m_node->GetId() == 97)
 				//getchar();
 			return;
@@ -534,7 +535,9 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 			{
 				cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 				//getchar();
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+				CachingInterestPacket(seq,interest);
+				BroadcastStopMessage(interest);
 				
 				//if(nodeId == 97)
 					//getchar();
@@ -732,7 +735,9 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
 					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-					Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+					CachingInterestPacket(seq,interest);
+					BroadcastStopMessage(interest);
 					//重新选择路线发送兴趣包
 					//if(nodeId == 24)
 					    //getchar();
@@ -968,8 +973,9 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的数据包"<<endl;
 			//getchar();
 			std::unordered_set<std::string> lastroutes;
-			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
+			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingDataPacket,this,data->GetSignature(),data/*,lastroutes*/);
 			
+			CachingDataPacket(data->GetSignature(),data);
 			// 2018.1.11 added by sy
 			NotifyUpperLayer(data);
 			
@@ -1156,7 +1162,10 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			{
 				cout<<"(forwarding.cc-OnData_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				std::unordered_set<std::string> lastroutes;
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,lastroutes*/);
+				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,lastroutes*/);
+				CachingDataPacket(signature,data);
+				BroadcastStopMessage(data);
+				
 			}
 			else
 			{
@@ -1288,7 +1297,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
-				Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
+				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
+				CachingDataPacket(signature,data);
 				BroadcastStopMessage(data);
 				getchar();
 			}
@@ -1333,7 +1343,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
 					CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
-					BroadcastStopMessage(data);
+					//BroadcastStopMessage(data);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
 					cout<<"缓存该数据包"<<endl;
 					getchar();
@@ -1419,6 +1429,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					//cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 					//getchar();
+					CachingDataPacket(signature,data);
 					BroadcastStopMessage(data);
 					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
 				}
@@ -1540,7 +1551,6 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包"<<endl;
-		BroadcastStopMessage(interest);
 	}
 	else
 	{
@@ -1561,8 +1571,6 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包"<<endl;
-		if(m_sensor->getType() != "RSU")
-			BroadcastStopMessage(data);
 	}
 	else
 	{
