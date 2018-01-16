@@ -1610,8 +1610,8 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	
 	double x= m_sensor->getX();
 	double y= m_sensor->getY();
-	nrheader.setX(x);
-	nrheader.setY(y);
+	dstheader.setX(x);
+	dstheader.setY(y);
 	
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(dstheader);
