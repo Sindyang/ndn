@@ -441,7 +441,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		if(msgdirection.first && msgdirection.second)
+		if(msgdirection.first && msgdirection.second > 0)
 		{
 			m_cs->DeleteInterest(interest->GetNonce());
 			getchar();
