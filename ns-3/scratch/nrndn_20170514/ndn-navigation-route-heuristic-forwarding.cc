@@ -441,15 +441,15 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		/*if(msgdirection.first && msgdirection.second > 0)
+		if(msgdirection.first && msgdirection.second > 0)
 		{
-			m_cs->DeleteForwardInterest(interest->GetNonce());
+			m_cs->DeleteInterest(interest->GetNonce());
 			getchar();
-		}*/
+		}
 		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		// 2017.12.27 
-		return;
+		//return;
 	}
 	
 	//获取优先列表
@@ -609,12 +609,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		/*if(msgdirection.first && msgdirection.second)
+		if(msgdirection.first && msgdirection.second)
 		{
-			m_cs->DeleteForwardInterest(interest->GetNonce());
+			m_cs->DeleteInterest(interest->GetNonce());
 			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
 			getchar();
-		}*/
+		}
 		
 		cout<<"(forwarding.cc-OnInterest_RSU) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
@@ -2024,7 +2024,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		}
 		if(idx == id)
 		{
-			consumer->SendPacket();
+			//consumer->SendPacket();
 			cout<<"(forwarding.cc-notifyUpperOnInterest) idx "<<idx<<endl;
 			getchar();
 			break;
@@ -2037,6 +2037,13 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
+	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
+	if(interval < 1)
+	{
+		cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
+		return;
+	}
+	m_sendInterestTime = Simulator::Now().GetSeconds();
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
