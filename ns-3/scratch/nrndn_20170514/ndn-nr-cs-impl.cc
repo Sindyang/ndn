@@ -449,7 +449,7 @@ NrCsImpl::GetInterest(std::string lane)
 	}
 	size = GetInterestSize();
 	std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
-	getchar();
+	//getchar();
 	return InterestCollection;
 }
 
