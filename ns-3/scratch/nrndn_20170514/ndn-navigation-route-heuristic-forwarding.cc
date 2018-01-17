@@ -1673,7 +1673,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 		ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	}
 	
-    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<endl;
+    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<" m_sendInterestTime "<<m_sendInterestTime<<endl;
 	//if(sourceId == 97)
 		//getchar();
 	//getchar();
@@ -2083,7 +2083,7 @@ void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<
 	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 	if(interval < 1)
 	{
-		cout<<"(forwarding.cc-SendForwardInterestInCache) 时间小于一秒，不转发"<<endl;
+		cout<<"(forwarding.cc-SendForwardInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
 		return;
 	}
 	
