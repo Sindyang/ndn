@@ -523,7 +523,7 @@ NrCsImpl::PrintInterestEntry(uint32_t nonce)
 /*兴趣包部分*/
 
 /*准备转发的兴趣包*/
-bool NrCsImpl::AddForwardInterest(uint32_t nonce,Ptr<const Interest> interest)
+/*bool NrCsImpl::AddForwardInterest(uint32_t nonce,Ptr<const Interest> interest)
 {
 	Ptr<cs::EntryInterest> csEntryInterest = FindForwardInterest(nonce);
 	if(csEntryInterest != 0)
@@ -641,7 +641,7 @@ NrCsImpl::PrintForwardInterestEntry(uint32_t nonce)
 	uint32_t nodeId = nrheader.getSourceId();
 	std::cout<<"(cs-impl.cc-PrintForwardInterestEntry) 兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
 	<<" 兴趣包的名字为 "<<csEntryInterest->GetName().toUri()<<std::endl;
-}
+}*/
 
 /*准备转发的兴趣包*/
 
