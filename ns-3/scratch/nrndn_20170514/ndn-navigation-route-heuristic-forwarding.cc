@@ -441,11 +441,11 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		if(msgdirection.first && msgdirection.second > 0)
+		/*if(msgdirection.first && msgdirection.second > 0)
 		{
 			m_cs->DeleteForwardInterest(interest->GetNonce());
 			getchar();
-		}
+		}*/
 		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		// 2017.12.27 
@@ -609,12 +609,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		if(msgdirection.first && msgdirection.second)
+		/*if(msgdirection.first && msgdirection.second)
 		{
 			m_cs->DeleteForwardInterest(interest->GetNonce());
 			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
 			getchar();
-		}
+		}*/
 		
 		cout<<"(forwarding.cc-OnInterest_RSU) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
@@ -1661,7 +1661,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	
-	m_cs->AddForwardInterest(nonce,interest);
+	//m_cs->AddForwardInterest(nonce,interest);
 	m_sendInterestTime = Simulator::Now().GetSeconds();	
 	
 	// 4. record the forward times
@@ -1974,7 +1974,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
-		if(m_cs->GetForwardInterestSize() > 0)
+		/*if(m_cs->GetForwardInterestSize() > 0)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 有未转发成功的兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
@@ -1983,7 +1983,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				SendForwardInterestInCache(forwardinterestcollection);
 			}
-		}
+		}*/
 	}
 	
 	// 2018.1.7
@@ -2076,7 +2076,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	}
 }
 
-void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection)
+/*void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection)
 {
 	cout<<"进入(forwarding.cc-SendForwardInterestInCache)"<<endl;
 	//增加一个时间限制，超过1s才进行转发
@@ -2124,7 +2124,7 @@ void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<
 			//getchar();
 		getchar();
 	}
-}
+}*/
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datacollection)
 {
@@ -2308,7 +2308,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
-	if(routes_front.size() > 0 && m_cs->GetForwardInterestSize() > 0)
+	/*if(routes_front.size() > 0 && m_cs->GetForwardInterestSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 有未转发成功的兴趣包在缓存中"<<endl;
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
@@ -2322,7 +2322,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 			//getchar();
 		}
-	}
+	}*/
 	/*if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;

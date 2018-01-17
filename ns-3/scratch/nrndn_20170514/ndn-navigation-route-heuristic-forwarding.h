@@ -276,7 +276,7 @@ private:
 	void SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection);
 	
 	//2018.1.17 重新发送未转发成功的兴趣包
-	void SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection);
+	//void SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection);
 
 	// 2018.1.9 发送缓存的数据包
 	void SendDataInCache(std::map<uint32_t,Ptr<const Data> > datatcollection);
