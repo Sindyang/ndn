@@ -173,6 +173,34 @@ public:
 	PrintInterestEntry(uint32_t nonce);
 	
 	/*兴趣包部分*/
+	
+	/*准备转发的兴趣包*/
+	// 添加兴趣包进入缓存中
+	bool
+    AddForwardInterest (uint32_t nonce, Ptr<const Interest> Interest);
+	
+	//返回当前所在路段为lane的兴趣包
+    std::map<uint32_t,Ptr<const Interest> >
+    GetForwardInterest(std::string lane);
+	
+	//删除指定的兴趣包
+	void
+    DeleteForwardInterest(const uint32_t nonce);
+	
+	uint32_t
+    GetForwardInterestSize () const;
+	
+	//根据序列号查找兴趣包
+    Ptr<EntryInterest>
+    FindForwardInterest (const uint32_t nonce);
+	
+	// 输出缓存中的兴趣包
+	void 
+	PrintForwardInterestCache() const;
+	
+	// 根据序列号输出兴趣包
+	void 
+	PrintForwardInterestEntry(uint32_t nonce);
   
     
 protected:
@@ -187,6 +215,7 @@ private:
     std::map<uint32_t,Ptr<cs::Entry> >	m_data;
 	std::map<uint32_t,Ptr<cs::EntryInterest>> m_interest;
 	std::map<uint32_t,std::unordered_set<std::string> > m_lastroutes;
+	std::map<uint32_t,Ptr<cs::EntryInterest>> m_forwardinterest;
 };
 
 

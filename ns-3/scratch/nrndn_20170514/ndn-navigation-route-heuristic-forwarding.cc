@@ -443,7 +443,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//2018.1.16 从缓存中删除兴趣包
 		if(msgdirection.first && msgdirection.second > 0)
 		{
-			m_cs->DeleteInterest(interest->GetNonce());
+			m_cs->DeleteForwardInterest(interest->GetNonce());
 			getchar();
 		}
 		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
@@ -611,7 +611,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//2018.1.16 从缓存中删除兴趣包
 		if(msgdirection.first && msgdirection.second)
 		{
-			m_cs->DeleteInterest(interest->GetNonce());
+			m_cs->DeleteForwardInterest(interest->GetNonce());
 			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
 			getchar();
 		}
@@ -1661,6 +1661,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 	
+	m_cs->AddForwardInterest(nonce,interest);
+	
 	// 4. record the forward times
 	// 2017.12.23 added by sy
 	// 若源节点与当前节点相同，则不需要记录转发次数
@@ -1957,7 +1959,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			//cout<<"(forwarding.cc-ProcessHello) 有兴趣包在缓存中"<<endl;
 			const string& localLane = m_sensor->getLane();
-		//	cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
+			//cout<<"(forwarding.cc-ProcessHello) 车辆当前所在路段为 "<<localLane<<endl;
 			//获得缓存的兴趣包
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(localLane);
 			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
@@ -1971,6 +1973,16 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
+		if(m_cs->GetForwardInterestSize() > 0)
+		{
+			cout<<"(forwarding.cc-ProcessHello) 有未转发成功的兴趣包在缓存中"<<endl;
+			const string& localLane = m_sensor->getLane();
+			map<uint32_t,Ptr<const Interest> > forwardinterestcollection = m_cs->GetForwardInterest(localLane);
+			if(!forwardinterestcollection.empty())
+			{
+				SendForwardInterestInCache(forwardinterestcollection);
+			}
+		}
 	}
 	
 	// 2018.1.7
@@ -2024,12 +2036,6 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
-	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
-	if(interval < 1)
-		return;
-	
-	m_sendInterestTime = Simulator::Now().GetSeconds();	
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
@@ -2043,6 +2049,57 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
         uint32_t sourceId = nrheader.getSourceId();
 		
 		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
+		
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
+		std::vector<std::string> routes;
+		SplitString(interest->GetRoutes(),routes," ");
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
+		
+		std::vector<uint32_t> newPriorityList;
+		if(m_sensor->getType() == "RSU")
+			newPriorityList = RSUGetPriorityListOfInterest(routes[0]);
+		else
+		    newPriorityList = VehicleGetPriorityListOfInterest();
+		
+		for(uint32_t i = 0;i < newPriorityList.size();i++)
+		{
+			cout<<newPriorityList[i]<<" ";
+		}
+		cout<<endl;
+		double random = m_uniformRandomVariable->GetInteger(0,100);
+		Time sendInterval(MilliSeconds(random));
+		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+		//if(sourceId == 97)
+			//getchar();
+		getchar();
+	}
+}
+
+void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection)
+{
+	cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
+	if(interval < 1)
+	{
+		cout<<"(forwarding.cc-SendForwardInterestInCache) 时间小于一秒，不转发"<<endl;
+		return;
+	}
+	
+	m_sendInterestTime = Simulator::Now().GetSeconds();	
+	std::map<uint32_t,Ptr<const Interest> >::iterator it;
+	for(it = forwardinterestcollection.begin();it != forwardinterestcollection.end();it++)
+	{
+		uint32_t nonce = it->first;
+		uint32_t nodeId = m_node->GetId();
+		
+		//added by sy
+		Ptr<const Interest> interest = it->second;
+        ndn::nrndn::nrHeader nrheader;
+        interest->GetPayload()->PeekHeader(nrheader);
+        uint32_t sourceId = nrheader.getSourceId();
+		
+		cout<<"(forwarding.cc-SendForwardInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
 		
 		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
 		std::vector<std::string> routes;
@@ -2251,6 +2308,21 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) RSU前方无路段存在车辆或者兴趣包缓存为空"<<endl;
 	}
 	
+	if(routes_front.size() > 0 && m_cs->GetForwardInterestSize() > 0)
+	{
+		cout<<"(forwarding.cc-ProcessHello) 有未转发成功的兴趣包在缓存中"<<endl;
+		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
+		{
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			map<uint32_t,Ptr<const Interest> > forwardinterestcollection = m_cs->GetForwardInterest(*itroutes_front);
+			if(!forwardinterestcollection.empty())
+			{
+				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
+				SendForwardInterestInCache(forwardinterestcollection);
+			}
+			//getchar();
+		}
+	}
 	/*if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;

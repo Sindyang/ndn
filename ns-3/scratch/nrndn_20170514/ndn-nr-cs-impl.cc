@@ -428,7 +428,7 @@ NrCsImpl::GetInterest(std::string lane)
 	//PrintInterestCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
-	for(it = m_interest.begin();it != m_interest.end();it++)
+	for(it = m_interest.begin();it != m_interest.end();/*it++*/)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes(); 
@@ -440,16 +440,16 @@ NrCsImpl::GetInterest(std::string lane)
 		{
 			//PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			//m_interest.erase(it++);
+			m_interest.erase(it++);
 	  	}
-		//else
-		//{
-		//	++it;
-		//}
+		else
+		{
+			++it;
+		}
 	}
-	//size = GetInterestSize();
-	//std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
-	//getchar();
+	size = GetInterestSize();
+	std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
+	getchar();
 	return InterestCollection;
 }
 
@@ -521,6 +521,129 @@ NrCsImpl::PrintInterestEntry(uint32_t nonce)
 }
 
 /*兴趣包部分*/
+
+/*准备转发的兴趣包*/
+bool NrCsImpl::AddForwardInterest(uint32_t nonce,Ptr<const Interest> interest)
+{
+	Ptr<cs::EntryInterest> csEntryInterest = FindForwardInterest(nonce);
+	if(csEntryInterest != 0)
+	{
+		std::cout<<"(cs-impl.cc-AddForwardInterest) 该兴趣包已经被加入到缓存中"<<std::endl;
+		//PrintInterestEntry(nonce);
+		return false;
+	}
+	uint32_t size = GetForwardInterestSize();
+	std::cout<<"(cs-impl.cc-AddForwardInterest) 加入该兴趣包前的缓存大小为 "<<size<<std::endl;
+    csEntryInterest = ns3::Create<cs::EntryInterest>(this,interest);
+	
+    m_forwardinterest[nonce] = csEntryInterest;
+	size = GetForwardInterestSize();
+	std::cout<<"(NrCsImpl.cc-AddForwardInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
+	return true;
+}
+
+std::map<uint32_t,Ptr<const Interest> >
+NrCsImpl::GetForwardInterest(std::string lane)
+{ 
+	//uint32_t size = GetForwardInterestSize();
+	//std::cout<<"(cs-impl.cc-GetForwardInterest) 该路段有车辆 "<<lane<<std::endl;
+	//std::cout<<"(cs-impl.cc-GetForwardInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
+	//PrintInterestCache();
+	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
+	for(it = m_forwardinterest.begin();it != m_forwardinterest.end();it++)
+	{
+		Ptr<const Interest> interest = it->second->GetInterest();
+		std::string routes = interest->GetRoutes(); 
+		std::cout<<"(cs-interest.cc-GetInterest) 兴趣包实际导航路线 "<<routes<<std::endl;
+		std::string currentroute = routes.substr(0,lane.length());
+		std::cout<<"(cs-impl.cc-GetInterest) 兴趣包下一行驶路段 "<<currentroute<<std::endl;
+		//getchar();
+		if(currentroute == lane)
+		{
+			//PrintEntryInterest(interest->GetNonce());
+			InterestCollection[interest->GetNonce()] = interest;
+			//m_forwardinterest.erase(it++);
+	  	}
+		//else
+		//{
+		//	++it;
+		//}
+	}
+	//size = GetForwardInterestSize();
+	//std::cout<<"(cs-impl.cc-GetForwardInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
+	getchar();
+	return InterestCollection;
+}
+
+uint32_t
+NrCsImpl::GetForwardInterestSize () const
+{
+	return m_forwardinterest.size ();
+}
+
+Ptr<cs::EntryInterest>
+NrCsImpl::FindForwardInterest(const uint32_t nonce)
+{
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it = m_forwardinterest.find(nonce);
+	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
+	if(it != m_forwardinterest.end())
+	{
+		return it->second;
+	}
+	return 0;
+}
+
+void
+NrCsImpl::DeleteForwardInterest(const uint32_t nonce)
+{
+	uint32_t size = GetForwardInterestSize();
+	std::cout<<"(cs-impl.cc-DeleteForwardInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it = m_forwardinterest.find(nonce);
+	if(it != m_forwardinterest.end())
+	{
+		m_forwardinterest.erase(it);
+		size = GetForwardInterestSize();
+		std::cout<<"(cs-impl.cc-DeleteForwardInterest) 删除兴趣包后的缓存大小为 "<<size<<" 兴趣包序列号为 "<<nonce<<std::endl;
+	}
+	else
+		std::cout<<"(cs-impl.cc-DeleteForwardInterest) 该兴趣包不在缓存中"<<std::endl;
+}
+
+void
+NrCsImpl::PrintForwardInterestCache () const
+{
+	std::cout<<"(cs-impl.cc-PrintForwardInterestCache)"<<std::endl;
+	std::map<uint32_t,Ptr<cs::EntryInterest> >::const_iterator it; 
+	for(it=m_forwardinterest.begin();it!=m_forwardinterest.end();++it)
+	{
+		Ptr<const Interest> interest = it->second->GetInterest();
+		Ptr<const Packet> nrPayload	= interest->GetPayload();
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader(nrheader);
+		//获取发送兴趣包节点的ID
+		uint32_t nodeId = nrheader.getSourceId();
+		std::cout<<"兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
+		<<" 兴趣包的名字为 "<<it->second->GetName().toUri()<<std::endl;
+	}
+	std::cout<<std::endl;
+}
+
+void
+NrCsImpl::PrintForwardInterestEntry(uint32_t nonce) 
+{
+	Ptr<cs::EntryInterest> csEntryInterest = FindForwardInterest(nonce);
+	Ptr<const Interest> interest = csEntryInterest->GetInterest();
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	std::cout<<"(cs-impl.cc-PrintForwardInterestEntry) 兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
+	<<" 兴趣包的名字为 "<<csEntryInterest->GetName().toUri()<<std::endl;
+}
+
+/*准备转发的兴趣包*/
 
 void NrCsImpl::DoInitialize(void)
 {
