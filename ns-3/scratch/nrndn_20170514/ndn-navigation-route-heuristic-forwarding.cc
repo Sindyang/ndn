@@ -363,12 +363,12 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		
 		//更新兴趣包的实际转发路线
 		std::string routes = interest->GetRoutes();
-		cout<<"(forwarding.cc-OnInterest_Car) routes "<<routes<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) routes "<<routes<<endl;
 		const string& localLane = m_sensor->getLane();
-		cout<<"(forwarding.cc-OnInterest_Car) localLane "<<localLane<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) localLane "<<localLane<<endl;
 		std::size_t found = routes.find(localLane);
 		std::string newroutes = routes.substr(found);
-		cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
 		interest->SetRoutes(newroutes);
 		//getchar();
         
@@ -596,7 +596,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//获取兴趣包的实际转发路线
 	std::string forwardRoute = interest->GetRoutes();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<endl;
+	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 	
 	//if(nodeId == 24)

@@ -402,7 +402,7 @@ bool NrCsImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	if(csEntryInterest != 0)
 	{
 		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中"<<std::endl;
-		PrintInterestEntry(nonce);
+		//PrintInterestEntry(nonce);
 		return false;
 	}
 	//uint32_t size = GetInterestSize();
