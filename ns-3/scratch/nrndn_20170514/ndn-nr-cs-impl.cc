@@ -422,9 +422,9 @@ bool NrCsImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 std::map<uint32_t,Ptr<const Interest> >
 NrCsImpl::GetInterest(std::string lane)
 {
-	//uint32_t size = GetInterestSize();
+	uint32_t size = GetInterestSize();
 	//std::cout<<"(cs-impl.cc-GetInterest) 该路段有车辆 "<<lane<<std::endl;
-	//std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
+	std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
 	//PrintInterestCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
