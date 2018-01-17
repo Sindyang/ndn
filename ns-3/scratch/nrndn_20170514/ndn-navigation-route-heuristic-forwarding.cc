@@ -1657,6 +1657,8 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 
 	Ptr<Interest> interest = Create<Interest> (*src);
 	interest->SetPayload(newPayload);
+	
+	CachingInterestPacket(nonce,interest);
 
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
