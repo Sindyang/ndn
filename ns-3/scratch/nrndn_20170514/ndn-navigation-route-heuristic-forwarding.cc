@@ -1041,6 +1041,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		cout<<"该数据包已经被发送"<<endl;
 		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
+		// 2018.1.18
 		return;
 	}
 	
