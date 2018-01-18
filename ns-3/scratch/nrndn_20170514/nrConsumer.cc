@@ -276,7 +276,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	// 2018.1.12 added by sy
 	if(m_dataReceivedSeen.Get(signature))
 	{
-		std::cout<<"(nrConsumer.cc-OnData) 车辆已经收到过该数据包"<<std::endl;
+		std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
 		return;
 	}
 
