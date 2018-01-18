@@ -183,7 +183,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	return true;
 }
     
-std::map<uint32_t,Ptr<const Data> >
+/*std::map<uint32_t,Ptr<const Data> >
 NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route)
 {
 	uint32_t size = GetDataSize();
@@ -246,7 +246,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 	std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 	
 	return DataCollection;
-}
+}*/
 
 
 std::map<uint32_t,Ptr<const Data> >
