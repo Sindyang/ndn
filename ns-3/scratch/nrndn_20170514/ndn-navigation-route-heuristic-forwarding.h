@@ -529,6 +529,9 @@ private:
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_cs;
 
 	uint32_t				m_CacheSize;
+	
+	// 2018.1.18
+	std::map< uint32_t,std::unordered_set<std::string> > m_RSUforwardedData;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
 							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages

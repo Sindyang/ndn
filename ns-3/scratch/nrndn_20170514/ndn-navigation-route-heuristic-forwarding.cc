@@ -991,7 +991,6 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
 			
-			
 			return;
 		}
 
@@ -1306,6 +1305,20 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			std::vector<uint32_t> newPriorityList = collection.first;
 			std::unordered_set<std::string> remainroutes = collection.second;
 			
+			//获取该数据包已转发过的上一跳路段
+			std::unordered_set<std::string> forwardedroutes;
+			for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
+			{
+				std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+				if(itremain != remainroutes.end())
+					continue;
+				forwardedroutes.insert(*itinterest);
+				cout<<"(forwarding.cc-OnData_RSU) 有车辆的上一跳路段为 "<<*itinterest<<endl;
+			}
+			if(!forwardroutes.empty())
+				m_RSUforwardedData[signature] = forwardedroutes;
+			
+			getchar();
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
@@ -1434,6 +1447,19 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//getchar();
 				std::vector<uint32_t> newPriorityList = collection.first;
 				std::unordered_set<std::string> remainroutes = collection.second;
+				
+				//获取该数据包已转发过的上一跳路段
+				std::unordered_set<std::string> forwardedroutes;
+				for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
+				{
+					std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+					if(itremain != remainroutes.end())
+						continue;
+					forwardedroutes.insert(*itinterest);
+					cout<<"(forwarding.cc-OnData_RSU) 有车辆的上一跳路段为 "<<*itinterest<<endl;
+				}
+				if(!forwardroutes.empty())
+					m_RSUforwardedData[signature] = forwardedroutes;
 			
 				// 2018.1.15 
 				if(newPriorityList.empty())
@@ -1993,7 +2019,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
 			std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route;
-			//map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData1(dataname_route);
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
@@ -2163,8 +2188,61 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 				const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 				NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
-				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
+				
+				//获取该数据包已转发过的上一跳路段
+				std::unordered_set<std::string> forwardedroutes;
+				std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
+				if(itrsu != m_RSUforwardedData.end())
+					forwardedroutes = itrsu->second;
+				
+				std::unordered_set<std::string> newinterestRoutes;
+				if(forwardedroutes.empty())
+				{
+					newinterestRoutes = interestRoutes;
+					cout<<"(forwarding.cc-SendDataInCache) 数据包对应的上一跳路段全部未转发过"<<endl;
+				}
+				else
+				{
+					//从上一跳路段中去除已转发过的路段
+					for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
+					{
+						std::unordered_set<std::string> itforward = forwardedroutes.find(*itinterest);
+						if(itforward != forwardedroutes.end())
+						{
+							newinterestRoutes.insert(*itinterest);
+							cout<<"(forwarding.cc-SendDataInCache) 未转发过的上一跳路段为 "<<*itinterest<<endl;
+						}
+							
+					}
+				}
+				
+				if(newinterestRoutes.empty())
+				{
+					cout<<"该数据包对应的上一跳路段全部转发过"<<endl;
+					continue;
+				}
+					
+				
+				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),newinterestRoutes);
 				newPriorityList = collection.first;
+				std::unordered_set<std::string> remainroutes = collection.second;
+				
+				if(newPriorityList.empty())
+				{
+					cout<<"该数据包对应的未转发过的上一跳路段为空"<<endl;
+					continue;
+				}
+			
+				//加入转发过的上一跳路段
+				for(std::unordered_set<std::string>::iterator itinterest = newinterestRoutes.begin();itinterest != newinterestRoutes.end();itinterest++)
+				{
+					std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+					if(itremain != remainroutes.end())
+						continue;
+					forwardedroutes.insert(*itinterest);
+				}
+				if(!forwardroutes.empty())
+					m_RSUforwardedData[signature] = forwardedroutes;
 			}
 		}
 		else
@@ -2179,7 +2257,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		}
 		cout<<endl;
 		
-		//getchar();
+		getchar();
 		
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
@@ -2335,12 +2413,12 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
-		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		//for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
-		//{
-		//	cout<<*it<<" ";
-		//}
-		//cout<<endl;
+		cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
+		for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
 		//cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为 "<<endl;
@@ -2365,8 +2443,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的数据包"<<endl;
 		}
-		
-		
 		//getchar();
 	}
 	m_preNB = m_nb;
