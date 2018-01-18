@@ -1307,9 +1307,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			
 			//获取该数据包已转发过的上一跳路段
 			std::unordered_set<std::string> forwardedroutes;
-			std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
-			if(itrsu != m_RSUforwardedData.end())
-				forwardedroutes = itrsu->second;
+			//std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
+			//if(itrsu != m_RSUforwardedData.end())
+				//forwardedroutes = itrsu->second;
 			
 			for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
 			{
@@ -1454,9 +1454,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				
 				//获取该数据包已转发过的上一跳路段
 				std::unordered_set<std::string> forwardedroutes;
-				std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
-				if(itrsu != m_RSUforwardedData.end())
-					forwardedroutes = itrsu->second;
+				//std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
+				//if(itrsu != m_RSUforwardedData.end())
+					//forwardedroutes = itrsu->second;
 				
 				for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
 				{
