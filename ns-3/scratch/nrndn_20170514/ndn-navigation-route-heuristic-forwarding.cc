@@ -2207,7 +2207,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 					//从上一跳路段中去除已转发过的路段
 					for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
 					{
-						std::unordered_set<std::string> itforward = forwardedroutes.find(*itinterest);
+						std::unordered_set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if(itforward != forwardedroutes.end())
 						{
 							newinterestRoutes.insert(*itinterest);
