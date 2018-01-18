@@ -110,7 +110,7 @@ public:
 	
 	// 得到相同名字的数据包
 	std::map<uint32_t,Ptr<const Data> >
-    GetData1(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
+    GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
 	
 	std::map<uint32_t,Ptr<const Data> >
     GetData(std::vector<std::string> interest);
