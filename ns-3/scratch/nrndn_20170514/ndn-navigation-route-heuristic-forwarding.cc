@@ -2292,7 +2292,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 	
 	if(routes_front.size() > 0 && m_cs->GetInterestSize() > 0)
