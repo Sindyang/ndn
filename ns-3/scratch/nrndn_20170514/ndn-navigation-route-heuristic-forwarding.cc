@@ -1458,7 +1458,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					forwardedroutes.insert(*itinterest);
 					cout<<"(forwarding.cc-OnData_RSU) 有车辆的上一跳路段为 "<<*itinterest<<endl;
 				}
-				if(!forwardroutes.empty())
+				if(!forwardedroutes.empty())
 					m_RSUforwardedData[signature] = forwardedroutes;
 				getchar();
 			
