@@ -1309,7 +1309,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			std::unordered_set<std::string> forwardedroutes;
 			for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
 			{
-				std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+				std::unordered_set<std::string>::iterator itremain = remainroutes.find(*itinterest);
 				if(itremain != remainroutes.end())
 					continue;
 				forwardedroutes.insert(*itinterest);
@@ -1452,7 +1452,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				std::unordered_set<std::string> forwardedroutes;
 				for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
 				{
-					std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+					std::unordered_set<std::string>::iterator itremain = remainroutes.find(*itinterest);
 					if(itremain != remainroutes.end())
 						continue;
 					forwardedroutes.insert(*itinterest);
@@ -2237,12 +2237,12 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				//加入转发过的上一跳路段
 				for(std::unordered_set<std::string>::iterator itinterest = newinterestRoutes.begin();itinterest != newinterestRoutes.end();itinterest++)
 				{
-					std::unordered_set<std::string> itremain = remainroutes.find(*itinterest);
+					std::unordered_set<std::string>::iterator itremain = remainroutes.find(*itinterest);
 					if(itremain != remainroutes.end())
 						continue;
 					forwardedroutes.insert(*itinterest);
 				}
-				if(!forwardroutes.empty())
+				if(!forwardedroutes.empty())
 					m_RSUforwardedData[signature] = forwardedroutes;
 			}
 		}
