@@ -2333,31 +2333,31 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-		cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
-		cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
-		{
-			cout<<*it<<" ";
-		}
-		cout<<endl;
-		cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
+		//for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
+		//{
+		//	cout<<*it<<" ";
+		//}
+		//cout<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
-		cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为 "<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为 "<<endl;
 		
 		std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
 		
-		for(std::unordered_map<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
+		/*for(std::unordered_map<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
 		{
-			cout<<"数据包名称为 "<<it->first<<endl;
-			cout<<"对应的上一跳节点为 ";
+			//cout<<"数据包名称为 "<<it->first<<endl;
+			//cout<<"对应的上一跳节点为 ";
 			std::unordered_set<std::string> collection = it->second;
 			for(std::unordered_set<std::string>::iterator itcollect = collection.begin();itcollect != collection.end();itcollect++)
 			{
 				cout<<*itcollect<<" ";
 			}
 			cout<<endl;
-		}
+		}*/
 		
 		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		if(!datacollection.empty())
