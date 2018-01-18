@@ -2359,7 +2359,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			cout<<endl;
 		}
 		
-		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData1(dataandroutes);
+		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		if(!datacollection.empty())
 		{
 			SendDataInCache(datacollection);
