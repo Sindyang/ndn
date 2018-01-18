@@ -1356,7 +1356,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		
 		if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
 		{
-			//第一次收到该数据包，总之是要丢掉的
+			//第一次收到该数据包
 			if(!isDuplicatedData(nodeId,signature))
 			{
 				//这部分不一定需要 
@@ -2181,8 +2181,6 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
         data->GetPayload()->PeekHeader(nrheader);
         uint32_t sourceId = nrheader.getSourceId();
 		
-		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
-		
 		std::vector<uint32_t> newPriorityList;
 		
 		if(m_sensor->getType() == "RSU")
@@ -2261,6 +2259,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			newPriorityList = VehicleGetPriorityListOfData();
 		}
 			
+		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;	
 		cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;	
 		for(uint32_t i = 0;i < newPriorityList.size();i++)
 		{
