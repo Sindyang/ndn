@@ -226,7 +226,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				sortlistRSU.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -237,7 +237,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfInterest
 		else
 		{
 			std::pair<bool, double> result = m_sensor->VehicleGetDistanceWithVehicle(nb->second.m_x,nb->second.m_y);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			//若result.second >= 0,会将自身加入转发优先级列表中
 			if(result.first && result.second > 0)
 			{
@@ -302,7 +302,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 			if(lane == nb->second.m_lane)
 			{
 				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
-				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				if(result.first && result.second > 0)
 				{
 					sortlistVehicle.insert(std::pair<double,uint32_t>(result.second,nb->first));
@@ -408,7 +408,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"(forwarding.cc-OnInterest_Car)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	   // cout<<"(forwarding.cc-OnInterest_Car)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		//getchar();
 		return;
 	}
@@ -905,7 +905,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	vector<string> futureinterest;
 	if(it != interestroute.end())
 	{
-		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段为兴趣路段"<<endl;
+		//cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段为兴趣路段"<<endl;
 		for(;it != interestroute.end();it++)
 		{
 			futureinterest.push_back(*it);
@@ -1007,7 +1007,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		NotifyUpperLayer(data);
 
 		uint32_t myNodeId = m_node->GetId();
-		cout<<"(forwarding.cc-OnData_Car) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
+		//cout<<"(forwarding.cc-OnData_Car) 应用层的数据包事件设置成功，源节点 "<<myNodeId<<endl<<endl;
 		//getchar();
 		return;
 	}
@@ -1357,7 +1357,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
 					//BroadcastStopMessage(data);
 					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
-					cout<<"缓存该数据包"<<endl;
+					//cout<<"缓存该数据包"<<endl;
 					//getchar();
 					return;
 				}
@@ -1562,7 +1562,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	}
 	else
 	{
-		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
+		//cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 	}
 	//getchar();
 }
@@ -1573,7 +1573,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
  */
 void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> data/*,std::unordered_set<std::string> lastroutes*/)
 {
-	cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
+	//cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
 	//bool result = m_cs->AddData1(signature,data,lastroutes);
 	bool result = m_cs->AddData(signature,data);
 	if(result)
@@ -1582,7 +1582,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	}
 	else
 	{
-		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
+		//cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
 	}
 	//getchar();
 }
@@ -2040,7 +2040,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 	if(interval < 1)
 	{
-		cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
+		//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
 		return;
 	}
 	m_sendInterestTime = Simulator::Now().GetSeconds();

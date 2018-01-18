@@ -204,7 +204,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 	}*/
 	//else
 	//{
-		std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
+		//std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
 		std::unordered_map<std::string,std::unordered_set<std::string> >::iterator itdataroute = dataname_route.begin();
 		//从缓存中取出对应的数据包
 		for(;itdataroute != dataname_route.end();itdataroute++)
@@ -277,10 +277,10 @@ NrCsImpl::GetData(std::vector<std::string> interest)
 std::map<uint32_t,Ptr<const Data> >
 NrCsImpl::GetData()
 {
-	std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
+	//std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
 	
-	uint32_t size = GetDataSize();
-	std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
+	//uint32_t size = GetDataSize();
+	//std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
 	
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
@@ -292,8 +292,8 @@ NrCsImpl::GetData()
 	}
 	m_data.clear();
 	
-	size = GetDataSize();
-	std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
+	//size = GetDataSize();
+	//std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 	
 	return DataCollection;
 }
