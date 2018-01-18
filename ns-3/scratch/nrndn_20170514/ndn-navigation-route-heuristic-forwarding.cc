@@ -1460,6 +1460,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				}
 				if(!forwardroutes.empty())
 					m_RSUforwardedData[signature] = forwardedroutes;
+				getchar();
 			
 				// 2018.1.15 
 				if(newPriorityList.empty())
