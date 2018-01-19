@@ -564,6 +564,8 @@ private:
 	
 	double m_sendInterestTime;
 	
+	double m_sendDataTime;
+	
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 };
 } /* namespace nrndn */

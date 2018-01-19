@@ -97,7 +97,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_gap(20),
 	m_TTLMax(3),
 	NoFwStop(false),
-	m_sendInterestTime(0)
+	m_sendInterestTime(0),
+	m_sendDataTime(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -1377,7 +1378,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				forwardedroutes.insert(forwardLane);
 				m_RSUforwardedData[signature] = forwardedroutes;
 			}
-			cout<<"该数据包已经被发送，上一跳路段为 "<<forwardLane<<endl;
+			cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
 			//getchar();
 			NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 			//2018.1.2 RSU有可能重复转发数据包
@@ -2201,6 +2202,14 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datacollection)
 {
+	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+	if(interval < 1)
+	{
+		//cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
+		return;
+	}
+	m_sendDataTime = Simulator::Now().GetSeconds();
+	
 	std::map<uint32_t,Ptr<const Data>>::iterator it;
 	for(it = datacollection.begin();it != datacollection.end();it++)
 	{
