@@ -538,7 +538,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				CachingInterestPacket(seq,interest);
 				//BroadcastStopMessage(interest);
-				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopMessage,this,interest);
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 				//if(nodeId == 97)
 					//getchar();
 			}
@@ -721,7 +721,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			if(routes.size() <= 1)
 			{
 				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线 "<<seq<<std::endl;
-				BroadcastStopMessage(interest);
+				BroadcastStopInterestMessage(interest);
 				//getchar();
 				return;
 			}
@@ -746,7 +746,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 					CachingInterestPacket(seq,interest);
 					//BroadcastStopMessage(interest);
-					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopMessage,this,interest);
+					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 					//重新选择路线发送兴趣包
 					//if(nodeId == 24)
 					    //getchar();
@@ -1181,7 +1181,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 				//BroadcastStopMessage(data);
 				m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
-					&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
+					&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
 			}
 			else
 			{
@@ -1274,7 +1274,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		if(!Will)
 		{
 			//或者改为广播停止转发数据包
-			BroadcastStopMessage(data);
+			BroadcastStopDataMessage(data);
 			return;
 		}
 		else
@@ -1336,7 +1336,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//BroadcastStopMessage(data);
 				m_sendingDataEvent[nodeId][signature]=
 				Simulator::Schedule(sendInterval,
-				&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
+				&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
 				//getchar();
 			}
 			else
@@ -1421,7 +1421,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			if(!Will)
 			{
 				//或者改为广播停止转发数据包
-				BroadcastStopMessage(data);
+				BroadcastStopDataMessage(data);
 				cout<<"PIT列表中没有该数据包对应的表项"<<endl;
 			//	getchar();
 				return;
@@ -1484,7 +1484,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					//BroadcastStopMessage(data);
 					m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
-					&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
+					&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
 					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
 				}
 				else
@@ -1633,10 +1633,10 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<Data> da
 	//getchar();
 }
 
-void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
+void NavigationRouteHeuristic::BroadcastStopInterestMessage(Ptr<Interest> src)
 {
 	if(!m_running) return;
-	cout<<"(forwarding.cc-BroadcastStopMessage) 节点 "<<m_node->GetId()<<" 广播停止转发兴趣包的消息 "<<src->GetNonce()<<endl;
+	cout<<"(forwarding.cc-BroadcastStopInterestMessage) 节点 "<<m_node->GetId()<<" 广播停止转发兴趣包的消息 "<<src->GetNonce()<<endl;
 	//cout<<"(forwarding.cc-BroadcastStopMessage) 兴趣包的名字为 "<<src->GetName().toUri() <<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the interest packet
@@ -2586,13 +2586,13 @@ bool NavigationRouteHeuristic::isDuplicatedData(uint32_t id, uint32_t signature)
 		return m_sendingDataEvent[id].count(signature);
 }
 
-void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
+void NavigationRouteHeuristic::BroadcastStopDataMessage(Ptr<Data> src)
 {
 	if(!m_running) return;
 	//cout<<"进入(forwarding.cc-BroadcastStopMessage)"<<endl;
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)");
 
-	cout<<"(forwarding.cc-BroadcastStopMessage) 节点 "<<m_node->GetId()<<" 广播停止转发数据包的消息 "<<src->GetSignature()<<endl;
+	cout<<"(forwarding.cc-BroadcastStopDataMessage) 节点 "<<m_node->GetId()<<" 广播停止转发数据包的消息 "<<src->GetSignature()<<endl;
 	NS_LOG_FUNCTION (this<<" broadcast a stop message of "<<src->GetName().toUri());
 	//1. copy the data packet
 	/*Ptr<Data> data = Create<Data> (*src);
@@ -2618,7 +2618,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 	data->SetPayload(nrPayload);
 
 	//4. send the payload
-	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 

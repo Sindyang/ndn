@@ -423,14 +423,14 @@ private:
 	 * 			That is: change the nackType from NORMAL_INTEREST to NACK_LOOP,
 	 * 			representing it is a Duplicated Interest
 	 */
-	void BroadcastStopMessage(Ptr<Interest> src);
+	void BroadcastStopInterestMessage(Ptr<Interest> src);
 
 	/**
 	 * \brief	Broadcast stop message
 	 * 			Stop message contains an empty priority list,
 	 * 			representing it is a Duplicated Data
 	 */
-	void BroadcastStopMessage(Ptr<Data> src);
+	void BroadcastStopDataMessage(Ptr<Data> src);
 	
 	/**
 	 * \brief   Cache Interest Packet
