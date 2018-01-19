@@ -537,8 +537,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				//getchar();
 				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				CachingInterestPacket(seq,interest);
-				BroadcastStopMessage(interest);
-				
+				//BroadcastStopMessage(interest);
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopMessage,this,interest);
 				//if(nodeId == 97)
 					//getchar();
 			}
@@ -745,7 +745,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 					CachingInterestPacket(seq,interest);
-					BroadcastStopMessage(interest);
+					//BroadcastStopMessage(interest);
+					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopMessage,this,interest);
 					//重新选择路线发送兴趣包
 					//if(nodeId == 24)
 					    //getchar();
@@ -1177,7 +1178,10 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 				std::unordered_set<std::string> lastroutes;
 				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,lastroutes*/);
 				CachingDataPacket(signature,data);
-				BroadcastStopMessage(data);
+				//BroadcastStopMessage(data);
+				m_sendingDataEvent[nodeId][signature]=
+					Simulator::Schedule(sendInterval,
+					&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
 			}
 			else
 			{
@@ -1329,7 +1333,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
 				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingDataPacket,this,signature,data/*,remainroutes*/);
 				CachingDataPacket(signature,data);
-				BroadcastStopMessage(data);
+				//BroadcastStopMessage(data);
+				m_sendingDataEvent[nodeId][signature]=
+				Simulator::Schedule(sendInterval,
+				&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
 				//getchar();
 			}
 			else
@@ -1474,7 +1481,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				// 2018.1.15 
 				if(newPriorityList.empty())
 				{
-					BroadcastStopMessage(data);
+					//BroadcastStopMessage(data);
+					m_sendingDataEvent[nodeId][signature]=
+					Simulator::Schedule(sendInterval,
+					&NavigationRouteHeuristic::BroadcastStopMessage, this, data);
 					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
 				}
 				else
@@ -1653,7 +1663,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Interest> src)
 	interest->SetPayload(newPayload);
 
 	//4. send the payload
-	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 }
 
