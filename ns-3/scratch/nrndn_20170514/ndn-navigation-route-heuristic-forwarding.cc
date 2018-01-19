@@ -1224,6 +1224,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	uint32_t myNodeId = m_node->GetId();
 	//获取数据包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
+	std::string forwardLane = nrheader.getLane();
+	
 	
 	cout<<endl<<"(forwarding.cc-OnData_RSU) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
 	
@@ -1372,11 +1374,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				if(itrsu != m_RSUforwardedData.end())
 					forwardedroutes = itrsu->second;
 				
-				std::pair<std::string, double> remoteInfo = m_sensor->convertCoordinateToLanePos(nrheader.getX(),nrheader.getY());
-				forwardedroutes.insert(remoteInfo.first);
+				forwardedroutes.insert(forwardLane);
 				m_RSUforwardedData[signature] = forwardedroutes;
 			}
-			cout<<"该数据包已经被发送，上一跳路段为 "<<remoteInfo.first<<endl;
+			cout<<"该数据包已经被发送，上一跳路段为 "<<forwardLane<<endl;
 			//getchar();
 			NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 			//2018.1.2 RSU有可能重复转发数据包
@@ -2545,6 +2546,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setForwardId(forwardId);
+	nrheader.setLane(m_sensor->getLane());
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
@@ -2640,6 +2642,7 @@ void NavigationRouteHeuristic::BroadcastStopDataMessage(Ptr<Data> src)
 	double y= m_sensor->getY();
 	dstheader.setX(x);
 	dstheader.setY(y);
+	dstheader.setLane(m_sensor->getLane());
 	
 	nrPayload->AddHeader(dstheader);
 	
