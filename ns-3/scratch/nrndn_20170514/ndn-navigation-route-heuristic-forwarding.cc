@@ -1483,7 +1483,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				std::unordered_set<std::string> remainroutes = collection.second;
 				
 				//获取该数据包已转发过的上一跳路段
-				//std::unordered_set<std::string> forwardedroutes;
+				std::unordered_set<std::string> forwardedroutes;
 				//std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
 				//if(itrsu != m_RSUforwardedData.end())
 					//forwardedroutes = itrsu->second;
@@ -1497,7 +1497,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					//cout<<"(forwarding.cc-OnData_RSU) 准备转发的上一跳路段为 "<<*itinterest<<endl;
 				//}
 				//if(!forwardedroutes.empty())
-					//m_RSUforwardedData[signature] = forwardedroutes;
+			    m_RSUforwardedData[signature] = forwardedroutes;
 				getchar();
 			
 				// 2018.1.15 
