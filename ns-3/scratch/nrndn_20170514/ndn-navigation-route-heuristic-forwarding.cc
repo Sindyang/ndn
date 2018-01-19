@@ -2143,7 +2143,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 		cout<<endl;
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
-		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+		m_sendingInterestEvent[sourceId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 		//if(sourceId == 97)
 			//getchar();
 		//getchar();
@@ -2247,7 +2247,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				if(forwardedroutes.empty())
 				{
 					newinterestRoutes = interestRoutes;
-					cout<<"(forwarding.cc-SendDataInCache) 数据包对应的上一跳路段全部未转发过"<<endl;
+					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
 				}
 				else
 				{
@@ -2257,17 +2257,17 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 						std::unordered_set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if(itforward != forwardedroutes.end())
 						{
-							cout<<"(forwarding.cc-SendDataInCache) 已转发过的上一跳路段为 "<<*itinterest<<endl;
+							cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
 							continue;
 						}
 						newinterestRoutes.insert(*itinterest);
-						cout<<"(forwarding.cc-SendDataInCache) 未转发过的上一跳路段为 "<<*itinterest<<endl;
+						cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
 					}
 				}
 				
 				if(newinterestRoutes.empty())
 				{
-					cout<<"该数据包对应的上一跳路段全部转发过"<<endl;
+					cout<<"数据包 "<<signature<<" 对应的上一跳路段全部转发过"<<endl;
 					continue;
 				}
 					
@@ -2312,7 +2312,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
-		m_sendingDataEvent[nodeId][signature] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardDataPacket,this,data,newPriorityList);
+		m_sendingDataEvent[sourceId][signature] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardDataPacket,this,data,newPriorityList);
 	}
 }
 
