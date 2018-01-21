@@ -269,7 +269,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 			//从缓存中得到数据包
 			if(itdataroute->first == dataname)
 			{
-				//std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
+				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
 				Ptr<const Data> data = it->second->GetData();
 				DataCollection[data->GetSignature()] = data;
 			}
