@@ -17,8 +17,13 @@ def get_road(in_file):
 			#获取incLanes的部分
 			road = each_part[5]
 			junction = each_part[1]
+			typeid = each_part[2]
 			#去除空的incLanes
 			if road == 'incLanes=\"\"':
+				continue
+
+			#去除 internal
+			if typeid == 'type=\"internal\"':
 				continue
 				
 			road = road[len(incLanes):]
@@ -74,7 +79,7 @@ def get_rsu(junctions,lengths):
 		departpos = float(lengths[lane])
 		departpos = departpos-1
 		id = str(first_rsu)
-		add_line = '\t<vehicle id="'+ id +'" type="RSU" depart="0" departPos="'+str(departpos)+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" endPos="'+str(departpos)+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
+		add_line = '\t<vehicle id="'+ id +'" type="RSU" depart="0" departPos="'+str(departpos)+'" color="255,0,0">'+'\n\t\t' +'<route edges="'+road+'"/>'+'\n\t\t'+'<stop lane="'+lane+'" parking="true" endPos="'+str(departpos)+'" until="'+end_time+'"/>'+'\n\t</vehicle>\n'
 		fw_add.writelines(add_line)
 		first_rsu += 1
 	fw_add.writelines('</additional>')
