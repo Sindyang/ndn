@@ -685,14 +685,14 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		
 		//这里需要获取当前及之后的兴趣路线
-		/*vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
+		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
+		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
 			cout<<futureinterest[i]<<" ";
 		}
-		cout<<endl;
+		cout<<endl;*/
 		//getchar();
 
 		//查看缓存中是否有对应的数据包
@@ -701,9 +701,9 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		if(!datacollection.empty())
 		{
-			SendDataInCache(datacollection);
+			//SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
-		}*/
+		}
 		
 		
 		//evaluate whether receiver's id is in sender's priority list
