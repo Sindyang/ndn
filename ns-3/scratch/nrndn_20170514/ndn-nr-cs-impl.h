@@ -102,11 +102,14 @@ public:
 	/*数据包部分*/
 	
     // 添加数据包进入缓存中
-    bool
-    AddData1(uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes);
+   // bool
+   // AddData1(uint32_t signature,Ptr<const Data> data,std::unordered_set<std::string> lastroutes);
 	
 	bool 
 	AddData(uint32_t signature,Ptr<const Data> data);
+	
+	//删除超时的数据包
+	void CleanExpiredTimedoutData(uint32_t signature);
 	
 	// 得到相同名字的数据包
 	std::map<uint32_t,Ptr<const Data> >
