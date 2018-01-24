@@ -1201,9 +1201,6 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 			//getchar();
 		}
 	}
-	//查看上一跳节点为RSU的情况
-	//if(remoteId >= 101)
-		//getchar();
 }
 
 void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
