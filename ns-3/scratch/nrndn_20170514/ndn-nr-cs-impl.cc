@@ -209,8 +209,8 @@ NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	{
 		std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 不在缓存中"<<std::endl;
 	}	
-	uint32_t size = GetDataSize();
-	std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
+	//uint32_t size = GetDataSize();
+	//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 }
 
 void
