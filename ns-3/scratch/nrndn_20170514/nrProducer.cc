@@ -104,7 +104,7 @@ void nrProducer::OnInterest(Ptr<const Interest> interest)
 	}
 
 	NS_LOG_INFO(
-			"node("<< GetNode()->GetId() <<") respodning with Data: " << data->GetName ());
+			"node("<< GetNode()->GetId() <<") responding with Data: " << data->GetName ());
 
 	// Echo back FwHopCountTag if exists
 	FwHopCountTag hopCountTag;
@@ -250,7 +250,8 @@ void nrProducer::OnSendingTrafficData()
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 	dataName->append(m_postfix);//m_postfix is "/", seems OK
 	data->SetName(dataName);
-	data->SetFreshness(m_freshness);
+	// 2018.1.24
+	data->SetFreshness(Seconds(10.0));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue());//just generate a random number
