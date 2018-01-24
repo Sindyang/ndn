@@ -1035,12 +1035,35 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	}
 	cout<<endl;
 	
-	//If the data packet has already been sent, do not proceed the packet
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	pair<bool, double> msgdirection;
+	
+	//获取车辆上一跳节点
+	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
+	
+	if(remoteId >= numsofvehicles)
+	{
+		msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),remoteId);
+	}
+	else
+	{
+		msgdirection = m_sensor->VehicleGetDistanceWithVehicle(nrheader.getX(),nrheader.getY());
+	}
+	
+	cout<<"(forwarding.cc-OnData_Car) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
 	//该数据包已经被转发过
 	// 车辆应该不会重复转发数据包，但是RSU有可能重复转发数据包 
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		cout<<"该数据包已经被发送"<<endl;
+		//2018.1.24 从缓存中删除数据包
+		if(msgdirection.first && msgdirection.second < 0)
+		{
+			m_cs->DeleteData(data->GetSignature());
+			//getchar();
+		}
+	
 		//getchar();
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		// 2018.1.18
@@ -1068,22 +1091,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	}
 	
 	//If it is not a stop message, prepare to forward:
-	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	pair<bool, double> msgdirection;
 	
-	//获取车辆上一跳节点
-	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
-	
-	if(remoteId >= numsofvehicles)
-	{
-		msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),remoteId);
-	}
-	else
-	{
-		msgdirection = m_sensor->VehicleGetDistanceWithVehicle(nrheader.getX(),nrheader.getY());
-	}
-	
-	cout<<"(forwarding.cc-OnData_Car) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	//getchar();
 	
 	if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方

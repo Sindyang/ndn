@@ -212,6 +212,22 @@ NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	uint32_t size = GetDataSize();
 	std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 }
+
+void
+NrCsImpl::DeleteData(const uint32_t signature)
+{
+	uint32_t size = GetDataSize();
+	std::cout<<"(cs-impl.cc-DeleteData) 删除数据包前的缓存大小为 "<<size<<std::endl;
+	std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_data.find(signature);
+	if(it != m_data.end())
+	{
+		m_data.erase(it);
+		size = GetDataSize();
+		std::cout<<"(cs-impl.cc-DeleteData) 删除数据包后的缓存大小为 "<<size<<" 数据包序列号为 "<<signature<<std::endl;
+	}
+	else
+		std::cout<<"(cs-impl.cc-DeleteData) 该数据包不在缓存中"<<std::endl;
+}
     
 /*std::map<uint32_t,Ptr<const Data> >
 NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route)
@@ -353,7 +369,7 @@ NrCsImpl::GetData()
 		Ptr<const Data> data = it->second->GetData();
 		DataCollection[data->GetSignature()] = data;
 	}
-	m_data.clear();
+	//m_data.clear();
 	
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;

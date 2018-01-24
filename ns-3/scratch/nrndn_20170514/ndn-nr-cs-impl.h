@@ -111,6 +111,9 @@ public:
 	//删除超时的数据包
 	void CleanExpiredTimedoutData(uint32_t signature);
 	
+	// 删除已经发出去的数据包
+	void DeleteData(const uint32_t signature);
+	
 	// 得到相同名字的数据包
 	std::map<uint32_t,Ptr<const Data> >
     GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
