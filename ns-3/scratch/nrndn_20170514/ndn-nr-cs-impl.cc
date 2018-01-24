@@ -199,12 +199,14 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 void 
 NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 {
-	 std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_data.find(signature);
-	 if(it != m_data.end())
-	 {
-		 std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
-		 m_data.erase(it);
-	 }
+	std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_data.find(signature);
+	if(it != m_data.end())
+	{
+		std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
+		m_data.erase(it);
+	}
+	uint32_t size = GetDataSize();
+	std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 }
     
 /*std::map<uint32_t,Ptr<const Data> >
