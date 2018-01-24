@@ -191,7 +191,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	size = GetDataSize();
 	std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
-	Simulator::Schedule(interval,&NrCsImpl::CleanExpiredTimedoutData,this,signature);
+	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
 	std::cout<<"(cs-impl.c-AddData) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
