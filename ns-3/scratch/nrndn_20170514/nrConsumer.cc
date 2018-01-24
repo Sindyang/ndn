@@ -289,7 +289,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	
 	//延迟为数据包从发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-	std::cout<<"(nrConsumer-OnData) 数据包 "<<signature<<" 的延迟为 "<<delay<<std::endl;
+	std::cout<<"延迟为 "<<delay;
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
 	{
