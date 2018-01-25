@@ -345,7 +345,9 @@ NrCsImpl::GetData(std::vector<std::string> interest)
 			if(*itinterest == dataname)
 			{
 				std::cout<<"(cs-impl.cc-GetData) 缓存中有对应的数据包"<<std::endl;
-				Ptr<const Data> data = it->second->GetData();
+				Ptr<const Data> src = it->second->GetData();
+				//复制数据包
+				Ptr<Data> data = Create<Data> (*src);
 				//修改数据包的Timestamp
 				data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
