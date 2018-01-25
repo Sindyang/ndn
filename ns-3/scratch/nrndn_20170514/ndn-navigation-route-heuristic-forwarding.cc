@@ -701,7 +701,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		if(!datacollection.empty())
 		{
-			//SendDataInCache(datacollection);
+			SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
 		}
 		
