@@ -225,7 +225,7 @@ NrCsImpl::DeleteData(const uint32_t signature)
 		size = GetDataSize();
 		std::cout<<"(cs-impl.cc-DeleteData) 删除数据包后的缓存大小为 "<<size<<" 数据包序列号为 "<<signature<<std::endl;
 	}
-	else
+	//else
 		//std::cout<<"(cs-impl.cc-DeleteData) 该数据包不在缓存中"<<std::endl;
 }
     
