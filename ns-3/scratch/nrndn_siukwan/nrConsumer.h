@@ -87,6 +87,7 @@ private:
 	  int*m_nbChange_mode;
 	  uint32_t m_virtualPayloadSize;
 	  //Ptr<ForwardingStrategy>		m_forwardingStrategy;
+	  ndn::nrndn::cache::LRUCache<uint32_t,bool> m_dataReceivedSeen;
 };
 
 } /* namespace nrndn */

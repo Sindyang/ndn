@@ -49,7 +49,8 @@ TypeId nrConsumer::GetTypeId()
 }
 
 nrConsumer::nrConsumer():
-		m_virtualPayloadSize(0)
+		m_virtualPayloadSize(0),
+		m_dataReceivedSeen(5000)
 {
 	// TODO Auto-generated constructor stub
 
@@ -237,6 +238,13 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
+	
+	// 2018.1.12 added by sy
+	if(m_dataReceivedSeen.Get(signature))
+	{
+		std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
+		return;
+	}
 
 	NS_LOG_DEBUG("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")");
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
@@ -244,6 +252,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	//NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
 
+	m_dataReceivedSeen.Put(signature,true);
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
