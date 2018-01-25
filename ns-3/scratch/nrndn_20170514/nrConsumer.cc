@@ -289,18 +289,20 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	
 	//延迟为数据包从发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-	std::cout<<"延迟为 "<<delay;
-	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
+	
 	if(IsInterestData(data->GetName()))
 	{
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
-		std::cout<<" 感兴趣"<<std::endl;
+		// 2018.1.25 只统计感兴趣的延迟
+		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
+		std::cout<<" 感兴趣 ";
 	}
 	else
 	{
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
-		std::cout<<" 不感兴趣"<<std::endl;
+		std::cout<<" 不感兴趣 ";
 	}
+	std::cout<<" 延迟为 "<<delay;
 	std::cout<<std::endl;
 	getchar();
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
