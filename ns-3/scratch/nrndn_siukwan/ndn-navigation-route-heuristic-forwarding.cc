@@ -176,6 +176,7 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	else
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId());
+		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId()<<endl;
 		m_outFaceList.push_back(face);
 	}
 }
@@ -1092,8 +1093,8 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
-		if(HELLO_MESSAGE ==interest->GetScope())
-			cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
+		//if(HELLO_MESSAGE ==interest->GetScope())
+			//cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
 }
 
