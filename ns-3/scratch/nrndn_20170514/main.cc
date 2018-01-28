@@ -703,18 +703,18 @@ nrndnExample::InstallNrNdnStack()
 	uint32_t pitCleanInterval = 1.0 / interestFrequency;
 	//uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
 	pitCleanIntervalStr<<pitCleanInterval;
-	//cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
+	cout<<"(main.cc-InstallNrNdnStack)pitInterval = "<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
-	//cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) SetForwardingStrategy"<<endl;
 	ndnHelper.SetContentStore("ns3::ndn::cs::Lru", "MaxSize", "1000");
 	ndnHelper.SetContentStore("ns3::ndn::cs::nrndn::NrCsImpl");
-	//cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) SetContentStore"<<endl;
 	ndnHelper.SetPit("ns3::ndn::pit::nrndn::NrPitImpl","CleanInterval",pitCleanIntervalStr.str());
-	//cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) SetPit"<<endl;
 	ndnHelper.SetDefaultRoutes (true);
-	//cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) SetDefaultRoutes"<<endl<<endl;
 	ndnHelper.Install (nodes);
-	//cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
+	cout<<"(main.cc-InstallNrNdnStack) Install"<<endl;
 }
 
 void nrndnExample::InstallDistNdnStack()
