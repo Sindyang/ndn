@@ -1092,10 +1092,10 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
 		(*fit)->SendInterest(interest);
-		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
 		//if(HELLO_MESSAGE ==interest->GetScope())
 			//cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
+	ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
 }
 
 
@@ -1723,8 +1723,8 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
 	{
 		(*fit)->SendData(data);
-		ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
 	}
+	ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
 }
 
 std::unordered_set<uint32_t> NavigationRouteHeuristic::converVectorList(
