@@ -1962,7 +1962,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//更新邻居列表
 	
-	string interestroute = interest->GetName().toUri();
+	string interestroute = interest->GetName().get(0).toUri();
 	cout<<interestroute<<" "<<interest->GetRoutes()<<endl;
 	getchar();
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
