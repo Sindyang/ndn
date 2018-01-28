@@ -1938,7 +1938,7 @@ NavigationRouteHeuristic::SendHello()
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
-	interest->SetRoutes(LaneName);//2017.12.25 added by sy
+	//interest->SetRoutes(LaneName);//2017.12.25 added by sy
 	//4. send the hello message
 	SendInterestPacket(interest);
 }
@@ -1962,10 +1962,8 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	
 	//更新邻居列表
 	
-	string interestroute = interest->GetName().get(0).toUri();
-	cout<<interestroute<<" "<<interest->GetRoutes()<<endl;
-	getchar();
-	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),interest->GetRoutes(),Time (AllowedHelloLoss * HelloInterval));
+	string remoteroute = interest->GetName().get(0).toUri();
+	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),remoteroute,Time (AllowedHelloLoss * HelloInterval));
 	
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -2328,7 +2326,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	uint32_t nodeId = m_node->GetId();
 	//const std::string& lane = m_sensor->getLane();
 	//获取心跳包所在路段
-	string remoteroute = interest->GetRoutes();
+	string remoteroute = interest->GetName().get(0).toUri();
 	
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
