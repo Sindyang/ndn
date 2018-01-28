@@ -335,7 +335,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		OnInterest_RSU(face,interest);
 	}
-	else if(currentType == "DEFAULT_VEHTYPE")
+	else if(currentType == "DEFAULT_VEHTYPE" || currentType == "CarA")
 	{
 		OnInterest_Car(face,interest);
 	}
@@ -949,7 +949,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		OnData_RSU(face,data);
 	}
-	else if(currentType == "DEFAULT_VEHTYPE")
+	else if(currentType == "DEFAULT_VEHTYPE" || currentType == "CarA")
 	{
 		OnData_Car(face,data);
 	}
