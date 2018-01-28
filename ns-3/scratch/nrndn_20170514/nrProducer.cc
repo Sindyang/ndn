@@ -347,7 +347,6 @@ void nrProducer::addAccident(double iType)
 		ScheduleAccident(dTime);
 		//std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
 	}
-
 	return;
 }
 
