@@ -497,6 +497,7 @@ nrndnExample::Report ()
 			<<std::left<<std::setw(10)<<"SumFwd"
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
+			<<std::left<<std::setw(11)<<"HelloCount"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
 			<<std::left<<std::setw(11)<<"ByteSnt"
 			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
@@ -509,6 +510,7 @@ nrndnExample::Report ()
 			<<std::left<<std::setw(10)<<SumForwardTimes
 			<<std::left<<std::setw(13)<<nrUtils::InterestByteSent
 			<<std::left<<std::setw(11)<<nrUtils::HelloByteSent
+			<<std::left<<std::setw(11)<<nrUtils::HelloCount
 			<<std::left<<std::setw(11)<<nrUtils::DataByteSent
 			<<std::left<<std::setw(11)<<nrUtils::ByteSent
 			<<std::left<<std::setw(11)<<disinterestRate<<endl;

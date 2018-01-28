@@ -28,6 +28,7 @@ uint32_t nrUtils::ByteSent=0;
 uint32_t nrUtils::DataByteSent=0;
 uint32_t nrUtils::InterestByteSent=0;
 uint32_t nrUtils::HelloByteSent=0;
+uint32_t nrUtils::HelloCount = 0;
 
 
 nrUtils::nrUtils()
@@ -375,6 +376,7 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	if(2==interest->GetScope())//Hello message
 	{
 		HelloByteSent += size;
+		HelloCount += 1;
 		//cout << "Hello size " << size << endl;
 	}	
 	else
