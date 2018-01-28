@@ -2648,7 +2648,7 @@ void NavigationRouteHeuristic::BroadcastStopDataMessage(Ptr<Data> src)
 	Ptr<Packet> newPayload = Create<Packet> ();
 	newPayload->AddHeader(dstheader);
 	
-	//Ptr<Data> data = Create<Data> (*src);
+	Ptr<Data> data = Create<Data> (*src);
 	data->SetPayload(newPayload);
 
 	//4. send the payload
