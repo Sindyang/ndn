@@ -1092,6 +1092,8 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
+		if(HELLO_MESSAGE ==interest->GetScope())
+			cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
 }
 
