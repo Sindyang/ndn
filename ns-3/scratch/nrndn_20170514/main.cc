@@ -918,7 +918,7 @@ void nrndnExample::InstallTraffics()
 	// RSU不产生数据包 在该地图中，RSU的数量为16
 	UniformVariable rnd(0,nodes.GetN()-16);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
