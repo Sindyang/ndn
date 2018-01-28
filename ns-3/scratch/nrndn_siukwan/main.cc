@@ -202,7 +202,7 @@ int main (int argc, char **argv)
 //构造函数
 nrndnExample::nrndnExample () :
   random_seed(54321),
-  certain_count(20), //定点数量
+  certain_count(30), //定点数量
   certain_interval(10),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
@@ -936,7 +936,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {1,9,17,24,36,40,46,49,50,55,56,62,64,66,72,73,76,82,90,98};
+		uint32_t array[30] = {2,4,15,47,60,77,112,155,171,173,187,196,209,215,228,241,252,254,255,270,284,303,322,328,332,347,359,366,382,387};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
@@ -946,7 +946,7 @@ void nrndnExample::InstallTraffics()
 			NS_ASSERT(producer);
 			producer->addAccident(certain_interval);
 		}
-	}
+	} 
 	
 	std::cout<<"插入事件：完毕"<<endl;
 	getchar();
