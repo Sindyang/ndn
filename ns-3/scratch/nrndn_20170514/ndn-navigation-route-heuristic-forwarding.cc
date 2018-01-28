@@ -1832,13 +1832,12 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
 		(*fit)->SendInterest(interest);
-		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
-		if(HELLO_MESSAGE ==interest->GetScope())
-			cout<<"(forwarding.cc-SendInterestPacket) 心跳包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
-		else
-			cout<<"(forwarding.cc-SendInterestPacket) 兴趣包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
+		//if(HELLO_MESSAGE ==interest->GetScope())
+			//cout<<"(forwarding.cc-SendInterestPacket) 心跳包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
+		//else
+		//	cout<<"(forwarding.cc-SendInterestPacket) 兴趣包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
-	
+	ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
 }
 
 
@@ -2724,9 +2723,9 @@ void NavigationRouteHeuristic::SendDataPacket(Ptr<Data> data)
 	for (fit = m_outFaceList.begin(); fit != m_outFaceList.end(); ++fit)
 	{
 		(*fit)->SendData(data);
-		ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
-		cout<<"(forwarding.cc-SendDataPacket) 数据包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
+		//cout<<"(forwarding.cc-SendDataPacket) 数据包"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
+	ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
 }
 
 /*
