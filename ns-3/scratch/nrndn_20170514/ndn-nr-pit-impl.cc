@@ -325,7 +325,8 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 已找到 "<<lane<<" 在PIT表项中的位置"<<std::endl;
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
 		bool flag = false;
-		for(;pit != m_pitContainer.end();)
+		// 2018.1.28 
+		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->CleanPITNeighbors(flag,id);
