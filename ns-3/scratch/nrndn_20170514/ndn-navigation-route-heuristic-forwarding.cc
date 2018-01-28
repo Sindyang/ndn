@@ -2645,10 +2645,11 @@ void NavigationRouteHeuristic::BroadcastStopDataMessage(Ptr<Data> src)
 	dstheader.setY(y);
 	dstheader.setLane(m_sensor->getLane());
 	
-	nrPayload->AddHeader(dstheader);
+	Ptr<Packet> newPayload = Create<Packet> ();
+	newPayload->AddHeader(dstheader);
 	
-	Ptr<Data> data = Create<Data> (*src);
-	data->SetPayload(nrPayload);
+	//Ptr<Data> data = Create<Data> (*src);
+	data->SetPayload(newPayload);
 
 	//4. send the payload
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,10)),
