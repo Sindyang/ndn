@@ -168,6 +168,7 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add application face "<<face->GetId());
+		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add application face "<<face->GetId()<<endl;
 		m_inFaceList.push_back(face);
 	}
 	else
