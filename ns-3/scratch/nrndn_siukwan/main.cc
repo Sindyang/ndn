@@ -940,13 +940,13 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		//uint32_t array[30] = {2,4,15,47,60,77,112,155,171,173,187,196,209,215,228,241,252,254,255,270,284,303,322,328,332,347,359,366,382,387};
+		uint32_t array[20] = {4,15,60,77,112,155,171,173,187,196,215,241,270,284,322,328,332,347,359,382};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
-			randomNode[index] = true;
+			randomNode[array[index]] = true;
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+					nodes.Get(array[index])->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
 			producer->addAccident(certain_interval);
 		}
