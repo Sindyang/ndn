@@ -918,7 +918,7 @@ void nrndnExample::InstallTraffics()
 	// RSU不产生数据包 在该地图中，RSU的数量为16
 	UniformVariable rnd(0,nodes.GetN()-16);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
@@ -945,12 +945,13 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
+		uint32_t array[20] = {4,15,60,77,112,155,171,173,187,196,215,241,270,284,322,328,332,347,359,382};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
-			randomNode[index] = true;
+			randomNode[array[index]] = true;
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+					nodes.Get(array[index])->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
 			producer->addAccident(certain_interval);
 		}
