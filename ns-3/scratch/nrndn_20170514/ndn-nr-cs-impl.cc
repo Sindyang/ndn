@@ -175,12 +175,12 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 		return false;
 	}
 	//数据包保留的时间 = 产生时间+有效时间-当前时间
-	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
-	if(interval < 0)
-	{
+	//double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
+	//if(interval < 0)
+	//{
 		//std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
-		return false;
-	}
+	//	return false;
+	//}
 	
 	//uint32_t size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;

@@ -170,7 +170,7 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add application face "<<face->GetId());
-		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add application face "<<face->GetId()<<endl;
+		//cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add application face "<<face->GetId()<<endl;
 		//getchar();
 		m_inFaceList.push_back(face);
 		
@@ -178,7 +178,7 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	else
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId());
-		cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId()<<endl;
+		//cout<<"(forwarding.cc-AddFace) Node "<<m_node->GetId()<<" add NOT application face "<<face->GetId()<<endl;
 		//getchar();
 		m_outFaceList.push_back(face);
 	}
@@ -1061,6 +1061,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		if(msgdirection.first && msgdirection.second < 0)
 		{
 			m_cs->DeleteData(data->GetSignature());
+			cout<<"(forwarding.cc-OnData_Car)从缓存中删除数据包 "<<signature<<endl;
 			//getchar();
 		}
 	
