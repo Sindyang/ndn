@@ -405,7 +405,11 @@ NrCsImpl::GetData()
 	
 	for(it = m_data.begin();it != m_data.end();it++)
 	{
-		Ptr<const Data> data = it->second->GetData();
+		Ptr<const Data> src = it->second->GetData();
+		//复制数据包
+		Ptr<Data> data = Create<Data> (*src);
+		//修改数据包的Timestamp
+		data->SetTimestamp(Simulator::Now());
 		DataCollection[data->GetSignature()] = data;
 	}
 	//m_data.clear();
