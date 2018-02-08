@@ -174,7 +174,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 		//std::cout<<"(cs-impl.cc-AddData) 该数据包已经在缓存中"<<std::endl;
 		return false;
 	}
-	//数据包保留的时间 = 产生时间+有效时间-当前时间；
+	//数据包保留的时间 = 产生时间+有效时间-当前时间
 	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
 	if(interval < 0)
 	{
@@ -191,8 +191,39 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
-	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
-	std::cout<<"(cs-impl.c-AddData) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
+	//Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
+	//std::cout<<"(cs-impl.c-AddData) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
+	return true;
+}
+
+bool NrCsImpl::AddDataSource(uint32_t signature,Ptr<const Data> data)
+{
+	//std::cout<<"(cs-impl.cc-AddDataSource) 添加数据包 "<<data->GetName().get(0).toUri()<<std::endl;
+	Ptr<cs::Entry> csEntry = FindDataSource(signature);
+	if(csEntry != 0)
+	{
+		//std::cout<<"(cs-impl.cc-AddDataSource) 该数据包已经在缓存中"<<std::endl;
+		return false;
+	}
+	//数据包保留的时间 = 产生时间+有效时间-当前时间
+	//double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
+	//if(interval < 0)
+	//{
+		//std::cout<<"(cs-impl.cc-AddDataSource) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
+	//	return false;
+	//}
+	
+	//uint32_t size = GetDataSourceSize();
+	//std::cout<<"(cs-impl.cc-AddDataSource) 加入该数据包前的缓存大小为 "<<size<<std::endl;
+	
+    csEntry = ns3::Create<cs::Entry>(this,data) ;
+    m_datasource[signature] = csEntry;
+	
+	//size = GetDataSize();
+	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
+	
+	//Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
+	//std::cout<<"(cs-impl.c-AddDataSource) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
 
@@ -329,9 +360,9 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 }
 
 std::map<uint32_t,Ptr<const Data> >
-NrCsImpl::GetData(std::vector<std::string> interest)
+NrCsImpl::GetDataSource(std::vector<std::string> interest)
 {
-	std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
+	std::cout<<"(cs-impl.cc-GetDataSource) RSU获取缓存中的数据包"<<std::endl;
 	
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::vector<std::string>::iterator itinterest;
@@ -339,7 +370,7 @@ NrCsImpl::GetData(std::vector<std::string> interest)
 	for(itinterest = interest.begin();itinterest != interest.end();itinterest++)
 	{
 		std::cout<<"(cs-impl.cc-GetData) 想要得到的数据包为 "<<*itinterest<<std::endl;
-		for(it = m_data.begin();it != m_data.end();it++)
+		for(it = m_datasource.begin();it != m_datasource.end();it++)
 		{
 			std::string dataname = it->second->GetName().get(0).toUri();
 			if(*itinterest == dataname)
@@ -382,7 +413,7 @@ NrCsImpl::GetData()
 }
 
 // routes为有车辆的上一跳路段
-bool
+/*bool
 NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> routes)
 {
 	// lastroutes为未被满足的上一跳路段
@@ -407,7 +438,7 @@ NrCsImpl::IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> ro
 		return true;
 	}
 	return false;
-}
+}*/
 
 uint32_t
 NrCsImpl::GetDataSize () const
@@ -415,12 +446,17 @@ NrCsImpl::GetDataSize () const
 	return m_data.size ();
 }
 
+uint32_t
+NrCsImpl::GetDataSourceSize() const
+{
+	return m_datasource.size();
+}
 
 /*
  * 2017.12.29 added by sy
  * 获得缓存中数据包的名字
  */
-std::unordered_set<std::string> 
+/*std::unordered_set<std::string> 
 NrCsImpl::GetDataName() const
 {
 	std::unordered_set<std::string> collection;
@@ -431,7 +467,7 @@ NrCsImpl::GetDataName() const
 		collection.insert(it->second->GetName().toUri());
 	}
 	return collection;
-}
+}*/
 
 
 Ptr<Entry>
@@ -443,6 +479,14 @@ NrCsImpl::FindData (const uint32_t signature)
 	return 0;
 }
 
+Ptr<Entry>
+NrCsImpl::FindDataSource(const uint32_t signature)
+{
+	std::map<uint32_t,Ptr<cs::Entry>>::iterator it = m_datasource.find(signature);
+	if(it != m_datasource.end())
+		return it->second;
+	return 0;
+}
 
 void
 NrCsImpl::PrintDataEntry(uint32_t signature) 

@@ -434,17 +434,21 @@ private:
 	
 	/**
 	 * \brief   Cache Interest Packet
-	 *          Broadcast stop message
 	 *          2017.12.18 added by sy
 	 */
 	void CachingInterestPacket(uint32_t nonce, Ptr<Interest> interest);
 	
 	/**
 	 * \brief   Cache Data Packet
-	 *          Broadcast stop message
 	 *          2018.1.3 added by sy
 	 */
-	void CachingDataPacket(uint32_t nonce,Ptr<Data> data/*,std::unordered_set<std::string> lastroutes*/);
+	void CachingDataPacket(uint32_t signature,Ptr<Data> data/*,std::unordered_set<std::string> lastroutes*/);
+	
+	/**
+	 * \brief   Cache Data Source Packet
+	 *			2018.2.8 added by sy
+	 */
+	void CachingDataSourcePacket(uint32_t signature,Ptr<Data> data);
 
 	/**
 	 * \brief	the function which will be executed after InterestPacketTimer expire

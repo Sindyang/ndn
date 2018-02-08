@@ -108,6 +108,9 @@ public:
 	bool 
 	AddData(uint32_t signature,Ptr<const Data> data);
 	
+	bool
+	AddDataSource(uint32_t signature,Ptr<const Data> data);
+	
 	//删除超时的数据包
 	void CleanExpiredTimedoutData(uint32_t signature);
 	
@@ -119,7 +122,7 @@ public:
     GetData(std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route);
 	
 	std::map<uint32_t,Ptr<const Data> >
-    GetData(std::vector<std::string> interest);
+    GetDataSource(std::vector<std::string> interest);
 	
 	std::map<uint32_t,Ptr<const Data> >
     GetData();
@@ -128,15 +131,23 @@ public:
 	uint32_t
 	GetDataSize () const;
 	
-	bool IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> routes);
+	// 获取数据包(Source)缓存的大小
+	uint32_t 
+	GetDataSourceSize() const;
+	
+	//bool IsLastRoutesLeft(uint32_t signature,std::unordered_set<std::string> routes);
 	
 	// 获取缓存中的数据包名字
-    std::unordered_set<std::string> 
-	GetDataName() const;
+   // std::unordered_set<std::string> 
+	//GetDataName() const;
 	
 	// 根据序列号查找数据包
     Ptr<Entry>
     FindData (const uint32_t signature);
+	
+	// 根据序列号查找数据包(Source)
+	Ptr<Entry>
+	FindDataSource(const uint32_t signature);
 	
 	// 输出缓存中的数据包
 	void 
@@ -189,10 +200,11 @@ protected:
     
     
 private:
-    Ptr<ForwardingStrategy>		        m_forwardingStrategy;
-    std::map<uint32_t,Ptr<cs::Entry> >	m_data;
+    Ptr<ForwardingStrategy>		              m_forwardingStrategy;
+    std::map<uint32_t,Ptr<cs::Entry> >	      m_data;
+	std::map<uint32_t,Ptr<cs::Entry> >        m_datasource;
 	std::map<uint32_t,Ptr<cs::EntryInterest>> m_interest;
-	std::map<uint32_t,std::unordered_set<std::string> > m_lastroutes;
+	//std::map<uint32_t,std::unordered_set<std::string> > m_lastroutes;
 };
 
 

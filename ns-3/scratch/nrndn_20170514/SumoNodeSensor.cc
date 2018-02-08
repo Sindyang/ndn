@@ -50,9 +50,7 @@ double SumoNodeSensor::getX()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().x;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getX():Cannot find Trace!!");
 	NS_ASSERT_MSG(m_sumodata->GetTrace(m_id,pos).x == pos.x,"Can not find coordinate x");
 	return m_sumodata->GetTrace(m_id,pos).x;
@@ -64,9 +62,7 @@ double SumoNodeSensor::getY()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().y;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getY():Cannot find Trace!!");
 	NS_ASSERT_MSG(m_sumodata->GetTrace(m_id,pos).y == pos.y,"Can not find coordinate y");
 	return m_sumodata->GetTrace(m_id,pos).y;
@@ -79,9 +75,7 @@ double SumoNodeSensor::getPos()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().pos;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getPos():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).pos;
 }
@@ -92,9 +86,7 @@ double SumoNodeSensor::getTime()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().time;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getTime():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).time;
 }
@@ -105,9 +97,7 @@ double SumoNodeSensor::getAngle()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().angle;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getAngle():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).angle;
 }
@@ -118,9 +108,7 @@ double SumoNodeSensor::getSlope()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().slope;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getSlope():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).slope;
 }
@@ -131,9 +119,7 @@ double SumoNodeSensor::getSpeed()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().speed;
+	
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getSpeed():Cannot find Trace!!");
 	return m_sumodata->GetTrace(m_id,pos).speed;
 }
@@ -144,9 +130,7 @@ const std::string& SumoNodeSensor::getType()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	//RSU
-	//if(m_id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[m_id].trace.front().type;
+	
 	if(&m_sumodata->GetTrace(m_id,pos)==NULL)
 		return emptyType;
 	return m_sumodata->GetTrace(m_id,pos).type;
@@ -159,9 +143,7 @@ const std::string& SumoNodeSensor::getLane()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t id = node->GetId();
-	//RSU
-	//if(id >= getNumsofVehicles())
-		//return m_sumodata->getVl().getVehicles()[id].trace.front().lane;
+	
 	//cout << "(SumoNodeSensor.cc-getLane)" << " NodeId " << id << endl;
 	
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
