@@ -696,7 +696,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//getchar();
 
 		//查看缓存中是否有对应的数据包
-		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(futureinterest);
+		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
 		//getchar();
 		
 		if(!datacollection.empty())
@@ -1405,7 +1405,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
 					//CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
-					CachingDataSourcePacket(data->GetSignature,data);
+					CachingDataSourcePacket(data->GetSignature(),data);
 					// 2018.1.28
 					std::unordered_set<std::string> forwardedroutes;
 					forwardedroutes.insert(forwardLane);
