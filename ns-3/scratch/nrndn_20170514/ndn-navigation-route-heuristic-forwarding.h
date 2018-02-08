@@ -442,7 +442,7 @@ private:
 	 * \brief   Cache Data Packet
 	 *          2018.1.3 added by sy
 	 */
-	void CachingDataPacket(uint32_t signature,Ptr<Data> data/*,std::unordered_set<std::string> lastroutes*/);
+	void CachingDataPacket(uint32_t signature,Ptr<const Data> data/*,std::unordered_set<std::string> lastroutes*/);
 	
 	/**
 	 * \brief   Cache Data Source Packet
