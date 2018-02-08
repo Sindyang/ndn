@@ -1073,8 +1073,6 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
-		// 2018.1.6 如果收到了停止转发的消息，不论是否感兴趣，都停止转发
-		//if(!IsInterestData(data->GetName()))// if it is interested about the data, ignore the stop message)
 		// 2018.1.11
 		if(!isDuplicatedData(nodeId,signature) && IsInterestData(data->GetName()))
 		{
@@ -2306,7 +2304,10 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				
 				//未满足的路段为空，可以从缓存中删除数据包
 				if(remainroutes.empty())
+				{
 					m_cs->DeleteData(signature);
+				}
+					
 			
 				//加入准备转发的上一跳路段
 				//for(std::unordered_set<std::string>::iterator itinterest = newinterestRoutes.begin();itinterest != newinterestRoutes.end();itinterest++)
@@ -2449,8 +2450,62 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	//cout<<endl;
 	//getchar();
+	int front_change_mode = 0;
+	int behind_change_mode = 0;
 	
-	if(routes_front.size() > 0 && m_cs->GetInterestSize() > 0)
+	if(routes_front_pre.size() < routes_front.size())
+	{
+		//前方邻居增加
+		front_change_mode = 2;
+	}		
+	else if(routes_front_pre.size() > routes_front.size())
+	{
+		//前方邻居减少
+		front_change_mode = 1;
+	}
+	else
+	{
+		bool nbchange = false;
+		std::unordered_set<std::string>::iterator itroutes_front_pre = routes_front_pre.begin();
+		for(;itroutes_front_pre != routes_front_pre.end();++itroutes_front_pre)
+		{
+			if(routes_front.find(*itroutes_front_pre) == routes_front.end())
+			{
+				nbchange = true;
+				break;
+			}
+		}
+		//邻居数目不变，但是有增加
+		if(nbchange)
+			front_change_mode = 3;
+	}
+	
+	if(routes_behind_pre.size() < routes_behind.size())
+	{
+		behind_change_mode = 2;
+	}
+	else if(routes_behind_pre.size() > routes_behind.size())
+	{
+		behind_change_mode = 1;
+	}
+	else
+	{
+		bool nbchange = false;
+		std::unordered_set<std::string>::iterator itroutes_behind_pre = routes_behind_pre.begin();
+		for(;itroutes_behind_pre != routes_behind_pre.end();++itroutes_behind_pre)
+		{
+			if(routes_behind.find(*itroutes_behind_pre) == routes_behind.end())
+			{
+				nbchange = true;
+				break;
+			}
+		}
+		//邻居数目不变，但是有增加
+		if(nbchange)
+			behind_change_mode = 3;
+	}
+	
+	if(front_change_mode > 1 && m_cs->GetInterestSize() > 0)
 	{
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
@@ -2471,7 +2526,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	
 	
-	if(routes_behind.size() > 0 && m_cs->GetDataSize() > 0)
+	if(behind_change_mode > 1 && m_cs->GetDataSize() > 0)
 	{
 		cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
@@ -2509,7 +2564,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//getchar();
 	}
 	m_preNB = m_nb;
-	
+	routes_front_pre = routes_front;
+	routes_behind_pre = routes_behind;
 }
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
