@@ -1061,7 +1061,6 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		if(msgdirection.first && msgdirection.second < 0)
 		{
 			m_cs->DeleteData(data->GetSignature());
-			cout<<"(forwarding.cc-OnData_Car)从缓存中删除数据包 "<<signature<<endl;
 			//getchar();
 		}
 	
