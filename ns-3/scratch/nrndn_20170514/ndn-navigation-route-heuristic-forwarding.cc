@@ -1984,7 +1984,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
 	
-	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	
@@ -2011,7 +2011,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			std::pair<bool,double> result = m_sensor->VehicleGetDistanceWithRSU(nb->second.m_x,nb->second.m_y,nb->first);
 			
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				nums_car_front += 1;
@@ -2036,7 +2036,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 		}
 	}
-	//cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_behind "<<nums_car_behind<<endl;
+	cout<<endl<<"(forwarding.cc-ProcessHello) nums_car_behind "<<nums_car_behind<<endl;
 	
 	
 	//前方道路有车辆
