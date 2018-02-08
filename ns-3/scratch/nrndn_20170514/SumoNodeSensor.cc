@@ -187,8 +187,8 @@ const std::string& SumoNodeSensor::getLane()
 //2018.1.29
 const uint32_t SumoNodeSensor::getNumsofVehicles()
 {
-	//return m_sumodata->GetVehiclesSize();
-	return 400;
+	return m_sumodata->GetVehiclesSize();
+	//return 400;
 }
 	
 const std::uint32_t SumoNodeSensor::getNodeId()

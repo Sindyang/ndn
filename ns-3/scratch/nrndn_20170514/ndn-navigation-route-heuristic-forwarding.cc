@@ -2081,13 +2081,11 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{
 		if(m_cs->GetDataSize() > 0)
 		{
-			cout<<"(forwarding.cc-ProcessHello) 有数据包在缓存中"<<endl;
-			std::unordered_map<std::string,std::unordered_set<std::string> > dataname_route;
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
 				SendDataInCache(datacollection);
-				cout<<"(forwarding.cc-ProcessHello) 从缓存中取出数据包"<<endl;
+				cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
 			
 			//getchar();
@@ -2227,7 +2225,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
 	if(interval < 1)
 	{
-		//cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
+		cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
 		return;
 	}
 	m_sendDataTime = Simulator::Now().GetSeconds();
@@ -2460,7 +2458,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
 			if(!interestcollection.empty())
 			{
-				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
+				//cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 				SendInterestInCache(interestcollection);
 			}
 			//getchar();
