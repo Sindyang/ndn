@@ -1379,8 +1379,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				
 				forwardedroutes.insert(forwardLane);
 				m_RSUforwardedData[signature] = forwardedroutes;
+				cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
 			}
-			cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
 			//getchar();
 			NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 			//2018.1.2 RSU有可能重复转发数据包
@@ -1499,8 +1499,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				}
 				
 				//获取该数据包已转发过的上一跳路段
-				//std::unordered_set<std::string> forwardedroutes;
-				//m_RSUforwardedData[signature] = forwardedroutes;
+				std::unordered_set<std::string> forwardedroutes;
+				m_RSUforwardedData[signature] = forwardedroutes;
 				getchar();
 			
 				// 2018.1.15 

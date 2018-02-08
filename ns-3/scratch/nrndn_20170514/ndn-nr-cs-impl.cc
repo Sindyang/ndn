@@ -369,13 +369,13 @@ NrCsImpl::GetDataSource(std::vector<std::string> interest)
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 	for(itinterest = interest.begin();itinterest != interest.end();itinterest++)
 	{
-		std::cout<<"(cs-impl.cc-GetData) 想要得到的数据包为 "<<*itinterest<<std::endl;
+		std::cout<<"(cs-impl.cc-GetDataSource) 想要得到的数据包为 "<<*itinterest<<std::endl;
 		for(it = m_datasource.begin();it != m_datasource.end();it++)
 		{
 			std::string dataname = it->second->GetName().get(0).toUri();
 			if(*itinterest == dataname)
 			{
-				std::cout<<"(cs-impl.cc-GetData) 缓存中有对应的数据包"<<std::endl;
+				std::cout<<"(cs-impl.cc-GetDataSource) 缓存中有对应的数据包"<<std::endl;
 				Ptr<const Data> src = it->second->GetData();
 				//复制数据包
 				Ptr<Data> data = Create<Data> (*src);
