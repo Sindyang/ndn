@@ -2265,7 +2265,6 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				if(forwardedroutes.empty())
 				{
 					newinterestRoutes = interestRoutes;
-					//2018.2.8 修改后不该进入该函数
 					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
 				}
 				else
@@ -2298,7 +2297,8 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				
 				if(newPriorityList.empty())
 				{
-					cout<<"该数据包对应的未转发过的上一跳路段为空"<<endl;
+					cout<<"数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
+					CachingDataPacket(signature,data);
 					continue;
 				}
 				
@@ -2306,6 +2306,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				if(remainroutes.empty())
 				{
 					m_cs->DeleteData(signature);
+					cout<<"数据包 "<<signature<<" 未满足的路段为空，从缓存中删除"<<endl;
 				}
 					
 			

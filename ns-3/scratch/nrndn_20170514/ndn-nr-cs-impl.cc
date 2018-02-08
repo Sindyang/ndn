@@ -347,7 +347,11 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 			if(itdataroute->first == dataname)
 			{
 				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
-				Ptr<const Data> data = it->second->GetData();
+				Ptr<const Data> src = it->second->GetData();
+				//复制数据包
+				Ptr<Data> data = Create<Data> (*src);
+				//修改数据包的Timestamp
+				data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
 			}
 		}
