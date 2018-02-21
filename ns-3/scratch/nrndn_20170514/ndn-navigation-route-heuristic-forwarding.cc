@@ -705,7 +705,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
 			for(;itdata != datacollection.end();itdata++)
 			{
-				std::map<uint32_t,std::unordered_set<std::string> > itforwarded = m_RSUforwardedData.find(itdata->first);
+				std::map< uint32_t,std::unordered_set<std::string> >::iterator itforwarded = m_RSUforwardedData.find(itdata->first);
 				if(itforwarded != m_RSUforwardedData.end())
 				{
 					//从已转发过的路段中删除当前路段
