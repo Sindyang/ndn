@@ -701,6 +701,20 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		
 		if(!datacollection.empty())
 		{
+			// 2018.2.21
+			std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
+			for(;itdata != datacollection.end();itdata++)
+			{
+				std::map<uint32_t,std::unordered_set<std::string> > itforwarded = m_RSUforwardedData.find(itdata->first);
+				if(itforwarded != m_RSUforwardedData.end())
+				{
+					//从已转发过的路段中删除当前路段
+					std::unordered_set<std::string> forwardedroutes = itforwarded->second;
+					forwardedroutes.erase(routes[0]);
+					itforwarded->second = forwardedroutes;
+				}
+			}
+			
 			SendDataInCache(datacollection);
 			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
 		}
@@ -1436,7 +1450,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		{
 			if(isDuplicatedData(nodeId,signature))
 			{
-				cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复,仍然转发"<<endl;
+				cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复,仍然转发 "<<endl;
 				//getchar();
 				//return;
 			}
@@ -1493,7 +1507,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				if(!remainroutes.empty())
 				{
 					CachingDataPacket(signature,data);
-					cout<<"(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包"<<endl;
+					cout<<"(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 "<<signature<<endl;
 				}
 				
 				//获取该数据包已转发过的上一跳路段
@@ -1984,7 +1998,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t nodeId = m_node->GetId();
 	
-	cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHello) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	
 	//更新邻居列表
 	
