@@ -762,7 +762,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					unsigned int nV;                      // 顶点数
 					unsigned int nE;                      // 边数
 					
-					ifstream fin("/home/wangsiyang/ndn/ns-3/data1.txt");
+					ifstream fin("data1.txt");
 					if (!fin)
 					{
 						cout << "fail to open the file" <<endl;
