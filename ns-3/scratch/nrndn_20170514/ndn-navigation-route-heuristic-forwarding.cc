@@ -761,8 +761,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					unsigned int nV;                      // 顶点数
 					unsigned int nE;                      // 边数
-					vector<Edge> G[N];           // 图的邻接表形式
-					int G1[N][N];                // 图的邻接矩阵形式
 					
 					ifstream fin;
 					fin.open("data1.txt");
@@ -773,19 +771,10 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					fin >> nE;
 					cout << nE << endl;
 
-					// 输入图
-					for (i = 0; i < nV; i++) {
-						for (unsigned int j = i; j < nV; j++) {
-							G1[i][j] = G1[j][i] = 10000;
-						}
-					}
-					cout << endl << "原图{边的起点，终点，花费}：" << endl;
 					int from, to, cost;
 					for (i = 0; i < nE; i++) {
 						fin >> from >> to >> cost;
 						cout << from << " " << to << " " << cost << endl;
-						//G1[from][to] = G1[to][from] = cost;
-						G1[from][to] = cost;
 					}
 					fin.close();
 					
