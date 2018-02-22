@@ -23,7 +23,9 @@ namespace ndn
 {
 namespace nrndn
 {
-	
+
+using namespace std;
+
 #define INF 200000000
 #define nV 16
 
