@@ -23,7 +23,6 @@ namespace nrndn
 {
 	
 #define INF 200000000
-#defind nV 16
 
 struct Edge {
 	int to;          // 边终止节点
@@ -52,10 +51,10 @@ class getShortestPath{
 public:
 	getShortestPath();
 	~getShortestPath();
-	addEdge(int from, int to, double cost,vector<Edge> G[nV]);
-	dijkstra(int s, vector<Edge> G[nV]);
-	dfs(int s, int t, Ans &A, vector<Ans> &paths, int start);
-	solve(string from, string to);
+	void addEdge(int from, int to, double cost,vector<Edge> G[nV]);
+	void dijkstra(int s, vector<Edge> G[nV]);
+	void dfs(int s, int t, Ans &A, vector<Ans> &paths, int start);
+	void solve(string from, string to);
 
 private:
 	static uint32_t nV;
