@@ -754,7 +754,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				if(newPriorityList.empty())
 				{
 					
-					std::pair<std::string,std::string> junctions = GetLaneJunction(nextroute);
+					std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
 					//2018.2.22 为兴趣包重新选择转发路线
 					ndn::nrndn::getShortestPath::solve(junctions.first,junctions.second);
 					
