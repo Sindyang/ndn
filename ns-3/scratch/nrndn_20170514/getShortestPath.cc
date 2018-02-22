@@ -9,6 +9,7 @@
 
 #include<map>
 #include<string>
+#include "getShortestPath.h"
 namespace ns3
 {
 namespace ndn
