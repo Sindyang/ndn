@@ -16,9 +16,7 @@ namespace ndn
 namespace nrndn
 {
 
-
-//获取顶点个数
-uint32_t getShortestPath::nV = m_sumodata->GetRSUSize();	
+using namespace std;
 
 getShortestPath::getShortestPath()
 {

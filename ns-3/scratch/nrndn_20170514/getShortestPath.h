@@ -23,6 +23,7 @@ namespace nrndn
 {
 	
 #define INF 200000000
+#define nV 16
 
 struct Edge {
 	int to;          // 边终止节点
@@ -55,9 +56,9 @@ public:
 	void dijkstra(int s, vector<Edge> G[nV]);
 	void dfs(int s, int t, Ans &A, vector<Ans> &paths, int start);
 	void solve(string from, string to);
+	friend struct Ans;
 
 private:
-	static uint32_t nV;
 	Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
 	map<string,int> m; 			//顶点与下标的对应关系
 	vector<Edge> G[nV];          // 图的邻接表形式
