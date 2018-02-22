@@ -73,6 +73,11 @@ public:
 	{
 		return vl.getNumOfVehicles();
 	}
+	
+	const uint32_t GetRSUSize() const
+	{
+		return vl.getNumOfRSUs();
+	}
 
 	void Install();
 

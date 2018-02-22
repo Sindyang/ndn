@@ -753,6 +753,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
 				if(newPriorityList.empty())
 				{
+					
+					std::pair<std::string,std::string> junctions = GetLaneJunction(nextroute);
+					//2018.2.22 为兴趣包重新选择转发路线
+					ndn::nrndn::getShortestPath::solve(junctions.first,junctions.second);
+					
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
