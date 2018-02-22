@@ -772,7 +772,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					cout << nE << endl;
 
 					int from, to, cost;
-					for (i = 0; i < nE; i++) {
+					for (int i = 0; i < nE; i++) {
 						fin >> from >> to >> cost;
 						cout << from << " " << to << " " << cost << endl;
 					}
