@@ -21,7 +21,6 @@
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
 #include "ndn-nr-cs-impl.h"
-#include "getShortestPath.h"
 
 #include <vector>
 #include <map>
