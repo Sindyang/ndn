@@ -4,8 +4,6 @@
  *  Created on: Feb 21, 2018
  *      Author: wangsy
  */
-#ifndef GETSHORTESTPATH_H_
-#define GETSHORTESTPATH_H_
 
 #include<map>
 #include<string>
@@ -145,5 +143,3 @@ getShortestPath::solve(string from, string to)
 } /* namespace nrndn */
 } /* namespace ndn */
 } /* namespace ns3 */
-
-#endif /* GETSHORTESTPATH_H_ */
