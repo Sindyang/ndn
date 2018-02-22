@@ -531,7 +531,6 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	
-	Ptr<ndn::nrndn::getShortestPath> m_getpath;
 	
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_cs;
 	

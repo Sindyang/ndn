@@ -756,7 +756,50 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
 					//2018.2.22 为兴趣包重新选择转发路线
-					m_getpath->solve(junctions.first,junctions.second);
+					//m_getpath->solve(junctions.first,junctions.second);
+					
+					ifstream fin;
+					fin.open("data1.txt");
+					cout << "顶点数：";
+					fin >> nV;
+					cout << nV << endl;
+					cout << "边数：";
+					fin >> nE;
+					cout << nE << endl;
+
+					// 输入图
+					for (i = 0; i < nV; i++) {
+						for (unsigned int j = i; j < nV; j++) {
+							G1[i][j] = G1[j][i] = INF;
+						}
+					}
+					cout << endl << "原图{边的起点，终点，花费}：" << endl;
+					int from, to, cost;
+					for (i = 0; i < nE; i++) {
+						fin >> from >> to >> cost;
+						cout << from << " " << to << " " << cost << endl;
+						addEdge(from, to, cost, G);
+						//G1[from][to] = G1[to][from] = cost;
+						G1[from][to] = cost;
+					}
+					fin.close();
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
