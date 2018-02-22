@@ -25,6 +25,8 @@ namespace nrndn
 #define INF 200000000
 #define nV 16
 
+class getShortestPath;
+
 struct Edge {
 	int to;          // 边终止节点
 	int cost;        // 花费
