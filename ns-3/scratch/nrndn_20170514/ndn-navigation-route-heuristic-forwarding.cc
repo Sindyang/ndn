@@ -756,7 +756,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
 					//2018.2.22 为兴趣包重新选择转发路线
-					ndn::nrndn::getShortestPath::solve(junctions.first,junctions.second);
+					m_getpath->solve(junctions.first,junctions.second);
 					
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
