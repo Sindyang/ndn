@@ -34,7 +34,7 @@ getShortestPath::getShortestPath()
 	
 	//对顶点编号
 	uint32_t num = 0;
-	for (map<string,Edge>::iterator edge=edges.begin();edge!=edges.end();edge++)
+	for (map<string,vanetmobility::sumomobility::Edge>::iterator edge=edges.begin();edge!=edges.end();edge++)
 	{
 		string from = (*edge).second.from;
 		string to = (*edge).second.to;
