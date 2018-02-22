@@ -61,13 +61,13 @@ getShortestPath::~getShortestPath()
 	
 }
 
-getShortestPath::addEdge(int from, int to, double cost,vector<Edge> G[nV])
+getShortestPath::addEdge(int from, int to, double cost,vector<Edges> G[nV])
 {
-	Edge e(to, cost);
+	Edges e(to, cost);
 	G[from].push_back(e);
 }
 
-getShortestPath::dijkstra(int s, vector<Edge> G[nV])
+getShortestPath::dijkstra(int s, vector<Edges> G[nV])
 {
 	//对dist进行初始化
 	fill(dist, dist + nV + 1, INF);
@@ -83,7 +83,7 @@ getShortestPath::dijkstra(int s, vector<Edge> G[nV])
 
 		//G[v]代表点v与其他顶点之间的距离
 		for (unsigned int i = 0; i < G[v].size(); i++) {
-			Edge &e = G[v][i];
+			Edges &e = G[v][i];
 			int dis = dist[v] + e.cost;
 			//更新距离列表
 			if (dist[e.to] > dis) {
