@@ -16,6 +16,7 @@
 #include <functional>
 #include "ns3/core-module.h"
 #include "ns3/ndn-wire.h"
+#include "ns3/SumoMobility.h"
 
 namespace ns3
 {
