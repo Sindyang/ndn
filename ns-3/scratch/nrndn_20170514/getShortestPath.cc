@@ -10,6 +10,8 @@
 #include<map>
 #include<string>
 #include "getShortestPath.h"
+#include "ns3/network-module.h"
+
 namespace ns3
 {
 namespace ndn
