@@ -116,7 +116,10 @@ void getShortestPath::dfs(int s, int t, Ans &A, vector<Ans> &paths, int start)
 void getShortestPath::solve(string from, string to)
 {
 	//将想要得到的路线设为无穷大
-	addEdge(m[from],m[to],INF,G);
+	Edges e(m[to], INF);
+	G[m[from]].push_back(e);
+		
+		
 	G1[m[from]][m[to]] = INF;
 	
 	dijkstra(m[from], G);
