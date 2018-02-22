@@ -34,7 +34,7 @@ getShortestPath::getShortestPath()
 	
 	//对顶点编号
 	uint32_t num = 0;
-	for (map<string,vanetmobility::sumomobility::Edge>::iterator edge=edges.begin();edge!=edges.end();edge++)
+	for (map<string,vanetmobility::sumomobility::Edge>::const_iterator edge=edges.begin();edge!=edges.end();edge++)
 	{
 		string from = (*edge).second.from;
 		string to = (*edge).second.to;
@@ -51,7 +51,9 @@ getShortestPath::getShortestPath()
 			m[to] = num++;
 		}
 		
-		addEdge(m[from],m[to],cost,G);
+		Edges e(m[to], cost);
+		G[m[from]].push_back(e);
+		
 		G1[m[from]][m[to]] = cost;
 	}
 }
@@ -61,13 +63,7 @@ getShortestPath::~getShortestPath()
 	
 }
 
-getShortestPath::addEdge(int from, int to, double cost,vector<Edges> G[nV])
-{
-	Edges e(to, cost);
-	G[from].push_back(e);
-}
-
-getShortestPath::dijkstra(int s, vector<Edges> G[nV])
+void getShortestPath::dijkstra(int s, vector<Edges> G[nV])
 {
 	//对dist进行初始化
 	fill(dist, dist + nV + 1, INF);
@@ -97,7 +93,7 @@ getShortestPath::dijkstra(int s, vector<Edges> G[nV])
 	}
 }
 
-getShortestPath::dfs(int s, int t, Ans &A, vector<Ans> &paths, int start) 
+void getShortestPath::dfs(int s, int t, Ans &A, vector<Ans> &paths, int start) 
 {
 	if (s == t) {
 		A.start = start;
@@ -117,7 +113,7 @@ getShortestPath::dfs(int s, int t, Ans &A, vector<Ans> &paths, int start)
 	}
 }
 
-getShortestPath::solve(string from, string to)
+void getShortestPath::solve(string from, string to)
 {
 	//将想要得到的路线设为无穷大
 	addEdge(m[from],m[to],INF,G);

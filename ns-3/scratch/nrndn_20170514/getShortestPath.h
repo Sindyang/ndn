@@ -47,7 +47,6 @@ class getShortestPath{
 public:
 	getShortestPath();
 	~getShortestPath();
-	void addEdge(int from, int to, double cost,vector<Edge> G[nV]);
 	void dijkstra(int s, vector<Edges> G[nV]);
 	void dfs(int s, int t, Ans &A, vector<Ans> &paths, int start);
 	void solve(string from, string to);
@@ -71,9 +70,9 @@ public:
 	int start;
 
 	void getCost() {
-		cost = getShortestPath->G1[start][path[0]];
+		cost = G1[start][path[0]];
 		for (unsigned int i = 0; i < path.size() - 1; i++) {
-			cost += getShortestPath->G1[path[i]][path[i + 1]];
+			cost += G1[path[i]][path[i + 1]];
 		}
 	}
 };
