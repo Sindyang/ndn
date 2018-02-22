@@ -10,6 +10,7 @@
 #include "getShortestPath.h"
 #include "ns3/network-module.h"
 
+NS_LOG_COMPONENT_DEFINE ("ndn.nrndn.getShortestPath");
 namespace ns3
 {
 namespace ndn

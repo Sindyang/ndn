@@ -55,14 +55,14 @@ public:
 	Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
 	map<string,int> m; 			//顶点与下标的对应关系
 	vector<Edges> G[nV];          // 图的邻接表形式
-	int G1[nV][nV];               // 图的邻接矩阵形式
+	extern int G1[nV][nV];               // 图的邻接矩阵形式
 	int dist[nV];                // 从源点出发的最短距离
 	typedef pair<int, int> P;   // first是最短距离，second是顶点编号
 	bool vis[nV];
 	vector<Edges> G4[nV];
 };
 
-class Ans {
+class Ans{
 public:
 	vector<int> path;
 	int cost;
