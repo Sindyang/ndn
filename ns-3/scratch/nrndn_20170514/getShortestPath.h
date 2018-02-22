@@ -25,28 +25,16 @@ namespace nrndn
 #define INF 200000000
 #define nV 16
 
-class getShortestPath;
+class Ans;
 
-struct Edge {
+class Edge {
+public:
 	int to;          // 边终止节点
 	int cost;        // 花费
 
 	Edge(int to1, int cost1) {
 		to = to1;
 		cost = cost1;
-	}
-};
-
-struct Ans {
-	vector<int> path;
-	int cost;
-	int start;
-
-	void getCost() {
-		cost = G1[start][path[0]];
-		for (unsigned int i = 0; i < path.size() - 1; i++) {
-			cost += G1[path[i]][path[i + 1]];
-		}
 	}
 };
 
@@ -71,6 +59,19 @@ private:
 	vector<Edge> G4[nV];
 };
 
+class Ans {
+public:
+	vector<int> path;
+	int cost;
+	int start;
+
+	void getCost() {
+		cost = G1[start][path[0]];
+		for (unsigned int i = 0; i < path.size() - 1; i++) {
+			cost += G1[path[i]][path[i + 1]];
+		}
+	}
+};
 
 } /* namespace nrndn */
 } /* namespace ndn */
