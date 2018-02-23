@@ -756,10 +756,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
 					//2018.2.22 为兴趣包重新选择转发路线
-					//m_getpath->solve(junctions.first,junctions.second);
-					
-					
-	
+		
 					string home = getenv("HOME");
 					string inputDir  = home +"/input";
 					string path   = inputDir + "/shortestpath.txt";
@@ -767,10 +764,20 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					if (!fin)
 					{
 						cout << "fail to open the file" <<endl;
+						NS_ASSERT_MSG(false,"fail to open the file");
 					}
 					else
 					{
 						cout << "open the file successfully" << endl;
+						
+						string str;
+						while (getline(fin, str)) {
+							vector<string> v;
+							SplitString(str, v, " ");
+							if (v[0] == junctions.first && v[1] == junctions.second) {
+								cout << str.substr(v[0].size() + v[1].size() + 2) << endl;
+							}
+						}
 					}
 					
 					fin.close();
@@ -778,17 +785,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					getchar();
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-				
+			
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
