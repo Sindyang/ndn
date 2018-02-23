@@ -759,10 +759,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					//m_getpath->solve(junctions.first,junctions.second);
 					
 					
-					unsigned int nV;                      // 顶点数
-					unsigned int nE;                      // 边数
-					
-					ifstream fin("data1.txt");
+	
+					string home = getenv("HOME");
+					string inputDir  = home +"/input";
+					string path   = inputDir + "/shortestpath.txt";
+					ifstream fin(path);
 					if (!fin)
 					{
 						cout << "fail to open the file" <<endl;
@@ -771,18 +772,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					{
 						cout << "open the file successfully" << endl;
 					}
-					cout << "顶点数：";
-					fin >> nV;
-					cout << nV << endl;
-					cout << "边数：";
-					fin >> nE;
-					cout << nE << endl;
-
-					int from, to, cost;
-					for (int i = 0; i < nE; i++) {
-						fin >> from >> to >> cost;
-						cout << from << " " << to << " " << cost << endl;
-					}
+					
 					fin.close();
 					
 					
@@ -798,10 +788,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					
 					
-					
-					
-					
-					
+				
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
