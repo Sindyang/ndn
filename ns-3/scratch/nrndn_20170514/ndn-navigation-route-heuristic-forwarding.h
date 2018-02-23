@@ -84,7 +84,13 @@ public:
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
 	void
+	DetectDatainCache(vector<string> futureinterest);
+	
+	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
+	
+	string
+	GetShortestPath(vector<string> forwardroutes);
 	
 	vector<string> 
 	GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute);

@@ -675,6 +675,11 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		SplitString(forwardRoute,routes," ");
 		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
+		
+		//还需要判断兴趣包源节点是否全部在主PIT表项中
+		//若是的话，不需要再转发
+		
+		
 		// Update the PIT here
 		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
@@ -690,30 +695,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		}
 		cout<<endl;*/
 		//getchar();
-
-		//查看缓存中是否有对应的数据包
-		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
-		//getchar();
 		
-		if(!datacollection.empty())
-		{
-			// 2018.2.21
-			std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
-			for(;itdata != datacollection.end();itdata++)
-			{
-				std::map< uint32_t,std::unordered_set<std::string> >::iterator itforwarded = m_RSUforwardedData.find(itdata->first);
-				if(itforwarded != m_RSUforwardedData.end())
-				{
-					//从已转发过的路段中删除当前路段
-					std::unordered_set<std::string> forwardedroutes = itforwarded->second;
-					forwardedroutes.erase(routes[0]);
-					itforwarded->second = forwardedroutes;
-				}
-			}
-			
-			SendDataInCache(datacollection);
-			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
-		}
+		DetectDatainCache(futureinterest);
 		
 		
 		//evaluate whether receiver's id is in sender's priority list
@@ -894,6 +877,34 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//getchar();
 		//cout<<endl;
+	}
+}
+
+void 
+NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest)
+{
+	//查看缓存中是否有对应的数据包
+	std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
+	//getchar();
+		
+	if(!datacollection.empty())
+	{
+		// 2018.2.21
+		std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
+		for(;itdata != datacollection.end();itdata++)
+		{
+			std::map< uint32_t,std::unordered_set<std::string> >::iterator itforwarded = m_RSUforwardedData.find(itdata->first);
+			if(itforwarded != m_RSUforwardedData.end())
+			{
+				//从已转发过的路段中删除当前路段
+				std::unordered_set<std::string> forwardedroutes = itforwarded->second;
+				forwardedroutes.erase(routes[0]);
+				itforwarded->second = forwardedroutes;
+			}
+		}
+			
+		SendDataInCache(datacollection);
+		cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
 	}
 }
 
