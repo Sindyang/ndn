@@ -696,7 +696,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		cout<<endl;*/
 		//getchar();
 		
-		DetectDatainCache(futureinterest);
+		DetectDatainCache(futureinterest,routes[0]);
 		
 		
 		//evaluate whether receiver's id is in sender's priority list
@@ -881,7 +881,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 }
 
 void 
-NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest)
+NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
 {
 	//查看缓存中是否有对应的数据包
 	std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
@@ -898,7 +898,7 @@ NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest)
 			{
 				//从已转发过的路段中删除当前路段
 				std::unordered_set<std::string> forwardedroutes = itforwarded->second;
-				forwardedroutes.erase(routes[0]);
+				forwardedroutes.erase(currentroute);
 				itforwarded->second = forwardedroutes;
 			}
 		}

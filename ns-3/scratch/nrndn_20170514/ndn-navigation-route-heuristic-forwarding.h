@@ -84,12 +84,12 @@ public:
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
 	void
-	DetectDatainCache(vector<string> futureinterest);
+	DetectDatainCache(vector<string> futureinterest,string currentroute);
 	
 	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	
-	string
+	vector<string>
 	GetShortestPath(vector<string> forwardroutes);
 	
 	vector<string> 
