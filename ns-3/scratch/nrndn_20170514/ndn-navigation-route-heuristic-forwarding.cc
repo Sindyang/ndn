@@ -988,6 +988,8 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		}
 		cout<<endl;
 		
+		vector<vector<string>> temproutes(shortroutes);
+		
 		for(vector<vector<string>>::iterator it = shortroutes.begin();it != shortroutes.end();)
 		{
 			set<string> newjunction;
@@ -1034,7 +1036,8 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		}
 		else if(shortroutes.size() == 0)
 		{
-			NS_ASSERT_MSG(false,"具有0个最佳路段");
+			shortroutes = temproutes;
+			cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
 	
