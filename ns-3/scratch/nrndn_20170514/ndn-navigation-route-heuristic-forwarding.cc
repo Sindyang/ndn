@@ -734,6 +734,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				if(newPriorityList.empty())
 				{
 					vector<string> bestroute = GetShortestPath(routes);
+					cout<<"最佳路线为 "<<endl;
 					for(uint32_t i = 2;i < bestroute.size();i++)
 					{
 						cout<<bestroute[i]<<" ";
@@ -1006,6 +1007,7 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 				cout<<junctions.second<<" ";
 				newjunction.insert(junctions.second);
 			}
+			cout<<endl;
 			
 			//判断新旧路段是否有重复交点
 			bool HasSameJunction = false;
@@ -1040,7 +1042,6 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
-	
 	return shortroutes[0];
 }
 
