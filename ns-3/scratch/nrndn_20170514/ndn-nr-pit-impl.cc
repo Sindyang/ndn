@@ -220,7 +220,7 @@ NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const st
  * 更新主待处理兴趣列表
  * interestRoute:兴趣包的兴趣路线
  * id:兴趣包的源节点
- * lane:兴趣包的源节点所对应的车辆在未来会经过的路段
+ * currentRoute:兴趣包的源节点所对应的车辆在未来会经过的路段
  */
 bool 
 NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
