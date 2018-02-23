@@ -1005,10 +1005,10 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			
 			//判断新旧路段是否有重复交点
 			bool HasSameJunction = false;
-			for(uint32_t i = 0;i < newjunction.size();i++)
+			for(set<string>::iterator itnew = newjunction.begin();itnew != newjunction.end();itnew++)
 			{
-				set<string>::iterator itset = originjunction.find(newjunction[i]);
-				if(itset != originjunction.end())
+				set<string>::iterator itorigin = originjunction.find(*itnew);
+				if(itorigin != originjunction.end())
 				{
 					HasSameJunction = true;
 					break;
