@@ -960,8 +960,8 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			vector<string> v;
 			SplitString(str, v, " ");
 			if (v[0] == junctions.first && v[1] == junctions.second) {
-				cout<<"(forwarding.cc-OnInterest_RSU) 最短的路线为 "<<endl;
-				cout << str.substr(v[0].size() + v[1].size() + 2) << endl;
+				//cout<<"(forwarding.cc-OnInterest_RSU) 最短的路线为 "<<endl;
+				//cout << str.substr(v[0].size() + v[1].size() + 2) << endl;
 				shortroutes.push_back(v);
 			}
 		}
@@ -971,10 +971,10 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 	//判断是否具有多条最短路线
 	if(shortroutes.size() > 1)
 	{
-		cout<<"(forwarding.cc-GetShortestPath) 具有多个最佳路段"<<endl;
+		//cout<<"(forwarding.cc-GetShortestPath) 具有多个最佳路段"<<endl;
 		
 		set<string> originjunction;
-		cout<<"(forwarding.cc-GetShortestPath) 兴趣包下下路段及之后的交点为 "<<endl;
+		//cout<<"(forwarding.cc-GetShortestPath) 兴趣包下下路段及之后的交点为 "<<endl;
 		
 		//获得原路线的交点
 		/*
@@ -984,10 +984,10 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		for(uint32_t i = 2;i < forwardroutes.size();i++)
 		{
 			junctions = m_sensor->GetLaneJunction(forwardroutes[i]);
-			cout<<junctions.second<<" ";
+			//cout<<junctions.second<<" ";
 			originjunction.insert(junctions.second);
 		}
-		cout<<endl;
+	//	cout<<endl;
 		
 		vector<vector<string>> temproutes(shortroutes);
 		
@@ -1000,14 +1000,14 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			 * 最后一条路段的终点不用计算
 			 */
 			//获得新路段的交点
-			cout<<"(forwarding.cc-GetShortestPath) 新路段的交点为 "<<endl;
+		//	cout<<"(forwarding.cc-GetShortestPath) 新路段的交点为 "<<endl;
 			for(uint32_t j = 2;j < v.size()-1;j++)
 			{
 				junctions = m_sensor->GetLaneJunction(v[j]);
-				cout<<junctions.second<<" ";
+				//cout<<junctions.second<<" ";
 				newjunction.insert(junctions.second);
 			}
-			cout<<endl;
+			//cout<<endl;
 			
 			//判断新旧路段是否有重复交点
 			bool HasSameJunction = false;
@@ -1017,7 +1017,7 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 				if(itorigin != originjunction.end())
 				{
 					HasSameJunction = true;
-					cout<<"相同的交点为 "<<*itnew<<endl;
+					//cout<<"相同的交点为 "<<*itnew<<endl;
 					break;
 				}
 			}
@@ -1039,7 +1039,7 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		else if(shortroutes.size() == 0)
 		{
 			shortroutes = temproutes;
-			cout<<"无最佳路线，则选择第一个路线"<<endl;
+			//cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
 	return shortroutes[0];
