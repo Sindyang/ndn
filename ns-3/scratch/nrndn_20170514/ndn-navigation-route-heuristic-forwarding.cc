@@ -742,6 +742,16 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					cout<<endl;
 					getchar();
 					
+					//查看最佳路线的转发优先级列表
+					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
+					if(anotherNewPriorityList.empty())
+					{
+						cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+					}
+					else
+					{
+						
+					}
 			
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
