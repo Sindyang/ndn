@@ -1059,7 +1059,7 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		else if(shortroutes.size() == 0)
 		{
 			shortroutes = temproutes;
-			//cout<<"无最佳路线，则选择第一个路线"<<endl;
+			cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
 	return shortroutes[0];
