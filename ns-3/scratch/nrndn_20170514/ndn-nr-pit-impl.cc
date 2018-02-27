@@ -164,7 +164,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 {
 	std::vector<std::string> forwardRoutes;
 	std::vector<std::string> unpassedRoutes;
-	std::vector<std::string> futureInterestRoutes;
+	
 	std::vector<std::string>::iterator itforward;
 	std::vector<std::string>::const_iterator itinterest;
 	SplitString(forwardRoute,forwardRoutes," "); 
@@ -196,7 +196,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	}
 	std::cout<<std::endl;
 	
-	futureInterestRoutes = unpassedRoutes;
+	std::vector<std::string> futureInterestRoutes(unpassedRoutes);
 	
 	//判断未行驶的兴趣路段的终点是否为junction
 	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
