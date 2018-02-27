@@ -203,10 +203,16 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	{
 		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-		eit = edges.find(*itunpassed);
+		std::string lane = *itunpassed;
+		cout<<lane<<endl;
+		eit = edges.find(lane);
+		std::string to;
+		if(eit != edges.end())
+		{
+			//路段的终点
+			to = eit->second.to;
+		}
 		
-		//路段的终点
-		std::string to = eit->second.to;
 		if(junction == to)
 		{
 			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 路段 "<<*itunpassed<<" 的终点为 "<<junction<<std::endl;
