@@ -771,7 +771,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 							newforwardRoute += routes[i]+" ";
 						}
 						cout<<"重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
-						
+						interest->SetRoutes(newforwardRoute);
+						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
 					}
 					
 					getchar();
