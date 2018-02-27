@@ -710,8 +710,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		if (idIsInPriorityList)
 		{
 			//查看下一路段是否为兴趣路段
-			std::vector<std::string> routes;
-			SplitString(forwardRoute,routes," ");
+			//std::vector<std::string> routes;
+			//SplitString(forwardRoute,routes," ");
 			if(routes.size() <= 1)
 			{
 				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线 "<<seq<<std::endl;
@@ -740,31 +740,41 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						cout<<bestroute[i]<<" ";
 					}
 					cout<<endl;
-					getchar();
 					
-					//查看最佳路线的转发优先级列表
-					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
-					if(anotherNewPriorityList.empty())
-					{
-						cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
-					}
-					else
-					{
-						
-					}
-			
+					//去除兴趣包来时的路段
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
-					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
 					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 					CachingInterestPacket(seq,interest);
-					//BroadcastStopMessage(interest);
-					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
-					//重新选择路线发送兴趣包
-					//if(nodeId == 24)
-					    //getchar();
+					
+					//查看最佳路线的转发优先级列表
+					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
+					
+					if(anotherNewPriorityList.empty())
+					{
+						cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
+					}
+					else
+					{
+						string newforwardRoute;
+						//更新兴趣包的实际转发路线
+						for(uint32_t i = 2;i < bestroute.size();i++)
+						{
+							newforwardRoute += bestroute[i]+" ";
+						}
+						for(uint32_t i = 2;i < routes.size();i++)
+						{
+							newforwardRoute += routes[i]+" ";
+						}
+						cout<<"重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+						
+					}
+					
+					getchar();
 				}
 				else
 				{
