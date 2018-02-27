@@ -119,17 +119,38 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	//该兴趣包来时的路段不是兴趣路段，RSU为借路RSU
 	else
 	{
-		NS_ASSERT_MSG(false,"该兴趣包来时的路段不是兴趣路段");
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
 		//更新副待处理兴趣列表 这个函数还没写
 		// update secondary pit
+		
 		// 其实我觉得这里应该只有一条路
 		bool result = true;
-		std::vector<std::string> unpassedRoutes = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
-		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
+		pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
+		std::vector<std::string> futureInterestRoutes = collection.first;
+		std::vector<std::string> unpassedRoutes = collection.second;
+		
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit)需要记录在副表中的兴趣路线为 "<<std::endl;
+		for(uint32_t i = 0;i < futureInterestRoutes.size();i++)
+		{
+			std::cout<<futureInterestRoutes[i]<<" ";
+		}
+		std::cout<<std::endl;
+		
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线"<<std::endl;
+		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
+		{
+			std::cout<<unpassedRoutes[i]<<" ";
+		}
+		std::cout<<std::endl;
+		
+		/*for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
 			result = UpdatePrimaryPit(interestRoute,id,*it);
 			result &= result;
-		}
+		}*/
+		
+		
+		getchar();
 		return result;
 	}
 }
@@ -138,11 +159,12 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
  * 2017.12.25 added by sy
  * 得到未行驶且会通过当前RSU的兴趣路线
  */
-std::vector<std::string> 
+pair<std::vector<std::string>,std::vector<std::string> >
 NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute)
 {
 	std::vector<std::string> forwardRoutes;
 	std::vector<std::string> unpassedRoutes;
+	std::vector<std::string> futureInterestRoutes;
 	std::vector<std::string>::iterator itforward;
 	std::vector<std::string>::const_iterator itinterest;
 	SplitString(forwardRoute,forwardRoutes," "); 
@@ -173,6 +195,9 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		}
 	}
 	std::cout<<std::endl;
+	
+	futureInterestRoutes = unpassedRoutes;
+	
 	//判断未行驶的兴趣路段的终点是否为junction
 	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
 	{
@@ -191,7 +216,8 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 			unpassedRoutes.erase(itunpassed++);
 		}
 	}
-	return unpassedRoutes;
+	return std::pair<std::vector<std::string>,std::vector<std::string>>(futureInterestRoutes,unpassedRoutes);
+	//return unpassedRoutes;
 }
 
 /*
