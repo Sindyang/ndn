@@ -121,7 +121,7 @@ public:
     
     bool UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id);
     
-    pair<std::vector<std::string>,std::vector<std::string> > getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
+    std::pair<std::vector<std::string>,std::vector<std::string> > getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
     
     void SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	

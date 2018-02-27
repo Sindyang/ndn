@@ -125,7 +125,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		
 		// 其实我觉得这里应该只有一条路
 		bool result = true;
-		pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
+		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
 		
@@ -159,7 +159,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
  * 2017.12.25 added by sy
  * 得到未行驶且会通过当前RSU的兴趣路线
  */
-pair<std::vector<std::string>,std::vector<std::string> >
+std::pair<std::vector<std::string>,std::vector<std::string> >
 NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute)
 {
 	std::vector<std::string> forwardRoutes;
