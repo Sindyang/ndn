@@ -163,6 +163,7 @@ std::pair<std::vector<std::string>,std::vector<std::string> >
 NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute)
 {
 	std::vector<std::string> forwardRoutes;
+	std::vector<std::string> futureInterestRoutes;
 	std::vector<std::string> unpassedRoutes;
 	
 	std::vector<std::string>::iterator itforward;
@@ -185,7 +186,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	{
 		if(*itforward == *itinterest)
 		{
-			unpassedRoutes.push_back(*itforward);
+			futureInterestRoutes.push_back(*itforward);
 			std::cout<<*itforward<<" ";
 		}
 		else
@@ -196,10 +197,20 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	}
 	std::cout<<std::endl;
 	
-	std::vector<std::string> futureInterestRoutes(unpassedRoutes);
+	for(uint32_t i = 0;i < futureInterestRoutes.size();i++)
+	{
+		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+		eit = edges.find(futureInterestRoutes[i]);
+		if(junction ==  eit->second.to)
+		{
+			unpassedRoutes.push_back(futureInterestRoutes[i]);
+		}
+	}
+	
 	
 	//判断未行驶的兴趣路段的终点是否为junction
-	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
+	/*for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
 	{
 		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
@@ -219,7 +230,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 			itunpassed = unpassedRoutes.erase(itunpassed);
 			}
 		}
-	}
+	}*/
 	return std::pair<std::vector<std::string>,std::vector<std::string>>(futureInterestRoutes,unpassedRoutes);
 	//return unpassedRoutes;
 }
