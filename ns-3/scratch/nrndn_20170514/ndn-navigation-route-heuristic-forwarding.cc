@@ -775,7 +775,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
 					}
 					
-					getchar();
+					//getchar();
 				}
 				else
 				{
