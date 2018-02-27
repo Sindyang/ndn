@@ -203,7 +203,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	{
 		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-		const std::string lane = *itunpassed;
+		const std::string& lane = *itunpassed;
 		std::cout<<lane<<std::endl;
 		eit = edges.find(lane);
 		
