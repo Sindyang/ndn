@@ -688,13 +688,13 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
+		cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
 			cout<<futureinterest[i]<<" ";
 		}
-		cout<<endl;*/
-		//getchar();
+		cout<<endl;
+		getchar();
 		
 		DetectDatainCache(futureinterest,routes[0]);
 		
@@ -789,7 +789,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			}
 			else
 			{
-				NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
+				//NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
+				cout<<"(OnInterest_RSU) 兴趣包的下一路段不为兴趣路段"<<endl;
 			}
 			
 			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
@@ -1084,7 +1085,6 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	}
 	else
 	{
-		NS_ASSERT_MSG(false,"还未测试这部分代码");
 		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
 		for(uint32_t i = 0;i < forwardroute.size();i++)
 		{

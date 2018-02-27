@@ -155,7 +155,6 @@ private:
     std::vector<Ptr<Entry> >		               m_pitContainer;
 	std::vector<Ptr<Entry> >                       m_secondPitContainer;
     Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
-    Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
     friend class EntryNrImpl;
     
     

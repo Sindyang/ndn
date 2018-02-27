@@ -136,7 +136,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		}
 		std::cout<<std::endl;
 		
-		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线"<<std::endl;
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 "<<std::endl;
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
 			std::cout<<unpassedRoutes[i]<<" ";
@@ -201,41 +201,11 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	{
 		std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(futureInterestRoutes[i]);
 		
-		//const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
-		//std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-		//eit = edges.find(futureInterestRoutes[i]);
-		//if(eit != edges.end())
-		//{
 		if(junction == junctions.second)
 		{
 			unpassedRoutes.push_back(futureInterestRoutes[i]);
 		}
-		//}
 	}
-	
-	
-	//判断未行驶的兴趣路段的终点是否为junction
-	/*for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
-	{
-		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
-		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-		const std::string& lane = *itunpassed;
-		std::cout<<lane<<std::endl;
-		eit = edges.find(lane);
-		
-		if(eit != edges.end())
-		{
-			if(junction ==  eit->second.to)
-			{
-				std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 路段 "<<*itunpassed<<" 的终点为 "<<junction<<std::endl;
-				itunpassed++;
-			}
-			else
-			{
-			itunpassed = unpassedRoutes.erase(itunpassed);
-			}
-		}
-	}*/
 	return std::pair<std::vector<std::string>,std::vector<std::string>>(futureInterestRoutes,unpassedRoutes);
 	//return unpassedRoutes;
 }
