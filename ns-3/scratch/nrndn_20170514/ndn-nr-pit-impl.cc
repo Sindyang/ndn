@@ -206,21 +206,18 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		const std::string lane = *itunpassed;
 		std::cout<<lane<<std::endl;
 		eit = edges.find(lane);
-		std::string to;
+		
 		if(eit != edges.end())
 		{
-			//路段的终点
-			to = eit->second.to;
-		}
-		
-		if(junction == to)
-		{
-			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 路段 "<<*itunpassed<<" 的终点为 "<<junction<<std::endl;
-			itunpassed++;
-		}
-		else
-		{
+			if(junction ==  eit->second.to)
+			{
+				std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 路段 "<<*itunpassed<<" 的终点为 "<<junction<<std::endl;
+				itunpassed++;
+			}
+			else
+			{
 			itunpassed = unpassedRoutes.erase(itunpassed);
+			}
 		}
 	}
 	return std::pair<std::vector<std::string>,std::vector<std::string>>(futureInterestRoutes,unpassedRoutes);
