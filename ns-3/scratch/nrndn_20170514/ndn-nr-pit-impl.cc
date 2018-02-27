@@ -201,7 +201,7 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	//判断未行驶的兴趣路段的终点是否为junction
 	for(std::vector<std::string>::iterator itunpassed = unpassedRoutes.begin();itunpassed != unpassedRoutes.end();)
 	{
-		const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+		const std::map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 		eit = edges.find(*itunpassed);
 		
