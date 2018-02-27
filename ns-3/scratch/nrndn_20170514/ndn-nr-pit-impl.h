@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <unordered_set>
 
 
@@ -155,6 +156,7 @@ private:
 	std::vector<Ptr<Entry> >                       m_secondPitContainer;
     Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
     Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
+	Ptr<ndn::nrndn::NodeSensor> 				   m_sensor;
     friend class EntryNrImpl;
     
     

@@ -199,13 +199,18 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 	
 	for(uint32_t i = 0;i < futureInterestRoutes.size();i++)
 	{
-		const std::map<std::string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
-		std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-		eit = edges.find(futureInterestRoutes[i]);
-		if(junction ==  eit->second.to)
+		std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(futureInterestRoutes[i]);
+		
+		//const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+		//std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+		//eit = edges.find(futureInterestRoutes[i]);
+		//if(eit != edges.end())
+		//{
+		if(junction == junctions.second)
 		{
 			unpassedRoutes.push_back(futureInterestRoutes[i]);
 		}
+		//}
 	}
 	
 	
