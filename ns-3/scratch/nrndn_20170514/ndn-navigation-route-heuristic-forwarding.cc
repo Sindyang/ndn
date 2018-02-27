@@ -688,13 +688,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
+		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
 			cout<<futureinterest[i]<<" ";
 		}
-		cout<<endl;
-		getchar();
+		cout<<endl;*/
 		
 		DetectDatainCache(futureinterest,routes[0]);
 		
@@ -1096,10 +1095,13 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 				break;
 			}
 		}
+		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 "<<endl;
 		for(;it != interestroute.end();it++)
 		{
 			futureinterest.push_back(*it);
+			cout<<*it<<" ";
 		}
+		getchar();
 	}
 	return futureinterest;
 }
