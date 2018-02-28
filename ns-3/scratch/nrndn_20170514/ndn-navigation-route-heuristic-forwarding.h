@@ -578,6 +578,8 @@ private:
 	
 	double m_sendDataTime;
 	
+	double m_detecttime;
+	
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 	
 	std::unordered_set<std::string> routes_front_pre;

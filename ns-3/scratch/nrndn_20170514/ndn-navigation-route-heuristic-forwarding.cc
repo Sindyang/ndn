@@ -98,7 +98,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false),
 	m_sendInterestTime(0),
-	m_sendDataTime(0)
+	m_sendDataTime(0),
+	m_detecttime(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -1915,7 +1916,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	SendInterestPacket(interest);
 	
 	//m_cs->AddForwardInterest(nonce,interest);
-	m_sendInterestTime = Simulator::Now().GetSeconds();	
+	//m_sendInterestTime = Simulator::Now().GetSeconds();	
 	
 	// 4. record the forward times
 	// 2017.12.23 added by sy
@@ -2752,9 +2753,15 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 		//getchar();
 	}
+	double interval = Simulator::Now().GetSeconds() - m_detecttime;
+	if(interval >= 1)
+	{
+		routes_front_pre = routes_front;
+		routes_behind_pre = routes_behind;
+		cout<<"(forwarding.cc-ProcessHelloRSU)更新道路信息"<<endl;
+		m_detecttime = Simulator::Now().GetSeconds();
+	}
 	m_preNB = m_nb;
-	routes_front_pre = routes_front;
-	routes_behind_pre = routes_behind;
 }
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
