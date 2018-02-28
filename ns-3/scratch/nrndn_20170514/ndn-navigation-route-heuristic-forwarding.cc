@@ -2608,7 +2608,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
@@ -2625,6 +2625,20 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
+	
+	cout<<"routes_front_pre"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	
+	cout<<endl<<"routes_front"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front.begin();it != routes_front.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	
 	
 	if(routes_front_pre.size() < routes_front.size())
 	{
