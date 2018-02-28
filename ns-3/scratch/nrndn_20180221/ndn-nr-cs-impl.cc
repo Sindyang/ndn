@@ -563,7 +563,7 @@ NrCsImpl::GetInterest(std::string lane)
 	//PrintInterestCache();
 	std::map<uint32_t,Ptr<const Interest> > InterestCollection;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it;
-	for(it = m_interest.begin();it != m_interest.end();/*it++*/)
+	for(it = m_interest.begin();it != m_interest.end();it++)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes(); 
@@ -575,12 +575,12 @@ NrCsImpl::GetInterest(std::string lane)
 		{
 			//PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			m_interest.erase(it++);
+			//m_interest.erase(it++);
 	  	}
-		else
-		{
-			++it;
-		}
+		//else
+		//{
+			//++it;
+		//}
 	}
 	//size = GetInterestSize();
 	//std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
