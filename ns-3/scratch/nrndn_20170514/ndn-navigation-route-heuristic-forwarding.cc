@@ -2534,7 +2534,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetName().get(0).toUri();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
@@ -2592,7 +2592,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
@@ -2621,7 +2621,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	//cout<<endl;
+	cout<<endl;
 	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
@@ -2653,6 +2653,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
+	cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
+	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{
 		behind_change_mode = 2;
@@ -2682,11 +2684,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
-			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
 			if(!interestcollection.empty())
 			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
+				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
 				SendInterestInCache(interestcollection);
 			}
 			//getchar();
