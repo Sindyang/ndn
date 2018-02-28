@@ -2523,26 +2523,17 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(front_change_mode > 1 && m_cs->GetInterestSize() > 0)
 	{
-		map<uint32_t,Ptr<const Interest> > interestcollection;
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
-			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
-			map<uint32_t,Ptr<const Interest> > temp = m_cs->GetInterest(*itroutes_front);
-			if(!temp.empty())
+			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
+			if(!interestcollection.empty())
 			{
 				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
-				for(map<uint32_t,Ptr<const Interest> >::iterator it = temp.begin();it != temp.end();it++)
-				{
-					interestcollection[it->first] = it->second; 
-				}
+				SendInterestInCache(interestcollection);
 			}
 			//getchar();
 		}
-		if(!interestcollection.empty())
-		{
-			SendInterestInCache(interestcollection);
-		}
-		
 	}
 	else
 	{
