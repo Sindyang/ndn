@@ -1758,7 +1758,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	SendInterestPacket(interest);
 	
 	//m_cs->AddForwardInterest(nonce,interest);
-	m_sendInterestTime = Simulator::Now().GetSeconds();	
+	//m_sendInterestTime = Simulator::Now().GetSeconds();	
 	
 	// 4. record the forward times
 	// 2017.12.23 added by sy
