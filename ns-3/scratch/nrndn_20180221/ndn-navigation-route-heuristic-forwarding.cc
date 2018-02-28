@@ -2140,7 +2140,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	if(interval < 1)
 	{
 		//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
-		//return;
+		return;
 	}
 	m_sendInterestTime = Simulator::Now().GetSeconds();
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
@@ -2238,7 +2238,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 	if(interval < 1)
 	{
 		cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
-		//return;
+		return;
 	}
 	m_sendDataTime = Simulator::Now().GetSeconds();
 	
@@ -2523,17 +2523,26 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(front_change_mode > 1 && m_cs->GetInterestSize() > 0)
 	{
+		map<uint32_t,Ptr<const Interest> > interestcollection;
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
 			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
-			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
-			if(!interestcollection.empty())
+			map<uint32_t,Ptr<const Interest> > temp = m_cs->GetInterest(*itroutes_front);
+			if(!temp.empty())
 			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
-				SendInterestInCache(interestcollection);
+				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
+				for(map<uint32_t,Ptr<const Interest> >::iterator it = temp.begin();it != temp.end();it++)
+				{
+					interestcollection[it->first] = it->second; 
+				}
 			}
 			//getchar();
 		}
+		if(!interestcollection.empty())
+		{
+			SendInterestInCache(interestcollection);
+		}
+		
 	}
 	else
 	{
