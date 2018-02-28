@@ -2140,7 +2140,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	if(interval < 1)
 	{
 		//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
-		return;
+		//return;
 	}
 	m_sendInterestTime = Simulator::Now().GetSeconds();
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
