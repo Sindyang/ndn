@@ -2377,7 +2377,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetName().get(0).toUri();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
@@ -2435,7 +2435,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
@@ -2451,7 +2451,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
@@ -2496,6 +2496,19 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
+	cout<<"routes_front_pre"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	
+	cout<<endl<<"routes_front"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front.begin();it != routes_front.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{
 		behind_change_mode = 2;
@@ -2523,17 +2536,26 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	if(front_change_mode > 1 && m_cs->GetInterestSize() > 0)
 	{
+		map<uint32_t,Ptr<const Interest> > interestcollection;
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
-			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
-			if(!interestcollection.empty())
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			map<uint32_t,Ptr<const Interest> > temp = m_cs->GetInterest(*itroutes_front);
+			if(!temp.empty())
 			{
 				cout<<"(forwarding.cc-ProcessHelloRSU) 获得缓存的兴趣包"<<endl;
-				SendInterestInCache(interestcollection);
+				for(map<uint32_t,Ptr<const Interest> >::iterator it = temp.begin();it != temp.end();it++)
+				{
+					interestcollection[it->first] = it->second; 
+				}
 			}
 			//getchar();
 		}
+		if(!interestcollection.empty())
+		{
+			SendInterestInCache(interestcollection);
+		}
+		
 	}
 	else
 	{
