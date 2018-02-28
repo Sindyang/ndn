@@ -733,7 +733,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				if(newPriorityList.empty())
 				{
 					vector<string> bestroute = GetShortestPath(routes);
-					cout<<"最佳路线为 "<<endl;
+					cout<<"源节点 "<<nodeId<<" 的最佳路线为 "<<endl;
 					for(uint32_t i = 2;i < bestroute.size();i++)
 					{
 						cout<<bestroute[i]<<" ";
@@ -742,7 +742,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					
 					//去除兴趣包来时的路段
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
-					cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
 					interest->SetRoutes(forwardRoute);
 					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
@@ -769,7 +769,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						{
 							newforwardRoute += routes[i]+" ";
 						}
-						cout<<"重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+						cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
 						interest->SetRoutes(newforwardRoute);
 						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
 					}
