@@ -121,7 +121,6 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
 		
-		bool result = true;
 		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
@@ -312,6 +311,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 bool NrPitImpl::
 UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
 {
+	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
 	std::vector<std::string>::const_iterator it = interestRoute.begin();
 	for(;it != interestRoute.end();++it)
