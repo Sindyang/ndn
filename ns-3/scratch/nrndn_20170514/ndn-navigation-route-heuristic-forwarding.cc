@@ -679,11 +679,10 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//还需要判断兴趣包源节点是否全部在主PIT表项中
 		//若是的话，不需要再转发
 		
-		
+		bool IsExist = true;
 		// Update the PIT here
-		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
+		m_nrpit->UpdateRSUPit(IsExist,junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
-		
 		
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
@@ -694,8 +693,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			cout<<futureinterest[i]<<" ";
 		}
 		cout<<endl;*/
-		
 		DetectDatainCache(futureinterest,routes[0]);
+		
+		if(IsExist)
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 兴趣包的兴趣路线已经存在，不用再转发兴趣包"<<endl;
+		}
 		
 		
 		//evaluate whether receiver's id is in sender's priority list
@@ -2593,7 +2596,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
 	
-	cout<<"routes_front_pre"<<endl;
+	/*cout<<"routes_front_pre"<<endl;
 	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
 	{
 		cout<<*it<<" ";
@@ -2604,7 +2607,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		cout<<*it<<" ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 	
 	
 	if(routes_front_pre.size() < routes_front.size())
@@ -2634,7 +2637,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
 	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{

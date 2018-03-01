@@ -121,16 +121,16 @@ public:
     //added by sy
     //bool UpdateRSUPit(const std::vector<std::string>& route,const uint32_t& id);
     
-    bool UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id);
+    bool UpdateRSUPit(bool& IsExist,std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id);
     
     std::pair<std::vector<std::string>,std::vector<std::string> > getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
     
     void SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	
-	bool UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
+	bool UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
 	
 	//2018.3.1
-	bool UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
+	bool UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
 	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);

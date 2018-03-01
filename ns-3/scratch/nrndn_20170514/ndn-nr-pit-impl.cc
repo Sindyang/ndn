@@ -103,7 +103,7 @@ std::string NrPitImpl::getCurrentLane()
  * id为兴趣包源节点
  */
 bool 
-NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
+NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
 {
 	std::size_t found = forwardRoute.find(" ");
 	std::string currentroute = forwardRoute.substr(0,found);
@@ -113,7 +113,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	if(it != interestRoute.end())
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段为兴趣路段"<<std::endl;
-		bool result = UpdatePrimaryPit(interestRoute,id,currentroute);
+		bool result = UpdatePrimaryPit(IsExist,interestRoute,id,currentroute);
 		return result;
 	}
 	//该兴趣包来时的路段不是兴趣路段，RSU为借路RSU
@@ -133,7 +133,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		std::cout<<std::endl;
 		
 		// update secondary pit
-		bool result = UpdateSecondPit(futureInterestRoutes,id,currentroute);
+		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
 		
 		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
@@ -244,7 +244,7 @@ NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const st
  * currentRoute:兴趣包的源节点所对应的车辆在未来会经过的路段
  */
 bool 
-NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
+NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
@@ -281,6 +281,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 		//interestRoute不在PIT中
 		if(pit == m_pitContainer.end())
 		{
+			IsExist = false;
 			//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
@@ -308,8 +309,15 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	return true;
 }
 
+/*
+ * 2017.3.1 added by sy
+ * 更新副待处理兴趣列表
+ * interestRoute:兴趣包的兴趣路线
+ * id:兴趣包的源节点
+ * currentRoute:兴趣包来时的路段
+ */
 bool NrPitImpl::
-UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
@@ -333,6 +341,7 @@ UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id
 		//interestRoute不在PIT中
 		if(pit == m_secondPitContainer.end())
 		{
+			IsExist = false;
 			std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
@@ -387,7 +396,8 @@ NrPitImpl::showSecondPit()
  * added by sy
  * lane为车辆当前所在路段
  */
-std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
+std::pair<bool,uint32_t> 
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	//showPit();
 	//std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
