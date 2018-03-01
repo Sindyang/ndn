@@ -98,8 +98,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false),
 	m_sendInterestTime(0),
-	m_sendDataTime(0),
-	m_detecttime(0)
+	m_sendDataTime(0)
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -2241,16 +2240,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
-		/*if(m_cs->GetForwardInterestSize() > 0)
-		{
-			cout<<"(forwarding.cc-ProcessHello) 有未转发成功的兴趣包在缓存中"<<endl;
-			const string& localLane = m_sensor->getLane();
-			map<uint32_t,Ptr<const Interest> > forwardinterestcollection = m_cs->GetForwardInterest(localLane);
-			if(!forwardinterestcollection.empty())
-			{
-				SendForwardInterestInCache(forwardinterestcollection);
-			}
-		}*/
 	}
 	
 	// 2018.1.7
@@ -2261,6 +2250,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
+				double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+				if(interval < 1)
+				{
+					cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
+					return;
+				}
+				m_sendDataTime = Simulator::Now().GetSeconds();
 				SendDataInCache(datacollection);
 				cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
@@ -2347,65 +2343,16 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	}
 }
 
-/*void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection)
-{
-	cout<<"进入(forwarding.cc-SendForwardInterestInCache)"<<endl;
-	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
-	if(interval < 1)
-	{
-		cout<<"(forwarding.cc-SendForwardInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
-		return;
-	}
-	
-	std::map<uint32_t,Ptr<const Interest> >::iterator it;
-	for(it = forwardinterestcollection.begin();it != forwardinterestcollection.end();it++)
-	{
-		uint32_t nonce = it->first;
-		uint32_t nodeId = m_node->GetId();
-		
-		//added by sy
-		Ptr<const Interest> interest = it->second;
-        ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t sourceId = nrheader.getSourceId();
-		
-		cout<<"(forwarding.cc-SendForwardInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
-		
-		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
-		std::vector<std::string> routes;
-		SplitString(interest->GetRoutes(),routes," ");
-		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
-		
-		std::vector<uint32_t> newPriorityList;
-		if(m_sensor->getType() == "RSU")
-			newPriorityList = RSUGetPriorityListOfInterest(routes[0]);
-		else
-		    newPriorityList = VehicleGetPriorityListOfInterest();
-		
-		for(uint32_t i = 0;i < newPriorityList.size();i++)
-		{
-			cout<<newPriorityList[i]<<" ";
-		}
-		cout<<endl;
-		double random = m_uniformRandomVariable->GetInteger(0,100);
-		Time sendInterval(MilliSeconds(random));
-		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-		//if(sourceId == 97)
-			//getchar();
-		getchar();
-	}
-}*/
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datacollection)
 {
-	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+	/*double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
 	if(interval < 1)
 	{
 		cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
 		return;
 	}
-	m_sendDataTime = Simulator::Now().GetSeconds();
+	m_sendDataTime = Simulator::Now().GetSeconds();*/
 	
 	std::map<uint32_t,Ptr<const Data>>::iterator it;
 	for(it = datacollection.begin();it != datacollection.end();it++)
@@ -2760,14 +2707,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 		//getchar();
 	}
-	//double interval = Simulator::Now().GetSeconds() - m_detecttime;
-//	if(interval >= 1)
-	//{
-		routes_front_pre = routes_front;
-		routes_behind_pre = routes_behind;
-		//cout<<"(forwarding.cc-ProcessHelloRSU)更新道路信息"<<endl;
-		//m_detecttime = Simulator::Now().GetSeconds();
-	//}
+	
+	routes_front_pre = routes_front;
+	routes_behind_pre = routes_behind;
 	m_preNB = m_nb;
 }
 
