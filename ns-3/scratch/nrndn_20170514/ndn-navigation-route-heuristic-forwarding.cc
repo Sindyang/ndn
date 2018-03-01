@@ -2760,14 +2760,14 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 		//getchar();
 	}
-	double interval = Simulator::Now().GetSeconds() - m_detecttime;
-	if(interval >= 1)
-	{
+	//double interval = Simulator::Now().GetSeconds() - m_detecttime;
+//	if(interval >= 1)
+	//{
 		routes_front_pre = routes_front;
 		routes_behind_pre = routes_behind;
-		cout<<"(forwarding.cc-ProcessHelloRSU)更新道路信息"<<endl;
-		m_detecttime = Simulator::Now().GetSeconds();
-	}
+		//cout<<"(forwarding.cc-ProcessHelloRSU)更新道路信息"<<endl;
+		//m_detecttime = Simulator::Now().GetSeconds();
+	//}
 	m_preNB = m_nb;
 }
 
