@@ -84,7 +84,13 @@ public:
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
 	void
+	DetectDatainCache(vector<string> futureinterest,string currentroute);
+	
+	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
+	
+	vector<string>
+	GetShortestPath(vector<string> forwardroutes);
 	
 	vector<string> 
 	GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute);
@@ -274,9 +280,6 @@ private:
 	
 	// 2017.12.21 发送缓存的兴趣包
 	void SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection);
-	
-	//2018.1.17 重新发送未转发成功的兴趣包
-	//void SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection);
 
 	// 2018.1.9 发送缓存的数据包
 	void SendDataInCache(std::map<uint32_t,Ptr<const Data> > datatcollection);
@@ -530,7 +533,9 @@ private:
 
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	
+	
 	Ptr<ndn::cs::nrndn::NrCsImpl> m_cs;
+	
 
 	uint32_t				m_CacheSize;
 	

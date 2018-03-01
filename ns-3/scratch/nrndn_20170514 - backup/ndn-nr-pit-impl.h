@@ -27,7 +27,9 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <unordered_set>
+
 
 
 namespace ns3
@@ -121,7 +123,7 @@ public:
     
     bool UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id);
     
-    std::vector<std::string> getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
+    std::pair<std::vector<std::string>,std::vector<std::string> > getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
     
     void SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
 	
@@ -151,8 +153,8 @@ private:
     Time m_cleanInterval;
     Ptr<ForwardingStrategy>		                   m_forwardingStrategy;
     std::vector<Ptr<Entry> >		               m_pitContainer;
+	std::vector<Ptr<Entry> >                       m_secondPitContainer;
     Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
-    Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
     friend class EntryNrImpl;
     
     

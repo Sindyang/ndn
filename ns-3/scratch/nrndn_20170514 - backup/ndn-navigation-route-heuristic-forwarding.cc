@@ -600,8 +600,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 	
-	//if(nodeId == 24)
-		//getchar();
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
 	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
@@ -639,8 +637,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
-		//if(nodeId == 24)
-		   // getchar();
 		return;
 	}
 
@@ -679,12 +675,17 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		SplitString(forwardRoute,routes," ");
 		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
+		
+		//还需要判断兴趣包源节点是否全部在主PIT表项中
+		//若是的话，不需要再转发
+		
+		
 		// Update the PIT here
 		m_nrpit->UpdateRSUPit(junction,forwardRoute,interestRoute,nodeId);
 		// Update finish
 		
 		
-		//这里需要获取当前及之后的兴趣路线
+		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
 		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
@@ -693,31 +694,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			cout<<futureinterest[i]<<" ";
 		}
 		cout<<endl;*/
-		//getchar();
-
-		//查看缓存中是否有对应的数据包
-		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
-		//getchar();
 		
-		if(!datacollection.empty())
-		{
-			// 2018.2.21
-			std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
-			for(;itdata != datacollection.end();itdata++)
-			{
-				std::map< uint32_t,std::unordered_set<std::string> >::iterator itforwarded = m_RSUforwardedData.find(itdata->first);
-				if(itforwarded != m_RSUforwardedData.end())
-				{
-					//从已转发过的路段中删除当前路段
-					std::unordered_set<std::string> forwardedroutes = itforwarded->second;
-					forwardedroutes.erase(routes[0]);
-					itforwarded->second = forwardedroutes;
-				}
-			}
-			
-			SendDataInCache(datacollection);
-			cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
-		}
+		DetectDatainCache(futureinterest,routes[0]);
 		
 		
 		//evaluate whether receiver's id is in sender's priority list
@@ -731,8 +709,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		if (idIsInPriorityList)
 		{
 			//查看下一路段是否为兴趣路段
-			std::vector<std::string> routes;
-			SplitString(forwardRoute,routes," ");
+			//std::vector<std::string> routes;
+			//SplitString(forwardRoute,routes," ");
 			if(routes.size() <= 1)
 			{
 				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线 "<<seq<<std::endl;
@@ -740,6 +718,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				//getchar();
 				return;
 			}
+			
 			std::string nextroute = routes[1];
 			std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),nextroute);
 		
@@ -753,6 +732,15 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
 				if(newPriorityList.empty())
 				{
+					vector<string> bestroute = GetShortestPath(routes);
+					cout<<"源节点 "<<nodeId<<" 的最佳路线为 "<<endl;
+					for(uint32_t i = 2;i < bestroute.size();i++)
+					{
+						cout<<bestroute[i]<<" ";
+					}
+					cout<<endl;
+					
+					//去除兴趣包来时的路段
 					forwardRoute = forwardRoute.substr(nextroute.size()+1);
 					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 					//更新兴趣包的实际转发路线
@@ -760,11 +748,33 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 					CachingInterestPacket(seq,interest);
-					//BroadcastStopMessage(interest);
-					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
-					//重新选择路线发送兴趣包
-					//if(nodeId == 24)
-					    //getchar();
+					
+					//查看最佳路线的转发优先级列表
+					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
+					
+					//if(anotherNewPriorityList.empty())
+					//{
+					//	cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
+					//}
+					/*else
+					{
+						string newforwardRoute;
+						//更新兴趣包的实际转发路线
+						for(uint32_t i = 2;i < bestroute.size();i++)
+						{
+							newforwardRoute += bestroute[i]+" ";
+						}
+						for(uint32_t i = 2;i < routes.size();i++)
+						{
+							newforwardRoute += routes[i]+" ";
+						}
+						cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+						interest->SetRoutes(newforwardRoute);
+						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
+					}*/
+					
+					//getchar();
 				}
 				else
 				{
@@ -778,7 +788,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			}
 			else
 			{
-				NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
+				//NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
+				cout<<"(OnInterest_RSU) 兴趣包的下一路段不为兴趣路段"<<endl;
 			}
 			
 			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
@@ -891,6 +902,34 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
+void 
+NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
+{
+	//查看缓存中是否有对应的数据包
+	std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetDataSource(futureinterest);
+	//getchar();
+		
+	if(!datacollection.empty())
+	{
+		// 2018.2.21
+		std::map<uint32_t,Ptr<const Data> > ::iterator itdata = datacollection.begin();
+		for(;itdata != datacollection.end();itdata++)
+		{
+			std::map< uint32_t,std::unordered_set<std::string> >::iterator itforwarded = m_RSUforwardedData.find(itdata->first);
+			if(itforwarded != m_RSUforwardedData.end())
+			{
+				//从已转发过的路段中删除当前路段
+				std::unordered_set<std::string> forwardedroutes = itforwarded->second;
+				forwardedroutes.erase(currentroute);
+				itforwarded->second = forwardedroutes;
+			}
+		}
+			
+		SendDataInCache(datacollection);
+		cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
+	}
+}
+
 /*
  * 2017.12 25 added by sy
  * 分割字符串
@@ -911,6 +950,122 @@ NavigationRouteHeuristic::SplitString(const std::string& s,std::vector<std::stri
 		v.push_back(s.substr(pos1));
 }
 
+/* 2018.2.23
+ * 为兴趣包选择最短路线
+ */
+vector<string> 
+NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
+{
+	//2018.2.22 为兴趣包重新选择转发路线
+	string nextroute = forwardroutes[1];
+	//下一条路段的两个交点
+	std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
+	//最短路线集合
+	vector<vector<string>> shortroutes;
+					
+	string home = getenv("HOME");
+	string inputDir = home +"/input";
+	string path = inputDir + "/shortestpath.txt";
+	ifstream fin(path);
+	if (!fin)
+	{
+		cout << "fail to open the file" <<endl;
+		NS_ASSERT_MSG(false,"fail to open the file");
+	}
+	else
+	{
+		cout << "open the file successfully" << endl;
+						
+		string str;
+		while (getline(fin, str)) {
+			vector<string> v;
+			SplitString(str, v, " ");
+			if (v[0] == junctions.first && v[1] == junctions.second) {
+				//cout<<"(forwarding.cc-OnInterest_RSU) 最短的路线为 "<<endl;
+				//cout << str.substr(v[0].size() + v[1].size() + 2) << endl;
+				shortroutes.push_back(v);
+			}
+		}
+	}
+	fin.close();
+					
+	//判断是否具有多条最短路线
+	if(shortroutes.size() > 1)
+	{
+		//cout<<"(forwarding.cc-GetShortestPath) 具有多个最佳路段"<<endl;
+		
+		set<string> originjunction;
+		//cout<<"(forwarding.cc-GetShortestPath) 兴趣包下下路段及之后的交点为 "<<endl;
+		
+		//获得原路线的交点
+		/*
+		 * forwardroutes[0]代表当前路段
+		 * forwardroutes[1]代表下一路段
+		 */
+		for(uint32_t i = 2;i < forwardroutes.size();i++)
+		{
+			junctions = m_sensor->GetLaneJunction(forwardroutes[i]);
+			//cout<<junctions.second<<" ";
+			originjunction.insert(junctions.second);
+		}
+	//	cout<<endl;
+		
+		vector<vector<string>> temproutes(shortroutes);
+		
+		for(vector<vector<string>>::iterator it = shortroutes.begin();it != shortroutes.end();)
+		{
+			set<string> newjunction;
+			vector<string> v = *it;
+			/*
+			 * v的前两项为交点
+			 * 最后一条路段的终点不用计算
+			 */
+			//获得新路段的交点
+		//	cout<<"(forwarding.cc-GetShortestPath) 新路段的交点为 "<<endl;
+			for(uint32_t j = 2;j < v.size()-1;j++)
+			{
+				junctions = m_sensor->GetLaneJunction(v[j]);
+				//cout<<junctions.second<<" ";
+				newjunction.insert(junctions.second);
+			}
+			//cout<<endl;
+			
+			//判断新旧路段是否有重复交点
+			bool HasSameJunction = false;
+			for(set<string>::iterator itnew = newjunction.begin();itnew != newjunction.end();itnew++)
+			{
+				set<string>::iterator itorigin = originjunction.find(*itnew);
+				if(itorigin != originjunction.end())
+				{
+					HasSameJunction = true;
+					//cout<<"相同的交点为 "<<*itnew<<endl;
+					break;
+				}
+			}
+			
+			if(HasSameJunction)
+			{
+				it++;
+			}
+			else
+			{
+				it = shortroutes.erase(it);
+			}
+		}
+		
+		if(shortroutes.size() > 1)
+		{
+			NS_ASSERT_MSG(false,"具有多个最佳路段");
+		}
+		else if(shortroutes.size() == 0)
+		{
+			shortroutes = temproutes;
+			cout<<"无最佳路线，则选择第一个路线"<<endl;
+		}
+	}
+	return shortroutes[0];
+}
+
 
 vector<string> 
 NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute)
@@ -929,7 +1084,6 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	}
 	else
 	{
-		NS_ASSERT_MSG(false,"还未测试这部分代码");
 		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
 		for(uint32_t i = 0;i < forwardroute.size();i++)
 		{
@@ -941,10 +1095,13 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 				break;
 			}
 		}
+		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 "<<endl;
 		for(;it != interestroute.end();it++)
 		{
 			futureinterest.push_back(*it);
+			cout<<*it<<" ";
 		}
+		getchar();
 	}
 	return futureinterest;
 }
@@ -1346,7 +1503,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			//if(!forwardedroutes.empty())
 				//m_RSUforwardedData[signature] = forwardedroutes;
 			
-			getchar();
+			//getchar();
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
@@ -1513,7 +1670,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//获取该数据包已转发过的上一跳路段
 				std::unordered_set<std::string> forwardedroutes;
 				m_RSUforwardedData[signature] = forwardedroutes;
-				getchar();
+				//getchar();
 			
 				// 2018.1.15 
 				if(newPriorityList.empty())
@@ -1758,7 +1915,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	SendInterestPacket(interest);
 	
 	//m_cs->AddForwardInterest(nonce,interest);
-	m_sendInterestTime = Simulator::Now().GetSeconds();	
+	//m_sendInterestTime = Simulator::Now().GetSeconds();	
 	
 	// 4. record the forward times
 	// 2017.12.23 added by sy
@@ -2068,6 +2225,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 		    if(!interestcollection.empty())
 			{
+				double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
+				if(interval < 1)
+				{
+					cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
+					return;
+				}
+				m_sendInterestTime = Simulator::Now().GetSeconds();
 				SendInterestInCache(interestcollection);
 			}
 		}
@@ -2076,16 +2240,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
 		//getchar();
-		/*if(m_cs->GetForwardInterestSize() > 0)
-		{
-			cout<<"(forwarding.cc-ProcessHello) 有未转发成功的兴趣包在缓存中"<<endl;
-			const string& localLane = m_sensor->getLane();
-			map<uint32_t,Ptr<const Interest> > forwardinterestcollection = m_cs->GetForwardInterest(localLane);
-			if(!forwardinterestcollection.empty())
-			{
-				SendForwardInterestInCache(forwardinterestcollection);
-			}
-		}*/
 	}
 	
 	// 2018.1.7
@@ -2096,6 +2250,13 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData();
 			if(!datacollection.empty())
 			{
+				double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+				if(interval < 1)
+				{
+					cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
+					return;
+				}
+				m_sendDataTime = Simulator::Now().GetSeconds();
 				SendDataInCache(datacollection);
 				cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
@@ -2136,13 +2297,13 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const Interest> > interestcollection)
 {
 	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
-	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
+	/*double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 	if(interval < 1)
 	{
-		//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
+		cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
 		return;
 	}
-	m_sendInterestTime = Simulator::Now().GetSeconds();
+	m_sendInterestTime = Simulator::Now().GetSeconds();*/
 	std::map<uint32_t,Ptr<const Interest> >::iterator it;
 	for(it = interestcollection.begin();it != interestcollection.end();it++)
 	{
@@ -2182,65 +2343,16 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
 	}
 }
 
-/*void NavigationRouteHeuristic::SendForwardInterestInCache(std::map<uint32_t,Ptr<const Interest> > forwardinterestcollection)
-{
-	cout<<"进入(forwarding.cc-SendForwardInterestInCache)"<<endl;
-	//增加一个时间限制，超过1s才进行转发
-	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
-	if(interval < 1)
-	{
-		cout<<"(forwarding.cc-SendForwardInterestInCache) 时间小于一秒，不转发 m_sendInterestTime "<<m_sendInterestTime<<endl;
-		return;
-	}
-	
-	std::map<uint32_t,Ptr<const Interest> >::iterator it;
-	for(it = forwardinterestcollection.begin();it != forwardinterestcollection.end();it++)
-	{
-		uint32_t nonce = it->first;
-		uint32_t nodeId = m_node->GetId();
-		
-		//added by sy
-		Ptr<const Interest> interest = it->second;
-        ndn::nrndn::nrHeader nrheader;
-        interest->GetPayload()->PeekHeader(nrheader);
-        uint32_t sourceId = nrheader.getSourceId();
-		
-		cout<<"(forwarding.cc-SendForwardInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
-		
-		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
-		std::vector<std::string> routes;
-		SplitString(interest->GetRoutes(),routes," ");
-		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包转发优先级列表为 "<<endl;
-		
-		std::vector<uint32_t> newPriorityList;
-		if(m_sensor->getType() == "RSU")
-			newPriorityList = RSUGetPriorityListOfInterest(routes[0]);
-		else
-		    newPriorityList = VehicleGetPriorityListOfInterest();
-		
-		for(uint32_t i = 0;i < newPriorityList.size();i++)
-		{
-			cout<<newPriorityList[i]<<" ";
-		}
-		cout<<endl;
-		double random = m_uniformRandomVariable->GetInteger(0,100);
-		Time sendInterval(MilliSeconds(random));
-		m_sendingInterestEvent[nodeId][nonce] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-		//if(sourceId == 97)
-			//getchar();
-		getchar();
-	}
-}*/
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data> > datacollection)
 {
-	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+	/*double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
 	if(interval < 1)
 	{
 		cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不转发 m_sendDataTime "<<m_sendDataTime<<endl;
 		return;
 	}
-	m_sendDataTime = Simulator::Now().GetSeconds();
+	m_sendDataTime = Simulator::Now().GetSeconds();*/
 	
 	std::map<uint32_t,Ptr<const Data>>::iterator it;
 	for(it = datacollection.begin();it != datacollection.end();it++)
@@ -2351,7 +2463,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		}
 		cout<<endl;
 		
-		getchar();
+		//getchar();
 		
 		double random = m_uniformRandomVariable->GetInteger(0,100);
 		Time sendInterval(MilliSeconds(random));
@@ -2464,10 +2576,24 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	//cout<<endl;
+	cout<<endl;
 	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
+	
+	cout<<"routes_front_pre"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	
+	cout<<endl<<"routes_front"<<endl;
+	for(std::unordered_set<std::string>::iterator it = routes_front.begin();it != routes_front.end();++it)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+	
 	
 	if(routes_front_pre.size() < routes_front.size())
 	{
@@ -2496,18 +2622,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
-	cout<<"routes_front_pre"<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
-	{
-		cout<<*it<<" ";
-	}
-	
-	cout<<endl<<"routes_front"<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_front.begin();it != routes_front.end();++it)
-	{
-		cout<<*it<<" ";
-	}
-	cout<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
 	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{
@@ -2592,9 +2707,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 		//getchar();
 	}
-	m_preNB = m_nb;
+	
 	routes_front_pre = routes_front;
 	routes_behind_pre = routes_behind;
+	m_preNB = m_nb;
 }
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
