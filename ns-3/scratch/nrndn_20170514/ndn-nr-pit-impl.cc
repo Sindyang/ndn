@@ -120,10 +120,7 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	else
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
-		//更新副待处理兴趣列表 这个函数还没写
-		// update secondary pit
 		
-		// 其实我觉得这里应该只有一条路
 		bool result = true;
 		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
@@ -136,6 +133,10 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		}
 		std::cout<<std::endl;
 		
+		// update secondary pit
+		bool result = UpdateSecondPit(futureInterestRoutes,id,currentroute);
+		
+		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
@@ -143,11 +144,15 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		}
 		std::cout<<std::endl;
 		
-		/*for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
+		NS_ASSERT_MSG(unpassedRoutes.size() > 1,"未来会通过的兴趣路线大于1");
+		
+		
+		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
-			result = UpdatePrimaryPit(interestRoute,id,*it);
+			std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会再次通过该节点"<<std::endl;
+			result &= UpdatePrimaryPit(interestRoute,id,*it);
 			result &= result;
-		}*/
+		}
 		
 		
 		getchar();
@@ -304,6 +309,55 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 	return true;
 }
 
+bool NrPitImpl::
+UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+{
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::vector<std::string>::const_iterator it = interestRoute.begin();
+	for(;it != interestRoute.end();++it)
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
+		for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				pitEntry->AddIncomingNeighbors(currentRoute,id);
+				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+				break;
+			}
+		}
+		//interestRoute不在PIT中
+		if(pit == m_secondPitContainer.end())
+		{
+			std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
+			//创建一个新的表项
+			Ptr<Name> name = ns3::Create<Name>('/'+*it);
+			Ptr<Interest> interest = ns3::Create<Interest>();
+			interest->SetName(name);
+			interest->SetInterestLifetime(Time::Max());//never expire
+			
+			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
+		    Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
+			
+			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
+		    m_secondPitContainer.push_back(entry);
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
+			pitEntry->AddIncomingNeighbors(currentRoute,id);
+			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//getchar();
+		}
+		std::cout<<std::endl;
+	}
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
+	showSecondPit();
+	return true;
+}
+
 void 
 NrPitImpl::showPit()
 {
@@ -316,6 +370,17 @@ NrPitImpl::showPit()
 	std::cout<<std::endl;
 }
 
+void
+NrPitImpl::showSecondPit()
+{
+	std::cout<<"showSecondPit"<<std::endl;
+	for(uint32_t i = 0;i<m_secondPitContainer.size();++i)
+	{
+		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_secondPitContainer[i]);
+		pitEntry_siu->listPitEntry();
+	}
+	std::cout<<std::endl;
+}
 
 /*
  * 2017.12.24

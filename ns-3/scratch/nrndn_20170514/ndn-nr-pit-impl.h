@@ -129,6 +129,9 @@ public:
 	
 	bool UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
 	
+	//2018.3.1
+	bool UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
+	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
 	
@@ -136,6 +139,10 @@ public:
 	std::unordered_map<std::string,std::unordered_set<std::string> > GetDataNameandLastRoute(std::unordered_set<std::string> routes);
     
     void showPit();
+	
+	//2018.3.1
+	void showSecondPit();
+	
     void laneChange(std::string oldLane, std::string newLane);
 	
     
