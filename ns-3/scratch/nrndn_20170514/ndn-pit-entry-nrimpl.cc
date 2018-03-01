@@ -76,7 +76,7 @@ EntryNrImpl::AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id)
 		}
 		else
 		{
-			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已找到源节点"<<std::endl;
+			std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已找到源节点"<<std::endl;
 			return incominglane;
 		}
 	}
