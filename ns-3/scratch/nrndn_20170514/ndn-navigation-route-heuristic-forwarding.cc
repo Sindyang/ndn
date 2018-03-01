@@ -698,6 +698,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		if(IsExist)
 		{
 			cout<<"(forwarding.cc-OnInterest_RSU) 兴趣包的兴趣路线已经存在，不用再转发兴趣包"<<endl;
+			BroadcastStopInterestMessage(interest);
+			return;
 		}
 		
 		
