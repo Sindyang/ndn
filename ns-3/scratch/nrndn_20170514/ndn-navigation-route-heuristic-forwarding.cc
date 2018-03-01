@@ -608,7 +608,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
 		//2018.1.16 从缓存中删除兴趣包
-		if(msgdirection.first && msgdirection.second)
+		if(msgdirection.first && msgdirection.second > 0)
 		{
 			m_cs->DeleteInterest(interest->GetNonce());
 			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<interest->GetNonce()<<endl;
@@ -1943,7 +1943,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 		ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 	}
 	
-    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<" m_sendInterestTime "<<m_sendInterestTime<<endl;
+    cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<endl;
 	//if(sourceId == 97)
 		//getchar();
 	//getchar();
