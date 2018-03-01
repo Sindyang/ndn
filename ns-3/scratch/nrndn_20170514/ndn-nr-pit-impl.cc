@@ -191,8 +191,9 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		}
 		else
 		{
-			//TEST IT
-			NS_ASSERT_MSG(false,"不知道为啥会进入这部分");
+			futureInterestRoutes.clear();
+			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 兴趣路线与转发路线中的兴趣路线不相符"<<std::endl;
+			break;
 		}
 	}
 	std::cout<<std::endl;

@@ -752,12 +752,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 					//查看最佳路线的转发优先级列表
 					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
 					
-					//if(anotherNewPriorityList.empty())
-					//{
-					//	cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+					if(anotherNewPriorityList.empty())
+					{
+						cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
 						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
-					//}
-					/*else
+					}
+				    else
 					{
 						string newforwardRoute;
 						//更新兴趣包的实际转发路线
@@ -772,7 +772,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 						cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
 						interest->SetRoutes(newforwardRoute);
 						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
-					}*/
+					}
 					
 					//getchar();
 				}
@@ -1085,7 +1085,8 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	else
 	{
 		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
-		for(uint32_t i = 0;i < forwardroute.size();i++)
+		uint32_t i = 0;
+		for(;i < forwardroute.size();i++)
 		{
 			string route = forwardroute[i];
 			it = find(interestroute.begin(),interestroute.end(),route);
@@ -1096,10 +1097,20 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 			}
 		}
 		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 "<<endl;
-		for(;it != interestroute.end();it++)
+		for(;it != interestroute.end() && i < forwardroute.size();it++,i++)
 		{
-			futureinterest.push_back(*it);
-			cout<<*it<<" ";
+			if(*it == forwardroute[i])
+			{
+				futureinterest.push_back(*it);
+				cout<<*it<<" ";
+			}
+			else
+			{
+				//2018.3.1
+				cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣路线与转发路线中的兴趣路线不相符"<<endl;
+				futureinterest.clear();
+				break;
+			}
 		}
 		getchar();
 	}
