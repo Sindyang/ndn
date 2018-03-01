@@ -64,7 +64,7 @@ public:
 	AddIncomingNeighbors(uint32_t id);*/
 	
 	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
-	AddIncomingNeighbors(std::string lane,uint32_t id);
+	AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id);
 
 	/*const std::unordered_set<uint32_t>& getIncomingnbs() const
 	{

@@ -271,9 +271,14 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
 			//PIT中已经有该路段
 			if(pitName.toUri() == *it)
 			{
+				bool flag = true;
 				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				pitEntry->AddIncomingNeighbors(currentRoute,id);
+				pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
+				if(!flag)
+				{
+					IsExist = false;
+				}
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 				break;
 			}
