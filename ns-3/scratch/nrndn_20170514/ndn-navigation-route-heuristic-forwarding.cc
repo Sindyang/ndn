@@ -1112,6 +1112,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 				break;
 			}
 		}
+		cout<<endl;
 		getchar();
 	}
 	return futureinterest;

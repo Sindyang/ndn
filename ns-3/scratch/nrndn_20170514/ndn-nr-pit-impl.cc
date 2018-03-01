@@ -129,14 +129,14 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
 		
-		std::cout<<"(NrPitImpl.cc-UpdateRSUPit)需要记录在副表中的兴趣路线为 "<<std::endl;
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit)需要记录在副表中的兴趣路线为 ";
 		for(uint32_t i = 0;i < futureInterestRoutes.size();i++)
 		{
 			std::cout<<futureInterestRoutes[i]<<" ";
 		}
 		std::cout<<std::endl;
 		
-		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 "<<std::endl;
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
 			std::cout<<unpassedRoutes[i]<<" ";
