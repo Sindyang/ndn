@@ -133,7 +133,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		std::cout<<std::endl;
 		
 		// update secondary pit
-		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
+		bool result = UpdateSecondPit(futureInterestRoutes,id,currentroute);
 		
 		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
@@ -149,7 +149,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
 			std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会再次通过该节点"<<std::endl;
-			result &= UpdatePrimaryPit(interestRoute,id,*it);
+			result &= UpdatePrimaryPit(IsExist,interestRoute,id,*it);
 			result &= result;
 		}
 		
@@ -317,7 +317,7 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
  * currentRoute:兴趣包来时的路段
  */
 bool NrPitImpl::
-UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
@@ -341,7 +341,6 @@ UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,cons
 		//interestRoute不在PIT中
 		if(pit == m_secondPitContainer.end())
 		{
-			IsExist = false;
 			std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
