@@ -300,7 +300,8 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		    m_pitContainer.push_back(entry);
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
-			pitEntry->AddIncomingNeighbors(currentRoute,id);
+			bool flag = true;
+			pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
 			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
@@ -338,7 +339,8 @@ UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id
 			{
 				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				pitEntry->AddIncomingNeighbors(currentRoute,id);
+				bool flag = true;
+				pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 				break;
 			}
@@ -359,7 +361,8 @@ UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		    m_secondPitContainer.push_back(entry);
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
-			pitEntry->AddIncomingNeighbors(currentRoute,id);
+			bool flag = true;
+			pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
 			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
