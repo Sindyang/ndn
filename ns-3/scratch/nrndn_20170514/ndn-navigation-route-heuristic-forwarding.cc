@@ -817,7 +817,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			}
 			//将节点和借路路线添加至待删除列表中
 			nodeWithRoutes[nodeId] = newforwardRoute;
-			for( = nodeWithRoutes.begin();it != nodeWithRoutes.end();++it)
+			for(it = nodeWithRoutes.begin();it != nodeWithRoutes.end();++it)
 			{
 				cout<<"("<<it->first<<" "<<it->second<<")";
 			}
