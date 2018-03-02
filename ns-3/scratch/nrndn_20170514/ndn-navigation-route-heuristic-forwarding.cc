@@ -730,67 +730,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
 			{
-				double index = distance(pri.begin(), idit);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				//构造转发优先级列表，并判断前方邻居是否为空
-				std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
-				if(newPriorityList.empty())
-				{
-					vector<string> bestroute = GetShortestPath(routes);
-					cout<<"源节点 "<<nodeId<<" 的最佳路线为 "<<endl;
-					for(uint32_t i = 2;i < bestroute.size();i++)
-					{
-						cout<<bestroute[i]<<" ";
-					}
-					cout<<endl;
-					
-					//去除兴趣包来时的路段
-					forwardRoute = forwardRoute.substr(nextroute.size()+1);
-					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
-					//更新兴趣包的实际转发路线
-					interest->SetRoutes(forwardRoute);
-					cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-					//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
-					CachingInterestPacket(seq,interest);
-					
-					//查看最佳路线的转发优先级列表
-					std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
-					
-					if(anotherNewPriorityList.empty())
-					{
-						cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
-						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
-					}
-				    else
-					{
-						string newforwardRoute;
-						//更新兴趣包的实际转发路线
-						for(uint32_t i = 2;i < bestroute.size();i++)
-						{
-							newforwardRoute += bestroute[i]+" ";
-						}
-						for(uint32_t i = 2;i < routes.size();i++)
-						{
-							newforwardRoute += routes[i]+" ";
-						}
-						cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
-						interest->SetRoutes(newforwardRoute);
-						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
-					}
-					
-					//getchar();
-				}
-				else
-				{
-					forwardRoute = forwardRoute.substr(nextroute.size()+1);
-					//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
-					//更新兴趣包的实际转发路线
-					interest->SetRoutes(forwardRoute);
-					m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
-					//getchar();
-				}
-			}
+				Interest_InInterestRoute(interest,pri,forwardRoute,nextroute,routes);
 			else
 			{
 				//NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
@@ -906,6 +846,72 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//cout<<endl;
 	}
 }
+
+void 
+NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,std::string forwardRoute,std::string nextroute,vector<std::string> routes)
+{
+	double index = distance(pri.begin(), idit);
+	double random = m_uniformRandomVariable->GetInteger(0, 20);
+	Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+	//构造转发优先级列表，并判断前方邻居是否为空
+	std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
+	if(newPriorityList.empty())
+	{
+		vector<string> bestroute = GetShortestPath(routes);
+		cout<<"源节点 "<<nodeId<<" 的最佳路线为 "<<endl;
+		for(uint32_t i = 2;i < bestroute.size();i++)
+		{
+			cout<<bestroute[i]<<" ";
+		}
+		cout<<endl;
+		
+		//去除兴趣包来时的路段
+		forwardRoute = forwardRoute.substr(nextroute.size()+1);
+		//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+		//更新兴趣包的实际转发路线
+		interest->SetRoutes(forwardRoute);
+		cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+		//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
+		CachingInterestPacket(seq,interest);
+		
+		//查看最佳路线的转发优先级列表
+		std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
+		
+		if(anotherNewPriorityList.empty())
+		{
+			cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
+		}
+	    else
+		{
+			string newforwardRoute;
+			//更新兴趣包的实际转发路线
+			for(uint32_t i = 2;i < bestroute.size();i++)
+			{
+				newforwardRoute += bestroute[i]+" ";
+			}
+			for(uint32_t i = 2;i < routes.size();i++)
+			{
+				newforwardRoute += routes[i]+" ";
+			}
+			cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+			interest->SetRoutes(newforwardRoute);
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
+		}
+		
+		//getchar();
+	}
+	else
+	{
+		forwardRoute = forwardRoute.substr(nextroute.size()+1);
+		//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+		//更新兴趣包的实际转发路线
+		interest->SetRoutes(forwardRoute);
+		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+		//getchar();
+	}
+}
+
 
 void 
 NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
