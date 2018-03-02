@@ -810,16 +810,16 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 				newforwardRoute += bestroute[i]+" ";
 			}
 			
-			std::unordered_map<uint32_t,std::string> it = nodeWithRoutes.find(nodeId);
-			if(it != nodeWithRoutes.end())
+			std::unordered_map<uint32_t,std::string>::iterator itnode = nodeWithRoutes.find(nodeId);
+			if(itnode != nodeWithRoutes.end())
 			{
 				NS_ASSERT_MSG(false,"该节点已经存在于待删除列表中");
 			}
 			//将节点和借路路线添加至待删除列表中
 			nodeWithRoutes[nodeId] = newforwardRoute;
-			for(it = nodeWithRoutes.begin();it != nodeWithRoutes.end();++it)
+			for(itnode = nodeWithRoutes.begin();itnode != nodeWithRoutes.end();++itnode)
 			{
-				cout<<"("<<it->first<<" "<<it->second<<")";
+				cout<<"("<<itnode->first<<" "<<itnode->second<<")";
 			}
 			cout<<endl;
 			
