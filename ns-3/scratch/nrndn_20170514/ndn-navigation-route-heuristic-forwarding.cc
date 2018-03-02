@@ -730,7 +730,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
 			{
-				Interest_InInterestRoute(interest,pri,routes);
+				Interest_InInterestRoute(interest,routes);
 			}
 			else
 			{
@@ -849,7 +849,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 }
 
 void 
-NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,vector<std::string> routes)
+NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector<std::string> routes)
 {
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
@@ -860,8 +860,9 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,const 
 	uint32_t seq = interest->GetNonce();
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
-	//获取兴趣包的转发节点id
-	uint32_t forwardId = nrheader.getForwardId();
+	
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
 	//获取兴趣包的实际转发路线
 	std::string forwardRoute = interest->GetRoutes();
 	std::string nextroute = routes[1];
