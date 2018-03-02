@@ -87,6 +87,9 @@ public:
 	Interest_InInterestRoute(Ptr<Interest> interest,vector<std::string> routes);
 	
 	void
+	Interest_NotInInterestRoute(Ptr<Interest> interest, vector<std::string> routes);
+	
+	void
 	DetectDatainCache(vector<string> futureinterest,string currentroute);
 	
 	void

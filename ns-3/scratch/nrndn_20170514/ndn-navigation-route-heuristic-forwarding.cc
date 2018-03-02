@@ -730,111 +730,14 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
 			{
+				cout<<"(OnInterest_RSU) 兴趣包的下一路段为兴趣路段"<<endl;
 				Interest_InInterestRoute(interest,routes);
 			}
 			else
 			{
-				//NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
 				cout<<"(OnInterest_RSU) 兴趣包的下一路段不为兴趣路段"<<endl;
+				Interest_NotInInterestRoute(interest,routes);
 			}
-			
-			/*cout<<"(forwarding.cc-OnInterest) Node id is in PriorityList"<<endl;
-			NS_LOG_DEBUG("Node id is in PriorityList");
-
-			//判断主待处理兴趣列表是否有增加新的表项
-			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
-
-			//NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
-			//if(NoFwStop)
-				//IsPitCoverTheRestOfRoute = false;
-
-			if (IsPitCoverTheRestOfRoute)
-			{
-				BroadcastStopMessage(interest);
-				return;
-			}
-			else
-			{
-				//查看下一路段是否为兴趣路段
-				if(yes)
-				{
-					//查看下一路段前方邻居是否为空
-					if(yes)
-					{
-						//缓存该兴趣包的备份
-						//重新选择路线
-						//查看新路段是否有车辆
-						if()
-						{
-							double index = distance(pri.begin(), idit);
-							double random = m_uniformRandomVariable->GetInteger(0, 20);
-							Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-							m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-								&NavigationRouteHeuristic::ForwardInterestPacket, this,
-								interest);
-						cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-						}
-						else
-						{
-							//广播停止转发的消息
-							//这里需不需要等，我也不知道
-						}
-						
-					}
-					else
-					{
-						double index = distance(pri.begin(), idit);
-						double random = m_uniformRandomVariable->GetInteger(0, 20);
-						Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-							&NavigationRouteHeuristic::ForwardInterestPacket, this,
-							interest);
-						cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-					}
-				}
-				else
-				{
-					//RSU自身是否处于某一兴趣路段的起点处
-					//实际转发路线是否包含了兴趣路线
-					//借路路线是否和兴趣路线处于同一条道路上
-					//若上述条件都满足，RSU生成一个新的兴趣包
-					//查看下一路段前方邻居是否为空
-					if(yes)
-					{
-						//缓存该兴趣包的备份
-						//广播停止转发的消息
-					}
-					else
-					{
-						double index = distance(pri.begin(), idit);
-						double random = m_uniformRandomVariable->GetInteger(0, 20);
-						Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-						m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-							&NavigationRouteHeuristic::ForwardInterestPacket, this,
-							interest);
-						cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-					}
-					
-				}
-			}
-			//判断前方邻居是否为空
-			if()
-			{
-				double index = distance(pri.begin(),idit);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				//此处的函数为等待一定时间后，广播停止转发该兴趣包的消息
-			}
-			else
-			{
-				double index = distance(pri.begin(), idit);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this,
-						interest);
-				cout<<"(forwarding.cc-OnInterest)ForwardInterestPacket"<<endl;
-			}*/
 		}
 		else
 		{
@@ -889,7 +792,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 		//更新兴趣包的实际转发路线
 		interest->SetRoutes(forwardRoute);
-		cout<<"(forwarding.cc-OnInterest_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+		cout<<"(forwarding.cc-Interest_InInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 		//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 		CachingInterestPacket(seq,interest);
 		
@@ -898,7 +801,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		
 		if(anotherNewPriorityList.empty())
 		{
-			cout<<"(forwarding.cc-OnInterest_RSU) 重新选择的路段也没有车辆"<<endl;
+			cout<<"(forwarding.cc-Interest_InInterestRoute) 重新选择的路段也没有车辆"<<endl;
 			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 		}
 	    else
@@ -931,6 +834,47 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 	}
 }
 
+
+void
+NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, vector<std::string> routes)
+{
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取兴趣的序列号
+	uint32_t seq = interest->GetNonce();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
+	//获取兴趣包的实际转发路线
+	std::string forwardRoute = interest->GetRoutes();
+	std::string nextroute = routes[1];
+	
+	vector<uint32_t>::const_iterator idit;
+	idit = find(pri.begin(), pri.end(), m_node->GetId());
+	double index = distance(pri.begin(), idit);
+	double random = m_uniformRandomVariable->GetInteger(0, 20);
+	Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+	//构造转发优先级列表，并判断前方邻居是否为空
+	std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
+	forwardRoute = forwardRoute.substr(nextroute.size()+1);
+	interest->SetRoutes(forwardRoute);
+	
+	if(newPriorityList.empty())
+	{
+		cout<<"(forwarding.cc-Interest_NotInInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+		CachingInterestPacket(seq,interest);
+		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
+	}
+	else
+	{
+		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
+	}
+}
 
 void 
 NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
