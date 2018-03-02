@@ -730,7 +730,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
 			{
-				Interest_InInterestRoute(interest,pri,forwardRoute,nextroute,routes);
+				Interest_InInterestRoute(interest,pri,routes);
+			}
 			else
 			{
 				//NS_ASSERT_MSG(false,"兴趣包的下一路段不为兴趣路段");
@@ -848,8 +849,25 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 }
 
 void 
-NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,std::string forwardRoute,std::string nextroute,vector<std::string> routes)
+NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,vector<std::string> routes)
 {
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取兴趣的序列号
+	uint32_t seq = interest->GetNonce();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	//获取兴趣包的转发节点id
+	uint32_t forwardId = nrheader.getForwardId();
+	//获取兴趣包的实际转发路线
+	std::string forwardRoute = interest->GetRoutes();
+	std::string nextroute = routes[1];
+	
+	vector<uint32_t>::const_iterator idit;
+	idit = find(pri.begin(), pri.end(), m_node->GetId());
 	double index = distance(pri.begin(), idit);
 	double random = m_uniformRandomVariable->GetInteger(0, 20);
 	Time sendInterval(MilliSeconds(random) + index * m_timeSlot);

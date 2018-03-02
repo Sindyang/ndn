@@ -84,7 +84,7 @@ public:
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
 	void 
-	Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,std::string forwardRoute,std::string nextroute,vector<std::string> routes);
+	Interest_InInterestRoute(Ptr<Interest> interest,const std::vector<uint32_t>& pri,vector<std::string> routes);
 	
 	void
 	DetectDatainCache(vector<string> futureinterest,string currentroute);
