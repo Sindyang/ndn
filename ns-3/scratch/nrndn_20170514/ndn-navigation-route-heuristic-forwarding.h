@@ -586,6 +586,11 @@ private:
 	std::unordered_set<std::string> routes_front_pre;
 	
 	std::unordered_set<std::string> routes_behind_pre;
+	
+	//2018.3.2
+	std::unordered_map<uint32_t,std::string> nodeWithRoutes;
+	
+	std::unordered_map<uint32_t,std::string> nodeWithRoutesTobeDeleted;
 };
 } /* namespace nrndn */
 } /* namespace fw */

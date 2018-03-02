@@ -713,9 +713,6 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 
 		if (idIsInPriorityList)
 		{
-			//查看下一路段是否为兴趣路段
-			//std::vector<std::string> routes;
-			//SplitString(forwardRoute,routes," ");
 			if(routes.size() <= 1)
 			{
 				std::cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包已经行驶完了所有的兴趣路线 "<<seq<<std::endl;
@@ -812,6 +809,20 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			{
 				newforwardRoute += bestroute[i]+" ";
 			}
+			
+			std::unordered_map<uint32_t,std::string> it = nodeWithRoutes.find(nodeId);
+			if(it != nodeWithRoutes.end())
+			{
+				NS_ASSERT_MSG(false,"该节点已经存在于待删除列表中");
+			}
+			//将节点和借路路线添加至待删除列表中
+			nodeWithRoutes[nodeId] = newforwardRoute;
+			for( = nodeWithRoutes.begin();it != nodeWithRoutes.end();++it)
+			{
+				cout<<"("<<it->first<<" "<<it->second<<")";
+			}
+			cout<<endl;
+			
 			for(uint32_t i = 2;i < routes.size();i++)
 			{
 				newforwardRoute += routes[i]+" ";
@@ -875,6 +886,7 @@ NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, ve
 		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,newPriorityList);
 	}
 }
+
 
 void 
 NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
