@@ -573,7 +573,7 @@ NrCsImpl::GetInterest(std::string lane)
 		//getchar();
 		if(currentroute == lane)
 		{
-			PrintEntryInterest(interest->GetNonce());
+			//PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
 			//m_interest.erase(it++);
 	  	}
