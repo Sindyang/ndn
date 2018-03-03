@@ -421,10 +421,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		return;
 	}
 	
-	if(DELETE_MESSAGE == interest->GetScope())
-	{
-		cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包"<<endl;
-	}
+	
 	
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
@@ -437,6 +434,11 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	uint32_t myNodeId = m_node->GetId();
 	//获取兴趣包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
+	
+	if(DELETE_MESSAGE == interest->GetScope())
+	{
+		cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包 "<<seq<<endl;
+	}
 	
 	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	
@@ -588,7 +590,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//收到删除包
 	if(DELETE_MESSAGE == interest->GetScope())
 	{
-		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包"<<endl;
+		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包 "<<interest->GetNonce()<<endl;
 		return;
 	}
 	
