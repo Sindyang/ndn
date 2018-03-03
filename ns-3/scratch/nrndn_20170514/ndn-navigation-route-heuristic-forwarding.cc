@@ -98,7 +98,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false),
 	m_sendInterestTime(0),
-	m_sendDataTime(0)
+	m_sendDataTime(0),
+	m_rand (0, std::numeric_limits<uint32_t>::max ())
 {
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
@@ -2555,7 +2556,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
@@ -2571,7 +2572,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		else
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
-			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
