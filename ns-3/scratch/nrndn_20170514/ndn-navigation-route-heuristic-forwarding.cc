@@ -2728,7 +2728,7 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 	std::unordered_map<uint32_t,std::string>::iterator it = nodeWithRoutes.find(sourceId);
 	if(it != nodeWithRoutes.end())
 	{
-		cout<<"(forwarding.cc-NodesToDeleteFromTable) 源节点 "<<sourceId<<" 在此处重新选择了兴趣路线"<<endl;
+		cout<<"(forwarding.cc-NodesToDeleteFromTable) 源节点 "<<sourceId<<" 在此处重新选择了兴趣路线" <<it->second<<endl;
 		nodeWithRoutes.erase(it);
 		
 		// routes代表车辆的实际转发路线
