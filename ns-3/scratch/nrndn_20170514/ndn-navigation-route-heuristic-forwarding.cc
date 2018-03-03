@@ -2729,7 +2729,6 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 	if(it != nodeWithRoutes.end())
 	{
 		cout<<"(forwarding.cc-NodesToDeleteFromTable) 源节点 "<<sourceId<<" 在此处重新选择了兴趣路线" <<it->second<<endl;
-		nodeWithRoutes.erase(it);
 		
 		// routes代表车辆的实际转发路线
 		vector<std::string> routes;
@@ -2741,6 +2740,8 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 			cout<<newPriorityList[i]<<" ";
 		}
 		cout<<endl;
+		
+		nodeWithRoutes.erase(it);
 		
 		//创建删除包
 		//1. setup name
