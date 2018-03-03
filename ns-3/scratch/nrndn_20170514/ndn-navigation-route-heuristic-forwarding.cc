@@ -420,6 +420,11 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		return;
 	}
 	
+	if(DELETE_MESSAGE == interest->GetScope())
+	{
+		cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包"<<endl;
+	}
+	
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
@@ -580,7 +585,10 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}
 	
 	//收到删除包
-	//删除包可以与兴趣包有相同的结构
+	if(DELETE_MESSAGE == interest->GetScope())
+	{
+		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包"<<endl;
+	}
 	
 	
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
@@ -2758,6 +2766,7 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		deletepacket->SetScope(DELETE_MESSAGE);
 		deletepacket->SetRoutes(it->second);
 		
+		getchar();
 		
 		if(newPriorityList.empty())
 		{
@@ -2772,6 +2781,8 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		// 3. Then forward the interest packet directly
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 				&NavigationRouteHeuristic::SendInterestPacket,this,deletepacket);
+				
+		getchar();
 	}
 }
 
