@@ -2745,11 +2745,10 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		}
 		cout<<endl;
 		
-		nodeWithRoutes.erase(it);
 		
 		//创建删除包
 		//1. setup name
-		const string& PacketName = "delete";
+		const string& PacketName = it->second;
 		Ptr<Name> name = ns3::Create<Name>('/'+PacketName);
 		
 		//2. setup payload
@@ -2771,7 +2770,9 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		deletepacket->SetNonce(m_rand.GetValue ());
 		deletepacket->SetScope(DELETE_MESSAGE);
 		deletepacket->SetRoutes(it->second);
+		deletepacket->SetName(name);
 		
+		nodeWithRoutes.erase(it);
 		getchar();
 		
 		if(newPriorityList.empty())
