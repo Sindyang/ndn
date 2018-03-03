@@ -2748,8 +2748,8 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		
 		//创建删除包
 		//1. setup name
-		const string& PacketName = it->second;
-		Ptr<Name> name = ns3::Create<Name>('/'+PacketName);
+		const string& LaneName = routes[0];
+		Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
 		
 		//2. setup payload
 		Ptr<Packet> newPayload	= Create<Packet> ();
