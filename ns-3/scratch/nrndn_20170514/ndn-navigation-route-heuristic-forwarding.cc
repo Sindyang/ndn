@@ -2735,8 +2735,8 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		
 		//创建删除包
 		//1. setup name
-		const string& name = "deletepacket";
-		Ptr<Name> name = ns3::Create('/'+name);
+		const string& packetname = "deletepacket";
+		Ptr<Name> name = ns3::Create('/'+packetname);
 		
 		//2. setup payload
 		Ptr<Packet> newPayload	= Create<Packet> ();

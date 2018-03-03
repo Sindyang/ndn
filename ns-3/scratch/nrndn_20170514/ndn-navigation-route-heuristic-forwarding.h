@@ -595,6 +595,8 @@ private:
 	//2018.3.2
 	std::unordered_map<uint32_t,std::string> nodeWithRoutes;
 	
+	UniformVariable m_rand; ///< @brief nonce generator
+	
 };
 } /* namespace nrndn */
 } /* namespace fw */
