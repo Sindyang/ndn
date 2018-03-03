@@ -456,7 +456,7 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 		return std::pair<bool,uint32_t>(false,id);
 	}
-	showPit();
+	//showPit();
 	//getchar();
 	return std::pair<bool,uint32_t>(true,id);
 }
