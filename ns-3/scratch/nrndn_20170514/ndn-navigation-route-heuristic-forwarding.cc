@@ -588,6 +588,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(DELETE_MESSAGE == interest->GetScope())
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包"<<endl;
+		return;
 	}
 	
 	
