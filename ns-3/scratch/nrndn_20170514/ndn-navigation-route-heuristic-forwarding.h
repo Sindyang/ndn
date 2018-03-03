@@ -156,6 +156,7 @@ public:
 	enum
 	{
 		HELLO_MESSAGE = 2,
+		DELETE_MESSAGE = 3,
 	};
 
 protected:
@@ -472,6 +473,10 @@ private:
 	 *                              True means needs to reset to 0;
 	 */
 	void ForwardDataPacket(Ptr<const Data> src,std::vector<uint32_t> newPriorityList);
+	
+	
+	// 2018.3.3 生成删除包
+	void NodesToDeleteFromTable(uint32_t sourceId);
 
 	/**
 	 * \brief	Send the interest packet immediately,
@@ -590,7 +595,6 @@ private:
 	//2018.3.2
 	std::unordered_map<uint32_t,std::string> nodeWithRoutes;
 	
-	std::unordered_map<uint32_t,std::string> nodeWithRoutesTobeDeleted;
 };
 } /* namespace nrndn */
 } /* namespace fw */

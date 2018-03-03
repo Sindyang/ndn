@@ -823,6 +823,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			}
 			cout<<endl;
 			
+			//将后续路线添加至转发路线中
 			for(uint32_t i = 2;i < routes.size();i++)
 			{
 				newforwardRoute += routes[i]+" ";
@@ -1925,8 +1926,6 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<endl;
-	//if(sourceId == 97)
-		//getchar();
 	//getchar();
 }
 
@@ -2513,6 +2512,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 			cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 			std::pair<bool,uint32_t> resend = m_nrpit->DeleteFrontNode(remoteroute,sourceId);
+			NodesToDeleteFromTable(sourceId);
+			
 			overtake.erase(it);
 			
 			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
@@ -2710,6 +2711,70 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	routes_behind_pre = routes_behind;
 	m_preNB = m_nb;
 }
+
+void
+NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
+{
+	//查看该节点是否在nodeWithRoutes中
+	std::unordered_map<uint32_t,std::string>::iterator it = nodeWithRoutes.find(sourceId);
+	if(it != nodeWithRoutes.end())
+	{
+		cout<<"(forwarding.cc-NodesToDeleteFromTable) 源节点 "<<sourceId<<" 在此处重新选择了兴趣路线"<<endl;
+		nodeWithRoutes.erase(it);
+		
+		// routes代表车辆的实际转发路线
+		vector<std::string> routes;
+		SplitString(it->second,routes," ");
+		std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(routes[0]);
+		cout<<"删除包的转发优先级列表为 ";
+		for(uint32_t i = 0;i < newPriorityList.size();++i)
+		{
+			cout<<newPriorityList[i]<<" ";
+		}
+		cout<<endl;
+		
+		//创建删除包
+		//1. setup name
+		const string& name = "deletepacket";
+		Ptr<Name> name = ns3::Create('/'+name);
+		
+		//2. setup payload
+		Ptr<Packet> newPayload	= Create<Packet> ();
+		ndn::nrndn::nrHeader nrheader;
+		
+		const double& x		= m_sensor->getX();
+		const double& y		= m_sensor->getY();
+	
+		nrheader.setX(x);
+		nrheader.setY(y);
+		nrheader.setSourceId(sourceId);
+		nrheader.setPriorityList(newPriorityList);
+		newPayload->AddHeader(nrheader);
+		
+		//3. setup delete packet
+		Ptr<Interest> deletepacket	= Create<Interest> (newPayload);
+		deletepacket->SetNonce(m_rand.GetValue ());
+		deletepacket->SetScope(DELETE_MESSAGE);
+		deletepacket->SetName(name);
+		deletepacket->SetRoutes(it->second);
+		
+		
+		if(newPriorityList.empty())
+		{
+			cout<<"(forwarding.cc-NodesToDeleteFromTable) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存删除包 "<<deletepacket->GetNonce()<<endl;
+			CachingInterestPacket(deletepacket->GetNonce(),deletepacket);
+			return;
+		}
+		
+		m_interestNonceSeen.Put(deletepacket->GetNonce(),true);
+		cout<<"(forwarding.cc-NodesToDeleteFromTable) 记录删除包 nonce "<<deletepacket->GetNonce()<<" 源节点 "<<sourceId<<endl;
+
+		// 3. Then forward the interest packet directly
+		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+				&NavigationRouteHeuristic::SendInterestPacket,this,deletepacket);
+	}
+}
+
 
 vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 {
