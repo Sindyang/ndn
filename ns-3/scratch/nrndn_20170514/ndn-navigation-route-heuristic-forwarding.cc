@@ -2748,6 +2748,7 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		nrheader.setX(x);
 		nrheader.setY(y);
 		nrheader.setSourceId(sourceId);
+		nrheader.setForwardId(m_node->GetId());
 		nrheader.setPriorityList(newPriorityList);
 		newPayload->AddHeader(nrheader);
 		
