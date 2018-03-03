@@ -2735,8 +2735,8 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		
 		//创建删除包
 		//1. setup name
-		const string& packetname = "deletepacket";
-		Ptr<Name> name = ns3::Create('/'+packetname);
+		const string& PacketName = "delete";
+		Ptr<Name> name = ns3::Create<Name>('/'+PacketName);
 		
 		//2. setup payload
 		Ptr<Packet> newPayload	= Create<Packet> ();
@@ -2756,7 +2756,6 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		Ptr<Interest> deletepacket	= Create<Interest> (newPayload);
 		deletepacket->SetNonce(m_rand.GetValue ());
 		deletepacket->SetScope(DELETE_MESSAGE);
-		deletepacket->SetName(name);
 		deletepacket->SetRoutes(it->second);
 		
 		
