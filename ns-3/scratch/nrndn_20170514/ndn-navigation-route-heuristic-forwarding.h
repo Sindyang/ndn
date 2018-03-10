@@ -83,6 +83,9 @@ public:
 	virtual void 
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
+	void
+	OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletepacket);
+	
 	void 
 	Interest_InInterestRoute(Ptr<Interest> interest,vector<std::string> routes);
 	

@@ -571,7 +571,145 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 
 void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletepacket)
 {
+	Ptr<const Packet> nrPayload	= deletepacket->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取删除包的源节点
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取删除包的序列号
+	uint32_t seq = deletepacket->GetNonce();
+	//获取当前节点Id
+	uint32_t myNodeId = m_node->GetId();
+	//获取删除包的转发节点id
+	uint32_t forwardId = nrheader.getForwardId();
+	//获取删除包的实际转发路线
+	std::string forwardRoute = deletepacket->GetRoutes();
 	
+	cout<<endl<<"(forwarding.cc-OnDelete_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
+	cout<<"删除包实际转发路线为 "<<forwardRoute<<endl;
+	
+	//If it is not a stop message, prepare to forward:
+	pair<bool, double> msgdirection = packetFromDirection(deletepacket);
+	cout<<"(forwarding.cc-OnDelete_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	
+	//If the deletepacket packet has already been sent, do not proceed the packet
+	if(m_interestNonceSeen.Get(deletepacket->GetNonce()))
+	{
+		//2018.1.16 从缓存中删除兴趣包
+		if(msgdirection.first && msgdirection.second > 0)
+		{
+			m_cs->DeleteInterest(deletepacket->GetNonce());
+			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<deletepacket->GetNonce()<<endl;
+			//getchar();
+		}
+		
+		cout<<"(forwarding.cc-OnDelete_RSU) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<deletepacket->GetNonce()<<endl;
+		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<deletepacket->GetNonce());
+		return;
+	}
+	
+	//获取优先列表
+	cout << "(forwarding.cc-OnDelete_RSU) 删除包的转发优先级列表为: ";
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+    for(auto it = pri.begin();it != pri.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<endl;
+
+	//Deal with the stop message first
+	//避免回环
+	//2017.12.23 按理来说，若RSU收到的兴趣包为NACK_LOOP，RSU应该为该兴趣包所在路段的起点处 TEST IT
+	if(Interest::NACK_LOOP==deletepacket->GetNack())
+	{
+		cout<<"(forwarding.cc-OnDelete_RSU) 该删除包为NACK_LOOP。源节点 "<<nodeId<<endl;
+		ExpireInterestPacketTimer(nodeId,seq);
+		return;
+	}
+
+	
+	if(!msgdirection.first || // from other direction
+			msgdirection.second >= 0)// or from front
+	{
+		NS_LOG_DEBUG("Get deletepacket packet from front or other direction");
+		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
+		{
+			NS_LOG_DEBUG("Get deletepacket packet from front or other direction and it is new packet");
+			//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//getchar();
+			DropInterestePacket(deletepacket);
+		}
+		else // Is old packet
+		{
+			//按理来说，不应该进入该函数；因为RSU具有处理兴趣包的最高优先级
+			NS_LOG_DEBUG("Get deletepacket packet from front or other direction and it is old packet");
+			//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//getchar();
+			ExpireInterestPacketTimer(nodeId,seq);
+		}
+	}
+	else// it is from nodes behind
+	{
+		NS_LOG_DEBUG("Get deletepacket packet from nodes behind");
+		cout<<"(forwarding.cc-OnDetect_RSU) 该删除包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+		
+
+		// routes代表车辆的实际转发路线
+		vector<std::string> routes;
+		SplitString(forwardRoute,routes," ");
+		
+		//删除副PIT列表
+		m_nrpit->DeleteSecondPIT(routes[0],nodeId);
+		
+		
+		
+	
+		//evaluate whether receiver's id is in sender's priority list
+		bool idIsInPriorityList;
+		vector<uint32_t>::const_iterator idit;
+		idit = find(pri.begin(), pri.end(), m_node->GetId());
+		idIsInPriorityList = (idit != pri.end());
+
+		//evaluate end
+
+		if (idIsInPriorityList)
+		{
+			if(routes.size() <= 1)
+			{
+				std::cout<<"(forwarding.cc-OnDetect_RSU) 该删除包已经行驶完了所有的转发路线 "<<seq<<std::endl;
+				BroadcastStopInterestMessage(detectpacket);
+				//getchar();
+				return;
+			}
+			
+			std::string nextroute = routes[1];
+			double index = distance(pri.begin(), idit);
+			double random = m_uniformRandomVariable->GetInteger(0, 20);
+			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+			//构造转发优先级列表，并判断前方邻居是否为空
+			std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
+			forwardRoute = forwardRoute.substr(nextroute.size()+1);
+			detectpacket->SetRoutes(forwardRoute);
+	
+			if(newPriorityList.empty())
+			{
+				cout<<"(forwarding.cc-OnDetect_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存删除包 "<<seq<<endl;
+				CachingInterestPacket(seq,detectpacket);
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,detectpacket);
+			}
+			else
+			{
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,detectpacket,newPriorityList);
+			}
+		}
+		else
+		{
+			//不在转发优先级列表中
+			cout<<"(forwarding.cc-OnDetect_RSU) Node id is not in PriorityList"<<endl;
+			NS_LOG_DEBUG("Node id is not in PriorityList");
+			DropInterestePacket(detectpacket);
+		}
+	}
 }
 
 void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)

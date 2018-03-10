@@ -461,6 +461,44 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 	return std::pair<bool,uint32_t>(true,id);
 }
 
+bool 
+NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
+{
+	//showPit();
+	//std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT)"<<std::endl;
+	std::vector<Ptr<Entry> >::iterator pit;
+	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+	bool flag = false;
+	for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();)
+	{
+		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+		pitEntry->CleanPITNeighbors(flag,id);
+		//若PIT的表项为空，可以删除该表项
+		const std::unordered_set<std::string>& interestroutes = pitEntry->getIncomingnbs();
+		//std::cout<<"(pit-impl.cc-DeleteFrontNode) 上一跳路段数目 "<<interestroutes.size()<<std::endl;
+		if(interestroutes.empty())
+		{
+			const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
+			std::string pitname = pitName.toUri();
+			//std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
+			pit = m_secondPitContainer.erase(pit);
+		}
+		else
+		{
+			pit++;
+		}
+	}
+	if(flag == false)
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 节点 "<<id<<"不在副PIT中"<<std::endl;
+		return std::pair<bool,uint32_t>(false,id);
+	}
+	
+	showPit();
+	return std::pair<bool,uint32_t>(true,id);
+}
+
+
 std::unordered_map<std::string,std::unordered_set<std::string> >
 NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes_behind)
 {
