@@ -569,6 +569,11 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 }
 
+void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletepacket)
+{
+	
+}
+
 void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest)
 {
 	//cout<<endl<<"进入(forwarding.cc-OnInterest_RSU)"<<endl;
@@ -591,6 +596,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	if(DELETE_MESSAGE == interest->GetScope())
 	{
 		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包 "<<interest->GetNonce()<<endl;
+		OnDelete_RSU(face,interest);
 		return;
 	}
 	
