@@ -136,7 +136,7 @@ public:
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
 	
 	//2018.3.10
-	std::pair<bool,uint32_t> DeleteSecondPIT(const std::string lane,const uint32_t& id);
+	bool DeleteSecondPIT(const std::string lane,const uint32_t& id);
 	
 	// 2017.1.8 
 	std::unordered_map<std::string,std::unordered_set<std::string> > GetDataNameandLastRoute(std::unordered_set<std::string> routes);

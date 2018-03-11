@@ -491,11 +491,11 @@ NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
 	if(flag == false)
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 节点 "<<id<<"不在副PIT中"<<std::endl;
-		return std::pair<bool,uint32_t>(false,id);
+		return false;
 	}
 	
 	showPit();
-	return std::pair<bool,uint32_t>(true,id);
+	return true;
 }
 
 

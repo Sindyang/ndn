@@ -675,7 +675,7 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 			if(routes.size() <= 1)
 			{
 				std::cout<<"(forwarding.cc-OnDetect_RSU) 该删除包已经行驶完了所有的转发路线 "<<seq<<std::endl;
-				BroadcastStopInterestMessage(detectpacket);
+				BroadcastStopInterestMessage(deletepacket);
 				//getchar();
 				return;
 			}
@@ -687,12 +687,12 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 			//构造转发优先级列表，并判断前方邻居是否为空
 			std::vector<uint32_t> newPriorityList = RSUGetPriorityListOfInterest(nextroute);
 			forwardRoute = forwardRoute.substr(nextroute.size()+1);
-			detectpacket->SetRoutes(forwardRoute);
+			deletepacket->SetRoutes(forwardRoute);
 	
 			if(newPriorityList.empty())
 			{
 				cout<<"(forwarding.cc-OnDetect_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存删除包 "<<seq<<endl;
-				CachingInterestPacket(seq,detectpacket);
+				CachingInterestPacket(seq,deletepacket);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,detectpacket);
 			}
 			else
@@ -705,7 +705,7 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 			//不在转发优先级列表中
 			cout<<"(forwarding.cc-OnDetect_RSU) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
-			DropInterestePacket(detectpacket);
+			DropInterestePacket(deletepacket);
 		}
 	}
 }
