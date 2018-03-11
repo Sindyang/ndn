@@ -635,7 +635,7 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
 			NS_LOG_DEBUG("Get deletepacket packet from front or other direction and it is new packet");
-			//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//cout<<"(forwarding.cc-OnDelete_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是新的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			DropInterestePacket(deletepacket);
 		}
@@ -643,7 +643,7 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 		{
 			//按理来说，不应该进入该函数；因为RSU具有处理兴趣包的最高优先级
 			NS_LOG_DEBUG("Get deletepacket packet from front or other direction and it is old packet");
-			//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
+			//cout<<"(forwarding.cc-OnDelete_RSU) 该兴趣包从前方或其他路线得到，且该兴趣包是旧的。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl<<endl;
 			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
