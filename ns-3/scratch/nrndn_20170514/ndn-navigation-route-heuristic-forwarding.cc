@@ -841,6 +841,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
+		m_nrpit->showPit();
+		
 		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
@@ -1237,7 +1239,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 				break;
 			}
 		}
-		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 "<<endl;
+		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 ";
 		for(;it != interestroute.end() && i < forwardroute.size();it++,i++)
 		{
 			if(*it == forwardroute[i])
@@ -2643,7 +2645,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//获取心跳包所在路段
 	string remoteroute = interest->GetName().get(0).toUri();
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
@@ -2737,7 +2739,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
 	
-	cout<<"routes_front_pre"<<endl;
+	/*cout<<"routes_front_pre"<<endl;
 	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
 	{
 		cout<<*it<<" ";
@@ -2748,7 +2750,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		cout<<*it<<" ";
 	}
-	cout<<endl;
+	cout<<endl;*/
 	
 	
 	if(routes_front_pre.size() < routes_front.size())
@@ -2778,7 +2780,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
-	cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
+	//cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
 	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{
