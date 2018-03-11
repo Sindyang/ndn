@@ -464,8 +464,8 @@ NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 bool 
 NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
 {
-	//showPit();
-	//std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT)"<<std::endl;
+	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT)"<<std::endl;
+	showPit();
 	std::vector<Ptr<Entry> >::iterator pit;
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
 	bool flag = false;

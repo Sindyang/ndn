@@ -662,8 +662,6 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 		m_nrpit->DeleteSecondPIT(routes[0],nodeId);
 		
 		
-		
-	
 		//evaluate whether receiver's id is in sender's priority list
 		bool idIsInPriorityList;
 		vector<uint32_t>::const_iterator idit;
