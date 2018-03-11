@@ -2737,7 +2737,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
 	
-	/*cout<<"routes_front_pre"<<endl;
+	cout<<"routes_front_pre"<<endl;
 	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
 	{
 		cout<<*it<<" ";
@@ -2748,7 +2748,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		cout<<*it<<" ";
 	}
-	cout<<endl;*/
+	cout<<endl;
 	
 	
 	if(routes_front_pre.size() < routes_front.size())
@@ -2778,7 +2778,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			front_change_mode = 3;
 	}
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
 	
 	if(routes_behind_pre.size() < routes_behind.size())
 	{

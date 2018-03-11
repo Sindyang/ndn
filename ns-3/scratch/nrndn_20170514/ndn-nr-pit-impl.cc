@@ -120,7 +120,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 	else
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
-		
+		IsExist = false;
 		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
@@ -465,7 +465,7 @@ bool
 NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
 {
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT)"<<std::endl;
-	showPit();
+	showSecondPit();
 	std::vector<Ptr<Entry> >::iterator pit;
 	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
 	bool flag = false;
@@ -494,7 +494,7 @@ NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
 		return false;
 	}
 	
-	showPit();
+	showSecondPit();
 	return true;
 }
 
