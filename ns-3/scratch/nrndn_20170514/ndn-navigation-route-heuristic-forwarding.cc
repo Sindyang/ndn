@@ -2530,7 +2530,8 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 		if(m_sensor->getType() == "RSU")
 		{
 			Ptr<pit::Entry> Will = WillInterestedData(data);
-			if(!Will)
+			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+			if(!Will || !WillSecond)
 			{
 				NS_ASSERT_MSG(false,"RSU对该数据包不感兴趣");
 			}
