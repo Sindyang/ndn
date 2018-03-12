@@ -1067,9 +1067,8 @@ NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string
 				itforwarded->second = forwardedroutes;
 			}
 		}
-			
-		SendDataInCache(datacollection);
 		cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
+		SendDataInCache(datacollection);
 	}
 }
 
@@ -1763,7 +1762,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-			if(!Will || !WillSecond)
+			if(!Will && !WillSecond)
 			{
 				//或者改为广播停止转发数据包
 				BroadcastStopDataMessage(data);
@@ -2537,9 +2536,33 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			}
 			else
 			{
-				Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-				const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-				NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
+				Ptr<pit::nrndn::EntryNrImpl> entry;
+				std::unordered_set<std::string> allinteresRoutes;
+				if(Will)
+				{
+					entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
+					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+					cout<<"(forwarding.cc-OnData_RSU) 主PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+					for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
+					{
+						allinteresRoutes.insert(*it);
+					}
+				}
+			
+				//获取副PIT中感兴趣的上一跳路段
+				if(WillSecond)
+				{
+					entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
+					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+					cout<<"(forwarding.cc-OnData_RSU) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+					for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
+					{
+						allinteresRoutes.insert(*it);
+					}
+				}
+			
+				NS_ASSERT_MSG(allinteresRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
+				
 				
 				//获取该数据包已转发过的上一跳路段
 				std::unordered_set<std::string> forwardedroutes;
@@ -2550,13 +2573,13 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				std::unordered_set<std::string> newinterestRoutes;
 				if(forwardedroutes.empty())
 				{
-					newinterestRoutes = interestRoutes;
+					newinterestRoutes = allinteresRoutes;
 					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
 				}
 				else
 				{
 					//从上一跳路段中去除已转发过的路段
-					for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
+					for(std::unordered_set<std::string>::const_iterator itinterest = allinteresRoutes.begin();itinterest != allinteresRoutes.end();itinterest++)
 					{
 						std::unordered_set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if(itforward != forwardedroutes.end())
