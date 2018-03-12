@@ -3291,14 +3291,6 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	cout<<"(forwarding.cc-RSUGetPriorityListOfData) At time:"<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" Current dataName:"<<dataName.toUri()<<endl;
 	//m_nrpit->showPit();
 	
-	
-	Ptr<pit::Entry> Will = WillInterestedData(data);
-	Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-	if(!Will && !WillSecond)
-	{
-		NS_ASSERT_MSG(false,"该数据包不在PIT中");
-	}
-	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
 	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
