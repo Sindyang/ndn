@@ -343,6 +343,9 @@ private:
 	Ptr<pit::Entry>
 	WillInterestedData(Ptr<const Data> data);
 	
+	Ptr<pit::Entry>
+	WillInterestedDataInSecondPit(Ptr<const Data> data);
+	
 	/**
 	 * \brief	drop the data
 	 * 			Simply do nothing

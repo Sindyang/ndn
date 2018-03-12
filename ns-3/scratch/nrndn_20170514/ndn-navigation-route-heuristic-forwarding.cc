@@ -1476,7 +1476,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 				return;
 			}*/
 		}
-		//Ptr<pit::Entry> Will = WillInterestedData(data);
+		
 		if(!IsInterestData(data->GetName()))
 		{
 			DropDataPacket(data);
@@ -1718,17 +1718,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				//这部分不一定需要 
 				Ptr<pit::Entry> Will = WillInterestedData(data);
-				if(Will)
+				Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+				if(Will || WillSecond)
 				{
-					// 1.Buffer the data in ContentStore
-					//ToContentStore(data);
-					// 2. Notify upper layer
-					//NotifyUpperLayer(data);
-					
-					Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
 					// 2018.1.6 added by sy
-					//CachingDataPacket(data->GetSignature(),data/*,interestRoutes*/);
 					CachingDataSourcePacket(data->GetSignature(),data);
 					// 2018.1.28
 					std::unordered_set<std::string> forwardedroutes;
@@ -3024,7 +3017,13 @@ Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::isInterestedData");
-	return m_pit->Find(data->GetName()) || m_nrpit->FindSecondPIT(data->GetName());
+	return m_pit->Find(data->GetName());
+}
+
+Ptr<pit::Entry>
+NavigationRouteHeuristic::WillInterestedDataInSecondPit(Ptr<const Data> data)
+{
+	return m_nrpit->FindSecondPIT(data->GetName());
 }
 
 bool NavigationRouteHeuristic::IsInterestData(const Name& name)
