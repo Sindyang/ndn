@@ -3024,7 +3024,7 @@ Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
 	//NS_ASSERT_MSG(false,"NavigationRouteHeuristic::isInterestedData");
-	return m_pit->Find(data->GetName());
+	return m_pit->Find(data->GetName()) || m_nrpit->FindSecondPIT(data->GetName());
 }
 
 bool NavigationRouteHeuristic::IsInterestData(const Name& name)

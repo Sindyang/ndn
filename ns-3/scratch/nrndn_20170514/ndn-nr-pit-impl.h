@@ -79,6 +79,9 @@ public:
     //This prefix is different from the format of interest's name
     virtual Ptr<Entry>
     Find (const Name &prefix);
+	
+	Ptr<Entry>
+	FindSecondPIT(const Name &prefix);
     
     //abandon
     virtual Ptr<Entry>
