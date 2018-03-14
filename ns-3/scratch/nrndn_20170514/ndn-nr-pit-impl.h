@@ -133,7 +133,7 @@ public:
 	bool UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
 	
 	//2018.3.1
-	bool UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
+	bool UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
 	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);

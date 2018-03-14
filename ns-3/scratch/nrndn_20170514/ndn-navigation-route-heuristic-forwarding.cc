@@ -985,6 +985,8 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 				newforwardRoute += routes[i]+" ";
 			}
 			cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+			//重新设置序列号
+			interest->SetNonce(m_rand.GetValue());
 			interest->SetRoutes(newforwardRoute);
 			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
 		}

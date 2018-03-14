@@ -120,7 +120,6 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 	else
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
-		IsExist = false;
 		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
@@ -133,7 +132,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		std::cout<<std::endl;
 		
 		// update secondary pit
-		bool result = UpdateSecondPit(futureInterestRoutes,id,currentroute);
+		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
 		
 		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
@@ -286,7 +285,7 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
 		if(pit == m_pitContainer.end())
 		{
 			IsExist = false;
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
 			Ptr<Interest> interest = ns3::Create<Interest>();
@@ -322,14 +321,14 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
  * currentRoute:兴趣包来时的路段
  */
 bool NrPitImpl::
-UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
 	std::vector<std::string>::const_iterator it = interestRoute.begin();
 	for(;it != interestRoute.end();++it)
 	{
-		std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
 		for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();++pit)
 		{
 			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
@@ -338,8 +337,12 @@ UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id
 			{
 				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				bool flag = true;
+				bool flag = true;//若flag为false,则证明源节点不在副PIT列表中
 				pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
+				if(!flag)
+				{
+					IsExist = false;
+				}
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 				break;
 			}
@@ -347,8 +350,9 @@ UpdateSecondPit(const std::vector<std::string>& interestRoute,const uint32_t& id
 		//interestRoute不在PIT中
 		if(pit == m_secondPitContainer.end())
 		{
-			std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
+			IsExist = false;
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
 			Ptr<Interest> interest = ns3::Create<Interest>();
 			interest->SetName(name);
