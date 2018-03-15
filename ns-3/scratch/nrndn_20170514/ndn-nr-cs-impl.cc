@@ -536,7 +536,7 @@ bool NrCsImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	Ptr<cs::EntryInterest> csEntryInterest = FindInterest(nonce);
 	if(csEntryInterest != 0)
 	{
-		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<nonce<<std::endl;
+		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<std::endl;
 		
 		//PrintInterestEntry(nonce);
 		return false;
@@ -568,9 +568,9 @@ NrCsImpl::GetInterest(std::string lane)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes(); 
-		std::cout<<"(cs-interest.cc-GetInterest) 兴趣包 "<<interest->GetNonce()<<" 的转发路线为 "<<routes;
+		//std::cout<<"(cs-interest.cc-GetInterest) 兴趣包 "<<interest->GetNonce()<<" 的转发路线为 "<<routes;
 		std::string currentroute = routes.substr(0,lane.length());
-		std::cout<<" 兴趣包下一行驶路段 "<<currentroute<<std::endl;
+		//std::cout<<" 兴趣包下一行驶路段 "<<currentroute<<std::endl;
 		//getchar();
 		if(currentroute == lane)
 		{
