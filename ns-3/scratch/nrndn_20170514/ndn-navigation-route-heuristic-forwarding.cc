@@ -959,6 +959,9 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		}
 	    else
 		{
+			//重新生成一个兴趣包
+			//1.copy the interest packet
+			Ptr<Interest> newinterest = Create<Interest> (*interest);
 			string newforwardRoute;
 			//更新兴趣包的实际转发路线
 			for(uint32_t i = 2;i < bestroute.size();i++)
@@ -987,9 +990,9 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
 			//重新设置序列号
 			m_cs->PrintInterestCache();
-			interest->SetRoutes(newforwardRoute);
+			newinterest->SetRoutes(newforwardRoute);
 			m_cs->PrintInterestCache();
-			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,newinterest,anotherNewPriorityList);
 		}
 		
 		//getchar();
