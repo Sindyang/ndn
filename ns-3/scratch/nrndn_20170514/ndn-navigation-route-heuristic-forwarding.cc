@@ -1966,7 +1966,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		else
 		{
 			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
-			cout<<"(forwarding.cc-CachingDataPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
+			cout<<"(forwarding.cc-CachingInterestPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
 		}
 			
 	}
