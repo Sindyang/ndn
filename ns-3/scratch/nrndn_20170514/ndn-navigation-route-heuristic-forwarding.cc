@@ -942,7 +942,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		
 		//去除兴趣包来时的路段
 		forwardRoute = forwardRoute.substr(nextroute.size()+1);
-		//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+		cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 		//更新兴趣包的实际转发路线
 		interest->SetRoutes(forwardRoute);
 		cout<<"(forwarding.cc-Interest_InInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
@@ -1959,7 +1959,11 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 		if(interest->GetScope() == DELETE_MESSAGE)
 			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存删除包 "<<nonce<<endl;
 		else
+		{
 			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
+			cout<<"(forwarding.cc-CachingDataPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
+		}
+			
 	}
 	else
 	{
