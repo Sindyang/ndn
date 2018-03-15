@@ -569,7 +569,7 @@ NrCsImpl::GetInterest(std::string lane)
 		std::string routes = interest->GetRoutes(); 
 		std::cout<<"(cs-interest.cc-GetInterest) 兴趣包的nonce为 "<<interest->GetNonce()<<" 实际导航路线 "<<routes;
 		std::string currentroute = routes.substr(0,lane.length());
-		//std::cout<<"(cs-impl.cc-GetInterest) 兴趣包下一行驶路段 "<<currentroute<<std::endl;
+		std::cout<<" 兴趣包下一行驶路段 "<<currentroute<<std::endl;
 		//getchar();
 		if(currentroute == lane)
 		{
