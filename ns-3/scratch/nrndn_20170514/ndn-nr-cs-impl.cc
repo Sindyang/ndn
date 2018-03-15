@@ -536,7 +536,8 @@ bool NrCsImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	Ptr<cs::EntryInterest> csEntryInterest = FindInterest(nonce);
 	if(csEntryInterest != 0)
 	{
-		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中"<<std::endl;
+		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<nonce<<std::endl;
+		
 		//PrintInterestEntry(nonce);
 		return false;
 	}
