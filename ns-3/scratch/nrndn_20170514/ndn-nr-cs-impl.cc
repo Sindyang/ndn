@@ -637,7 +637,7 @@ NrCsImpl::PrintInterestCache () const
 		//获取发送兴趣包节点的ID
 		uint32_t nodeId = nrheader.getSourceId();
 		std::cout<<"兴趣包的nonce为 "<<interest->GetNonce()<<" 源节点为 "<<nodeId
-		<<" 兴趣包的名字为 "<<it->second->GetName().toUri()<<std::endl;
+		<<" 兴趣包的转发路线为 "<<it->second->GetRoutes()<<std::endl;
 	}
 	std::cout<<std::endl;
 }

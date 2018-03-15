@@ -986,7 +986,9 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			}
 			cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
 			//重新设置序列号
+			m_cs->PrintInterestCache();
 			interest->SetRoutes(newforwardRoute);
+			m_cs->PrintInterestCache();
 			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,interest,anotherNewPriorityList);
 		}
 		
@@ -2843,7 +2845,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		for(itroutes_front = routes_front.begin();itroutes_front != routes_front.end();itroutes_front++)
 		{
-			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆"<<endl;
+			cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroutes_front<<"有车辆。当前节点为 "<<nodeId<<endl;
 			map<uint32_t,Ptr<const Interest> > interestcollection = m_cs->GetInterest(*itroutes_front);
 			if(!interestcollection.empty())
 			{
