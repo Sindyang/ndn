@@ -594,6 +594,8 @@ private:
 	
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 	
+	std::unordered_set<uint32_t> alreadyPassed;//2018.3.17 用于记录已经通过该RSU的车辆
+	
 	std::unordered_set<std::string> routes_front_pre;
 	
 	std::unordered_set<std::string> routes_behind_pre;

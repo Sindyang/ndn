@@ -599,7 +599,7 @@ void NavigationRouteHeuristic::OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletep
 		if(msgdirection.first && msgdirection.second > 0)
 		{
 			m_cs->DeleteInterest(deletepacket->GetNonce());
-			//cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中删除兴趣包 "<<deletepacket->GetNonce()<<endl;
+			//cout<<"(forwarding.cc-OnDelete_RSU) 从缓存中删除兴趣包 "<<deletepacket->GetNonce()<<endl;
 			//getchar();
 		}
 		
@@ -828,7 +828,29 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		vector<std::string> routes;
 		SplitString(forwardRoute,routes," ");
 		
+		//判断来时的路段和下一路段
+		if(routes.size() > 1)
+		{
+			std::vector<std::string>::const_iterator itcurrent = std::find(interestRoute.begin(),interestRoute.end(),routes[0]);
+			std::vector<std::string>::const_iterator itnext = std::find(interestRoute.begin(),interestRoute.end(),routes[1]);
+			//来时的路段不是兴趣路段，下一路段是兴趣路段
+			if(itcurrent == interestRoute.end() && itnext != interestRoute.end())
+			{
+				std::unordered_set<uint32_t>::italready = alreadyPassed.find(nodeId);
+				if(italready != alreadyPassed.end())
+				{
+					cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包 "<<seq<<"对应的车辆已经通过了该RSU"<<endl;
+					BroadcastStopInterestMessage(interest);
+					return;
+				}
+			}
+		}
+		
+		
+		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
+		
+		
 		
 		//还需要判断兴趣包源节点是否全部在主PIT表项中
 		//若是的话，不需要再转发
@@ -2711,6 +2733,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			NodesToDeleteFromTable(sourceId);
 			
 			overtake.erase(it);
+			
+			//2018.3.17
+			//该车辆已经超过RSU，记录下来
+			alreadyPassed.insert(sourceId);
 			
 			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
