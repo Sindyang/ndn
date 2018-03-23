@@ -2115,7 +2115,14 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<const Interest> src,std
 	uint32_t nodeId = m_node->GetId();
 	if(nodeId != sourceId)
 	{
-		ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
+		if(src->GetScope() == DELETE_MESSAGE)
+		{
+			ndn::nrndn::nrUtils::IncreaseDeleteForwardCounter(sourceId,nonce);
+		}
+		else
+		{
+			ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
+		}
 	}
 	
     cout<<"(forwarding.cc-ForwardInterestPacket) 源节点 "<<sourceId<<" 当前节点 "<<m_node->GetId()<<" nonce "<<nonce<<endl;

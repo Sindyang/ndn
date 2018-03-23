@@ -84,6 +84,9 @@ public:
 	static void IncreaseForwardCounter(uint32_t id,uint32_t signature);
 	static ForwardCounterMap interestForwardCounter;//兴趣包被转发的次数
 	static void IncreaseInterestForwardCounter(uint32_t id,uint32_t nonce);
+	//2018.3.23
+	static ForwardCounterMap deleteForwardCounter;//删除包被转发的次数
+	static void IncreaseDeleteForwardCounter(uint32_t id,uint32_t nonce);
 
 	//3. Delay Record
 	static TransmissionDelayMap TransmissionDelayRecord;  //\brief TransmissionDelayRecord[nodeid][signature]=Delay time;
@@ -107,6 +110,9 @@ public:
 	 * \return (InterestForwardTimesSum,averageInterestForwardTimes)
 	 * */
 	static std::pair<uint32_t,double> GetAverageInterestForwardTimes();
+	
+	//2017.2.23
+	static std::pair<uint32_t,double> GetAverageDeleteForwardTimes();
 
 	static double GetAverageDelay();
 

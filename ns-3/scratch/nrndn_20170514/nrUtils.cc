@@ -22,12 +22,14 @@ using namespace std;
 nrUtils::MessageArrivalMap nrUtils::msgArrivalCounter;
 nrUtils::ForwardCounterMap nrUtils::forwardCounter;
 nrUtils::ForwardCounterMap nrUtils::interestForwardCounter;
+nrUtils::ForwardCounterMap nrUtils::deleteForwardCounter;
 nrUtils::TransmissionDelayMap nrUtils::TransmissionDelayRecord;
 nrUtils::AppIndexType nrUtils::appIndex;
 uint32_t nrUtils::ByteSent=0;
 uint32_t nrUtils::DataByteSent=0;
 uint32_t nrUtils::InterestByteSent=0;
 uint32_t nrUtils::HelloByteSent=0;
+uint32_t nrUtils::DeleteByteSent=0;
 uint32_t nrUtils::HelloCount = 0;
 
 
@@ -119,10 +121,16 @@ void nrUtils::IncreaseForwardCounter(uint32_t id,
 	forwardCounter[id][signature]++;
 }
 
+
 //兴趣包的转发次数
 void nrUtils::IncreaseInterestForwardCounter(uint32_t id, uint32_t nonce)
 {
 	interestForwardCounter[id][nonce]++;
+}
+
+void nrUtils::IncreaseDeleteForwardCounter(uint32_t id,uint32_t nonce)
+{
+	deleteForwardCounter[id][nonce]++;
 }
 
 //数据包从发出到收到的时间
@@ -309,6 +317,31 @@ pair<uint32_t,double> nrUtils::GetAverageInterestForwardTimes()
 	return make_pair(forwardTimes,average);
 }
 
+//删除包平均转发次数
+pair<uint32_t,double>nrUtils::GetAverageDeleteForwardTimes()
+{
+	ForwardCounterMap::iterator it1;
+	std::unordered_map<uint32_t,uint32_t >::iterator it2;
+	uint32_t forwardTimes=0;
+	double messageNum=0;
+
+	for (it1 = deleteForwardCounter.begin(); it1 != deleteForwardCounter.end(); ++it1)
+	{
+		messageNum += it1->second.size();
+		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+		{
+			forwardTimes += it2->second;
+		}
+	}
+
+	if(messageNum == 0)
+		return make_pair(forwardTimes,0);
+
+	double average = forwardTimes / messageNum;
+
+	return make_pair(forwardTimes,average);
+}
+
 //数据包从发出到收到的时间
 double nrUtils::GetAverageDelay()
 {
@@ -379,6 +412,10 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 		HelloCount += 1;
 		//cout << "Hello size " << size << endl;
 	}	
+	else if(3 == interest->GetScope())
+	{
+		DeleteByteSent += size;
+	}
 	else
 	{
 		InterestByteSent += size;

@@ -142,6 +142,7 @@ private:
   double arrivalRate;
   double averageForwardTimes;
   double averageInterestForwardTimes;
+  double averageDeleteForwardTimes;
   double averageDelay;
   uint32_t SumForwardTimes;
 
@@ -227,6 +228,7 @@ nrndnExample::nrndnExample () :
   disinterestRate(0),
   arrivalRate(0),
   averageForwardTimes(0),
+  averageDeleteForwardTimes(0),
   averageInterestForwardTimes(0),
   averageDelay(0),
   SumForwardTimes(0),
@@ -530,19 +532,23 @@ nrndnExample::Report ()
 
 
 	std::cout<<std::left<<std::setw(11)<<"avgIntFwd"
+			<<std::left<<std::setw(11)<<"avgDelFwd"
 			<<std::left<<std::setw(10)<<"SumFwd"
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
 			<<std::left<<std::setw(11)<<"HelloCount"
+			<<std::left<<std::setw(11)<<"DeleteByteSnt"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
 			<<std::left<<std::setw(11)<<"ByteSnt"
 			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
 
 	std::cout<<std::left<<std::setw(11)<<averageInterestForwardTimes
+			<<std::left<<std::setw(11)<<averageDeleteForwardTimes
 			<<std::left<<std::setw(10)<<SumForwardTimes
 			<<std::left<<std::setw(13)<<nrUtils::InterestByteSent
 			<<std::left<<std::setw(11)<<nrUtils::HelloByteSent
 			<<std::left<<std::setw(11)<<nrUtils::HelloCount
+			<<std::left<<std::setw(11)<<nrUtils::DeleteByteSent
 			<<std::left<<std::setw(11)<<nrUtils::DataByteSent
 			<<std::left<<std::setw(11)<<nrUtils::ByteSent
 			<<std::left<<std::setw(11)<<disinterestRate<<endl;
@@ -1045,10 +1051,14 @@ nrndnExample::getStatistic()
 	//6. get average interest forward times
 	pair<uint32_t,double> AverageInterestForwardPair = nrUtils::GetAverageInterestForwardTimes();
 	averageInterestForwardTimes = AverageInterestForwardPair.second;
+	
+	//7. get average delete forward times
+	pair<uint32_t,double> AverageDeleteForwardPair = nrUtils::GetAverageDeleteForwardTimes();
+	averageDeleteForwardTimes = AverageDeleteForwardPair.second;
 
 	disinterestRate=nrUtils::GetAverageDisinterestedRate();
 
-	SumForwardTimes = AverageDataForwardPair.first + AverageInterestForwardPair.first;
+	SumForwardTimes = AverageDataForwardPair.first + AverageInterestForwardPair.first + AverageDeleteForwardPair.first;
 }
 
 
