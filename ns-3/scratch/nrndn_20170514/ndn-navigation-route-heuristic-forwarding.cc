@@ -836,7 +836,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//来时的路段不是兴趣路段，下一路段是兴趣路段
 			if(itcurrent == interestRoute.end() && itnext != interestRoute.end())
 			{
-				std::unordered_set<uint32_t>::italready = alreadyPassed.find(nodeId);
+				std::unordered_set<uint32_t>::iterator italready = alreadyPassed.find(nodeId);
 				if(italready != alreadyPassed.end())
 				{
 					cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包 "<<seq<<"对应的车辆已经通过了该RSU"<<endl;
