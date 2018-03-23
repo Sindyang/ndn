@@ -123,6 +123,7 @@ public:
 	static uint32_t DataByteSent;
 	static uint32_t InterestByteSent;
 	static uint32_t HelloByteSent;
+	static uint32_t DeleteByteSent;
 	static uint32_t HelloCount;
 	static void AggrateDataPacketSize(Ptr<const Data> data);
 	static void AggrateInterestPacketSize(Ptr<const Interest> interest);
