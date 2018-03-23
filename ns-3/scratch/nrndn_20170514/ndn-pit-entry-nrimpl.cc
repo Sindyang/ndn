@@ -122,6 +122,29 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
 	//std::cout<<std::endl;
 }
 
+/*
+ * 2018.3.23
+ * 检查节点是否在该表项中
+ */
+bool 
+EntryNrImpl::DetectId(uint32_t id)
+{
+	bool flag = false;
+	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
+	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
+	{
+		std::unordered_set<uint32_t> neighbors = it->second;
+		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
+		if(incomingnb != neighbors.end())
+		{
+			flag = true;
+			break;
+		}
+	}
+	return flag;
+}
+	
+
 std::string
 EntryNrImpl::GetDataName()
 {

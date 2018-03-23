@@ -135,6 +135,10 @@ public:
 	//2018.3.1
 	bool UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
 	
+	//2018.3.23
+	void
+	DetectPrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id);
+	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
 	

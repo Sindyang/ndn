@@ -374,10 +374,40 @@ UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,cons
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
 	showSecondPit();
+	//检查是否在主PIT中
+	DetectPrimaryPit(IsExist,interestRoute,id);
 	return true;
 }
 
-
+/*
+ * 2018.3.23
+ * 检查源节点是否已经处于主PIT列表中
+**/
+void
+NrPitImpl::DetectPrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id)
+{
+	IsExist = false;
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::vector<std::string>::const_iterator it = interestRoute.begin();
+	for(;it != interestRoute.end();++it)
+	{
+		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				bool flag = pitEntry->DetectId(id);
+				if(flag)
+				{
+					IsExist = true;
+					std::cout<<"(ndn-nr-pit-impl.cc-DetectPrimaryPit) 源节点 "<<id<<"在主PIT中。不用再转发兴趣包"<<std::endl;
+				}	
+			}
+		}
+	}
+}
 
 void 
 NrPitImpl::showPit()
