@@ -375,7 +375,10 @@ UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,cons
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
 	showSecondPit();
 	//检查是否在主PIT中
-	DetectPrimaryPit(IsExist,interestRoute,id);
+	if(IsExist == false)
+	{
+		DetectPrimaryPit(IsExist,interestRoute,id);
+	}
 	return true;
 }
 
