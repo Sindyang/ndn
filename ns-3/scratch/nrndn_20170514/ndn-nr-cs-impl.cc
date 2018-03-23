@@ -175,12 +175,12 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 		return false;
 	}
 	//数据包保留的时间 = 产生时间+有效时间-当前时间
-	//double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
-	//if(interval < 0)
-	//{
-		//std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
-	//	return false;
-	//}
+	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
+	if(interval < 0)
+	{
+		std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
+		return false;
+	}
 	
 	//uint32_t size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;
@@ -191,7 +191,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
-	//Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
+	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
 	//std::cout<<"(cs-impl.c-AddData) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
@@ -233,7 +233,7 @@ NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_data.find(signature);
 	if(it != m_data.end())
 	{
-		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
+		std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
 		m_data.erase(it);
 	}
 	else
@@ -351,7 +351,7 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 				//复制数据包
 				Ptr<Data> data = Create<Data> (*src);
 				//修改数据包的Timestamp
-				data->SetTimestamp(Simulator::Now());
+				//data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
 			}
 		}
@@ -409,7 +409,7 @@ NrCsImpl::GetData()
 		//复制数据包
 		Ptr<Data> data = Create<Data> (*src);
 		//修改数据包的Timestamp
-		data->SetTimestamp(Simulator::Now());
+		//data->SetTimestamp(Simulator::Now());
 		DataCollection[data->GetSignature()] = data;
 	}
 	//m_data.clear();

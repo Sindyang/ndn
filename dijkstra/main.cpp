@@ -19,7 +19,7 @@
 using namespace std;
 
 #define INF 200000000
-#define N 16
+#define N 36
 
 struct Edge {
 	int to;          // ±ßÖÕÖ¹½Úµã

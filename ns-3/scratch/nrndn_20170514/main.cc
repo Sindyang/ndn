@@ -203,7 +203,7 @@ int main (int argc, char **argv)
 //构造函数
 nrndnExample::nrndnExample () :
   random_seed(54321),
-  certain_count(20), //定点数量
+  certain_count(30), //定点数量
   certain_interval(10),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
@@ -537,7 +537,7 @@ nrndnExample::Report ()
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
 			<<std::left<<std::setw(11)<<"HelloCount"
-			<<std::left<<std::setw(11)<<"DeleteByteSnt"
+			<<std::left<<std::setw(11)<<"DeleteSnt"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
 			<<std::left<<std::setw(11)<<"ByteSnt"
 			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
@@ -922,7 +922,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	// 2017.12.29 added by sy
 	// RSU不产生数据包 在该地图中，RSU的数量为16
-	UniformVariable rnd(0,nodes.GetN()-16);
+	UniformVariable rnd(0,nodes.GetN()-36);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
 	if(random_accident)
 	{
