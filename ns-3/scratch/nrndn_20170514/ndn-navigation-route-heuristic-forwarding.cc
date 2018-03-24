@@ -2007,7 +2007,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<const Da
 {
 	//cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
 	//bool result = m_cs->AddData1(signature,data,lastroutes);
-	/*bool result = m_cs->AddData(signature,data);
+	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
@@ -2015,7 +2015,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<const Da
 	else
 	{
 		//cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
-	}*/
+	}
 	//getchar();
 }
 
