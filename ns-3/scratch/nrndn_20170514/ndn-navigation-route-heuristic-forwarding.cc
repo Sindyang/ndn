@@ -1619,7 +1619,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	
 	//在仿真地图中不会进入这部分函数
 	//未修改
-	if(remoteId >= numsofvehicles)
+	/*if(remoteId >= numsofvehicles)
 	{
 		//忽略自身节点
 		if(remoteId == m_node->GetId())
@@ -1712,10 +1712,19 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			//getchar();
 		}
-	}
-	else
-	{
-		msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nrheader.getX(),nrheader.getY());
+	}*/
+	//else
+	//{
+		if(remoteId >= numsofvehicles)
+		{
+			msgdirection = m_sensor->RSUGetDistanceWithRSU(remoteId,forwardLane);
+		}
+		else
+		{
+			msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nrheader.getX(),nrheader.getY());
+		}
+		
+		
 		cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
 		if(m_dataSignatureSeen.Get(data->GetSignature()))
@@ -1883,7 +1892,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 				//getchar();
 			}
 		}
-	}
+	//}
 }
 
 // 2017.12.25 changed by sy
