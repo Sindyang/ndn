@@ -394,6 +394,7 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 {
 	Ptr<Packet> packet = Wire::FromData (data);
 	uint32_t size = packet->GetSize();
+	cout<<"(nrUtils-AggrateDataPacketSize) Data size = " <<size<<endl;
 	ByteSent += size;
 	DataByteSent+= size;
 	//cout << "(nrUtils.cc-AggrateDataPacketSize) data size" << size << endl;
@@ -410,16 +411,17 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	{
 		HelloByteSent += size;
 		HelloCount += 1;
-		//cout << "Hello size " << size << endl;
+		cout << "(nrUtils-AggrateInterestPacketSize) Hello size " << size << endl;
 	}	
 	else if(3 == interest->GetScope())
 	{
 		DeleteByteSent += size;
+		cout << "(nrUtils-AggrateInterestPacketSize) Delete size " << size << endl;
 	}
 	else
 	{
 		InterestByteSent += size;
-		//cout << "Interest size " << size << endl;
+		cout << "(nrUtils-AggrateInterestPacketSize) Interest size " << size << endl;
 		//getchar();
 	}
 }
