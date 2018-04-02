@@ -2337,9 +2337,9 @@ NavigationRouteHeuristic::SendHello()
 	nrheader.setSourceId(m_node->GetId());
 	
 	cout<<"(forwarding.cc-SendHello) nrHeader的大小为 "<<nrheader.GetSerializedSize()<<endl;
-	cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
 	
 	newPayload->AddHeader(nrheader);
+	cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
 
 	//3. setup interest packet
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
