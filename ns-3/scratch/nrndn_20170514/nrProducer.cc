@@ -44,7 +44,7 @@ TypeId nrProducer::GetTypeId()
 			                    MakeNameAccessor (&nrProducer::m_postfix),
 			                    MakeNameChecker ())
 			    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-			                    UintegerValue (1024),
+			                    UintegerValue (5120),
 			                    MakeUintegerAccessor (&nrProducer::m_virtualPayloadSize),
 			                    MakeUintegerChecker<uint32_t> ())
 			    .AddAttribute ("Freshness", "Freshness of data packets, if 0, then unlimited freshness",
