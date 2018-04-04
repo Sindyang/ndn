@@ -2330,16 +2330,16 @@ NavigationRouteHeuristic::SendHello()
 
 	//2. setup payload
 	Ptr<Packet> newPayload	= Create<Packet> ();
-	cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
+	//cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
 	
-	cout<<"(forwarding.cc-SendHello) nrHeader的大小为 "<<nrheader.GetSerializedSize()<<endl;
+	//cout<<"(forwarding.cc-SendHello) nrHeader的大小为 "<<nrheader.GetSerializedSize()<<endl;
 	
 	newPayload->AddHeader(nrheader);
-	cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
+	//cout<<"(forwarding.cc-SendHello) newPayload的大小为 "<<newPayload->GetSize()<<endl;
 
 	//3. setup interest packet
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
