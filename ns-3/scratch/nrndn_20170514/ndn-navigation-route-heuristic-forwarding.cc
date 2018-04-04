@@ -1718,6 +1718,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		if(remoteId >= numsofvehicles)
 		{
 			msgdirection = m_sensor->RSUGetDistanceWithRSU(remoteId,forwardLane);
+			//忽略自身节点
+			if(remoteId == m_node->GetId())
+				return;
 		}
 		else
 		{
