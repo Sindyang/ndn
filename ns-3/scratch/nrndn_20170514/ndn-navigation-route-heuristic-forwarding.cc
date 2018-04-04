@@ -2595,7 +2595,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				{
 					entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-					cout<<"(forwarding.cc-OnData_RSU) 主PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+					cout<<"(forwarding.cc-SendDataInCache) 主PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
 					for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
 					{
 						allinteresRoutes.insert(*it);
@@ -2607,7 +2607,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				{
 					entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-					cout<<"(forwarding.cc-OnData_RSU) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+					cout<<"(forwarding.cc-SendDataInCache) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
 					for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
 					{
 						allinteresRoutes.insert(*it);
