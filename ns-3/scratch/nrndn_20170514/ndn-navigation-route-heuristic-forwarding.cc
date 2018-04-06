@@ -1040,6 +1040,7 @@ NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, ve
 	
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
+	
 	//获取兴趣包的实际转发路线
 	std::string forwardRoute = interest->GetRoutes();
 	std::string nextroute = routes[1];
@@ -1066,7 +1067,46 @@ NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, ve
 	}
 }
 
-
+bool
+NavigationRouteHeuristic::GenerateNewInterestPacket(Ptr<Interest> interest, vector<std::string>& routes)
+{
+	vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
+	//获取之后的兴趣路线
+	vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
+	//获取RSU的Junction id
+	std::string junction = m_sensor->RSUGetJunctionId(m_node->GetId());
+	
+	bool flag = false;
+	vector<string>::iterator it = futureinterest.begin();
+	for(;it != futureinterest.end();it++)
+	{
+		std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(*it);
+		if(junctions.first == junction)
+		{
+			flag = true;
+			cout<<"(forwarding.cc-GenerateNewInterestPacket) RSU "<<junction<<"也是未来兴趣路线的起点"<<endl;
+			break;
+		}
+	}
+	if(flag)
+	{
+		//生成一个新的兴趣路线
+		vector<string> newinterestroutes(it,futureinterest.end());
+		
+		cout<<"(forwarding.cc-GenerateNewInterestPacket) 生成新的兴趣路线"<<endl;
+		for(vector<string>::iterator newit = newinterestroutes.begin();newit != newinterestroutes.end();newit++)
+		{
+			cout<<*newit<<" ";
+			vector<string>>::iterator it = find(routes.begin(),routes.end(),*newit);
+			if(it != routes.end())
+			{
+				routes.erase(it);
+				cout<<"从routes中删除该路线"<<endl;
+			}
+		}
+	}
+}	
+	
 void 
 NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
 {
