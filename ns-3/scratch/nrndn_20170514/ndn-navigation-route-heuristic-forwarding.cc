@@ -856,7 +856,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		//m_nrpit->showPit();
+		m_nrpit->showPit();
+		m_nrpit->showSecondPit();
 		
 		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)

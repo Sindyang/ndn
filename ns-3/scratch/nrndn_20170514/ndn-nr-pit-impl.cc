@@ -131,10 +131,6 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		}
 		std::cout<<std::endl;
 		
-		// update secondary pit
-		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
-		
-		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
@@ -143,6 +139,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		std::cout<<std::endl;
 		
 		//NS_ASSERT_MSG(unpassedRoutes.size() <= 1,"未来会通过的兴趣路线大于1");
+		bool result = true;
 		
 		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
@@ -151,6 +148,8 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 			result &= result;
 		}
 		
+		// update secondary pit
+		result &= UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
 		
 		getchar();
 		return result;
@@ -307,10 +306,11 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
 		std::cout<<std::endl;
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
-	showPit();
+	//showPit();
 	//2018.4.6 检查源节点是否已经处于副PIT列表中
 	if(IsExist == false)
 	{
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 检查源节点 "<<id<<"是否在副PIT列表中"<<std::endl;
 		DetectSecondPit(IsExist,interestRoute,id,currentRoute);
 	}
 	//getchar();
@@ -408,7 +408,7 @@ UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,cons
 		std::cout<<std::endl;
 	}
 	std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
-	showSecondPit();
+	//showSecondPit();
 	//检查是否在主PIT中
 	if(IsExist == false)
 	{
