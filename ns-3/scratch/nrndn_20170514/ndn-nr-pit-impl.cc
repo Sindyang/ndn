@@ -311,7 +311,7 @@ NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& intere
 	if(IsExist == false)
 	{
 		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 检查源节点 "<<id<<"是否在副PIT列表中"<<std::endl;
-		DetectSecondPit(IsExist,interestRoute,id,currentRoute);
+		//DetectSecondPit(IsExist,interestRoute,id,currentRoute);
 	}
 	//getchar();
 	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
