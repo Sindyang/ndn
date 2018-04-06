@@ -975,42 +975,43 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		}
 	    else
 		{
-			//重新生成一个兴趣包
-			//1.copy the interest packet
-			Ptr<Interest> newinterest = Create<Interest> (*interest);
-			string newforwardRoute;
-			//更新兴趣包的实际转发路线
-			for(uint32_t i = 2;i < bestroute.size();i++)
-			{
-				newforwardRoute += bestroute[i]+" ";
-			}
-			
 			std::unordered_map<uint32_t,std::string>::iterator itnode = nodeWithRoutes.find(nodeId);
 			if(itnode != nodeWithRoutes.end())
 			{
-				NS_ASSERT_MSG(false,"该节点已经存在于待删除列表中");
+				//NS_ASSERT_MSG(false,"该节点已经存在于待删除列表中");
+				cout<<"该节点"<<nodeId<<"已经存在于待删除列表中"<<endl;
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 			}
-			//将节点和借路路线添加至待删除列表中
-			nodeWithRoutes[nodeId] = newforwardRoute;
-			for(itnode = nodeWithRoutes.begin();itnode != nodeWithRoutes.end();++itnode)
+			else
 			{
-				cout<<"("<<itnode->first<<" "<<itnode->second<<")";
-			}
-			cout<<endl;
+				//重新生成一个兴趣包
+				//1.copy the interest packet
+				Ptr<Interest> newinterest = Create<Interest> (*interest);
+				string newforwardRoute;
+				//更新兴趣包的实际转发路线
+				for(uint32_t i = 2;i < bestroute.size();i++)
+				{
+					newforwardRoute += bestroute[i]+" ";
+				}
 			
-			//将后续路线添加至转发路线中
-			for(uint32_t i = 2;i < routes.size();i++)
-			{
-				newforwardRoute += routes[i]+" ";
+				//将节点和借路路线添加至待删除列表中
+				nodeWithRoutes[nodeId] = newforwardRoute;
+				for(itnode = nodeWithRoutes.begin();itnode != nodeWithRoutes.end();++itnode)
+				{
+					cout<<"("<<itnode->first<<" "<<itnode->second<<")";
+				}
+				cout<<endl;
+			
+				//将后续路线添加至转发路线中
+				for(uint32_t i = 2;i < routes.size();i++)
+				{
+					newforwardRoute += routes[i]+" ";
+				}
+				cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
+				newinterest->SetRoutes(newforwardRoute);
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,newinterest,anotherNewPriorityList);
 			}
-			cout<<"当前节点 "<<myNodeId<<" 源节点 "<<nodeId<<" 重新选择后的实际转发路线为 "<<newforwardRoute<<endl;
-			//重新设置序列号
-			//m_cs->PrintInterestCache();
-			newinterest->SetRoutes(newforwardRoute);
-			//m_cs->PrintInterestCache();
-			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::ForwardInterestPacket,this,newinterest,anotherNewPriorityList);
 		}
-		
 		//getchar();
 	}
 	else
@@ -1067,7 +1068,7 @@ NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, ve
 	}
 }
 
-bool
+/*bool
 NavigationRouteHeuristic::GenerateNewInterestPacket(Ptr<Interest> interest, vector<std::string>& routes)
 {
 	vector<string> interestRoute= ExtractRouteFromName(interest->GetName());
@@ -1105,7 +1106,7 @@ NavigationRouteHeuristic::GenerateNewInterestPacket(Ptr<Interest> interest, vect
 			}
 		}
 	}
-}	
+}*/	
 	
 void 
 NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string currentroute)
