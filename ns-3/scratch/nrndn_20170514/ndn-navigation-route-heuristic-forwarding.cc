@@ -846,15 +846,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			}
 		}
 		
-		
-		
 		std::string junction = m_sensor->RSUGetJunctionId(myNodeId);
-		
-		
-		
-		//还需要判断兴趣包源节点是否全部在主PIT表项中
-		//若是的话，不需要再转发
-		
+			
 		bool IsExist = true;
 		// Update the PIT here
 		m_nrpit->UpdateRSUPit(IsExist,junction,forwardRoute,interestRoute,nodeId);
@@ -863,7 +856,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		m_nrpit->showPit();
+		//m_nrpit->showPit();
 		
 		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
 		for(uint32_t i = 0;i < futureinterest.size();i++)

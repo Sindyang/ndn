@@ -139,6 +139,9 @@ public:
 	void
 	DetectPrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id);
 	
+	void
+    DetectSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
+	
     //added by sy
     std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
 	
