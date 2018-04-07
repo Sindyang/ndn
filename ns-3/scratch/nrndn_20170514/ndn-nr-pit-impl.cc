@@ -131,6 +131,8 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		}
 		std::cout<<std::endl;
 		
+		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
+		
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
@@ -139,7 +141,8 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		std::cout<<std::endl;
 		
 		//NS_ASSERT_MSG(unpassedRoutes.size() <= 1,"未来会通过的兴趣路线大于1");
-		bool result &= UpdatePrimaryPit(IsExist,interestRoute,id,*it);
+		
+		bool result = true;
 		
 		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
