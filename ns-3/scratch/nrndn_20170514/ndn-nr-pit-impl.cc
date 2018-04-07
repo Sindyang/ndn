@@ -142,8 +142,6 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 		
 		//NS_ASSERT_MSG(unpassedRoutes.size() <= 1,"未来会通过的兴趣路线大于1");
 		
-		bool result = true;
-		
 		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
 			std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会再次通过该节点"<<std::endl;
