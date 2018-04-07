@@ -979,7 +979,7 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 			if(itnode != nodeWithRoutes.end())
 			{
 				//NS_ASSERT_MSG(false,"该节点已经存在于待删除列表中");
-				cout<<"该节点"<<nodeId<<"已经存在于待删除列表中"<<endl;
+				cout<<"该节点 "<<nodeId<<" 已经存在于待删除列表中"<<endl;
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 			}
 			else
