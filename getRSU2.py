@@ -56,6 +56,9 @@ def roadlength(in_file,junctions):
 			if lane_id in junctions:
 				nPos1 = line.find('length')
 				nPos2 = line.find('shape')
+				nPos3 = line.find('width')
+				if nPos3 >= 0:
+					nPos2 = nPos3
 				length = line[nPos1+8:nPos2-2]
 				lengths[lane_id] = length
 				print lane_id,length
