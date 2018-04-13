@@ -234,7 +234,7 @@ nrndnExample::nrndnExample () :
   SumForwardTimes(0),
   noFwStop(true),
   TTLMax(1),
-  virtualPayloadSize(2048)
+  virtualPayloadSize(5120)
 {
 	//os =  std::cout;
 	string home         = getenv("HOME");
