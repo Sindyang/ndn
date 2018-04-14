@@ -79,7 +79,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	if(m_dataReceivedSeen.Get(signature))
 	{
 		std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
-		return;
+		//return;
 	}
 
 	NS_LOG_DEBUG(
