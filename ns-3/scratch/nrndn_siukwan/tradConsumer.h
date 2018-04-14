@@ -10,6 +10,7 @@
 
 #include "ns3/ndn-app.h"
 #include "ns3/ndn-name.h"
+#include "LRUCache.h"
 
 namespace ns3
 {
