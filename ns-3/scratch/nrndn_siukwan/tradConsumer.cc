@@ -26,7 +26,8 @@ namespace nrndn
 NS_OBJECT_ENSURE_REGISTERED (tradConsumer);
 
 tradConsumer::tradConsumer():
-		m_virtualPayloadSize(0)
+		m_virtualPayloadSize(0),
+		m_dataReceivedSeen(5000)
 {
 	// TODO Auto-generated constructor stub
 
@@ -39,7 +40,7 @@ TypeId tradConsumer::GetTypeId()
 		    .SetParent<App> ()
 		    .AddConstructor<tradConsumer> ()
 		    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-		                    UintegerValue (1536),
+		                    UintegerValue (1024),
 		                    MakeUintegerAccessor (&tradConsumer::m_virtualPayloadSize),
 		                    MakeUintegerChecker<uint32_t> ())
 		   ;
@@ -73,6 +74,13 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	uint32_t nodeId = nrheader.getSourceId();
 	uint32_t signature = data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
+	
+	// 2018.4.14 added by sy
+	if(m_dataReceivedSeen.Get(signature))
+	{
+		std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
+		return;
+	}
 
 	NS_LOG_DEBUG(
 			"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()
@@ -80,9 +88,9 @@ void tradConsumer::OnData(Ptr<const Data> data)
 			<<signature);
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
 
-	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
+	//NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
 
-
+	m_dataReceivedSeen.Put(signature,true);
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))

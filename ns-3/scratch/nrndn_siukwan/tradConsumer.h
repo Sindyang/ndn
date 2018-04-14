@@ -45,6 +45,7 @@ protected:
 private:
 	typedef App super;
 	uint32_t m_virtualPayloadSize;
+	ndn::nrndn::cache::LRUCache<uint32_t,bool> m_dataReceivedSeen;
 };
 
 } /* namespace nrndn */
