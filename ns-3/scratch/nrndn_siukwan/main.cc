@@ -975,6 +975,9 @@ void nrndnExample::InstallDistApplications()
 	nrUtils::appIndex["ns3::ndn::nrndn::tradConsumer"]=0;
 
 	ndn::AppHelper producerHelper ("ns3::ndn::nrndn::nrProducer");
+	
+	//added by sy 2018.4.15
+	producerHelper.SetAttribute ("PayloadSize", UintegerValue (virtualPayloadSize));
 	producerHelper.Install(nodes);
 	nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]=1;
 
