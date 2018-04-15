@@ -38,11 +38,11 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	    .SetParent<ForwardingStrategy> ()
 	    .AddConstructor<DistanceBasedForwarding>()
 	    .AddAttribute ("HelloInterval", "HELLO messages emission interval.",
-	   	            TimeValue (Seconds (1)),
+	   	            TimeValue (Seconds (5)),
 	   	            MakeTimeAccessor (&DistanceBasedForwarding::HelloInterval),
 	   	            MakeTimeChecker ())
 	    .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	   	            UintegerValue (2),
+	   	            UintegerValue (6),
 	   	            MakeUintegerAccessor (&DistanceBasedForwarding::AllowedHelloLoss),
 	   	            MakeUintegerChecker<uint32_t> ())
 	    .AddAttribute ("UniformRv", "Access to the underlying UniformRandomVariable",
