@@ -514,7 +514,7 @@ int VehicleLoader::read_trace(TiXmlElement* pElement)//Return vehicle ID value
 	while (pAttrib)
 	{
 		attributeID=getAttribuutID(pAttrib->Name());
-		//cout<<"(RouteElement.cc-read_trace) attributeID "<<attributeID<<endl;
+		cout<<"(RouteElement.cc-read_trace) attributeID "<<attributeID<<endl;
 		switch(attributeID)
 		{
 		case ATTR_ID    :vid               =atoi(pAttrib->Value());break;
