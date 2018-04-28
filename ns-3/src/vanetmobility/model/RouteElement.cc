@@ -553,10 +553,13 @@ void VehicleLoader::Clear()
 void VehicleLoader::ReadMapIntoVector()
 {
 	map<int,Vehicle>::iterator it;
+	cout<<"ReadMapIntoVector"<<endl;
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
+		cout<<it->first<<" ";
 	}
+	cout<<endl;
 }
 
 uint32_t VehicleLoader::getNumOfVehicles() const
