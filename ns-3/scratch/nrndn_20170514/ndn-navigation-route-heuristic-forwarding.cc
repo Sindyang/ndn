@@ -1953,10 +1953,10 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	const double y = nrheader.getY();
 	
 	std::string routes = interest->GetRoutes(); 
-	//std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
+	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
 	std::size_t found = routes.find(" ");
 	std::string currentroute = routes.substr(0,found);
-	//std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
+	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
@@ -2770,7 +2770,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),remoteroute,Time (AllowedHelloLoss * HelloInterval));
