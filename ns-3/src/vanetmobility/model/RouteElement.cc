@@ -567,8 +567,9 @@ void VehicleLoader::ReadMapIntoVector()
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
+		cout<<it->first<<" ";
 	}
-	cout<<vehicles.size()<<endl;
+	cout<<endl<<vehicles.size()<<endl;
 }
 
 uint32_t VehicleLoader::getNumOfVehicles() const
