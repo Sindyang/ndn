@@ -290,7 +290,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::RSUGetPriorityListOfInterest(con
 		{
 			//获取另一RSU所在的交点id
 			std::string junction = m_sensor->RSUGetJunctionId(nb->first);
-			cout<<endl<<"(forwarding.cc-RSUGetPriorityListOfInterest) RSU所在的交点为 "<<junction<<endl;
+			//cout<<endl<<"(forwarding.cc-RSUGetPriorityListOfInterest) RSU所在的交点为 "<<junction<<endl;
 			if(junction == junctions.second)
 			{
 				PriorityList.push_back(nb->first);
@@ -1165,6 +1165,7 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 	string nextroute = forwardroutes[1];
 	//下一条路段的两个交点
 	std::pair<std::string,std::string> junctions = m_sensor->GetLaneJunction(nextroute);
+	cout<<"需要寻找最短路线的两个端点为 "<<junctions.first<<" "<<junctions.second<<endl;
 	//最短路线集合
 	vector<vector<string>> shortroutes;
 					
