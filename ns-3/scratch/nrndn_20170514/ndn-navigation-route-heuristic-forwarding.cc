@@ -1268,6 +1268,8 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
+	//2018.4.28 判断真实地图中是否存在最短路径
+	NS_ASSERT_MSG(shortroutes.size() != 0,"找不到最短路径");
 	return shortroutes[0];
 }
 

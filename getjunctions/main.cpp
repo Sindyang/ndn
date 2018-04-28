@@ -176,7 +176,6 @@ void RoadMap::printedges() {
 	 << (*edge).second.lane.speed << "  "
 	 << (*edge).second.lane.length << "  "
 	 << (*edge).second.lane.shape << endl;
-
 	 }*/
 	cout << "The Size of Edges " << edges.size() << endl;
 }
@@ -213,7 +212,7 @@ void RoadMap::getdata() {
 	for (edge = edges.begin(); edge != edges.end(); edge++) {
 		string from = (*edge).second.from;
 		string to = (*edge).second.to;
-		double cost = (*edge).second.lane.length;
+		int cost = (*edge).second.lane.length;
 		string id = (*edge).second.id;
 		in << m[from] << " " << m[to] << " " << cost << " " << id << endl;
 	}
@@ -382,7 +381,7 @@ void RoadMap::InitializeEdges(TiXmlNode* pParent) {
 
 int main() {
 	RoadMap roadmap;
-	string netxmlpath = "E:/ndn_input_data/input_800_RSU_36/input_net.net.xml";
+	string netxmlpath = "E:/ndn_input_data/input_zhujiang_800/input_net.net.xml";
 	roadmap.LoadNetXMLFile(netxmlpath.data());
 	return 0;
 }

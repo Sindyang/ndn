@@ -1,9 +1,3 @@
-/*
- * main.cpp
- *
- *  Created on: 2018年1月24日
- *      Author: wangsy
- */
 #include "iostream"
 #include "string"
 #include "fstream"
@@ -19,7 +13,7 @@
 using namespace std;
 
 #define INF 200000000
-#define N 36
+#define N 589 //RSU的个数
 
 struct Edge {
 	int to;          // 边终止节点
@@ -245,4 +239,3 @@ int main() {
 	out.close();
 	return 0;
 }
-
