@@ -486,19 +486,11 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 				}//timestep
 			case 2:
 				{
-					try
-					{
-						vid = read_trace(pParent->ToElement());
-						cout<<"(RouteElement.cc-initialize_trace) vid "<<vid;
-						vehicles[vid].trace.push_back(m_temp_trace);
-						cout<<"already push_back"<<endl;
-					}
-					catch (const std::exception &exc)
-					{
-						cout<<"err "<<vid<<exc.what()<<endl;
-						// catch anything thrown within try block that derives from std::exception
-						std::cerr << exc.what();
-					}					
+					
+					vid = read_trace(pParent->ToElement());
+					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid;
+					vehicles[vid].trace.push_back(m_temp_trace);
+					cout<<"already push_back"<<endl;	
 					break;
 				}//vehicle
 			default:break;
