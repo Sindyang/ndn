@@ -488,6 +488,8 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 				{
 					vid = read_trace(pParent->ToElement());
 					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid<<" ";
+					if(vid == 1345)
+						continue;
 					vehicles[vid].trace.push_back(m_temp_trace);
 					cout<<"already push_back"<<endl;
 					break;
