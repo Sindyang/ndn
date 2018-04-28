@@ -470,21 +470,21 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	eit = edges.find(lane);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
 	std::string from = eit->second.from;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
 	
 	std::string to = eit->second.to;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
 	
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
 	std::string remotejunction = RSUGetJunctionId(remoteid);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
 	
 	std::string localjunction = RSUGetJunctionId(getNodeId());
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
 	
 	if(remotejunction == localjunction)
 	{
@@ -493,18 +493,18 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	}
 	if(from == remotejunction && to == localjunction)
 	{
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点位于路段起点，当前节点位于路段终点"<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点位于路段起点，当前节点位于路段终点"<<std::endl;
 		return std::pair<bool,double>(true,-length);
 	}
 	else if(from == localjunction && to == remotejunction)
 	{
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点位于路段起点，另一节点位于路段终点"<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点位于路段起点，另一节点位于路段终点"<<std::endl;
 		return std::pair<bool,double>(true,length);
 	}
 	else
 	{
 		//2017.4.28 在真实地图中 位于不同路段的RSU可能可以互相通信
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU位于不同路段"<<std::endl;
+		//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU位于不同路段"<<std::endl;
 		return std::pair<bool,double>(false,0);
 	}
 }
