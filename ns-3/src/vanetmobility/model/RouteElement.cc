@@ -570,6 +570,10 @@ void VehicleLoader::ReadMapIntoVector()
 		cout<<it->first<<" ";
 	}
 	cout<<endl<<vehicles.size()<<endl;
+	for(int i = 0;i < vehicles.size();i++)
+	{
+		cout<<i<<" "<<vehicles[i].id<<" "<<vehicles[i].depart<<endl;
+	}
 }
 
 uint32_t VehicleLoader::getNumOfVehicles() const
