@@ -481,14 +481,14 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 			case 1:
 				{
 					read_trace(pParent->ToElement());
-					//cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
+					cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
 					break;
 				}//timestep
 			case 2:
 				{
 					vid = read_trace(pParent->ToElement());
 					vehicles[vid].trace.push_back(m_temp_trace);
-					//cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
+					cout<<"(RouteElement.cc-initialize_trace) already push_back "<<vid<<endl;
 					break;
 				}//vehicle
 			default:break;
