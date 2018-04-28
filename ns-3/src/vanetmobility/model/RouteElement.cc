@@ -481,16 +481,16 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 			case 1:
 				{
 					read_trace(pParent->ToElement());
-					cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
+					//cout<<"(RouteElement.cc-Initialize_trace) timestep"<<endl;
 					break;
 				}//timestep
 			case 2:
 				{
 					
 					vid = read_trace(pParent->ToElement());
-					cout<<"(RouteElement.cc-initialize_trace) vid "<<vid;
+					//cout<<"(RouteElement.cc-initialize_trace) vid "<<vid;
 					vehicles[vid].trace.push_back(m_temp_trace);
-					cout<<"already push_back"<<endl;	
+					//cout<<"already push_back"<<endl;	
 					break;
 				}//vehicle
 			default:break;
@@ -555,17 +555,17 @@ void VehicleLoader::Clear()
 void VehicleLoader::ReadMapIntoVector()
 {
 	map<int,Vehicle>::iterator it;
-	cout<<"ReadMapIntoVector ";
+	//cout<<"ReadMapIntoVector ";
 	for(it = mapvehicles.begin();it!= mapvehicles.end();it++)
 	{
 		vehicles.push_back(it->second);
-		cout<<it->first<<" ";
+		//cout<<it->first<<" ";
 	}
-	cout<<endl<<vehicles.size()<<endl;
-	for(int i = 0;i < vehicles.size();i++)
-	{
-		cout<<i<<" "<<vehicles[i].id<<" "<<vehicles[i].depart<<endl;
-	}
+	//cout<<endl<<vehicles.size()<<endl;
+	//for(int i = 0;i < vehicles.size();i++)
+	//{
+	//	cout<<i<<" "<<vehicles[i].id<<" "<<vehicles[i].depart<<endl;
+	//}
 }
 
 uint32_t VehicleLoader::getNumOfVehicles() const
