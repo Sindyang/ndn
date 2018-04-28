@@ -462,7 +462,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 {
 	if (!pParent) 
 		return;
-	cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
+	//cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
 	TiXmlNode* pChild;
 	int t = pParent->Type();
 	int vid;
