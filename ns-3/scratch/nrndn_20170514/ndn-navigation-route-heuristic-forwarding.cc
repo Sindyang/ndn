@@ -2386,9 +2386,8 @@ NavigationRouteHeuristic::SendHello()
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
-	//interest->SetRoutes(LaneName);//2017.12.25 added by sy
+	interest->SetRoutes(LaneName);//2017.12.25 added by sy 2018.4.28 readded by sy
 	//4. send the hello message
-	
 	SendInterestPacket(interest);
 }
 
