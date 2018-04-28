@@ -501,7 +501,12 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点位于路段起点，另一节点位于路段终点"<<std::endl;
 		return std::pair<bool,double>(true,length);
 	}
-	NS_ASSERT_MSG(false,"路段的起始点与RSU的交点ID不相同");
+	else
+	{
+		//2017.4.28 在真实地图中 位于不同路段的RSU可能可以互相通信
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU位于不同路段"<<std::endl;
+		return std::pair<bool,double>(false,0);
+	}
 }
 
 /*
