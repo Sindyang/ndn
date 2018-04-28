@@ -351,7 +351,7 @@ void VehicleLoader::LoadRouteXML(const char *  pXMLFilename)
 //对应的文件为fcdoutput.xml
 void VehicleLoader::LoadFCDOutputXML(const char *  pXMLFilename)
 {
-	//cout<<"进入(RouteElement.cc-LoadFCDOutputXML)"<<endl;
+	cout<<"进入(RouteElement.cc-LoadFCDOutputXML)"<<endl;
 	TiXmlDocument doc(pXMLFilename);
 	bool loadOkay = doc.LoadFile();
 	if (loadOkay)
@@ -462,7 +462,7 @@ void VehicleLoader::initialize_trace( TiXmlNode* pParent)
 {
 	if (!pParent) 
 		return;
-	//cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
+	cout<<"进入(RouteElement.cc-initialize_trace)"<<endl;
 	TiXmlNode* pChild;
 	int t = pParent->Type();
 	int vid;
