@@ -2492,7 +2492,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 				if(interval < 1)
 				{
-					cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
+					//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
 					return;
 				}
 				m_sendInterestTime = Simulator::Now().GetSeconds();
@@ -2871,7 +2871,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
