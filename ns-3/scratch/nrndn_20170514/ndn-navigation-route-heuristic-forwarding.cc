@@ -962,8 +962,15 @@ NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest,vector
 		//更新兴趣包的实际转发路线
 		interest->SetRoutes(forwardRoute);
 		cout<<"(forwarding.cc-Interest_InInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
-		//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 		CachingInterestPacket(seq,interest);
+		
+		//2018.5.2
+		if(bestroute.size() == 0)
+		{
+			cout<<"(forwarding.cc-Interest_InInterestRoute) 不存在最短路线"<<endl;
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
+			return;
+		}
 		
 		//查看最佳路线的转发优先级列表
 		std::vector<uint32_t> anotherNewPriorityList = RSUGetPriorityListOfInterest(bestroute[2]);
@@ -1194,6 +1201,13 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		}
 	}
 	fin.close();
+	
+	//2018.4.28 判断真实地图中是否存在最短路径
+	if(shortroutes.size() == 0)
+	{
+		vector<string> v;
+		return v;
+	}
 					
 	//判断是否具有多条最短路线
 	if(shortroutes.size() > 1)
@@ -1269,8 +1283,6 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 			cout<<"无最佳路线，则选择第一个路线"<<endl;
 		}
 	}
-	//2018.4.28 判断真实地图中是否存在最短路径
-	NS_ASSERT_MSG(shortroutes.size() != 0,"找不到最短路径");
 	return shortroutes[0];
 }
 
