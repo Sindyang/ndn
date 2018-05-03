@@ -731,7 +731,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//收到删除包
 	if(DELETE_MESSAGE == interest->GetScope())
 	{
-		cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包 "<<interest->GetNonce()<<endl;
+		//cout<<"(forwarding.cc-OnInterest_RSU) RSU收到了删除包 "<<interest->GetNonce()<<endl;
 		OnDelete_RSU(face,interest);
 		return;
 	}
@@ -751,12 +751,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//获取兴趣包的实际转发路线
 	std::string forwardRoute = interest->GetRoutes();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
-	cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
+	//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 	
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -776,13 +776,13 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest_RSU) 兴趣包的转发优先级列表为: ";
+	//cout << "(forwarding.cc-OnInterest_RSU) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		cout<<*it<<" ";
+		//cout<<*it<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 
 	//Deal with the stop message first
 	//避免回环
@@ -1137,7 +1137,7 @@ NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest,string
 				itforwarded->second = forwardedroutes;
 			}
 		}
-		cout<<"(forwarding.cc-OnInterest_RSU) 从缓存中取出数据包"<<endl;
+		cout<<"(forwarding.cc-DetectDatainCache) 从缓存中取出数据包"<<endl;
 		SendDataInCache(datacollection);
 	}
 }
@@ -2050,8 +2050,8 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存删除包 "<<nonce<<endl;
 		else
 		{
-			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
-			cout<<"(forwarding.cc-CachingInterestPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
+			//cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
+			//cout<<"(forwarding.cc-CachingInterestPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
 		}
 			
 	}
@@ -2073,7 +2073,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<const Da
 	bool result = m_cs->AddData(signature,data);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
+		//cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
 	else
 	{
@@ -2087,7 +2087,7 @@ void NavigationRouteHeuristic::CachingDataSourcePacket(uint32_t signature,Ptr<Da
 	bool result = m_cs->AddDataSource(signature,data);
 	if(result)
 	{
-		cout<<"(forwarding.cc-CachingDataSourcePacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
+		//cout<<"(forwarding.cc-CachingDataSourcePacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
 	else
 	{
