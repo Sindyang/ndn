@@ -384,7 +384,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		// 转发优先级列表为空，需要缓存兴趣包
 		if(pri.empty())
 		{
-			cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
+			//cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
 			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			CachingInterestPacket(interest->GetNonce(),interest);
 			//if(m_node->GetId() == 97)
@@ -437,15 +437,15 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	
 	if(DELETE_MESSAGE == interest->GetScope())
 	{
-		cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包 "<<seq<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包 "<<seq<<endl;
 	}
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
@@ -455,7 +455,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 			m_cs->DeleteInterest(interest->GetNonce());
 			//getchar();
 		}
-		cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		// 2017.12.27 
 		//return;
@@ -1065,7 +1065,7 @@ NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interest, ve
 	
 	if(newPriorityList.empty())
 	{
-		cout<<"(forwarding.cc-Interest_NotInInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+		//cout<<"(forwarding.cc-Interest_NotInInterestRoute) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 		CachingInterestPacket(seq,interest);
 		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
 	}
@@ -1304,7 +1304,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 	}
 	else
 	{
-		cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
+		//cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣包来时的路段不是兴趣路段"<<endl;
 		uint32_t i = 0;
 		for(;i < forwardroute.size();i++)
 		{
@@ -1312,11 +1312,11 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 			it = find(interestroute.begin(),interestroute.end(),route);
 			if(it != interestroute.end())
 			{
-				cout<<"(forwarding.cc-GetLocalandFutureInterest) 在转发路线中找到了兴趣路段"<<endl;
+				//cout<<"(forwarding.cc-GetLocalandFutureInterest) 在转发路线中找到了兴趣路段"<<endl;
 				break;
 			}
 		}
-		cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 ";
+		//cout<<"(forwarding.cc-GetLocalandFutureInterest) 剩余的兴趣路段为 ";
 		for(;it != interestroute.end() && i < forwardroute.size();it++,i++)
 		{
 			if(*it == forwardroute[i])
@@ -1327,7 +1327,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 			else
 			{
 				//2018.3.1
-				cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣路线与转发路线中的兴趣路线不相符"<<endl;
+				//cout<<"(forwarding.cc-GetLocalandFutureInterest) 兴趣路线与转发路线中的兴趣路线不相符"<<endl;
 				futureinterest.clear();
 				break;
 			}
@@ -1667,38 +1667,128 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//获取车辆上一跳节点
 	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
 	
-	//在仿真地图中不会进入这部分函数
-	//未修改
-	/*if(remoteId >= numsofvehicles)
+	if(remoteId >= numsofvehicles)
 	{
 		//忽略自身节点
 		if(remoteId == m_node->GetId())
 			return;
+			
+		msgdirection = m_sensor->RSUGetDistanceWithRSU(remoteId,forwardLane);
+	}
+	else
+	{
+		msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nrheader.getX(),nrheader.getY());
+	}
 		
-		NS_ASSERT_MSG(false,"仿真地图中不会进入该函数");
+	cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
-		//msgdirection = m_sensor->VehicleGetDistanceWithRSU(nrheader.getX(), nrheader.getY(),forwardId);
+	if(m_dataSignatureSeen.Get(data->GetSignature()))
+	{
+		if(msgdirection.first && msgdirection.second < 0)
+		{
+			//获取该数据包已转发过的上一跳路段
+			std::unordered_set<std::string> forwardedroutes;
+			std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
+			if(itrsu != m_RSUforwardedData.end())
+				forwardedroutes = itrsu->second;
+				
+			forwardedroutes.insert(forwardLane);
+			m_RSUforwardedData[signature] = forwardedroutes;
+			cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
+		}
+		//getchar();
+		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
+		//2018.1.2 RSU有可能重复转发数据包
+		//return;
+	}
+		
+	if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
+	{
+		//第一次收到该数据包
+		if(!isDuplicatedData(nodeId,signature))
+		{
+			//这部分不一定需要 
+			Ptr<pit::Entry> Will = WillInterestedData(data);
+			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+			if(Will || WillSecond)
+			{
+				// 2018.1.6 added by sy
+				CachingDataSourcePacket(data->GetSignature(),data);
+				// 2018.1.28
+				std::unordered_set<std::string> forwardedroutes;
+				forwardedroutes.insert(forwardLane);
+				m_RSUforwardedData[signature] = forwardedroutes;
+				
+				//BroadcastStopMessage(data);
+				cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
+				//cout<<"缓存该数据包"<<endl;
+				//getchar();
+				return;
+			}
+			else
+			{
+				cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
+				//DropDataPacket(data);
+				//getchar();
+				return;
+			}
+		}
+		else // duplicated data
+		{
+			cout<<"(forwarding.cc-OnData_RSU) 该数据包从后方得到且为重复数据包"<<endl<<endl;
+			ExpireDataPacketTimer(nodeId,signature);
+			//getchar();
+			return;
+		}
+	}
+	//数据包来源于当前路段前方
+	else
+	{
+		if(isDuplicatedData(nodeId,signature))
+		{
+			cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复,仍然转发 "<<endl;
+		}
+		
+		//缓存数据包
+		CachingDataSourcePacket(signature,data);
+		
 		Ptr<pit::Entry> Will = WillInterestedData(data);
-		if(!Will)
+		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+		if(!Will && !WillSecond)
 		{
 			//或者改为广播停止转发数据包
 			BroadcastStopDataMessage(data);
+			cout<<"主、副PIT列表中都没有该数据包对应的表项"<<endl;
 			return;
 		}
-		else
-		{
-			//这部分不一定需要
-			// 1.Buffer the data in ContentStore
-			ToContentStore(data);
-			// 2. Notify upper layer
-			NotifyUpperLayer(data);
-		}
-			
-		Ptr<pit::nrndn::EntryNrImpl> entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-		const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-		NS_ASSERT_MSG(interestRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
 		
-		cout<<"(forwarding.cc-OnData_RSU) 感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+		Ptr<pit::nrndn::EntryNrImpl> entry;
+		std::unordered_set<std::string> allinteresRoutes;
+		//获取主PIT中感兴趣的上一跳路段
+		if(Will)
+		{
+			entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
+			const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+			cout<<"(forwarding.cc-OnData_RSU) 主PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+			for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
+			{
+				allinteresRoutes.insert(*it);
+			}
+		}
+		
+		//获取副PIT中感兴趣的上一跳路段
+		if(WillSecond)
+		{
+			entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
+			const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
+			cout<<"(forwarding.cc-OnData_RSU) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+			for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
+			{
+				allinteresRoutes.insert(*it);
+			}
+		}
+		
+		NS_ASSERT_MSG(allinteresRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
 		
 		
 		bool idIsInPriorityList;
@@ -1713,37 +1803,32 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			double index = distance(pri.begin(),priorityListIt);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),interestRoutes);
+			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),allinteresRoutes);
 			//getchar();
 			std::vector<uint32_t> newPriorityList = collection.first;
 			std::unordered_set<std::string> remainroutes = collection.second;
 			
-			//获取该数据包已转发过的上一跳路段
-			//std::unordered_set<std::string> forwardedroutes;
-			//std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
-			//if(itrsu != m_RSUforwardedData.end())
-				//forwardedroutes = itrsu->second;
+			//2018.2.8
+			//有部分路段未被满足
+			if(!remainroutes.empty())
+			{
+				CachingDataPacket(signature,data);
+				cout<<"(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 "<<signature<<endl;
+			}
 			
-			//for(std::unordered_set<std::string>::const_iterator itinterest = interestRoutes.begin();itinterest != interestRoutes.end();itinterest++)
-			//{
-				//std::unordered_set<std::string>::iterator itremain = remainroutes.find(*itinterest);
-				//if(itremain != remainroutes.end())
-					//continue;
-				//forwardedroutes.insert(*itinterest);
-				//cout<<"(forwarding.cc-OnData_RSU) 准备转发的上一跳路段为 "<<*itinterest<<endl;
-			//}
-			//if(!forwardedroutes.empty())
-				//m_RSUforwardedData[signature] = forwardedroutes;
-			
+			//初始化已经转发过的路段
+			std::unordered_set<std::string> forwardedroutes;
+			m_RSUforwardedData[signature] = forwardedroutes;
 			//getchar();
+		
+			// 2018.1.15 
 			if(newPriorityList.empty())
 			{
-				cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存数据包 "<<signature<<endl;
-				CachingDataPacket(signature,data);
+				//BroadcastStopMessage(data);
 				m_sendingDataEvent[nodeId][signature]=
 				Simulator::Schedule(sendInterval,
 				&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
-				//getchar();
+				cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
 			}
 			else
 			{
@@ -1757,196 +1842,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		}
 		else
 		{
-			//丢掉该数据包
 			cout<<"(forwarding.cc-OnData_RSU) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			//getchar();
 		}
-	}*/
-	//else
-	//{
-		if(remoteId >= numsofvehicles)
-		{
-			//忽略自身节点
-			if(remoteId == m_node->GetId())
-				return;
-			
-			msgdirection = m_sensor->RSUGetDistanceWithRSU(remoteId,forwardLane);
-		}
-		else
-		{
-			msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nrheader.getX(),nrheader.getY());
-		}
-		
-		
-		cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-		
-		if(m_dataSignatureSeen.Get(data->GetSignature()))
-		{
-			if(msgdirection.first && msgdirection.second < 0)
-			{
-				//获取该数据包已转发过的上一跳路段
-				std::unordered_set<std::string> forwardedroutes;
-				std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
-				if(itrsu != m_RSUforwardedData.end())
-					forwardedroutes = itrsu->second;
-				
-				forwardedroutes.insert(forwardLane);
-				m_RSUforwardedData[signature] = forwardedroutes;
-				cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
-			}
-			//getchar();
-			NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
-			//2018.1.2 RSU有可能重复转发数据包
-			//return;
-		}
-		
-		if(!msgdirection.first || msgdirection.second <= 0)// 数据包位于其他路段或当前路段后方
-		{
-			//第一次收到该数据包
-			if(!isDuplicatedData(nodeId,signature))
-			{
-				//这部分不一定需要 
-				Ptr<pit::Entry> Will = WillInterestedData(data);
-				Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-				if(Will || WillSecond)
-				{
-					// 2018.1.6 added by sy
-					CachingDataSourcePacket(data->GetSignature(),data);
-					// 2018.1.28
-					std::unordered_set<std::string> forwardedroutes;
-					forwardedroutes.insert(forwardLane);
-					m_RSUforwardedData[signature] = forwardedroutes;
-					
-					//BroadcastStopMessage(data);
-					cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
-					//cout<<"缓存该数据包"<<endl;
-					//getchar();
-					return;
-				}
-				else
-				{
-					cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
-					//DropDataPacket(data);
-					//getchar();
-					return;
-				}
-			}
-			else // duplicated data
-			{
-				cout<<"(forwarding.cc-OnData_RSU) 该数据包从后方得到且为重复数据包"<<endl<<endl;
-				ExpireDataPacketTimer(nodeId,signature);
-				//getchar();
-				return;
-			}
-		}
-		//数据包来源于当前路段前方
-		else
-		{
-			if(isDuplicatedData(nodeId,signature))
-			{
-				cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复,仍然转发 "<<endl;
-			}
-			
-			//缓存数据包
-			CachingDataSourcePacket(signature,data);
-			
-			Ptr<pit::Entry> Will = WillInterestedData(data);
-			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-			if(!Will && !WillSecond)
-			{
-				//或者改为广播停止转发数据包
-				BroadcastStopDataMessage(data);
-				cout<<"主、副PIT列表中都没有该数据包对应的表项"<<endl;
-				return;
-			}
-			
-			Ptr<pit::nrndn::EntryNrImpl> entry;
-			std::unordered_set<std::string> allinteresRoutes;
-			//获取主PIT中感兴趣的上一跳路段
-			if(Will)
-			{
-				entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
-				const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-				cout<<"(forwarding.cc-OnData_RSU) 主PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
-				for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
-				{
-					allinteresRoutes.insert(*it);
-				}
-			}
-			
-			//获取副PIT中感兴趣的上一跳路段
-			if(WillSecond)
-			{
-				entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
-				const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-				cout<<"(forwarding.cc-OnData_RSU) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
-				for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
-				{
-					allinteresRoutes.insert(*it);
-				}
-			}
-			
-			NS_ASSERT_MSG(allinteresRoutes.size()!=0,"感兴趣的上一跳路段不该为0");
-			
-			
-			bool idIsInPriorityList;
-			std::vector<uint32_t>::const_iterator priorityListIt;
-			//找出当前节点是否在优先级列表中
-			priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
-			idIsInPriorityList = (priorityListIt != pri.end());
-			
-			if(idIsInPriorityList)
-			{
-				cout<<"(forwarding.cc-OnData_RSU) 车辆在数据包转发优先级列表中"<<endl;
-				double index = distance(pri.begin(),priorityListIt);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),allinteresRoutes);
-				//getchar();
-				std::vector<uint32_t> newPriorityList = collection.first;
-				std::unordered_set<std::string> remainroutes = collection.second;
-				
-				//2018.2.8
-				//有部分路段未被满足
-				if(!remainroutes.empty())
-				{
-					CachingDataPacket(signature,data);
-					cout<<"(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 "<<signature<<endl;
-				}
-				
-				//初始化已经转发过的路段
-				std::unordered_set<std::string> forwardedroutes;
-				m_RSUforwardedData[signature] = forwardedroutes;
-				//getchar();
-			
-				// 2018.1.15 
-				if(newPriorityList.empty())
-				{
-					//BroadcastStopMessage(data);
-					m_sendingDataEvent[nodeId][signature]=
-					Simulator::Schedule(sendInterval,
-					&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
-					cout<<"(forwarding.cc-OnData_RSU) 广播停止转发数据包的消息"<<endl;
-				}
-				else
-				{
-					m_sendingDataEvent[nodeId][signature]=
-					Simulator::Schedule(sendInterval,
-					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
-					newPriorityList);
-					cout<<"(forwarding.cc-OnData_RSU) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备发送数据包 "<<signature<<endl;
-					//getchar();
-				}
-			}
-			else
-			{
-				cout<<"(forwarding.cc-OnData_RSU) Node id is not in PriorityList"<<endl;
-				NS_LOG_DEBUG("Node id is not in PriorityList");
-				//getchar();
-			}
-		}
-	//}
+	}
 }
 
 // 2017.12.25 changed by sy
@@ -2262,25 +2162,9 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
-	
-	//added by sy
-  /*  ndn::nrndn::nrHeader nrheader;
-    interest->GetPayload()->PeekHeader(nrheader);
-    uint32_t nodeId = nrheader.getSourceId();
-	if(nodeId == 22)
-	{
-		cout<<"(forwarding.cc-sendInterestPacket) 收到了源节点为22的兴趣包"<<endl;
-		if(HELLO_MESSAGE == interest->GetScope())
-			cout<<"该消息包为心跳包"<<endl;
-		if(Interest::NACK_LOOP == interest->GetNack())
-			cout<<"该消息包为NACK包"<<endl;
-		//getchar();
-	}*/
-	
-		
 
-	//    if the node has multiple out Netdevice face, send the interest package to them all
-	//    makde sure this is a NetDeviceFace!!!!!!!!!!!
+	// if the node has multiple out Netdevice face, send the interest package to them all
+	// makde sure this is a NetDeviceFace!!!!!!!!!!!
 	vector<Ptr<Face> >::iterator fit;
 	for(fit=m_outFaceList.begin();fit!=m_outFaceList.end();++fit)
 	{
@@ -2517,12 +2401,12 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
 				if(interval < 1)
 				{
-					cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
+					//cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
 					return;
 				}
 				m_sendDataTime = Simulator::Now().GetSeconds();
 				SendDataInCache(datacollection);
-				cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
+				//cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
 			
 			//getchar();
@@ -2580,7 +2464,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t,Ptr<const I
         interest->GetPayload()->PeekHeader(nrheader);
         uint32_t sourceId = nrheader.getSourceId();
 		
-		cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
+		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包的nonce "<<nonce<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<" 当前时间 "<<Simulator::Now().GetSeconds()<<endl;
 		
 		//cout<<"(forwarding.cc-SendInterestInCache) 兴趣包源节点为 "<<sourceId<<" 兴趣包的实际转发路线为 "<<interest->GetRoutes()<<endl;
 		std::vector<std::string> routes;
@@ -2660,7 +2544,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				{
 					entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
 					const std::unordered_set<std::string>& interestRoutes =entry->getIncomingnbs();
-					cout<<"(forwarding.cc-SendDataInCache) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
+					//cout<<"(forwarding.cc-SendDataInCache) 副PIT中感兴趣的上一跳路段数目为 "<<interestRoutes.size()<<endl;
 					for(std::unordered_set<std::string>::const_iterator it = interestRoutes.begin();it != interestRoutes.end();++it)
 					{
 						allinteresRoutes.insert(*it);
@@ -2680,7 +2564,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				if(forwardedroutes.empty())
 				{
 					newinterestRoutes = allinteresRoutes;
-					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
+					//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
 				}
 				else
 				{
@@ -2690,18 +2574,18 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 						std::unordered_set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if(itforward != forwardedroutes.end())
 						{
-							cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
+							//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
 							continue;
 						}
 						newinterestRoutes.insert(*itinterest);
-						cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
+						//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
 					}
 				}
 				
 				if(newinterestRoutes.empty())
 				{
 					//2018.2.8 修改后不该进入该函数
-					cout<<"数据包 "<<signature<<" 对应的上一跳路段全部转发过"<<endl;
+					//cout<<"数据包 "<<signature<<" 对应的上一跳路段全部转发过"<<endl;
 					continue;
 				}
 					
@@ -2712,7 +2596,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				
 				if(newPriorityList.empty())
 				{
-					cout<<"数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
+					//cout<<"数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
 					//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
 					CachingDataPacket(signature,data);
 					continue;
@@ -2722,21 +2606,8 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 				if(remainroutes.empty())
 				{
 					m_cs->DeleteData(signature);
-					cout<<"数据包 "<<signature<<" 未满足的路段为空，从缓存中删除"<<endl;
+					//cout<<"数据包 "<<signature<<" 未满足的路段为空，从缓存中删除"<<endl;
 				}
-					
-			
-				//加入准备转发的上一跳路段
-				//for(std::unordered_set<std::string>::iterator itinterest = newinterestRoutes.begin();itinterest != newinterestRoutes.end();itinterest++)
-				//{
-					//std::unordered_set<std::string>::iterator itremain = remainroutes.find(*itinterest);
-					//if(itremain != remainroutes.end())
-						//continue;
-					//forwardedroutes.insert(*itinterest);
-					//cout<<"准备转发的上一跳路段为 "<<*itinterest<<endl;
-				//}
-				//if(!forwardedroutes.empty())
-					//m_RSUforwardedData[signature] = forwardedroutes;
 			}
 		}
 		else
@@ -2744,13 +2615,13 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t,Ptr<const Data>
 			newPriorityList = VehicleGetPriorityListOfData();
 		}
 			
-		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;	
-		cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;	
+		//cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;	
+		//cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;	
 		for(uint32_t i = 0;i < newPriorityList.size();i++)
 		{
-			cout<<newPriorityList[i]<<" ";
+			//cout<<newPriorityList[i]<<" ";
 		}
-		cout<<endl;
+		//cout<<endl;
 		
 		//getchar();
 		
@@ -2812,7 +2683,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			//该车辆已经超过RSU，记录下来
 			alreadyPassed.insert(sourceId);
 			
-			cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
 			//getchar();
 			if(resend.first == false)
 				notifyUpperOnInterest(resend.second);

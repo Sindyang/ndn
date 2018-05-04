@@ -178,7 +178,7 @@ bool NrCsImpl::AddData(uint32_t signature,Ptr<const Data> data)
 	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds()-Simulator::Now().GetSeconds();
 	if(interval < 0)
 	{
-		std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
+		//std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
 		return false;
 	}
 	
@@ -233,7 +233,7 @@ NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_data.find(signature);
 	if(it != m_data.end())
 	{
-		std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
+		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
 		m_data.erase(it);
 	}
 	else
@@ -366,20 +366,20 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 std::map<uint32_t,Ptr<const Data> >
 NrCsImpl::GetDataSource(std::vector<std::string> interest)
 {
-	std::cout<<"(cs-impl.cc-GetDataSource) RSU获取缓存中的数据包"<<std::endl;
+	//std::cout<<"(cs-impl.cc-GetDataSource) RSU获取缓存中的数据包"<<std::endl;
 	
 	std::map<uint32_t,Ptr<const Data> > DataCollection;
 	std::vector<std::string>::iterator itinterest;
 	std::map<uint32_t,Ptr<cs::Entry> >::iterator it;
 	for(itinterest = interest.begin();itinterest != interest.end();itinterest++)
 	{
-		std::cout<<"(cs-impl.cc-GetDataSource) 想要得到的数据包为 "<<*itinterest<<std::endl;
+		//std::cout<<"(cs-impl.cc-GetDataSource) 想要得到的数据包为 "<<*itinterest<<std::endl;
 		for(it = m_datasource.begin();it != m_datasource.end();it++)
 		{
 			std::string dataname = it->second->GetName().get(0).toUri();
 			if(*itinterest == dataname)
 			{
-				std::cout<<"(cs-impl.cc-GetDataSource) 缓存中有对应的数据包"<<std::endl;
+				//std::cout<<"(cs-impl.cc-GetDataSource) 缓存中有对应的数据包"<<std::endl;
 				Ptr<const Data> src = it->second->GetData();
 				//复制数据包
 				Ptr<Data> data = Create<Data> (*src);
@@ -536,7 +536,7 @@ bool NrCsImpl::AddInterest(uint32_t nonce,Ptr<const Interest> interest)
 	Ptr<cs::EntryInterest> csEntryInterest = FindInterest(nonce);
 	if(csEntryInterest != 0)
 	{
-		std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<std::endl;
+		//std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<std::endl;
 		
 		//PrintInterestEntry(nonce);
 		return false;
@@ -611,16 +611,16 @@ void
 NrCsImpl::DeleteInterest(const uint32_t nonce)
 {
 	uint32_t size = GetInterestSize();
-	std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
+	//std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
 	std::map<uint32_t,Ptr<cs::EntryInterest> >::iterator it = m_interest.find(nonce);
 	if(it != m_interest.end())
 	{
 		m_interest.erase(it);
 		size = GetInterestSize();
-		std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包后的缓存大小为 "<<size<<" 兴趣包序列号为 "<<nonce<<std::endl;
+		//std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包后的缓存大小为 "<<size<<" 兴趣包序列号为 "<<nonce<<std::endl;
 	}
 	else
-		std::cout<<"(cs-impl.cc-DeleteInterest) 该兴趣包不在缓存中"<<std::endl;
+		//std::cout<<"(cs-impl.cc-DeleteInterest) 该兴趣包不在缓存中"<<std::endl;
 }
 
 void
