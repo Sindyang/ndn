@@ -859,12 +859,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		m_nrpit->showPit();
 		m_nrpit->showSecondPit();
 		
-		cout<<"(forwarding.cc-OnInterest_RSU) 当前及之后的兴趣路线为 ";
+		//cout<<"(forwarding.cc-OnInterest_RSU) 当前及之后的兴趣路线为 ";
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
-			cout<<futureinterest[i]<<" ";
+			//cout<<futureinterest[i]<<" ";
 		}
-		cout<<endl;
+		//cout<<endl;
 		DetectDatainCache(futureinterest,routes[0]);
 		
 		if(IsExist)
