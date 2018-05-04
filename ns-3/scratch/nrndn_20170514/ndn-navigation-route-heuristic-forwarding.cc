@@ -789,7 +789,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//2017.12.23 按理来说，若RSU收到的兴趣包为NACK_LOOP，RSU应该为该兴趣包所在路段的起点处 TEST IT
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
-		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
+		//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包为NACK_LOOP。源节点 "<<nodeId<<endl;
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
@@ -859,12 +859,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		m_nrpit->showPit();
 		m_nrpit->showSecondPit();
 		
-		/*cout<<"(forwarding.cc-OnInterest_RSU) "<<endl;
+		cout<<"(forwarding.cc-OnInterest_RSU) 当前及之后的兴趣路线为 ";
 		for(uint32_t i = 0;i < futureinterest.size();i++)
 		{
 			cout<<futureinterest[i]<<" ";
 		}
-		cout<<endl;*/
+		cout<<endl;
 		DetectDatainCache(futureinterest,routes[0]);
 		
 		if(IsExist)
@@ -1322,7 +1322,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 			if(*it == forwardroute[i])
 			{
 				futureinterest.push_back(*it);
-				cout<<*it<<" ";
+				//cout<<*it<<" ";
 			}
 			else
 			{
