@@ -856,8 +856,8 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 		//获取当前及之后的兴趣路线
 		vector<string> futureinterest = GetLocalandFutureInterest(routes,interestRoute);
 		
-		m_nrpit->showPit();
-		m_nrpit->showSecondPit();
+		//m_nrpit->showPit();
+		//m_nrpit->showSecondPit();
 		
 		//cout<<"(forwarding.cc-OnInterest_RSU) 当前及之后的兴趣路线为 ";
 		for(uint32_t i = 0;i < futureinterest.size();i++)
@@ -1620,6 +1620,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	}
 	
 	m_nrpit->showPit();
+	m_nrpit->showSecondPit();
 	
 	//If it is not a stop message, prepare to forward:
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
