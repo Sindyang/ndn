@@ -1619,8 +1619,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		return;
 	}
 	
-	m_nrpit->showPit();
-	m_nrpit->showSecondPit();
+	//m_nrpit->showPit();
+	//m_nrpit->showSecondPit();
 	
 	//If it is not a stop message, prepare to forward:
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
