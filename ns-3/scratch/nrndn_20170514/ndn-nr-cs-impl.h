@@ -114,6 +114,10 @@ public:
 	//删除超时的数据包
 	void CleanExpiredTimedoutData(uint32_t signature);
 	
+	// 删除超时的数据包（作为数据源）
+	void 
+    CleanExpiredTimedoutDataSource(uint32_t signature);
+	
 	// 删除已经发出去的数据包
 	void DeleteData(const uint32_t signature);
 	

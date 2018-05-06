@@ -223,7 +223,7 @@ bool NrCsImpl::AddDataSource(uint32_t signature,Ptr<const Data> data)
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
-	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutData,this,signature);
+	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutDataSource,this,signature);
 	//std::cout<<"(cs-impl.c-AddDataSource) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
@@ -236,6 +236,23 @@ NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	{
 		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
 		m_data.erase(it);
+	}
+	else
+	{
+		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 不在缓存中"<<std::endl;
+	}	
+	//uint32_t size = GetDataSize();
+	//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
+}
+
+void 
+NrCsImpl::CleanExpiredTimedoutDataSource(uint32_t signature)
+{
+	std::map<uint32_t,Ptr<cs::Entry> >::iterator it = m_datasource.find(signature);
+	if(it != m_datasource.end())
+	{
+		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
+		m_datasource.erase(it);
 	}
 	else
 	{
