@@ -170,7 +170,7 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	double interval = data->GetTimestamp().GetSeconds() + 10 -Simulator::Now().GetSeconds();
 	if(interval < 0)
 	{
-		std::cout<<"数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
+		std::cout<<"数据包已经超过了有效时间"<<std::endl;
 		return;
 	}
 
