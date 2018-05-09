@@ -760,12 +760,12 @@ void
 nrndnExample::InstallMobility()
 {
 	//double maxTime = 0;
-	//std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
 	mobility->Install();
-	//std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
 	readTotalTime = mobility->GetReadTotalTime();
 	totalTime = readTotalTime < totalTime ? readTotalTime : totalTime;
-	//std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
 }
 
 

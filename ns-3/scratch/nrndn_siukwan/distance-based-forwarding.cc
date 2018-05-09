@@ -164,6 +164,15 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 				"The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
+	
+	// 2018.5.9 added by SY
+	// 判断数据包的有效时间
+	double interval = data->GetTimestamp().GetSeconds() + 10 -Simulator::Now().GetSeconds();
+	if(interval < 0)
+	{
+		std::cout<<"数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
+		return;
+	}
 
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
