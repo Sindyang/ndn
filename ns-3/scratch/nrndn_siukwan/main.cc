@@ -941,7 +941,7 @@ void nrndnExample::InstallTraffics()
 	else
 	{
 		uint32_t array[15] = {1,79,93,163,270,343,365,377,396,413,497,606,666,783,784};
-		for(uint32_t index = 0; index < certain_count; index ++)
+		for(uint32_t index = 0; index < certain_count; index++)
 		{
 
 			randomNode[array[index]] = true;
