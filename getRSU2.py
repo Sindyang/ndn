@@ -57,6 +57,11 @@ def roadlength(in_file,junctions):
 				nPos1 = line.find('length')
 				nPos2 = line.find('shape')
 				nPos3 = line.find('width')
+				nPos4 = line.find('allow=\"pedestrian\"')
+				if nPos4 >= 0:
+					print "delete junction's lane_id "+lane_id
+					junctions.pop(lane_id)
+					continue
 				if nPos3 >= 0:
 					nPos2 = nPos3
 				length = line[nPos1+8:nPos2-2]
