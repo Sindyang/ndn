@@ -166,40 +166,51 @@ void nrConsumer::SendPacket()
 		  //ScheduleNextPacket ();
 		  return;
 	  }*/
-	  NS_LOG_FUNCTION_NOARGS ();
+	  
+	// 2018.5.9 added by sy
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentType = sensor->getType();
+	//RSU的Type为”RSU" RSU不发送兴趣包
+	if(currentType == "RSU")
+	{
+		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
+		return;
+	}
+	
+	NS_LOG_FUNCTION_NOARGS ();
 
-	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
+	uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
 
-	  if (m_seqMax != std::numeric_limits<uint32_t>::max())
-	  {
+	if (m_seqMax != std::numeric_limits<uint32_t>::max())
+	{
 		if (m_seq >= m_seqMax)
 		{
 			return; // we are totally done
 		}
-	  }
+	}
 
-	  seq = m_seq++;
+	seq = m_seq++;
 
-	  Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
-	  nameWithSequence->appendSeqNum (seq);
+	Ptr<Name> nameWithSequence = Create<Name> (m_interestName);
+	nameWithSequence->appendSeqNum (seq);
 
-	  Ptr<Interest> interest = Create<Interest> ();
-	  interest->SetNonce               (m_rand.GetValue ());
-	  interest->SetName                (nameWithSequence);
-	  interest->SetInterestLifetime    (m_interestLifeTime);
+	Ptr<Interest> interest = Create<Interest> ();
+	interest->SetNonce               (m_rand.GetValue ());
+	interest->SetName                (nameWithSequence);
+	interest->SetInterestLifetime    (m_interestLifeTime);
 
-	  // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
-	  NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
+	// NS_LOG_INFO ("Requesting Interest: \n" << *interest);
+	NS_LOG_INFO ("> Interest for " <<nameWithSequence->toUri()<<" seq "<< seq);
 
-	  //WillSendOutInterest (seq);
+	//WillSendOutInterest (seq);
 
-	  FwHopCountTag hopCountTag;
-	  interest->GetPayload ()->AddPacketTag (hopCountTag);
+	FwHopCountTag hopCountTag;
+	interest->GetPayload ()->AddPacketTag (hopCountTag);
 
-	  m_transmittedInterests (interest, this, m_face);
-	  m_face->ReceiveInterest (interest);
-	  //std::cout<<"准备出错\n";
-	  //ScheduleNextPacket ();
+	m_transmittedInterests (interest, this, m_face);
+	m_face->ReceiveInterest (interest);
+	//std::cout<<"准备出错\n";
+	//ScheduleNextPacket ();
 	//  std::cout<<"已经出错\n";
 
 	  //std::cout<<"ScheduleNextPacket \n";
