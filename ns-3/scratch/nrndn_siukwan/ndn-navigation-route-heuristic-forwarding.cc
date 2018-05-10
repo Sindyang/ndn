@@ -317,6 +317,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//cout << "来自应用层" <<endl;
 	if(Face::APPLICATION==face->GetFlags())
 	{
+		cout << "来自应用层" <<endl;
 		OnInterest_application( interest);
 		return;
 	}
@@ -333,6 +334,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//处理ack包
 	if(FORWARD_ACK == interest->GetScope())
 	{
+		cout << "处理ack包" <<endl;
 		OnInterest_ackProcess(interest);
 		return;
 	}
@@ -377,7 +379,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 					//getchar();
 			}
 		}
-
+		cout<<"The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -415,7 +417,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		return ;
 	}
-	//cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
 	
 	//兴趣包来自后方
 	// it is from nodes behind
@@ -438,7 +440,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//getchar();
 
 	//提取兴趣树，并且还原
-	//cout << myNodeId << "提取兴趣树，并且还原" << endl;
+	cout << myNodeId << "提取兴趣树，并且还原" << endl;
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
@@ -458,7 +460,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	vector<vector<string>> receiveRoutes(0);
 	vector<string> tmpRoutes(0);
 	receive_tree->tree2Routes(receiveRoutes, tmpRoutes, receive_tree->root);
-	//cout << myNodeId << "tree2Routes OK" << endl;
+	cout << myNodeId << "tree2Routes OK" << endl;
 
 
 	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
@@ -472,7 +474,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		flag1=(m_nrtree->MergeInterest(nodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
-	//cout << myNodeId << "changeFlag OK" << endl;
+	cout << myNodeId << "changeFlag OK" << endl;
 
 	// Update the PIT here
 	//更新PIT表
@@ -486,7 +488,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 	//string currentLane=m_nrpit->getCurrentLane();
 	string currentLane = m_sensor->getLane();
-	//cout << myNodeId << "获取当前道路" << currentLane << endl;
+	cout << myNodeId << "获取当前道路" << currentLane << endl;
 
 	//兴趣树没有发生变化
 	if(!changeFlag)
@@ -534,7 +536,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		*/
 		//SendAckPacket();
 		DropInterestePacket(interest);
-		//cout << "forwarding.cc" << myNodeId << "DropInterestePacket" << endl;
+		cout << "forwarding.cc" << myNodeId << "DropInterestePacket" << endl;
 		return ;
 	}
 
@@ -549,7 +551,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	for(size_t ii=0;ii<pri.size();++ii)
 		cout<<pri[ii]<< " ";
 	//cout<<endl;
-	//cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
 	//evaluate end
 	idIsInPriorityList=true;
 		
