@@ -201,12 +201,13 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		cout<<"(ndn-InterestTree.cc)根结点为空，无法删除"<<endl;
 		return root;
 	}
-	//cout<<curLane<<endl;
+	cout<<curLane<<endl;
 	InterestTreeNode* result = NULL;
 	queue<InterestTreeNode*> q;
 	int count1=1;
 	int count2=0;
 	q.push(root);
+	cout<<"step 1 ";
 	while(!q.empty())
 	{
 		bool found=false;
@@ -222,6 +223,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 			}
 			else
 			{
+				cout<<"step 2 ";
 				map<string, InterestTreeNode* >::iterator ite = head->child.begin();
 				for(;ite!=head->child.end();ite++)
 				{
@@ -229,7 +231,9 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 					count2++;
 					q.push(ite->second);
 				}
-				delete head;//删除该结点
+				// if语句 added by sy 2018.5.10
+				if(head != NULL)
+					delete head;//删除该结点
 			}
 		}
 		//找到就跳出
@@ -240,8 +244,10 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		}
 		count1=count2;
 		count2=0;
+		cout<<"step 3 ";
 	}
 
+	cout<<"step 4 ";
 	//把队列中的节点递归删除
 	while(!q.empty())
 	{
@@ -250,6 +256,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		cout<<"递归删除节点 "<<head->lane<<endl;
 		deleteTree(head);
 	}
+	cout<<"step 5"<<endl;;
 	return result;
 }
 
