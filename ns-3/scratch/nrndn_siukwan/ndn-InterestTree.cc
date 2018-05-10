@@ -242,8 +242,6 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		count2=0;
 	}
 	
-	cout<<"found " <<found<<endl;
-
 	//把队列中的节点递归删除
 	while(!q.empty())
 	{
