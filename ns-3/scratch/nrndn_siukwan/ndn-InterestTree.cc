@@ -233,8 +233,11 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 			}
 		}
 		//找到就跳出
-		if(found) break;
-
+		if(found) 
+		{
+			cout<<"(ndn-InterestTree.cc) 找到了 "<<curLane<<endl;
+			break;
+		}
 		count1=count2;
 		count2=0;
 	}
@@ -244,6 +247,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 	{
 		InterestTreeNode* head=q.front();
 		q.pop();
+		cout<<"递归删除节点 "head->lane<<endl;
 		deleteTree(head);
 	}
 	return result;
@@ -254,15 +258,16 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 	//如果节点为空，则直接返回
 	if(deleteNode == NULL ) return;
 
-	map<string , InterestTreeNode*>::iterator ite = deleteNode->child.begin();
+	map<string,InterestTreeNode*>::iterator ite = deleteNode->child.begin();
 	//先删除子节点
 	for(;ite!=deleteNode->child.end();ite++)
 	{//迭代删除
 		deleteTree(ite->second);
 	}
 	//在删除当前节点
-	delete deleteNode;
-
+	// if语句 added by sy 2018.5.10
+	if(deleteNode != NULL)
+		delete deleteNode;
 }
 
 //序列化#层数$路段1^id1^id2^id3$路段2^id4^id5

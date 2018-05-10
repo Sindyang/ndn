@@ -317,7 +317,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//cout << "来自应用层" <<endl;
 	if(Face::APPLICATION==face->GetFlags())
 	{
-		cout << "来自应用层" <<endl;
+		//cout << "来自应用层" <<endl;
 		OnInterest_application( interest);
 		return;
 	}
@@ -334,7 +334,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//处理ack包
 	if(FORWARD_ACK == interest->GetScope())
 	{
-		cout << "处理ack包" <<endl;
+		//cout << "处理ack包" <<endl;
 		OnInterest_ackProcess(interest);
 		return;
 	}
@@ -379,7 +379,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 					//getchar();
 			}
 		}
-		cout<<"The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce()<<endl;
+		//cout<<"The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -449,12 +449,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	//receive_tree->levelOrder();
 	string tmp_curLane = receive_tree->prefix+m_sensor->getLane();
-	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+	cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
 	//找到当前路段，把当前路段作为根结点，其余的删除
-	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
-	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
 	//receive_tree->levelOrder();
 	//getchar();
 	vector<vector<string>> receiveRoutes(0);
