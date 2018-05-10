@@ -203,7 +203,9 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 	}
 	cout<<root->lane<<" "<<curLane<<endl;
 	InterestTreeNode* result = NULL;
+	cout<<"step -2 ";
 	queue<InterestTreeNode*> q;
+	cout<<"step -1 ";
 	int count1=1;
 	int count2=0;
 	cout<<"step 0 ";
