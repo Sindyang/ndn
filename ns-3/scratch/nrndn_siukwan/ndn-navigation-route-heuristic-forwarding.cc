@@ -278,7 +278,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 		if(flag1)changeFlag=true;
 	}
 	*/
-	//cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
 	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
@@ -316,14 +316,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-	//cout << "来自应用层" <<endl;
+	cout << "来自应用层" <<endl;
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		OnInterest_application( interest);
 		return;
 	}
 
-	//cout << "心跳包" <<endl;
+	cout << "心跳包" <<endl;
 	//如果它是个心跳包
 	if(HELLO_MESSAGE==interest->GetScope())
 	{//处理心跳
@@ -331,7 +331,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//cout << "处理ack包" <<endl;
+	cout << "处理ack包" <<endl;
 	//处理ack包
 	if(FORWARD_ACK == interest->GetScope())
 	{
@@ -339,14 +339,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//cout << "GetPayload" <<endl;
+	cout << "GetPayload" <<endl;
 	//Payload是什么，payload是假负载
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	//获取发送兴趣包节点的ID
 	uint32_t nodeId = nrheader.getSourceId();
-	//cout <<"forwarding.cc " << nodeId<< " GetPayload" <<endl;
+	cout <<"forwarding.cc " << nodeId<< " GetPayload" <<endl;
 	//获取兴趣的随机编码
 	uint32_t seq = interest->GetNonce();
 	//获取当前节点的id
@@ -362,10 +362,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(forwardId != 999999999)
 	{
 		//printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
-		//cout<<endl;
+		cout<<endl;
 	}
 
-	//cout << "m_interestNonceSeen" << endl;
+	cout << "m_interestNonceSeen" << endl;
 
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
@@ -385,7 +385,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 
 
-	//cout << "获取优先列表" << endl;
+	cout << "获取优先列表" << endl;
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
@@ -396,11 +396,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
-	//cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
@@ -417,7 +417,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		return ;
 	}
-	//cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
 	
 	//兴趣包来自后方
 	// it is from nodes behind
@@ -431,50 +431,50 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
-	//cout<<"forwarding.cc"<<myNodeId<<"如果重复"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"如果重复"<<nodeId<<endl;
 
 	NS_LOG_DEBUG("Get interest packet from nodes behind");
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
-	//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
 	//getchar();
 
 	//提取兴趣树，并且还原
-	//cout << myNodeId << "提取兴趣树，并且还原" << endl;
+	cout << myNodeId << "提取兴趣树，并且还原" << endl;
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
+	cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
 	receive_tree->root = receive_tree->deserialize_noId(receive_tree_str);
 	receive_tree->NodeId = nodeId;
-	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	//receive_tree->levelOrder();
 	string tmp_curLane = receive_tree->prefix+m_sensor->getLane();
-	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+	cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
 	//找到当前路段，把当前路段作为根结点，其余的删除
-	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
-	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
 	//receive_tree->levelOrder();
 	//getchar();
 	vector<vector<string>> receiveRoutes(0);
 	vector<string> tmpRoutes(0);
 	receive_tree->tree2Routes(receiveRoutes, tmpRoutes, receive_tree->root);
-	//cout << myNodeId << "tree2Routes OK" << endl;
+	cout << myNodeId << "tree2Routes OK" << endl;
 
 
-	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	//receive_tree->levelOrder();
 	bool changeFlag = false;
 	for(uint32_t i = 0; i < receiveRoutes.size(); ++i)
 	{
 		bool flag1 = false;
-		//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
+		cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
 		receive_tree->NodeId = nodeId;
 		flag1=(m_nrtree->MergeInterest(nodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
-	//cout << myNodeId << "changeFlag OK" << endl;
+	cout << myNodeId << "changeFlag OK" << endl;
 
 	// Update the PIT here
 	//更新PIT表
@@ -482,13 +482,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	//以当前的兴趣树，更新PIT
 
-	//cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
+	cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
 	m_nrpit->UpdatePitByInterestTree2(m_nrtree);
 	
 	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 	//string currentLane=m_nrpit->getCurrentLane();
 	string currentLane = m_sensor->getLane();
-	//cout << myNodeId << "获取当前道路" << currentLane << endl;
+	cout << myNodeId << "获取当前道路" << currentLane << endl;
 
 	//兴趣树没有发生变化
 	if(!changeFlag)
@@ -501,10 +501,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		*/
 		NS_LOG_DEBUG("InterestTree no changed");
 
-		//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+		cout << "forwarding.cc原来的随机码" << interest->GetNonce();
 		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
-		//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+		cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
 		//getchar();
 		Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 		ndn::nrndn::nrHeader nrheader_tmp;
@@ -514,7 +514,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			forwardNeighbors[nodeId]=true;
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 		}
-		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
+		cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
 		//发送ack包
 		//Start a timer and wait
@@ -536,7 +536,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		*/
 		//SendAckPacket();
 		DropInterestePacket(interest);
-		//cout << "forwarding.cc" << myNodeId << "DropInterestePacket" << endl;
+		cout << "forwarding.cc" << myNodeId << "DropInterestePacket" << endl;
 		return ;
 	}
 
@@ -550,8 +550,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	cout<<"forwarding.cc优先级列表为:";
 	for(size_t ii=0;ii<pri.size();++ii)
 		cout<<pri[ii]<< " ";
-	//cout<<endl;
-	//cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	cout<<endl;
+	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
 	//evaluate end
 	idIsInPriorityList=true;
 		
@@ -572,9 +572,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		else
 		{
-			//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+			cout << "forwarding.cc原来的随机码" << interest->GetNonce();
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
-			//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+			cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
 			//getchar();
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
@@ -639,8 +639,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	
-	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	//cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
 	//getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
@@ -702,13 +702,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	/*
 	if(isDuplicatedData(nodeId,signature))
 	{
-		//cout<<"OnData重复包"<<endl;
+		cout<<"OnData重复包"<<endl;
 	}
 	*/
 	//已经被发送了，不用再转发
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		//cout<<"OnData重复包2......................."<<endl;
+		cout<<"OnData重复包2......................."<<endl;
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
@@ -758,10 +758,10 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	else// This data packet is 1) NOT on the navigation route of the local node
 		//					or 2) and it is from location in front of it along the navigation route
 	{
-		//cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
+		cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
 		if(isDuplicatedData(nodeId,signature) )//&& nrheader.getLane() == m_sensor->getLane())
 		{
-			//cout<<"重复丢弃"<<endl;
+			cout<<"重复丢弃"<<endl;
 			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
@@ -778,7 +778,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else
 		{
-			//cout<<"进行转发"<<endl;
+			cout<<"进行转发"<<endl;
 			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
@@ -907,13 +907,13 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	//cout << nrheader.getX() << " " << nrheader.getY() <<endl;
+	cout << nrheader.getX() << " " << nrheader.getY() <<endl;
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	//cout << m_running << " route.size:" << route.size() <<endl;
+	cout << m_running << " route.size:" << route.size() <<endl;
 
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
-	//cout << "result" << route.size() <<endl;
+	cout << "result" << route.size() <<endl;
 
 	return result;
 }
@@ -1094,7 +1094,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		//if(HELLO_MESSAGE ==interest->GetScope())
-			//cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
+			cout<<"(forwarding.cc-SendInterestPacket)"<<m_node->GetId()<<" "<<Simulator::Now().GetSeconds()<<endl;
 	}
 	ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
 }
@@ -1196,7 +1196,7 @@ void
 NavigationRouteHeuristic::SendHello()
 {
 	if(!m_running) return;
-	//cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
+	cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	const double& x		= m_sensor->getX();
@@ -1244,7 +1244,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
-		//cout<<"邻居增加，重发"<<endl;
+		cout<<"邻居增加，重发"<<endl;
 		//getchar();
 		m_nbChange_mode=2;//邻居增加
 	}
@@ -1311,7 +1311,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		//cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
+		cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
 		//getchar();
 	}
 
@@ -1340,12 +1340,12 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
 	if( interval >= 1)
 	{
-		//cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
 
-		//cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
@@ -1580,14 +1580,14 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	double y= m_sensor->getY();
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
-	//cout << "forward.cc转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
+	cout << "forward.cc转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
 	//getchar();
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setForwardId(m_node->GetId());
 	nrheader.setLane(m_sensor->getLane());
-	//cout<<"forwarding.cc转发数据包，当前道路为"<<nrheader.getLane()<<endl;
+	cout<<"forwarding.cc转发数据包，当前道路为"<<nrheader.getLane()<<endl;
 	//getchar();
 	nrheader.setPriorityList(newPriorityList);
 	nrPayload->AddHeader(nrheader);
