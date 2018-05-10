@@ -344,12 +344,12 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	{
 		HelloByteSent += size;
 		HelloCount += 1;
-		cout << "nrUtils.cc Hello size" << size << endl;
+		//cout << "nrUtils.cc Hello size" << size << endl;
 	}
 	else
 	{
 		InterestByteSent += size;
-		cout << "nrUtils.cc Interest size" << size << endl;
+		//cout << "nrUtils.cc Interest size" << size << endl;
 		//getchar();
 	}
 }
