@@ -126,7 +126,7 @@ void SumoMobility::Install()
 		//call the initialize method while at time the vehicle depart
 		Time start_model_time = Seconds((*(*vehicle).trace.begin()).time);
 		Simulator::Schedule(start_model_time, &Object::Initialize, model);
-		std::cout<<"(SumoMobility.cc-Install) vehicle's id is"<<(*vehicle).id<<std::endl;
+		//std::cout<<"(SumoMobility.cc-Install) vehicle's id is"<<(*vehicle).id<<std::endl;
 	}
 
 	cout<<"Max time in fcdoutput.xml is "<<maxTime<<endl;
