@@ -247,7 +247,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 	{
 		InterestTreeNode* head=q.front();
 		q.pop();
-		cout<<"递归删除节点 "head->lane<<endl;
+		cout<<"递归删除节点 "<<head->lane<<endl;
 		deleteTree(head);
 	}
 	return result;
