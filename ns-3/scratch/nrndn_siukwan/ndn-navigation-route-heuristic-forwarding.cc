@@ -257,7 +257,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	nrPayload->PeekHeader( nrheader);
 /*
 	//获取发送兴趣包节点的ID
-	nodeId = nrheader.getSourceId();
+	
 	
 
 	//提取兴趣树，并且还原
@@ -279,7 +279,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	}
 	*/
 	uint32_t myNodeId=m_node->GetId();
-	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
+	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
 	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
@@ -1197,7 +1197,7 @@ void
 NavigationRouteHeuristic::SendHello()
 {
 	if(!m_running) return;
-	cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
+	//cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	const double& x		= m_sensor->getX();

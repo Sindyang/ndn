@@ -117,7 +117,7 @@ void SumoMobility::Install()
 				maxTime = end_time;
 			Waypoint wp(Seconds(end_time),Vector((*t).x,(*t).y,0.0));
 			waypointmodel->AddWaypoint(wp);
-			std::cout<<"(SumoMobility.cc-Install) add the trace into the way point model"<<std::endl;
+			//std::cout<<"(SumoMobility.cc-Install) add the trace into the way point model"<<std::endl;
 		}
 		//Add a final position(0,0,-10000)
 		waypointmodel->AddWaypoint(Waypoint(Seconds(end_time+1.0),Vector(-10000.0,-10000.0,-10000.0)));

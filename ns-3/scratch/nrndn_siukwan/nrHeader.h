@@ -131,8 +131,6 @@ private:
 	uint32_t m_treesize;
 	std::string m_tree;
 	std::string m_lane;
-
-
 };
 
 } /* namespace nrndn */
