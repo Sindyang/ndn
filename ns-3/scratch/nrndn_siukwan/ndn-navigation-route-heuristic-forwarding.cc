@@ -258,7 +258,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 /*
 	//获取发送兴趣包节点的ID
 	nodeId = nrheader.getSourceId();
-	uint32_t myNodeId=m_node->GetId();
+	
 
 	//提取兴趣树，并且还原
 	string receive_tree_str = nrheader.getTree();
@@ -278,6 +278,7 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 		if(flag1)changeFlag=true;
 	}
 	*/
+	uint32_t myNodeId=m_node->GetId();
 	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -469,7 +470,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	for(uint32_t i = 0; i < receiveRoutes.size(); ++i)
 	{
 		bool flag1 = false;
-		cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
+		//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
 		receive_tree->NodeId = nodeId;
 		flag1=(m_nrtree->MergeInterest(nodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
