@@ -50,7 +50,7 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	       		 MakePointerAccessor (&DistanceBasedForwarding::m_uniformRandomVariable),
 	       		 MakePointerChecker<UniformRandomVariable> ())
 	    .AddAttribute ("TTLMax", "This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded",
-	    		         UintegerValue (2),
+	    		         UintegerValue (1),
 	    		         MakeUintegerAccessor (&DistanceBasedForwarding::m_TTLMax),
 	    		         MakeUintegerChecker<uint32_t> ())
 	            ;
@@ -183,7 +183,7 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	FwHopCountTag hopCountTag;
 	nrPayload->PeekPacketTag(hopCountTag);
 	bool isTTLReachMax = (hopCountTag.Get() >= m_TTLMax);
-	if(hopCountTag.Get() >= 3)
+	if(hopCountTag.Get() >= m_TTLMax)
 	{
 		cout << m_node->GetId() << " " << hopCountTag.Get() << " " << m_TTLMax << endl;
 		getchar();

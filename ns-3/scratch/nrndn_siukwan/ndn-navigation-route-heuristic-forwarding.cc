@@ -1094,7 +1094,6 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 	{
 		(*fit)->SendInterest(interest);
 		ndn::nrndn::nrUtils::AggrateInterestPacketSize(interest);
-		cout<<"nonce "<<interest->GetNonce()<<endl;
 	}
 }
 
