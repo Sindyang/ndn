@@ -79,7 +79,7 @@ void SumoMobility::Install()
 	//Initialize the position of each vehicle, although it may appear later, it is placed once the simulation starts
 	for(vector<Vehicle>::const_iterator vehicle =vl.getVehicles().begin();vehicle!=vl.getVehicles().end();vehicle++)
 	{
-		//std::cout<<"(SumoMobility.cc-Install)初始化车辆位置："<<siu_i<<"   "<<std::endl;
+		std::cout<<"(SumoMobility.cc-Install)初始化车辆位置："<<siu_i<<"   "<<std::endl;
 		double pos_x =(*vehicle).trace.front().x;
 		double pos_y =(*vehicle).trace.front().y;
 		positionAlloc->Add(Vector(pos_x,pos_y,0.0));
@@ -126,7 +126,7 @@ void SumoMobility::Install()
 		//call the initialize method while at time the vehicle depart
 		Time start_model_time = Seconds((*(*vehicle).trace.begin()).time);
 		Simulator::Schedule(start_model_time, &Object::Initialize, model);
-		//std::cout<<"(SumoMobility.cc-Install) vehicle's id is"<<(*vehicle).id<<std::endl;
+		std::cout<<"(SumoMobility.cc-Install) vehicle's id is"<<(*vehicle).id<<std::endl;
 	}
 
 	cout<<"Max time in fcdoutput.xml is "<<maxTime<<endl;
