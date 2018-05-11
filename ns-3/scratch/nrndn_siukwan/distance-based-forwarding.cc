@@ -50,7 +50,7 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	       		 MakePointerAccessor (&DistanceBasedForwarding::m_uniformRandomVariable),
 	       		 MakePointerChecker<UniformRandomVariable> ())
 	    .AddAttribute ("TTLMax", "This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded",
-	    		         UintegerValue (3),
+	    		         UintegerValue (2),
 	    		         MakeUintegerAccessor (&DistanceBasedForwarding::m_TTLMax),
 	    		         MakeUintegerChecker<uint32_t> ())
 	            ;
@@ -63,7 +63,7 @@ DistanceBasedForwarding::DistanceBasedForwarding():
 		m_htimer (Timer::CANCEL_ON_DESTROY),
 		m_CacheSize(10),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 		m_dataSignatureSeen(m_CacheSize),
-		m_TTLMax(5),
+		m_TTLMax(2),
 		m_nb (HelloInterval),
 		m_running(false),
 		m_runningCounter(0)
