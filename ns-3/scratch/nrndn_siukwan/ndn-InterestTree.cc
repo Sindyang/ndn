@@ -201,16 +201,15 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		cout<<"(ndn-InterestTree.cc)根结点为空，无法删除"<<endl;
 		return root;
 	}
-	cout/*<<root->lane<<" "*/<<curLane<<endl;
+	// 2018.5.11 added by sy
+	if(root->lane[0] != '/')
+		return;
+	cout<<curLane<<endl;
 	InterestTreeNode* result = NULL;
-	cout<<"step -2 ";
 	queue<InterestTreeNode*> q;
-	cout<<"step -1 ";
 	int count1=1;
 	int count2=0;
-	cout<<"step 0 ";
 	q.push(root);
-	cout<<"step 1 ";
 	while(!q.empty())
 	{
 		bool found=false;
@@ -226,7 +225,6 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 			}
 			else
 			{
-				cout<<"step 2 ";
 				map<string, InterestTreeNode* >::iterator ite = head->child.begin();
 				for(;ite!=head->child.end();ite++)
 				{
