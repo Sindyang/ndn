@@ -203,7 +203,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 	}
 	// 2018.5.11 added by sy
 	if(root->lane[0] != '/')
-		return;
+		return NULL;
 	cout<<curLane<<endl;
 	InterestTreeNode* result = NULL;
 	queue<InterestTreeNode*> q;
