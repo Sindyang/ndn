@@ -342,7 +342,7 @@ void nrProducer::addAccident(double iType)
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
-	for(double dTime = /*start + */250; dTime </* end - */610; dTime += iType)
+	for(double dTime = start + 250; dTime < end - 50; dTime += iType)
 	{
 		ScheduleAccident(dTime);
 		//std::cout<<"(nrProducer.cc-addAccident) NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<" start "<<start<<" end "<<end<<endl;
