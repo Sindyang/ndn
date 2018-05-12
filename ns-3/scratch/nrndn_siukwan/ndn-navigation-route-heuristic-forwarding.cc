@@ -43,11 +43,11 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	    .SetParent<GreenYellowRed> ()
 	    .AddConstructor<NavigationRouteHeuristic>()
 	    .AddAttribute ("HelloInterval", "HELLO messages emission interval.",
-	            TimeValue (Seconds (1)),
+	            TimeValue (Seconds (5)),
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (2),
+	            UintegerValue (6),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 
