@@ -940,7 +940,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[15] = {11,13,18,25,34,49,63,66,127,149,156,163,165,179,207};
+		uint32_t array[15] = {21,24,34,47,64,92,117,123,236,276,290,302,305,332,384};
 		for(uint32_t index = 0; index < certain_count; index++)
 		{
 
