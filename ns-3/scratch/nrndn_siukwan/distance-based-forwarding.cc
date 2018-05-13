@@ -50,7 +50,7 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	       		 MakePointerAccessor (&DistanceBasedForwarding::m_uniformRandomVariable),
 	       		 MakePointerChecker<UniformRandomVariable> ())
 	    .AddAttribute ("TTLMax", "This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded",
-	    		         UintegerValue (2),
+	    		         UintegerValue (3),
 	    		         MakeUintegerAccessor (&DistanceBasedForwarding::m_TTLMax),
 	    		         MakeUintegerChecker<uint32_t> ())
 	            ;
