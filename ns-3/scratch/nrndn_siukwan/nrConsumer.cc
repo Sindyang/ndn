@@ -261,15 +261,27 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
 	//std::cout<<"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature<<"\t forwarded by("<<nrheader.getX()<<","<<nrheader.getY()<<")\n";
 
+	std::cout<<"(nrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature;
+
 	//NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
 
 	m_dataReceivedSeen.Put(signature,true);
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
+	
 	if(IsInterestData(data->GetName()))
+	{
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
+		// 2018.1.25 只统计感兴趣的延迟
+		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
+		std::cout<<" 感兴趣 ";
+	}
 	else
+	{
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
+		std::cout<<" 不感兴趣 ";
+	}
+	std::cout<<" 延迟为 "<<delay;
+	std::cout<<std::endl;
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
 }
 
