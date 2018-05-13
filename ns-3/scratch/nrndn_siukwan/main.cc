@@ -910,7 +910,7 @@ void nrndnExample::InstallTestApplications()
 void nrndnExample::InstallTraffics()
 {
 	SeedManager::SetSeed(random_seed);
-	UniformVariable rnd(0,nodes.GetN()-16);
+	UniformVariable rnd(0,nodes.GetN()-248);
 	std::cout<<"插入事件："<<accidentNum<<endl;
 	if(random_accident)
 	{
