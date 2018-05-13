@@ -1236,7 +1236,8 @@ NavigationRouteHeuristic::GetShortestPath(vector<string> forwardroutes)
 		
 		if(shortroutes.size() > 1)
 		{
-			NS_ASSERT_MSG(false,"具有多个最佳路段");
+			//2018.5.13 在真实地图中，存在多条最佳路线
+			//NS_ASSERT_MSG(false,"具有多个最佳路段");
 		}
 		else if(shortroutes.size() == 0)
 		{
