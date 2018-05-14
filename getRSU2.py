@@ -27,8 +27,8 @@ def get_road(in_file):
 				continue
 
 			#去除 只有一个路段终点的Junction
-			if each_part[6][0] == 'i':
-				continue
+			#if each_part[6][0] == 'i':
+				#continue
 				
 			road = road[len(incLanes):]
 			road = road.rstrip('"')
