@@ -924,7 +924,7 @@ void nrndnExample::InstallTraffics()
 	// RSU不产生数据包 需要减去RSU的数量
 	UniformVariable rnd(0,nodes.GetN()-298);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
@@ -951,7 +951,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {4,15,60,77,112,155,171,173,187,196,215,241,270,284,322,328,332,347,359,382};
+		uint32_t array[15] = {2,3,23,42,63,122,150,240,285,418,446,454,469,485,499};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
