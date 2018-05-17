@@ -174,7 +174,7 @@ void nrConsumer::SendPacket()
 	if(currentType == "RSU")
 	{
 		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
-		//return;
+		return;
 	}
 	
 	NS_LOG_FUNCTION_NOARGS ();
