@@ -244,6 +244,11 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
 	//consumer产生兴趣包，在路由层进行转发
 	NS_LOG_DEBUG("Get interest packet from APPLICATION");
+	
+	
+	NS_ASSERT_MSG(m_node->GetId() < 800,"RSU should not send hello packet");
+		
+	
 	// This is the source interest from the upper node application (eg, nrConsumer) of itself
 	// 1.Set the payload
 	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));

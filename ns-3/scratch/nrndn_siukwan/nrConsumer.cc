@@ -173,7 +173,7 @@ void nrConsumer::SendPacket()
 	//RSU的Type为”RSU" RSU不发送兴趣包
 	if(currentType == "RSU")
 	{
-		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
+		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
 		return;
 	}
 	
