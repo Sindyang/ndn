@@ -234,7 +234,11 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 				}
 				// if语句 added by sy 2018.5.10
 				if(head != NULL)
+				{
 					delete head;//删除该结点
+					head = NULL;
+				}
+					
 			}
 		}
 		//找到就跳出
@@ -275,7 +279,11 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 	//在删除当前节点
 	// if语句 added by sy 2018.5.10
 	if(deleteNode != NULL)
+	{
 		delete deleteNode;
+		deleteNode = NULL;
+	}
+		
 }
 
 //序列化#层数$路段1^id1^id2^id3$路段2^id4^id5
