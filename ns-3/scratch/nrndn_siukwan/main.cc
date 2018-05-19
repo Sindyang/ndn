@@ -202,8 +202,8 @@ int main (int argc, char **argv)
 //构造函数
 nrndnExample::nrndnExample () :
   random_seed(54321),
-  certain_count(20), //定点数量
-  certain_interval(15),//定点事件间隔
+  certain_count(27), //定点数量
+  certain_interval(10),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
@@ -940,7 +940,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {3,8,23,36,54,93,103,128,157,161,166,168,304,348,440,475,487,499,557,589};
+		uint32_t array[27] = {3,8,23,36,54,93,103,115,128,157,161,163,166,168,297,304,313,348,438,440,475,487,489,499,513,557,589};
 		for(uint32_t index = 0; index < certain_count; index++)
 		{
 
