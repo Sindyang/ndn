@@ -52,6 +52,9 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	//cout<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
+		// 2018.1.15 忽略RSU
+		if(idx >= 600)
+			continue;
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
 		//cout << "producer " << endl;
@@ -61,14 +64,14 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		else
 		{//非活跃节点直接跳过，避免段错误
 			idx++;
-			cout << "no active" << endl;
+			//cout << "no active" << endl;
 			continue;
 		}
 		//cout << "IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{	
 			++interestSize;
-			//cout<<idx<<" ";
+			cout<<idx<<" ";
 		}
 		idx++;
 		//cout << "idx++ " << endl;

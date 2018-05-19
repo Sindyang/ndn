@@ -173,7 +173,7 @@ void nrConsumer::SendPacket()
 	//RSU的Type为”RSU" RSU不发送兴趣包
 	if(currentType == "RSU")
 	{
-		cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
+		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
 		return;
 	}
 	
@@ -270,6 +270,9 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	
 	if(IsInterestData(data->GetName()))
 	{
+		//2018.5.19 
+		if(m_node->GetId() >= 600)
+			continue;
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
 		// 2018.1.25 只统计感兴趣的延迟
 		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
