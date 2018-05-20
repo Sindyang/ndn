@@ -247,20 +247,20 @@ pair<uint32_t,double> nrUtils::GetAverageForwardTimes()
 
 	for (it1 = forwardCounter.begin(); it1 != forwardCounter.end(); ++it1)
 	{
-		cout<<"车辆ID 为"<<it1->first<<endl;
+		//cout<<"车辆ID 为"<<it1->first<<endl;
 		messageNum += it1->second.size();
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
 		{
 			forwardTimes += it2->second;
-			cout<<"("<<it2->first<<" "<<forwardTimes<<") ";
+			//cout<<"("<<it2->first<<" "<<forwardTimes<<") ";
 		}
-		cout<<endl;
+		//cout<<endl;
 	}
 
 	if(messageNum == 0)
 		return make_pair(forwardTimes,0);
 
-	cout<<"total forwardTimes "<<forwardTimes<<" total messageNum "<<messageNum<<endl;
+	//cout<<"total forwardTimes "<<forwardTimes<<" total messageNum "<<messageNum<<endl;
 	double average = forwardTimes / messageNum;
 
 	return make_pair(forwardTimes,average);
