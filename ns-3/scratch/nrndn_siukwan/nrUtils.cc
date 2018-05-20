@@ -53,7 +53,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		// 2018.1.15 忽略RSU
-		if(idx >= 600)
+		if(idx >= 500)
 			continue;
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
@@ -247,16 +247,20 @@ pair<uint32_t,double> nrUtils::GetAverageForwardTimes()
 
 	for (it1 = forwardCounter.begin(); it1 != forwardCounter.end(); ++it1)
 	{
+		cout<<"车辆ID 为"<<it1->first<<endl;
 		messageNum += it1->second.size();
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
 		{
 			forwardTimes += it2->second;
+			cout<<"("<<it2->first<<" "<<forwardTimes<<") ";
 		}
+		cout<<endl;
 	}
 
 	if(messageNum == 0)
 		return make_pair(forwardTimes,0);
 
+	cout<<"total forwardTimes "<<forwardTimes<<" total messageNum "<<messageNum<<endl;
 	double average = forwardTimes / messageNum;
 
 	return make_pair(forwardTimes,average);

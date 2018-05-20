@@ -49,7 +49,7 @@ double SumoNodeSensor::getX()
 	Vector pos = mobility->GetPosition();
 	Ptr<Node> node = this->GetObject<Node>();
 	uint32_t m_id = node->GetId();
-	cout<<"(SumoNodeSensor.cc-getX) m_id "<<m_id<<" "<<pos.x<<" "<<pos.y<<endl;
+	//cout<<"(SumoNodeSensor.cc-getX) m_id "<<m_id<<" "<<pos.x<<" "<<pos.y<<endl;
 	NS_ASSERT_MSG(&m_sumodata->GetTrace(m_id,pos)!=NULL,"SumoNodeSensor::getX():Cannot find Trace!!");
 	NS_ASSERT_MSG(m_sumodata->GetTrace(m_id,pos).x == pos.x,"Can not find coordinate x");
 	return m_sumodata->GetTrace(m_id,pos).x;
