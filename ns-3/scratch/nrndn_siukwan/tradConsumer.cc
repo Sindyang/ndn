@@ -99,7 +99,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	if(IsInterestData(data->GetName()))
 	{
 		//2018.5.19 
-		if(m_node->GetId() >= 500)
+		if(m_node->GetId() >= 600)
 			return;
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
 		// 2018.1.25 只统计感兴趣的延迟
