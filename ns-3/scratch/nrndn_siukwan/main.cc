@@ -912,7 +912,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN()-527);
 	std::cout<<"插入事件："<<accidentNum<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
@@ -940,7 +940,8 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[27] = {3,8,23,36,54,93,103,115,128,157,161,163,166,168,297,304,313,348,438,440,475,487,489,499,513,557,589};
+		uint32_t array[50] = {3,8,9,23,36,45,46,53,54,67,72,93,103,115,125,128,139,157,161,163,166,168,169,250,276,297,300,304,313,324,330,332,348,354,
+		397,438,440,454,475,484,487,489,494,499,513,517,521,549,557,589};
 		for(uint32_t index = 0; index < certain_count; index++)
 		{
 
