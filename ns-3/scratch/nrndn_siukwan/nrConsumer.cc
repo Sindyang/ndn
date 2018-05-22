@@ -272,7 +272,10 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	{
 		//2018.5.19 
 		if(m_node->GetId() >= 800)
+		{
+			std::cout<<endl;
 			return;
+		}
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
 		// 2018.1.25 只统计感兴趣的延迟
 		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);

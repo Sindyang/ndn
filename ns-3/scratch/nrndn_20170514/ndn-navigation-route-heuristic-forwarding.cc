@@ -1576,8 +1576,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 {
 	if(Face::APPLICATION == face->GetFlags())
 	{
-		NS_ASSERT_MSG(false,"RSU收到了自己发送的数据包");
-		return;
+		//NS_ASSERT_MSG(false,"RSU收到了自己发送的数据包");
+		//return;
 	}
 	
 	Ptr<const Packet> nrPayload	= data->GetPayload();
