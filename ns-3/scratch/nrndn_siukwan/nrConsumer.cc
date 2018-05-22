@@ -271,7 +271,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	if(IsInterestData(data->GetName()))
 	{
 		//2018.5.19 
-		if(m_node->GetId() >= 800)
+		if(m_node->GetId() >= 600)
 		{
 			std::cout<<" 感兴趣"<<endl;
 			return;
