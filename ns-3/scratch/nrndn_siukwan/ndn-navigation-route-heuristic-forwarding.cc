@@ -811,7 +811,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					 */
 					FwHopCountTag hopCountTag;
 					data->GetPayload()->PeekPacketTag(hopCountTag);
-					isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
+					isTTLReachMax = (hopCountTag.Get() >= m_TTLMax);
 					if (isTTLReachMax)
 					{
 						cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() 
