@@ -251,7 +251,7 @@ void nrProducer::OnSendingTrafficData()
 	dataName->append(m_postfix);//m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(40.0));
+	data->SetFreshness(Seconds(25.0));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue());//just generate a random number
@@ -342,7 +342,7 @@ void nrProducer::addAccident(double iType)
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
-	for(double dTime = 200; dTime < end - 30; dTime += iType)
+	for(double dTime = 150; dTime < end - 30; dTime += iType)
 	{
 		ScheduleAccident(dTime);
 		//std::cout<<"(nrProducer.cc-addAccident) NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<" start "<<start<<" end "<<end<<endl;
