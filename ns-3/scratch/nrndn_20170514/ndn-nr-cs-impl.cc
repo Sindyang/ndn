@@ -223,7 +223,8 @@ bool NrCsImpl::AddDataSource(uint32_t signature,Ptr<const Data> data)
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
-	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutDataSource,this,signature);
+	//2018.5.25 在仿真地图中去掉数据源的有效时间
+	//Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutDataSource,this,signature);
 	//std::cout<<"(cs-impl.c-AddDataSource) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
