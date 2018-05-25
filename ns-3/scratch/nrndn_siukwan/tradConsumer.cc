@@ -99,7 +99,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	if(IsInterestData(data->GetName()))
 	{
 		//2018.5.19 
-		if(m_node->GetId() >= 800)
+		if(m_node->GetId() >= 500)
 		{
 			std::cout<<" 感兴趣"<<endl;
 			return;
