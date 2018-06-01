@@ -84,6 +84,15 @@ public:
 	OnInterest_RSU(Ptr<Face> face,Ptr<Interest> interest);
 	
 	void
+	OnDelete_RSU(Ptr<Face> face,Ptr<Interest> deletepacket);
+	
+	void 
+	Interest_InInterestRoute(Ptr<Interest> interest,vector<std::string> routes);
+	
+	void
+	Interest_NotInInterestRoute(Ptr<Interest> interest, vector<std::string> routes);
+	
+	void
 	DetectDatainCache(vector<string> futureinterest,string currentroute);
 	
 	void
@@ -150,6 +159,7 @@ public:
 	enum
 	{
 		HELLO_MESSAGE = 2,
+		DELETE_MESSAGE = 3,
 	};
 
 protected:
@@ -333,6 +343,9 @@ private:
 	Ptr<pit::Entry>
 	WillInterestedData(Ptr<const Data> data);
 	
+	Ptr<pit::Entry>
+	WillInterestedDataInSecondPit(Ptr<const Data> data);
+	
 	/**
 	 * \brief	drop the data
 	 * 			Simply do nothing
@@ -466,6 +479,10 @@ private:
 	 *                              True means needs to reset to 0;
 	 */
 	void ForwardDataPacket(Ptr<const Data> src,std::vector<uint32_t> newPriorityList);
+	
+	
+	// 2018.3.3 生成删除包
+	void NodesToDeleteFromTable(uint32_t sourceId);
 
 	/**
 	 * \brief	Send the interest packet immediately,
@@ -577,9 +594,17 @@ private:
 	
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 	
+	std::unordered_set<uint32_t> alreadyPassed;//2018.3.17 用于记录已经通过该RSU的车辆
+	
 	std::unordered_set<std::string> routes_front_pre;
 	
 	std::unordered_set<std::string> routes_behind_pre;
+	
+	//2018.3.2
+	std::unordered_map<uint32_t,std::string> nodeWithRoutes;
+	
+	UniformVariable m_rand; ///< @brief nonce generator
+	
 };
 } /* namespace nrndn */
 } /* namespace fw */

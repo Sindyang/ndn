@@ -142,6 +142,7 @@ private:
   double arrivalRate;
   double averageForwardTimes;
   double averageInterestForwardTimes;
+  double averageDeleteForwardTimes;
   double averageDelay;
   uint32_t SumForwardTimes;
 
@@ -227,6 +228,7 @@ nrndnExample::nrndnExample () :
   disinterestRate(0),
   arrivalRate(0),
   averageForwardTimes(0),
+  averageDeleteForwardTimes(0),
   averageInterestForwardTimes(0),
   averageDelay(0),
   SumForwardTimes(0),
@@ -530,19 +532,23 @@ nrndnExample::Report ()
 
 
 	std::cout<<std::left<<std::setw(11)<<"avgIntFwd"
+			<<std::left<<std::setw(11)<<"avgDelFwd"
 			<<std::left<<std::setw(10)<<"SumFwd"
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
 			<<std::left<<std::setw(11)<<"HelloCount"
+			<<std::left<<std::setw(11)<<"DeleteSnt"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
 			<<std::left<<std::setw(11)<<"ByteSnt"
 			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
 
 	std::cout<<std::left<<std::setw(11)<<averageInterestForwardTimes
+			<<std::left<<std::setw(11)<<averageDeleteForwardTimes
 			<<std::left<<std::setw(10)<<SumForwardTimes
 			<<std::left<<std::setw(13)<<nrUtils::InterestByteSent
 			<<std::left<<std::setw(11)<<nrUtils::HelloByteSent
 			<<std::left<<std::setw(11)<<nrUtils::HelloCount
+			<<std::left<<std::setw(11)<<nrUtils::DeleteByteSent
 			<<std::left<<std::setw(11)<<nrUtils::DataByteSent
 			<<std::left<<std::setw(11)<<nrUtils::ByteSent
 			<<std::left<<std::setw(11)<<disinterestRate<<endl;
@@ -754,12 +760,12 @@ void
 nrndnExample::InstallMobility()
 {
 	//double maxTime = 0;
-	//std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在安装mobility.."<<std::endl;
 	mobility->Install();
-	//std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)正在读取总时间："<<std::endl;
 	readTotalTime = mobility->GetReadTotalTime();
 	totalTime = readTotalTime < totalTime ? readTotalTime : totalTime;
-	//std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
+	std::cout<<"(main.cc-InstallMobility)总时间："<<totalTime<<std::endl;
 }
 
 
@@ -771,7 +777,7 @@ nrndnExample::InstallNrndnApplications ()
 	ndn::AppHelper consumerHelper ("ns3::ndn::nrndn::nrConsumer");
 	//Ndn application for sending out Interest packets at a "constant" rate (Poisson process)
 	consumerHelper.SetAttribute ("Frequency", DoubleValue (interestFrequency));
-	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (virtualPayloadSize));//从virtualPayloadSize改为0,因为兴趣树已经包含在header中
+	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (0));//从virtualPayloadSize改为0,因为兴趣树已经包含在header中
 	//If you send the same interest packet for several times, the data producer will
 	//response your interest packet respectively. It may be a waste. So we can set Consumer::MaxSeq
 	//To limit the times interest packet send. For example,just 1.0
@@ -915,10 +921,10 @@ void nrndnExample::InstallTraffics()
 {
 	SeedManager::SetSeed(random_seed);
 	// 2017.12.29 added by sy
-	// RSU不产生数据包 在该地图中，RSU的数量为16
-	UniformVariable rnd(0,nodes.GetN()-16);
+	// RSU不产生数据包 需要减去RSU的数量
+	UniformVariable rnd(0,nodes.GetN()-36);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
@@ -945,7 +951,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {4,15,60,77,112,155,171,173,187,196,215,241,270,284,322,328,332,347,359,382};
+		uint32_t array[20] = {120,179,367,444,459,529,560,611,619,636,687,699,702,723,733,734,778,79,794,795};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
@@ -1045,10 +1051,14 @@ nrndnExample::getStatistic()
 	//6. get average interest forward times
 	pair<uint32_t,double> AverageInterestForwardPair = nrUtils::GetAverageInterestForwardTimes();
 	averageInterestForwardTimes = AverageInterestForwardPair.second;
+	
+	//7. get average delete forward times
+	pair<uint32_t,double> AverageDeleteForwardPair = nrUtils::GetAverageDeleteForwardTimes();
+	averageDeleteForwardTimes = AverageDeleteForwardPair.second;
 
 	disinterestRate=nrUtils::GetAverageDisinterestedRate();
 
-	SumForwardTimes = AverageDataForwardPair.first + AverageInterestForwardPair.first;
+	SumForwardTimes = AverageDataForwardPair.first + AverageInterestForwardPair.first + AverageDeleteForwardPair.first;
 }
 
 

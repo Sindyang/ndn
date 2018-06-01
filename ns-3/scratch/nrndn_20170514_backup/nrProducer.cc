@@ -66,7 +66,7 @@ TypeId nrProducer::GetTypeId()
 
 nrProducer::nrProducer():
 		m_rand (0, std::numeric_limits<uint32_t>::max ()),
-		m_virtualPayloadSize(0),
+		m_virtualPayloadSize(1024),
 		m_signature(0)
 {
 	//NS_LOG_FUNCTION(this);
@@ -342,10 +342,10 @@ void nrProducer::addAccident(double iType)
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 
-	for(double dTime = start + 200; dTime < end - 50; dTime += iType)
+	for(double dTime = 250; dTime < 600; dTime += iType)
 	{
 		ScheduleAccident(dTime);
-		//std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+		//std::cout<<"(nrProducer.cc-addAccident) NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<" start "<<start<<" end "<<end<<endl;
 	}
 	return;
 }

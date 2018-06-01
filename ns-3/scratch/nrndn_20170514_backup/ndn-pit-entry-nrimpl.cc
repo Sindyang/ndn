@@ -42,13 +42,14 @@ EntryNrImpl::~EntryNrImpl ()
  * lane为兴趣包来时的路段,id为兴趣包的源节点
  */
 std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
-EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
+EntryNrImpl::AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id)
 {
 	//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
 	std::unordered_map<std::string,std::unordered_set<uint32_t> > ::iterator incominglane = m_incomingnbs.find(lane);
 	//未找到该路段
 	if(incominglane == m_incomingnbs.end())
 	{
+		flag = false;
 		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors;
 		//添加邻居信息
@@ -67,6 +68,7 @@ EntryNrImpl::AddIncomingNeighbors(std::string lane,uint32_t id)
 		std::unordered_set<uint32_t>::iterator itcomingnb = neighbors.find(id);
 		if(itcomingnb == neighbors.end())
 		{
+			flag = false;
 			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
 			incominglane->second.insert(id);
 			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该节点"<<std::endl;
@@ -119,6 +121,29 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
 	}
 	//std::cout<<std::endl;
 }
+
+/*
+ * 2018.3.23
+ * 检查节点是否在该表项中
+ */
+bool 
+EntryNrImpl::DetectId(uint32_t id)
+{
+	bool flag = false;
+	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
+	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
+	{
+		std::unordered_set<uint32_t> neighbors = it->second;
+		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
+		if(incomingnb != neighbors.end())
+		{
+			flag = true;
+			break;
+		}
+	}
+	return flag;
+}
+	
 
 std::string
 EntryNrImpl::GetDataName()

@@ -103,7 +103,7 @@ std::string NrPitImpl::getCurrentLane()
  * id为兴趣包源节点
  */
 bool 
-NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
+NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id)
 {
 	std::size_t found = forwardRoute.find(" ");
 	std::string currentroute = forwardRoute.substr(0,found);
@@ -113,43 +113,41 @@ NrPitImpl::UpdateRSUPit(std::string junction,const std::string forwardRoute,cons
 	if(it != interestRoute.end())
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段为兴趣路段"<<std::endl;
-		bool result = UpdatePrimaryPit(interestRoute,id,currentroute);
+		bool result = UpdatePrimaryPit(IsExist,interestRoute,id,currentroute);
 		return result;
 	}
 	//该兴趣包来时的路段不是兴趣路段，RSU为借路RSU
 	else
 	{
 		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 兴趣包来时的路段不是兴趣路段"<<std::endl;
-		//更新副待处理兴趣列表 这个函数还没写
-		// update secondary pit
-		
-		// 其实我觉得这里应该只有一条路
-		bool result = true;
 		std::pair<std::vector<std::string>,std::vector<std::string> > collection = getInterestRoutesReadytoPass(junction,forwardRoute,interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
 		
-		std::cout<<"(NrPitImpl.cc-UpdateRSUPit)需要记录在副表中的兴趣路线为 "<<std::endl;
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit)需要记录在副表中的兴趣路线为 ";
 		for(uint32_t i = 0;i < futureInterestRoutes.size();i++)
 		{
 			std::cout<<futureInterestRoutes[i]<<" ";
 		}
 		std::cout<<std::endl;
 		
-		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 "<<std::endl;
+		bool result = UpdateSecondPit(IsExist,futureInterestRoutes,id,currentroute);
+		
+		std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
 		for(uint32_t i = 0;i < unpassedRoutes.size();i++)
 		{
 			std::cout<<unpassedRoutes[i]<<" ";
 		}
 		std::cout<<std::endl;
 		
-		/*for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
+		//NS_ASSERT_MSG(unpassedRoutes.size() <= 1,"未来会通过的兴趣路线大于1");
+		
+		for(std::vector<std::string>::iterator it = unpassedRoutes.begin();it != unpassedRoutes.end();it++)
 		{
-			result = UpdatePrimaryPit(interestRoute,id,*it);
+			std::cout<<"(NrPitImpl.cc-UpdateRSUPit) 未来会再次通过该节点"<<std::endl;
+			result &= UpdatePrimaryPit(IsExist,interestRoute,id,*it);
 			result &= result;
-		}*/
-		
-		
+		}
 		getchar();
 		return result;
 	}
@@ -191,8 +189,9 @@ NrPitImpl::getInterestRoutesReadytoPass(const std::string junction,const std::st
 		}
 		else
 		{
-			//TEST IT
-			NS_ASSERT_MSG(false,"不知道为啥会进入这部分");
+			futureInterestRoutes.clear();
+			std::cout<<"(NrPitImpl.cc-getInterestRoutesReadytoPass) 兴趣路线与转发路线中的兴趣路线不相符"<<std::endl;
+			break;
 		}
 	}
 	std::cout<<std::endl;
@@ -239,7 +238,7 @@ NrPitImpl::SplitString(const std::string& s,std::vector<std::string>& v,const st
  * currentRoute:兴趣包的源节点所对应的车辆在未来会经过的路段
  */
 bool 
-NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
+NrPitImpl::UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry>>::iterator pit;
@@ -266,9 +265,14 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 			//PIT中已经有该路段
 			if(pitName.toUri() == *it)
 			{
+				bool flag = true;
 				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
 				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
-				pitEntry->AddIncomingNeighbors(currentRoute,id);
+				pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
+				if(!flag)
+				{
+					IsExist = false;
+				}
 				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 				break;
 			}
@@ -276,6 +280,7 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 		//interestRoute不在PIT中
 		if(pit == m_pitContainer.end())
 		{
+			IsExist = false;
 			//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
 			//创建一个新的表项
 			Ptr<Name> name = ns3::Create<Name>('/'+*it);
@@ -289,18 +294,154 @@ NrPitImpl::UpdatePrimaryPit(const std::vector<std::string>& interestRoute, const
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
 		    m_pitContainer.push_back(entry);
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
-			pitEntry->AddIncomingNeighbors(currentRoute,id);
+			bool flag = true;
+			pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
+			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
+			//getchar();
+		}
+		//std::cout<<std::endl;
+	}
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
+	//showPit();
+	//2018.4.6 检查源节点是否已经处于副PIT列表中
+	if(IsExist == false)
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 检查源节点 "<<id<<"是否在副PIT列表中"<<std::endl;
+		//DetectSecondPit(IsExist,interestRoute,id,currentRoute);
+	}
+	//getchar();
+	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
+	return true;
+}
+
+/*
+ * 2018.4.6
+ * 检查源节点是否已经处于副PIT列表中
+**/
+void
+NrPitImpl::DetectSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+{
+	IsExist = false;
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::vector<std::string>::const_iterator it = std::find(interestRoute.begin(),interestRoute.end(),currentRoute);
+	for(;it != interestRoute.end();++it)
+	{
+		for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				bool flag = pitEntry->DetectId(id);
+				if(flag)
+				{
+					IsExist = true;
+					std::cout<<"(ndn-nr-pit-impl.cc-DetectSecondPit) 源节点 "<<id<<"在副PIT中。不用再转发兴趣包"<<std::endl;
+				}	
+			}
+		}
+	}
+}
+
+/*
+ * 2017.3.1 added by sy
+ * 更新副待处理兴趣列表
+ * interestRoute:兴趣包的兴趣路线
+ * id:兴趣包的源节点
+ * currentRoute:兴趣包来时的路段
+ */
+bool NrPitImpl::
+UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute)
+{
+	std::ostringstream os;
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::vector<std::string>::const_iterator it = interestRoute.begin();
+	for(;it != interestRoute.end();++it)
+	{
+		//std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) 兴趣包的兴趣路段为 "<<*it<<std::endl;
+		for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				//std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) PIT中有该路段"<<std::endl;
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				bool flag = true;//若flag为false,则证明源节点不在副PIT列表中
+				pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
+				if(!flag)
+				{
+					IsExist = false;
+				}
+				os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+				break;
+			}
+		}
+		//interestRoute不在PIT中
+		if(pit == m_secondPitContainer.end())
+		{
+			//std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit) interestRoute "<<*it<<"不在PIT中"<<std::endl;
+			//创建一个新的表项
+			IsExist = false;
+			Ptr<Name> name = ns3::Create<Name>('/'+*it);
+			Ptr<Interest> interest = ns3::Create<Interest>();
+			interest->SetName(name);
+			interest->SetInterestLifetime(Time::Max());//never expire
+			
+			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
+		    Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
+			
+			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,Seconds(10.0)) ;
+		    m_secondPitContainer.push_back(entry);
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(entry);
+			bool flag = true;
+			pitEntry->AddIncomingNeighbors(flag,currentRoute,id);
 			os<<entry->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
 		   // std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit) 兴趣的名字: "<<uriConvertToString(entry->GetInterest()->GetName().toUri())<<" "<<"add Neighbor "<<id<<std::endl;
 			//getchar();
 		}
 		std::cout<<std::endl;
 	}
-	std::cout<<"(ndn-nr-pit-impl.cc-UpdatePrimaryPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
-	showPit();
-	//getchar();
-	NS_LOG_DEBUG("update PrimaryPit:"<<os.str());
+	std::cout<<"(ndn-nr-pit-impl.cc-UpdateSecondPit)添加后 NodeId "<<id<<" 来时的路段为 "<<currentRoute<<std::endl;
+	//showSecondPit();
+	//检查是否在主PIT中
+	if(IsExist == false)
+	{
+		DetectPrimaryPit(IsExist,interestRoute,id);
+	}
 	return true;
+}
+
+/*
+ * 2018.3.23
+ * 检查源节点是否已经处于主PIT列表中
+**/
+void
+NrPitImpl::DetectPrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id)
+{
+	IsExist = false;
+	std::vector<Ptr<Entry>>::iterator pit;
+	std::vector<std::string>::const_iterator it = interestRoute.begin();
+	for(;it != interestRoute.end();++it)
+	{
+		for(pit = m_pitContainer.begin();pit != m_pitContainer.end();++pit)
+		{
+			const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
+			//PIT中已经有该路段
+			if(pitName.toUri() == *it)
+			{
+				Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+				bool flag = pitEntry->DetectId(id);
+				if(flag)
+				{
+					IsExist = true;
+					std::cout<<"(ndn-nr-pit-impl.cc-DetectPrimaryPit) 源节点 "<<id<<"在主PIT中。不用再转发兴趣包"<<std::endl;
+				}	
+			}
+		}
+	}
 }
 
 void 
@@ -315,13 +456,25 @@ NrPitImpl::showPit()
 	std::cout<<std::endl;
 }
 
+void
+NrPitImpl::showSecondPit()
+{
+	std::cout<<"showSecondPit"<<std::endl;
+	for(uint32_t i = 0;i<m_secondPitContainer.size();++i)
+	{
+		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_secondPitContainer[i]);
+		pitEntry_siu->listPitEntry();
+	}
+	std::cout<<std::endl;
+}
 
 /*
  * 2017.12.24
  * added by sy
  * lane为车辆当前所在路段
  */
-std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
+std::pair<bool,uint32_t> 
+NrPitImpl::DeleteFrontNode(const std::string lane,const uint32_t& id)
 {
 	//showPit();
 	//std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode)"<<std::endl;
@@ -373,10 +526,48 @@ std::pair<bool,uint32_t> NrPitImpl::DeleteFrontNode(const std::string lane,const
 		std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) "<<lane<<" 不在PIT中"<<std::endl;
 		return std::pair<bool,uint32_t>(false,id);
 	}
-	showPit();
+	//showPit();
 	//getchar();
 	return std::pair<bool,uint32_t>(true,id);
 }
+
+bool 
+NrPitImpl::DeleteSecondPIT(const std::string lane,const uint32_t& id)
+{
+	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT)"<<std::endl;
+	showSecondPit();
+	std::vector<Ptr<Entry> >::iterator pit;
+	std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 准备删除节点 "<<id<<"。At time "<<Simulator::Now().GetSeconds()<<std::endl;
+	bool flag = false;
+	for(pit = m_secondPitContainer.begin();pit != m_secondPitContainer.end();)
+	{
+		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+		pitEntry->CleanPITNeighbors(flag,id);
+		//若PIT的表项为空，可以删除该表项
+		const std::unordered_set<std::string>& interestroutes = pitEntry->getIncomingnbs();
+		//std::cout<<"(pit-impl.cc-DeleteFrontNode) 上一跳路段数目 "<<interestroutes.size()<<std::endl;
+		if(interestroutes.empty())
+		{
+			const name::Component &pitName=pitEntry->GetInterest()->GetName().get(0);
+			std::string pitname = pitName.toUri();
+			//std::cout<<"(ndn-nr-pit-impl.cc-DeleteFrontNode) PIT中 "<<pitname<<" 为空"<<std::endl;
+			pit = m_secondPitContainer.erase(pit);
+		}
+		else
+		{
+			pit++;
+		}
+	}
+	if(flag == false)
+	{
+		std::cout<<"(ndn-nr-pit-impl.cc-DeleteSecondPIT) 节点 "<<id<<"不在副PIT中"<<std::endl;
+		return false;
+	}
+	
+	showSecondPit();
+	return true;
+}
+
 
 std::unordered_map<std::string,std::unordered_set<std::string> >
 NrPitImpl::GetDataNameandLastRoute(std::unordered_set<std::string> routes_behind)
@@ -448,7 +639,24 @@ NrPitImpl::Find (const Name &prefix)
 	 }
 	return 0;
 }
-  
+
+//2018.3.12
+Ptr<Entry>
+NrPitImpl::FindSecondPIT(const Name &prefix)
+{
+	 NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
+	 std::vector<Ptr<Entry> >::iterator it;
+	  if(m_secondPitContainer.size() == 0)
+	 	return 0;
+	 //NS_ASSERT_MSG(m_secondPitContainer.size()!=0,"Empty pit container. No initialization?");
+	 for(it=m_secondPitContainer.begin();it!=m_secondPitContainer.end();++it)
+	 {
+		  //如果找到兴趣，就返回入口
+		 if((*it)->GetPrefix()==prefix)
+			 return *it;
+	 }
+	return 0;
+}
 
 Ptr<Entry>
 NrPitImpl::Create (Ptr<const Interest> header)

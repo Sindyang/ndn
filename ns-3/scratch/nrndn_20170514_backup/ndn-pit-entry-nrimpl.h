@@ -44,6 +44,8 @@ public:
 	 */
 	void RemoveAllTimeoutEvent();
 
+	// 检查节点是否在PIT表项中
+	bool DetectId(uint32_t id);
 	//删除PIT中指定id的邻居
 	void CleanPITNeighbors(bool& flag,uint32_t id);
 	void listPitEntry();
@@ -64,7 +66,7 @@ public:
 	AddIncomingNeighbors(uint32_t id);*/
 	
 	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
-	AddIncomingNeighbors(std::string lane,uint32_t id);
+	AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id);
 
 	/*const std::unordered_set<uint32_t>& getIncomingnbs() const
 	{
