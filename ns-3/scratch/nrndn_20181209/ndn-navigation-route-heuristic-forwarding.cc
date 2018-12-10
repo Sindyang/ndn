@@ -1382,15 +1382,18 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//获取数据包源节点
-	uint32_t nodeId=nrheader.getSourceId();
+	uint32_t nodeId = nrheader.getSourceId();
 	//获取数据包的随机编码
-	uint32_t signature=data->GetSignature();
+	uint32_t signature = data->GetSignature();
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
 	//获取数据包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
+	//获取数据包的优先级
+	uint32_t priority = data->GetPriority();
 	
-	cout<<endl<<"(forwarding.cc-OnData_Car) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData_Car) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<
+	" Signature "<<signature<<" Priority "<<priority<<endl;
 	
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	cout<<"(forwarding.cc-OnData_Car) 数据包的转发优先级列表为 ";
@@ -1399,6 +1402,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		cout<<pri[i]<<" ";
 	}
 	cout<<endl;
+	getchar();
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	pair<bool, double> msgdirection;
@@ -1589,12 +1593,16 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	uint32_t signature=data->GetSignature();
 	//获取当前节点Id
 	uint32_t myNodeId = m_node->GetId();
+	//获取当前优先级
+	uint32_t priority = data->GetPriority();
 	//获取数据包的转发节点id
 	uint32_t forwardId = nrheader.getForwardId();
 	std::string forwardLane = nrheader.getLane();
 	
-	
-	cout<<endl<<"(forwarding.cc-OnData_RSU) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<endl;
+	cout<<endl<<"(forwarding.cc-OnData_RSU) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<
+	" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<" Priority "<<data->GetPriority()<<endl;
+
+	getchar();
 	
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
@@ -2890,7 +2898,7 @@ NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		deletepacket->SetName(name);
 		
 		nodeWithRoutes.erase(it);
-		getchar();
+		//getchar();
 		
 		if(newPriorityList.empty())
 		{

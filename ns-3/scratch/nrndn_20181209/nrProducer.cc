@@ -19,6 +19,8 @@
 
 #include "ns3/ndnSIM/utils/ndn-fw-hop-count-tag.h"
 
+#include <sstream>
+
 NS_LOG_COMPONENT_DEFINE ("ndn.nrndn.nrProducer");
 
 namespace ns3
@@ -246,9 +248,15 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 
+	// 2018.12.10
+	// update content packet's name
+	m_prefix = getDataName(m_prefix);
+	
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
 	Ptr<Name> dataName = Create<Name>(m_prefix);
-	dataName->append(m_postfix);//m_postfix is "/", seems OK
+
+	//2018.12.10 sy:doesn't work
+	//dataName->append(m_postfix);//m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
 	data->SetFreshness(Seconds(10.0));
@@ -259,9 +267,13 @@ void nrProducer::OnSendingTrafficData()
 	{
 		data->SetKeyLocator(Create<Name>(m_keyLocator));
 	}
+
+	// 2018.12.10
+	// set priority
+	data->SetPriority(0);
 	
 	std::cout<<"(nrProducer.cc-OnSendingTrafficData) 源节点 "<<GetNode()->GetId()<<" at time "<<Simulator::Now().GetSeconds()
-	<<" 发送数据包:"<<m_prefix.toUri()<<" Signature "<<data->GetSignature()<<std::endl;
+	<<" 发送数据包:"<<data->GetName()<<" Signature "<<data->GetSignature()<<" Priority "<<data->GetPriority()<<std::endl;
 
 	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	FwHopCountTag hopCountTag;
@@ -276,6 +288,36 @@ void nrProducer::OnSendingTrafficData()
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 	m_face->ReceiveData(data);
 	m_transmittedDatas(data, this, m_face);
+}
+
+Name nrProducer::getDataName(Name m_prefix)
+{
+	string m_name;
+	//获得数据源的坐标
+	double x = m_sensor->getX();
+	double y = m_sensor->getY();
+	string m_x = numToString(x);
+	string m_y = numToString(y);
+	
+	//随机确定事件类型
+	UniformVariable randType(0,2);
+	uint32_t index = randType.GetValue();
+	//车辆状态相关的
+	if(index == 0)
+	{
+		UniformVariable randDistance(5000,8000);
+		uint32_t distance = randDistance.GetValue();
+		string m_distance = numToString(distance);
+		
+		m_name = "/vehicle/" + m_distance + "/" + m_x + "/" + m_y;
+	}
+	else
+	{
+		m_name =  "/road/" + m_x + "/" + m_y;
+	}
+	m_prefix = m_prefix + m_name;
+	cout<<"m_prefix is "<<m_prefix<<endl;
+	return Name(m_prefix);
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)
@@ -339,10 +381,10 @@ void nrProducer::addAccident(double iType)
 	}*/
 
 	//std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
-	double start= m_startTime.GetSeconds();
-	double end	= m_stopTime.GetSeconds();
+	//double start= m_startTime.GetSeconds();
+	//double end	= m_stopTime.GetSeconds();
 
-	for(double dTime = 250; dTime < 600; dTime += iType)
+	for(double dTime = 100; dTime < 600; dTime += iType)
 	{
 		ScheduleAccident(dTime);
 		//std::cout<<"(nrProducer.cc-addAccident) NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<" start "<<start<<" end "<<end<<endl;
@@ -382,6 +424,14 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	}
 	return (it2!=route.end());
 }
+
+string nrProducer::numToString(double value) {
+	ostringstream stream;
+	stream << value;
+	return stream.str();
+}
+
+
 
 } /* namespace nrndn */
 } /* namespace ndn */

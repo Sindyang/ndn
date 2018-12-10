@@ -123,6 +123,22 @@ public:
   GetSignature () const;
 
   /**
+   * 2018.12.9 added by sy
+   * @brief Set priority of the content object
+   * @param priority uint32_t number 0 means high priority, 1 means medium priority and 2 means low priority
+   */
+  void SetPriority (uint32_t priority);
+
+  /**
+   * 2018.12.9 added by sy
+   * @brief Get priority of the content object
+   * 
+   * Values for the priority totally depend on the calcuation
+   */
+  uint32_t 
+  GetPriority () const;
+
+  /**
    * @brief Set key locator
    * @param keyLocator name of the key
    */
@@ -184,6 +200,7 @@ private:
   Time m_freshness;
   Time m_timestamp;
   uint32_t m_signature; // 0, means no signature, any other value application dependent (not a real signature)
+  uint32_t m_priority; //2018.12.9 added by sy
   Ptr<Packet> m_payload;
   Ptr<Name> m_keyLocator;
 

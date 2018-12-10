@@ -295,6 +295,9 @@ Data::GetSerializedSize () const
      (2 + 2 + 4 + 2 + 2 + (2 + 0)));
   if (m_data->GetSignature () != 0)
     size += 4;
+  // 2018.12.9 added by sy
+  // add priority
+  size += 4;
   
   NS_LOG_INFO ("Serialize size = " << size);
   return size;
@@ -308,16 +311,19 @@ Data::Serialize (Buffer::Iterator start) const
   start.WriteU16 (GetSerializedSize () - 4); // length
   
   if (m_data->GetSignature () != 0)
-    {
-      start.WriteU16 (6); // signature length
-      start.WriteU16 (0xFF00); // "fake" simulator signature
-      start.WriteU32 (m_data->GetSignature ());
-    }
+  {
+    start.WriteU16 (6); // signature length
+    start.WriteU16 (0xFF00); // "fake" simulator signature
+    start.WriteU32 (m_data->GetSignature ());
+  }
   else
-    {
-      start.WriteU16 (2); // signature length
-      start.WriteU16 (0); // empty signature
-    }
+  {
+    start.WriteU16 (2); // signature length
+    start.WriteU16 (0); // empty signature
+  }
+
+  //2018.12.10 added by sy
+  start.WriteU32 (m_data->GetPriority ());
 
   // name
   NdnSim::SerializeName (start, m_data->GetName ());
@@ -349,19 +355,22 @@ Data::Deserialize (Buffer::Iterator start)
 
   uint32_t signatureLength = i.ReadU16 ();
   if (signatureLength == 6)
-    {
-      if (i.ReadU16 () != 0xFF00) // signature type
-        throw new DataException ();
-      m_data->SetSignature (i.ReadU32 ());
-    }
+  {
+    if (i.ReadU16 () != 0xFF00) // signature type
+      throw new DataException ();
+    m_data->SetSignature (i.ReadU32 ());
+  }
   else if (signatureLength == 2)
-    {
-      if (i.ReadU16 () != 0) // signature type
-        throw new DataException ();
-      m_data->SetSignature (0);
-    }
+  {
+    if (i.ReadU16 () != 0) // signature type
+      throw new DataException ();
+    m_data->SetSignature (0);
+  }
   else
     throw new DataException ();
+
+  //2018.12.10 added by sy
+  m_data->SetPriority(i.ReadU32 ());
 
   m_data->SetName (NdnSim::DeserializeName (i));
 

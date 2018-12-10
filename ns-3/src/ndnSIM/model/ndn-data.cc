@@ -33,6 +33,7 @@ namespace ndn {
 Data::Data (Ptr<Packet> payload/* = Create<Packet> ()*/)
   : m_name (Create<Name> ())
   , m_signature (0)
+  , m_priority (0)
   , m_payload (payload)
   , m_keyLocator (0)
   , m_wire (0)
@@ -48,6 +49,7 @@ Data::Data (const Data &other)
   , m_freshness (other.GetFreshness ())
   , m_timestamp (other.GetTimestamp ())
   , m_signature (other.GetSignature ())
+  , m_priority (other.GetPriority ())
   , m_payload (other.GetPayload ()->Copy ())
   , m_wire (0)
 {
@@ -123,6 +125,19 @@ uint32_t
 Data::GetSignature () const
 {
   return m_signature;
+}
+
+void 
+Data::SetPriority (uint32_t priority)
+{
+  m_priority = priority;
+  m_wire = 0;
+}
+
+uint32_t 
+Data::GetPriority () const
+{
+  return m_priority;
 }
 
 void
