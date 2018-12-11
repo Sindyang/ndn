@@ -276,14 +276,18 @@ void nrProducer::OnSendingTrafficData()
 	<<" 发送数据包:"<<data->GetName()<<" Signature "<<data->GetSignature()<<" Priority "<<data->GetPriority()<<std::endl;
 
 	NS_LOG_DEBUG("node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
+	
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
+	
 	//找出当前时刻，活跃节点数目和对该数据包感兴趣节点数目
 	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),data->GetSignature(), m_prefix.get(0).toUri());
 	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
+
 	cout<<"(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 "<<size_InterestSize.first<<" 感兴趣的节点总数为 "<<size_InterestSize.second<<std::endl<<std::endl;
 	getchar();
+
 	//当前对该数据包感兴趣节点总数
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 	m_face->ReceiveData(data);
@@ -302,10 +306,10 @@ Name nrProducer::getDataName(Name m_prefix)
 	//随机确定事件类型
 	UniformVariable randType(0,2);
 	uint32_t index = randType.GetValue();
-	//车辆状态相关的
+	//车辆状态相关
 	if(index == 0)
 	{
-		UniformVariable randDistance(5000,8000);
+		UniformVariable randDistance(4000,5000);
 		uint32_t distance = randDistance.GetValue();
 		string m_distance = numToString(distance);
 		

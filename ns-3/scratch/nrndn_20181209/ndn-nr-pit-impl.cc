@@ -626,17 +626,17 @@ Ptr<Entry>
 NrPitImpl::Find (const Name &prefix)
 {
 	//NS_ASSERT_MSG(false,"In NrPitImpl,NrPitImpl::Find (const Name &prefix) should not be invoked");
-	 NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
-	 std::vector<Ptr<Entry> >::iterator it;
-	  if(m_pitContainer.size() == 0)
+	NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
+	std::vector<Ptr<Entry> >::iterator it;
+	if(m_pitContainer.size() == 0)
 	 	return 0;
-	 //NS_ASSERT_MSG(m_pitContainer.size()!=0,"Empty pit container. No initialization?");
-	 for(it=m_pitContainer.begin();it!=m_pitContainer.end();++it)
-	 {
-		  //如果找到兴趣，就返回入口
-		 if((*it)->GetPrefix()==prefix)
-			 return *it;
-	 }
+	//NS_ASSERT_MSG(m_pitContainer.size()!=0,"Empty pit container. No initialization?");
+	for(it=m_pitContainer.begin();it!=m_pitContainer.end();++it)
+	{
+		//如果找到兴趣，就返回入口
+		if((*it)->GetPrefix()==prefix)
+			return *it;
+	}
 	return 0;
 }
 
@@ -644,17 +644,17 @@ NrPitImpl::Find (const Name &prefix)
 Ptr<Entry>
 NrPitImpl::FindSecondPIT(const Name &prefix)
 {
-	 NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
-	 std::vector<Ptr<Entry> >::iterator it;
-	  if(m_secondPitContainer.size() == 0)
+	NS_LOG_INFO ("Finding prefix"<<prefix.toUri());
+	std::vector<Ptr<Entry> >::iterator it;
+	if(m_secondPitContainer.size() == 0)
 	 	return 0;
-	 //NS_ASSERT_MSG(m_secondPitContainer.size()!=0,"Empty pit container. No initialization?");
-	 for(it=m_secondPitContainer.begin();it!=m_secondPitContainer.end();++it)
-	 {
-		  //如果找到兴趣，就返回入口
-		 if((*it)->GetPrefix()==prefix)
-			 return *it;
-	 }
+	//NS_ASSERT_MSG(m_secondPitContainer.size()!=0,"Empty pit container. No initialization?");
+	for(it=m_secondPitContainer.begin();it!=m_secondPitContainer.end();++it)
+	{
+		//如果找到兴趣，就返回入口
+		if((*it)->GetPrefix()==prefix)
+			return *it;
+	}
 	return 0;
 }
 
