@@ -127,6 +127,7 @@ void nrProducer::laneChange(std::string oldLane, std::string newLane)
 	NS_LOG_FUNCTION(this);
 	NS_LOG_INFO ("Lane change of node "<<GetNode()->GetId()
 			<<" : move from " << oldLane << " to " << newLane );
+			
 	this->SetAttribute("Prefix", StringValue('/' + newLane));
 	//if(m_face)
 	//{
@@ -248,11 +249,9 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 
-	// 2018.12.10
-	// update content packet's name
-	m_prefix = getDataName(m_prefix);
-	
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
+	
+	m_prefix = getDataName(m_prefix);
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 
 	//2018.12.10 sy:doesn't work
@@ -296,7 +295,7 @@ void nrProducer::OnSendingTrafficData()
 
 Name nrProducer::getDataName(Name m_prefix)
 {
-	string m_name;
+	string m_name = "";
 	//获得数据源的坐标
 	double x = m_sensor->getX();
 	double y = m_sensor->getY();
@@ -319,9 +318,9 @@ Name nrProducer::getDataName(Name m_prefix)
 	{
 		m_name =  "/road/" + m_x + "/" + m_y;
 	}
-	m_prefix = m_prefix + m_name;
-	cout<<"m_prefix is "<<m_prefix<<endl;
-	return Name(m_prefix);
+	
+	m_prefix = Name("/"+m_prefix.get(0).toUri()) + m_name;
+	return m_prefix;
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)

@@ -26,6 +26,7 @@
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
+#include <sstream>
 
 namespace ns3
 {
@@ -117,9 +118,12 @@ public:
 	virtual void
 	OnData_RSU(Ptr<Face> face, Ptr<Data> data);
 	
+	void OnData_RSU_old(Ptr<Face> face,Ptr<Data> data);
+	
 	virtual void
 	OnData_Car(Ptr<Face> face, Ptr<Data> data);
 
+	double stringToNum(const string& str);
 
 	/**
 	 * @brief Default constructor

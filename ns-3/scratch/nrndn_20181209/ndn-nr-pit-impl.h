@@ -112,7 +112,7 @@ public:
     
     //获取车辆当前所在的路段
     //added by siukwan
-    std::string getCurrentLane();
+    //std::string getCurrentLane();
     /**
      * This function update the pit using Interest packet
      * not simply add the name into the pit

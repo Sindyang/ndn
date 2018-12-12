@@ -63,7 +63,7 @@ public:
 	//2016.11.18 siukwan add，定时发送事件
 	void addAccident(double iType);
 	
-	//2018.12.10 
+	//2018.12.12 
 	Name getDataName(Name name);
 	
 	string numToString(double num);
