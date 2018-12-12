@@ -254,7 +254,7 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 	return ret;
 }
 
-std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
+/*std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
 	//cout << "进入(SumoNodeSensor.cc-getDistanceWith)" << endl;
 	//当前节点所在路段和位置
@@ -344,7 +344,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	//cout << "(SuNodeSensor.cc-getDistanceWith) "<< "return" << endl;
 	//getchar();
 	return std::pair<bool, double>(true,distance);
-}
+}*/
 
 //2017.12.13 判断车辆与其他车辆(及其发送消息包)的位置关系
 std::pair<bool, double> SumoNodeSensor::VehicleGetDistanceWithVehicle(const double& x,const double& y)
