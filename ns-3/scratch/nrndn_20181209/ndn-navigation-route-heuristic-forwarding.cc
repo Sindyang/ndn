@@ -1840,17 +1840,31 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	uint32_t forwardId = nrheader.getForwardId();
 	std::string forwardLane = nrheader.getLane();
 	
-	cout<<endl<<"(forwarding.cc-OnData_RSU) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<
-	" 当前节点 "<<myNodeId<<" Signature "<<data->GetSignature()<<"Type "<<dataType<<
-	" totalDistance "<<totalDistance<<" sourceX "<<sourceX<<" sourceY "<<sourceY<<endl;
-
-	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	Vector localPos = GetObject<MobilityModel>()->GetPosition();
+	localPos.z=0;//Just in case
+	Vector remotePos(sourceX, sourceY, 0);
+	double currentDistance = CalculateDistance(localPos,remotePos);
+	
+	int priority = getPriorityOfData(const string &dataType, cosnt double &currentDistance);
+	
+	cout<<endl<<"(OnData_RSU) 源节点 "<<nodeId<<" 转发节点 "<<forwardId<<" 当前节点 "<<myNodeId<<
+	" Signature "<<data->GetSignature()<<" Type "<<dataType<<" totalDistance "<<totalDistance<<
+	" sourceX "<<sourceX<<" sourceY "<<sourceY<<" Priority "<<priority<<endl;
+	
+	const std::vector<uint32_t>& pri = nrheader.getPriorityList();
 	
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
 	{
 		ExpireDataPacketTimer(nodeId,signature);
 		//cout<<"该数据包停止转发 "<<"signature "<<data->GetSignature()<<endl<<endl;
+		return;
+	}
+	
+	//数据包属于高优先级
+	if(priority == 0)
+	{
+		//
 		return;
 	}
 	
@@ -1878,6 +1892,23 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	}
 		
 	//cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	
+	//2018.12.13 低优先级的数据包不需要缓存，不用记录已经转发过的路段
+	if((priority == 1) && m_dataSignatureSeen.Get(data->GetSignature()))
+	{
+		if(msgdirection.first && msgdirection.second < 0)
+		{
+			//获取该数据包已转发过的上一跳路段
+			std::unordered_set<std::string> forwardedroutes;
+			std::map< uint32_t,std::unordered_set<std::string> >::iterator itrsu = m_RSUforwardedData.find(signature);
+			if(itrsu != m_RSUforwardedData.end())
+				forwardedroutes = itrsu->second;
+			
+			forwardedroutes.insert(forwardLane);
+			m_RSUforwardedData[signature] = forwardedroutes;
+			//cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
+		}
+	}
 			
 	// 数据包位于其他路段或当前路段后方
 	if(!msgdirection.first || msgdirection.second <= 0)
@@ -1885,6 +1916,12 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		//第一次收到该数据包
 		if(!isDuplicatedData(nodeId,signature))
 		{
+			//Just For Test
+			if((dataType == "vehicle") && (currentDistance > totalDistance))
+			{
+				cout<<"(OnData_RSU) currentDistance "<<currentDistance <<" is beyond totalDistance and data comes behind"<<endl;
+			}
+		
 			//这部分不一定需要 
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
@@ -1892,6 +1929,13 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			{
 				CachingDataSourcePacket(data->GetSignature(),data);
 				cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
+				
+				if(priority == 1)
+				{
+					std::unordered_set<std::string> forwardedroutes;
+					forwardedroutes.insert(forwardLane);
+					m_RSUforwardedData[signature] = forwardedroutes;
+				}
 				return;
 			}
 			else
@@ -1916,18 +1960,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		}*/
 		
 		//2018.12.12 判断车辆状态的数据包是否超过有效距离
-		if(dataType == "vehicle")
+		if((dataType == "vehicle") && (currentDistance > totalDistance))
 		{
-			Vector localPos = GetObject<MobilityModel>()->GetPosition();
-			localPos.z=0;//Just in case
-			Vector remotePos(sourceX, sourceY, 0);
-			double currentDistance = CalculateDistance(localPos,remotePos);
-			if(currentDistance > totalDistance)
-			{
-				cout<<"(OnData_RSU) currentDistance "<<currentDistance <<" is beyond totalDistance"<<endl;
-				BroadcastStopDataMessage(data);
-				return;
-			}
+			cout<<"(OnData_RSU) currentDistance "<<currentDistance <<" is beyond totalDistance"<<endl;
+			BroadcastStopDataMessage(data);
+			return;
 		}
 		
 		//作为中间节点缓存数据包
@@ -1986,6 +2023,20 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(),allinteresRoutes);
 			//getchar();
 			std::vector<uint32_t> newPriorityList = collection.first;
+			std::unordered_set<std::string> remainroutes = collection.second;
+			
+			if((priority == 1) && !remainroutes.empty())
+			{
+				CachingDataPacket(signature,data);
+				cout<<"(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 "<<signature<<endl;
+			}
+			
+			if(priority == 1)
+			{
+				//初始化已经转发过的路段
+				std::unordered_set<std::string> forwardedroutes;
+				m_RSUforwardedData[signature] = forwardedroutes;
+			}
 			
 			// 2018.1.15 
 			if(newPriorityList.empty())
@@ -2012,6 +2063,30 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	}
 }
 
+int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, cosnt double &currentDistance)
+{
+	currentDistance = currentDistance/1000;
+	double factor = 0.4;
+	double highPriority = 2/3;
+	double lowPriority = 1/3;
+	if(dataType == "road")
+		factor = 0.6;
+	
+	double result = exp(-factor*currentDistance);
+	cout<<"(getPriorityOfData) the result is "<<result<<endl;
+	if(result <= 1 && result > highPriority)
+	{
+		return 0;
+	}
+	else if(result <= highPriority && result > lowPriority)
+	{
+		return 1;
+	}
+	else if(result <= lowPriority && result > 0)
+	{
+		return 2;
+	}
+}
 
 double NavigationRouteHeuristic::stringToNum(const string& str)
 {

@@ -27,6 +27,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <sstream>
+#include <math.h>
 
 namespace ns3
 {
@@ -98,6 +99,9 @@ public:
 	
 	void
 	SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
+	
+	int 
+	getPriorityOfData(const string &dataType, cosnt double &currentDistance);
 	
 	vector<string>
 	GetShortestPath(vector<string> forwardroutes);
