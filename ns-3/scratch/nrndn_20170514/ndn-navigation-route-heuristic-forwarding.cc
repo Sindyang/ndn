@@ -1927,28 +1927,28 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<const Da
 	//cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
 	//bool result = m_cs->AddData1(signature,data,lastroutes);
 	bool result = m_cs->AddData(signature,data);
-	if(result)
+	/*if(result)
 	{
-		//cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
+		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
 	else
 	{
-		//cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
-	}
+		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
+	}*/
 	//getchar();
 }
 
 void NavigationRouteHeuristic::CachingDataSourcePacket(uint32_t signature,Ptr<Data> data)
 {
 	bool result = m_cs->AddDataSource(signature,data);
-	if(result)
+	/*if(result)
 	{
-		//cout<<"(forwarding.cc-CachingDataSourcePacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
+		cout<<"(forwarding.cc-CachingDataSourcePacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
 	else
 	{
-		//cout<<"(forwarding.cc-CachingDataSourcePacket) 该数据包未能成功缓存"<<endl;
-	}
+		cout<<"(forwarding.cc-CachingDataSourcePacket) 该数据包未能成功缓存"<<endl;
+	}*/
 }
 
 void NavigationRouteHeuristic::BroadcastStopInterestMessage(Ptr<Interest> src)
@@ -2667,7 +2667,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	for(;nb != m_nb.getNb().end();++nb)
 	{
-		if(nb->first >= numsofvehicles)
+		/*if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
@@ -2682,9 +2682,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		//getchar();
-		}
-		else
-		{
+		}*/
+		//else
+		//{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
 			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
@@ -2697,7 +2697,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
-		}
+		//}
 	}
 	cout<<endl;
 	getchar();
@@ -2799,10 +2799,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
+		/*for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
 		{
-			//cout<<*it<<" ";
-		}
+			cout<<*it<<" ";
+		}*/
 	//	cout<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
