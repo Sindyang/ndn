@@ -367,12 +367,12 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		std::string routes = interest->GetRoutes();
 		//cout<<"(forwarding.cc-OnInterest_Car) routes "<<routes<<endl;
 		const string& localLane = m_sensor->getLane();
-		//cout<<"(forwarding.cc-OnInterest_Car) localLane "<<localLane<<endl;
+		//cout<<"(forwarding.cc-OnInterest_Car) 车辆所在路段为 "<<localLane<<endl;
 		std::size_t found = routes.find(localLane);
 		std::string newroutes = routes.substr(found);
 		//cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
 		interest->SetRoutes(newroutes);
-		//getchar();
+		getchar();
         
         //added by sy
         ndn::nrndn::nrHeader nrheader;
@@ -385,10 +385,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		if(pri.empty())
 		{
 			//cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<"准备缓存自身的兴趣包 "<<interest->GetNonce()<<endl;
-			//Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),&NavigationRouteHeuristic::CachingInterestPacket,this,interest->GetNonce(),interest);
 			CachingInterestPacket(interest->GetNonce(),interest);
-			//if(m_node->GetId() == 97)
-				//getchar();
 			return;
 		}
 		
@@ -457,7 +454,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		}
 		//cout<<"(forwarding.cc-OnInterest_Car) 源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",该兴趣包已经被发送, nonce为 "<<interest->GetNonce()<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
-		// 2017.12.27 
+		// 2017.12.27 车辆有可能重复转发同一个兴趣包
 		//return;
 	}
 	
@@ -544,12 +541,8 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 			{
 				//cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
 				//getchar();
-				//Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::CachingInterestPacket,this,seq,interest);
 				CachingInterestPacket(seq,interest);
-				//BroadcastStopMessage(interest);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,&NavigationRouteHeuristic::BroadcastStopInterestMessage,this,interest);
-				//if(nodeId == 97)
-					//getchar();
 			}
 			else
 			{
@@ -1823,19 +1816,19 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	//获取兴趣包的转发节点id
 	uint32_t sourceId = nrheader.getSourceId();
 	uint32_t forwardId = nrheader.getForwardId();
-	//cout<<"sourceId "<<sourceId<<" forwardId "<<forwardId<<endl;
+	cout<<"sourceId "<<sourceId<<" forwardId "<<forwardId<<endl;
 	uint32_t remoteId = (forwardId == 999999999) ? sourceId:forwardId;
 	const double x = nrheader.getX();
 	const double y = nrheader.getY();
 	
 	std::string routes = interest->GetRoutes(); 
-	//std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
+	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包实际转发路线 "<<routes<<std::endl;
 	std::size_t found = routes.find(" ");
 	std::string currentroute = routes.substr(0,found);
-	//std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
+	std::cout<<"(forwarding.cc-packetFromDirection) 兴趣包当前所在路段 "<<currentroute<<std::endl;
 	
 	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
-	//cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
+	cout<<"(forwarding.cc-packetFromDirection) 收到兴趣包的位置" << "x: "<<nrheader.getX() << " " <<"y: "<< nrheader.getY() <<endl;
 	//getchar();
 	const std::string& currentType = m_sensor->getType();
 	//当前节点为RSU
@@ -1844,7 +1837,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		if(remoteId >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(remoteId,currentroute);
-			//getchar();
+			getchar();
 			return result;
 		}
 		else
@@ -1910,19 +1903,19 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	if(result)
 	{
 		if(interest->GetScope() == DELETE_MESSAGE)
-			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存删除包 "<<nonce<<endl;
+			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存删除包 "<<nonce<<endl;
 		else
 		{
-			//cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<"节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
+			cout<<"(forwarding.cc-CachingInterestPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存兴趣包 "<<nonce<<endl;
 			//cout<<"(forwarding.cc-CachingInterestPacket) 兴趣包 "<<nonce<<" 的转发路线为 "<<interest->GetRoutes()<<endl;
 		}
 			
 	}
 	else
 	{
-		//cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
+		cout<<"(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存"<<endl;
 	}
-	//getchar();
+	getchar();
 }
 
 /*
@@ -2611,25 +2604,27 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//const std::string& lane = m_sensor->getLane();
 	//获取心跳包所在路段
 	string remoteroute = interest->GetName().get(0).toUri();
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包当前所在路段为 "<<remoteroute<<endl;
 	
 	std::string junctionid = m_sensor->RSUGetJunctionId(nodeId);
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 交点ID为 "<<junctionid<<endl;
 	
 	//更新邻居列表
 	m_nb.Update(sourceId,nrheader.getX(),nrheader.getY(),remoteroute,Time (AllowedHelloLoss * HelloInterval));
 	
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+	cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
-	//发送心跳包的节点位于当前节点后方
-	if(msgdirection.first && msgdirection.second < 0)
+	//发送心跳包的车辆位于当前节点后方
+	//2018.12.14 该心跳包由车辆发送
+	if(sourceId < numsofvehicles && msgdirection.first && msgdirection.second < 0)
 	{
 		overtake.insert(sourceId);
 	}
-	else if(msgdirection.first && msgdirection.second > 0)
+	else if(sourceId < numsofvehicles && msgdirection.first && msgdirection.second > 0)
 	{
 		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
 		//该车辆超车
@@ -2657,7 +2652,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 	}
 	
-	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator prenb = m_preNB.getNb().begin();
 	
@@ -2676,15 +2670,15 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		if(nb->first >= numsofvehicles)
 		{
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
-			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
 			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
+				cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<"前方有车辆"<<endl;
 				routes_front.insert(itroutes_front,nb->second.m_lane);
 			}
 			else if(result.first && result.second <0)
 			{
-				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
+				cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		//getchar();
@@ -2705,8 +2699,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			}
 		}
 	}
-	//cout<<endl;
-	//getchar();
+	cout<<endl;
+	getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
 	

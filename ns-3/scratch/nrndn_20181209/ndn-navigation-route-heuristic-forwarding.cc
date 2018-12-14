@@ -1861,13 +1861,6 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		return;
 	}
 	
-	//数据包属于高优先级
-	if(priority == 0)
-	{
-		//
-		return;
-	}
-	
 	//m_nrpit->showPit();
 	//m_nrpit->showSecondPit();
 	
@@ -1893,8 +1886,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		
 	//cout<<"(forwarding.cc-OnData_RSU) 数据包的方向为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 	
+	
 	//2018.12.13 低优先级的数据包不需要缓存，不用记录已经转发过的路段
-	if((priority == 1) && m_dataSignatureSeen.Get(data->GetSignature()))
+	if((priority <= 1) && m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		if(msgdirection.first && msgdirection.second < 0)
 		{
@@ -1908,6 +1902,13 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 			m_RSUforwardedData[signature] = forwardedroutes;
 			//cout<<"数据包 "<<signature<<" 已经发送，上一跳路段为 "<<forwardLane<<endl;
 		}
+	}
+	
+	//数据包属于高优先级
+	if(priority == 0)
+	{
+		OnData_RSU_HighPriority(msgdirection,data);
+		return;
 	}
 			
 	// 数据包位于其他路段或当前路段后方
@@ -2059,6 +2060,75 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		{
 			//cout<<"(forwarding.cc-OnData_RSU) Node id is not in PriorityList"<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
+		}
+	}
+}
+
+//2018.12.14 RSU对高优先级数据包的处理
+void NavigationRouteHeuristic::OnData_RSU_HighPriority(pair<bool, double> msgdirection, Ptr<Data> data)
+{
+	Ptr<const Packet> nrPayload	= data->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	//获取数据包源节点
+	uint32_t nodeId=nrheader.getSourceId();
+	//获取数据包的随机编码
+	uint32_t signature=data->GetSignature();
+	
+	// 数据包位于其他路段或当前路段后方
+	if(!msgdirection.first || msgdirection.second <= 0)
+	{
+		if(!isDuplicatedData(nodeId,signature))
+		{
+			//这部分不一定需要 
+			Ptr<pit::Entry> Will = WillInterestedData(data);
+			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+			if(Will || WillSecond)
+			{
+				// 2018.1.6 added by sy
+				CachingDataSourcePacket(data->GetSignature(),data);
+				// 2018.1.28
+				std::unordered_set<std::string> forwardedroutes;
+				forwardedroutes.insert(forwardLane);
+				m_RSUforwardedData[signature] = forwardedroutes;
+				
+				//BroadcastStopMessage(data);
+				cout<<"该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣"<<endl;
+				//cout<<"缓存该数据包"<<endl;
+				//getchar();
+				return;
+			}
+		}
+		else
+		{
+			ExpireDataPacketTimer(nodeId,signature);
+			return;
+		}	
+	}
+	else
+	{
+		//缓存数据包
+		CachingDataSourcePacket(signature,data);
+		
+	}
+	
+}
+
+unordered_set<std::string> NavigationRouteHeuristic::RSUGetRoadsWithVehicles()
+{
+	const uint32_t numsofvehicles = m_sensor->getNumsofVehicles();
+	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
+	for(nb = m_nb.getNb().begin();nb != m_nb.getNb().end();++nb)
+	{
+		if(nb->first >= numsofvehicles)
+		{
+			//忽略自身节点
+			if(nb->first == m_node->GetId())
+				continue;
+			
+			//获取另一RSU所在的交点ID
+			std::string junction = m_sensor->RSUGetJunctionId(nb->first);
+			
 		}
 	}
 }
