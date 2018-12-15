@@ -504,14 +504,34 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	else
 	{
 		//2017.4.28 在真实地图中 位于不同路段的RSU可能可以互相通信
+		NS_ASSERT_MSG(false, "两个RSU位于不同路段");
 		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU位于不同路段"<<std::endl;
 		return std::pair<bool,double>(false,0);
 	}
 }
 
-std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane)
+set<string> SumoNodeSensor::RSUGetRoadWithRSU(const uint32_t remoteid)
 {
-	
+	set<string> roadCollection;
+	std::string localjunction = RSUGetJunctionId(getNodeId());
+	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 当前RSU所在的交点为 "<<localjunction<<endl;
+	std::string remotejunction = RSUGetJunctionId(remoteid);
+	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 另一RSU所在的交点为 "<<remotejunction<<endl;
+	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
+	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 组成的道路为 ";
+	for(eit = edges.begin(); eit != edges.end(); eit++)
+	{
+		string from = eit->second.from;
+		string to = eit->second.to;
+		if((from == localjunction && to == remotejunction) || (from == remotejunction && to == localjunction))
+		{
+			roadCollection.insert(eit->first);
+			cout<<eit->first<<" ";
+		}
+	}
+	cout<<endl;
+	return roadCollection;
 }
 
 /*

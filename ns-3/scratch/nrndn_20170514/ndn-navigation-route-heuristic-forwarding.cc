@@ -2667,8 +2667,15 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	
 	for(;nb != m_nb.getNb().end();++nb)
 	{
-		/*if(nb->first >= numsofvehicles)
+		if(nb->first >= numsofvehicles)
 		{
+			set<string> roadCollection = RSUGetRoadWithRSU(nb->first);
+			for(uint32_t i = 0;i < roadCollection.size();i++)
+			{
+				std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first, nb->second.m_lane);
+				
+			}
+			
 			std::pair<bool,double> result = m_sensor->RSUGetDistanceWithRSU(nb->first,nb->second.m_lane);
 			cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
@@ -2682,9 +2689,9 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
 		//getchar();
-		}*/
-		//else
-		//{
+		}
+		else
+		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(),nb->second.m_x,nb->second.m_y);
 			//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 			if(result.first && result.second > 0)
@@ -2697,7 +2704,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				//cout<<"("<<nb->first<<" "<<result.first<<" "<<result.second<<")"<<" ";
 				routes_behind.insert(itroutes_behind,nb->second.m_lane);
 			}
-		//}
+		}
 	}
 	cout<<endl;
 	getchar();
