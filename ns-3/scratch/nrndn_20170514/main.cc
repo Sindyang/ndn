@@ -218,7 +218,7 @@ nrndnExample::nrndnExample () :
   //phyMode("OfdmRate24Mbps"),
   verbose (false),
   flood(false),
-  transRange(1200),
+  transRange(1100),
   HelloLogEnable(true),
   accidentNum(0),//默认3
   method(0),

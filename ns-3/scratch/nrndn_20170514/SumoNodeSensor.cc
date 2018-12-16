@@ -470,21 +470,21 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	eit = edges.find(lane);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 节点所经过的路段为 "<<lane<<std::endl;
 	std::string from = eit->second.from;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的起点为 "<<from<<std::endl;
 	
 	std::string to = eit->second.to;
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点所在路段的终点为 "<<to<<std::endl;
 	
 	//另一节点所在路段的长度
 	double length = eit->second.lane.length;
 	
 	std::string remotejunction = RSUGetJunctionId(remoteid);
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 另一节点的交点ID为 "<<remotejunction<<std::endl;
 	
 	std::string localjunction = RSUGetJunctionId(getNodeId());
-	std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
+	//std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) 当前节点的交点ID为 "<<localjunction<<std::endl;
 	
 	if(remotejunction == localjunction)
 	{
@@ -503,23 +503,21 @@ std::pair<bool,double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t remo
 	}
 	else
 	{
-		//2017.4.28 在真实地图中 位于不同路段的RSU可能可以互相通信
-		NS_ASSERT_MSG(false, "两个RSU位于不同路段");
-		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU位于不同路段"<<std::endl;
+		std::cout<<"(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU不在指定路段"<<std::endl;
 		return std::pair<bool,double>(false,0);
 	}
 }
 
-set<string> SumoNodeSensor::RSUGetRoadWithRSU(const uint32_t remoteid)
+std::set<std::string> SumoNodeSensor::RSUGetRoadWithRSU(const uint32_t remoteid)
 {
 	set<string> roadCollection;
 	std::string localjunction = RSUGetJunctionId(getNodeId());
-	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 当前RSU所在的交点为 "<<localjunction<<endl;
+	//cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 当前RSU所在的交点为 "<<localjunction<<endl;
 	std::string remotejunction = RSUGetJunctionId(remoteid);
-	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 另一RSU所在的交点为 "<<remotejunction<<endl;
+	//cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 另一RSU所在的交点为 "<<remotejunction<<endl;
 	const map<string,vanetmobility::sumomobility::Edge>& edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
-	cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 组成的道路为 ";
+	//cout<<"(SumoNodeSensor.cc-RSUGetRoadWithRSU) 组成的道路为 ";
 	for(eit = edges.begin(); eit != edges.end(); eit++)
 	{
 		string from = eit->second.from;
@@ -527,10 +525,10 @@ set<string> SumoNodeSensor::RSUGetRoadWithRSU(const uint32_t remoteid)
 		if((from == localjunction && to == remotejunction) || (from == remotejunction && to == localjunction))
 		{
 			roadCollection.insert(eit->first);
-			cout<<eit->first<<" ";
+			//cout<<eit->first<<" ";
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	return roadCollection;
 }
 

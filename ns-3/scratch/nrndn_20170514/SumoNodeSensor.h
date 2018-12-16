@@ -67,7 +67,7 @@ public:
 	virtual std::pair<std::string,std::string> GetLaneJunction(const std::string lane);
 	
 	//2018.12.15 获得RSU之间的道路
-	set<string> RSUGetRoadWithRSU(const uint32_t remoteid);
+	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid);
 	
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
