@@ -103,6 +103,8 @@ public:
 	
 	vector<string> 
 	GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute);
+	
+	double getRealIndex(double& index, const std::vector<uint32_t>& pri);
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
@@ -116,6 +118,8 @@ public:
 	
 	virtual void
 	OnData_RSU(Ptr<Face> face, Ptr<Data> data);
+	
+	void OnData_RSU_RSU(const uint32_t remoteId,Ptr<Data> data);
 	
 	virtual void
 	OnData_Car(Ptr<Face> face, Ptr<Data> data);
