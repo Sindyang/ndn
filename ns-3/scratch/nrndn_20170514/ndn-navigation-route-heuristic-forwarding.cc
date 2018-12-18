@@ -48,7 +48,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (6),
+	            UintegerValue (2),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 
@@ -407,7 +407,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
 		
 		
-	    cout<<"(forwarding.cc-OnInterest_Car)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
+	    //cout<<"(forwarding.cc-OnInterest_Car)来自应用层的兴趣包处理完毕。源节点 "<<nodeId<<endl;
 		//getchar();
 		return;
 	}
@@ -437,12 +437,12 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 		//cout<<"(forwarding.cc-OnInterest_Car) 车辆收到了删除包 "<<seq<<endl;
 	}
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest_Car)At Time "<<Simulator::Now().GetSeconds()<<" 当前车辆Id为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	
 
 	//If the interest packet has already been sent, do not proceed the packet
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-OnInterest_Car) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
@@ -459,13 +459,13 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face,Ptr<Interest> inter
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest_Car) 兴趣包的转发优先级列表为: ";
+	//cout << "(forwarding.cc-OnInterest_Car) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		cout<<*it<<" ";
+		//cout<<*it<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 	//getchar();
 
 	//Deal with the stop message first
@@ -744,12 +744,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	//获取兴趣包的实际转发路线
 	std::string forwardRoute = interest->GetRoutes();
 	
-	cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
+	//cout<<endl<<"(forwarding.cc-OnInterest_RSU)At Time "<<Simulator::Now().GetSeconds()<<" 当前RSUId为 "<<myNodeId<<",源节点 "<<nodeId<<",转发节点 "<<forwardId<<" seq "<<seq<<endl;
 	//cout<<"兴趣包实际转发路线为 "<<forwardRoute<<endl;
 	
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
+	//cout<<"(forwarding.cc-OnInterest_RSU) msgdirection first "<<msgdirection.first<<" second "<<msgdirection.second<<endl;
 	
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -769,13 +769,13 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	}
 	
 	//获取优先列表
-	cout << "(forwarding.cc-OnInterest_RSU) 兴趣包的转发优先级列表为: ";
+	//cout << "(forwarding.cc-OnInterest_RSU) 兴趣包的转发优先级列表为: ";
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
     for(auto it = pri.begin();it != pri.end();it++)
 	{
-		cout<<*it<<" ";
+		//cout<<*it<<" ";
 	}
-	cout<<endl;
+	//cout<<endl;
 
 	//Deal with the stop message first
 	//避免回环
@@ -811,7 +811,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
+		//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
 		//if(nodeId == 24)
 		    //getchar();
 		
@@ -892,12 +892,12 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face,Ptr<Interest> inter
 			//下一路段为兴趣路段
 			if(it != interestRoute.end())
 			{
-				cout<<"(OnInterest_RSU) 兴趣包的下一路段为兴趣路段"<<endl;
+				//cout<<"(OnInterest_RSU) 兴趣包的下一路段为兴趣路段"<<endl;
 				Interest_InInterestRoute(interest,routes);
 			}
 			else
 			{
-				cout<<"(OnInterest_RSU) 兴趣包的下一路段不为兴趣路段"<<endl;
+				//cout<<"(OnInterest_RSU) 兴趣包的下一路段不为兴趣路段"<<endl;
 				Interest_NotInInterestRoute(interest,routes);
 			}
 		}
@@ -1509,13 +1509,14 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 		bool idIsInPriorityList;
 		std::vector<uint32_t>::const_iterator priorityListIt;
   	    //找出当前节点是否在优先级列表中
-	    priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
+		int size = pri[0];
+	    priorityListIt = find(pri.begin()+size+1,pri.end(),m_node->GetId());
 		idIsInPriorityList = (priorityListIt != pri.end());
 		
 		if(idIsInPriorityList)
 		{
 			//cout<<"(forwarding.cc-OnData_Car) 车辆在数据包转发优先级列表中"<<endl;
-			double index = distance(pri.begin(),priorityListIt);
+			double index = distance(pri.begin()+size+1,priorityListIt);
 			index = getRealIndex(index, pri);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
@@ -1550,22 +1551,21 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face,Ptr<Data> data)
 
 double NavigationRouteHeuristic::getRealIndex(double& index, const std::vector<uint32_t>& pri)
 {
-	cout<<"(forwarding.cc-getRealIndex) index的初始值为 "<<index<<endl;
+	//cout<<"(forwarding.cc-getRealIndex) index的初始值为 "<<index<<endl;
 	int size = pri[0];
-	index = index - size - 1; 
-	cout<<"(forwarding.cc-getRealIndex) 感兴趣的路段数目为 "<<size<<endl;
+	//cout<<"(forwarding.cc-getRealIndex) 感兴趣的路段数目为 "<<size<<endl;
 	for(uint32_t i = 1; i <= size-1;i++)
 	{
-		cout<<"路段 "<<i<<" 的数目为 "<<pri[i]<<endl;
+		//cout<<"路段 "<<i<<" 的数目为 "<<pri[i]<<endl;
 		if(index >= pri[i])
 		{
 			index = index - pri[i]; 
-			cout<<"index "<<index<<endl;
+			//cout<<"index "<<index<<endl;
 		}
 		else
 			break;
 	}
-	cout<<"(forwarding.cc-getRealIndex) index is "<<index<<endl;
+	//cout<<"(forwarding.cc-getRealIndex) index is "<<index<<endl;
 	return index;
 }
 
@@ -1663,13 +1663,14 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId,Ptr<Data> 
 	bool idIsInPriorityList;
 	std::vector<uint32_t>::const_iterator priorityListIt;
 	//找出当前节点是否在优先级列表中
-	priorityListIt = find(pri.begin(),pri.end(),myNodeId);
+	int size = pri[0];
+	priorityListIt = find(pri.begin()+size+1,pri.end(),myNodeId);
 	idIsInPriorityList = (priorityListIt != pri.end());
 	
 	if(idIsInPriorityList)
 	{
 		//cout<<"(forwarding.cc-OnData_RSU_RSU) RSU在数据包转发优先级列表中"<<endl;
-		double index = distance(pri.begin(),priorityListIt);
+		double index = distance(pri.begin()+size+1,priorityListIt);
 		index = getRealIndex(index,pri);
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
@@ -1758,8 +1759,11 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 	//获取车辆上一跳节点
 	uint32_t remoteId = (forwardId == 999999999)?nodeId:forwardId;
 	
-	//上一跳转发节点为RSU
-	if(remoteId >= numsofvehicles && remoteId != myNodeId)
+	if(remoteId == myNodeId)
+		return;
+	
+	//上一跳转发节点为RSU且不为RSU自身
+	if(remoteId >= numsofvehicles)
 	{
 		OnData_RSU_RSU(remoteId,data);
 		return;
@@ -1878,13 +1882,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face,Ptr<Data> data)
 		bool idIsInPriorityList;
 		std::vector<uint32_t>::const_iterator priorityListIt;
 		//找出当前节点是否在优先级列表中
-		priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
+		int size = pri[0];
+	    priorityListIt = find(pri.begin()+size+1,pri.end(),m_node->GetId());
 		idIsInPriorityList = (priorityListIt != pri.end());
 		
 		if(idIsInPriorityList)
 		{
 			//cout<<"(forwarding.cc-OnData_RSU) 车辆在数据包转发优先级列表中"<<endl;
-			double index = distance(pri.begin(),priorityListIt);
+			double index = distance(pri.begin()+size+1,priorityListIt);
 			index = getRealIndex(index,pri);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
