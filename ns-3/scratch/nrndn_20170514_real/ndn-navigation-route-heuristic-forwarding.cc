@@ -1614,7 +1614,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	CachingDataSourcePacket(signature,data);
+	//CachingDataSourcePacket(signature,data);
 
 	Ptr<pit::nrndn::EntryNrImpl> entry;
 	std::unordered_set<std::string> allinteresRoutes;
@@ -1785,7 +1785,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy
-				CachingDataSourcePacket(data->GetSignature(),data);
+				//CachingDataSourcePacket(data->GetSignature(),data);
 				// 2018.1.28
 				std::unordered_set<std::string> forwardedroutes;
 				forwardedroutes.insert(forwardLane);
@@ -1822,7 +1822,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		}*/
 
 		//缓存数据包
-		CachingDataSourcePacket(signature,data);
+		//CachingDataSourcePacket(signature,data);
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
