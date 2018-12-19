@@ -224,8 +224,8 @@ bool NrCsImpl::AddDataSource(uint32_t signature,Ptr<const Data> data)
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
 	
 	//2018.5.25 在仿真地图中去掉数据源的有效时间
-	//Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutDataSource,this,signature);
-	//std::cout<<"(cs-impl.c-AddDataSource) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
+	Simulator::Schedule(Seconds(interval),&NrCsImpl::CleanExpiredTimedoutDataSource,this,signature);
+	std::cout<<"(cs-impl.c-AddDataSource) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
 
@@ -362,16 +362,17 @@ NrCsImpl::GetData(std::unordered_map<std::string,std::unordered_set<std::string>
 		for(it = m_data.begin();it != m_data.end();it++)
 		{
 			std::string dataname = it->second->GetName().toUri();
+			std::cout<<"(cs-impl.cc-GetData) 缓存中的数据包名称为 "<<dataname<<std::endl;
 			//从缓存中得到数据包
 			if(itdataroute->first == dataname)
 			{
-				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<dataname<<std::endl;
 				Ptr<const Data> src = it->second->GetData();
 				//复制数据包
 				Ptr<Data> data = Create<Data> (*src);
 				//修改数据包的Timestamp
 				//data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
+				std::cout<<"(cs-impl.cc-GetData) 从缓存中得到的数据包为 "<<data->GetSignature()<<std::endl;
 			}
 		}
 	}

@@ -3378,6 +3378,14 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		cout<<priorityList[i]<<" ";
 	}
 	cout<<endl;
+	
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) 无车辆的感兴趣路段为 "<<endl;
+	for(itroutes = remainroutes.begin(); itroutes != remainroutes.end(); itroutes++)
+	{
+		cout<<*itroutes<<" ";
+	}
+	cout<<endl;
+	
 	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
 }
 

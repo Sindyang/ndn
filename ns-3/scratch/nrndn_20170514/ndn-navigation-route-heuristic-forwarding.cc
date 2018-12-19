@@ -2061,14 +2061,10 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature,Ptr<const Da
 	//cout<<"(forwarding.cc-CachingDataPacket)"<<endl;
 	//bool result = m_cs->AddData1(signature,data,lastroutes);
 	bool result = m_cs->AddData(signature,data);
-	/*if(result)
+	if(result)
 	{
 		cout<<"(forwarding.cc-CachingDataPacket) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<m_node->GetId()<<" 已缓存数据包" <<signature<<endl;
 	}
-	else
-	{
-		cout<<"(forwarding.cc-CachingDataPacket) 该数据包未能成功缓存"<<endl;
-	}*/
 	//getchar();
 }
 
@@ -2921,28 +2917,28 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 		
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		/*for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
+		for(std::unordered_set<std::string>::iterator it = routes_behind.begin();it != routes_behind.end();it++)
 		{
 			cout<<*it<<" ";
-		}*/
-	//	cout<<endl;
+		}
+		cout<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 	
-		//cout<<"(forwarding.cc-ProcessHelloRSU)数据包对应的上一跳路段为 "<<endl;
+		//cout<<"(forwarding.cc-ProcessHelloRSU)PIT中对应的数据包为 "<<endl;
 		
 		std::unordered_map<std::string,std::unordered_set<std::string> > dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
 		
-		/*for(std::unordered_map<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
+		for(std::unordered_map<std::string,std::unordered_set<std::string>>::iterator it = dataandroutes.begin();it != dataandroutes.end();it++)
 		{
 			//cout<<"数据包名称为 "<<it->first<<endl;
-			//cout<<"对应的上一跳节点为 ";
+			//cout<<"对应的上一跳路段为 ";
 			std::unordered_set<std::string> collection = it->second;
 			for(std::unordered_set<std::string>::iterator itcollect = collection.begin();itcollect != collection.end();itcollect++)
 			{
-				cout<<*itcollect<<" ";
+				//cout<<*itcollect<<" ";
 			}
-			cout<<endl;
-		}*/
+			//cout<<endl;
+		}
 		
 		std::map<uint32_t,Ptr<const Data> > datacollection = m_cs->GetData(dataandroutes);
 		if(!datacollection.empty())
@@ -3311,9 +3307,12 @@ std::vector<uint32_t> NavigationRouteHeuristic::VehicleGetPriorityListOfData()
 		}
 	}
 	
-	PriorityList.push_back(1);
 	uint32_t totalSize = sortlistRSU.size() + sortlistVehicle.size();
-	PriorityList.push_back(totalSize);
+	if(totalSize != 0)
+	{
+		PriorityList.push_back(1);
+		PriorityList.push_back(totalSize);
+	}
 	cout<<"总共的车辆数目为 "<<totalSize;
 
 	cout<<endl<<"加入RSU：";
@@ -3599,7 +3598,10 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 	
 	//先加入有车辆的路段数目
 	uint32_t size = sortvehicles.size();
-	priorityList.push_back(size);
+	if(size != 0)
+	{
+		priorityList.push_back(size);
+	}
 	cout<<"(RSUGetPriorityListOfData) 有车辆的路段数目为 "<<size<<endl;
 	
 	//加入每一个路段的车辆数目
@@ -3637,6 +3639,14 @@ std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> NavigationRoute
 		cout<<priorityList[i]<<" ";
 	}
 	cout<<endl;
+	
+	cout<<"(forwarding.cc-RSUGetPriorityListOfData) 无车辆的感兴趣路段为 "<<endl;
+	for(itroutes = remainroutes.begin(); itroutes != remainroutes.end(); itroutes++)
+	{
+		cout<<*itroutes<<" ";
+	}
+	cout<<endl;
+	
 	return std::pair<std::vector<uint32_t>,std::unordered_set<std::string> > (priorityList,remainroutes);
 }
 
