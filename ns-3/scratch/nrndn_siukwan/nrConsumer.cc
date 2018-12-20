@@ -174,7 +174,7 @@ void nrConsumer::SendPacket()
 	if(currentType == "RSU")
 	{
 		//cout<<"(nrConsumer.cc-SendPacket) 该节点为RSU "<<GetNode()->GetId()<<"不该产生并发送兴趣包"<<endl<<endl;
-		//return;
+		return;
 	}
 	
 	NS_LOG_FUNCTION_NOARGS ();
@@ -254,7 +254,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	if(m_node->GetId() >= 500)
 	{
 		std::cout<<" 感兴趣"<<endl;
-		//return;
+		return;
 	}
 	
 	// 2018.1.12 added by sy
@@ -274,13 +274,12 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	m_dataReceivedSeen.Put(signature,true);
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-
-	// 2018.1.25 只统计感兴趣的延迟
-	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	
 	if(IsInterestData(data->GetName()))
 	{
 		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
+		// 2018.1.25 只统计感兴趣的延迟
+		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 		std::cout<<" 感兴趣 ";
 	}
 	else
