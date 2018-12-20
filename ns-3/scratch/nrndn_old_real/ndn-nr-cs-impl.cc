@@ -140,7 +140,7 @@ bool NrCsImpl::AddData(uint32_t signature, Ptr<const Data> data)
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;
 
 	csEntry = ns3::Create<cs::Entry>(this, data);
-	m_data[signature] = csEntry;
+	//m_data[signature] = csEntry;
 
 	//size = GetDataSize();
 	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;

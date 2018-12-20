@@ -1707,6 +1707,24 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		return;
 	}
 
+	//2018.12.20
+	string dataType = data->GetName().get(1).toUri();
+	int totalDistance = 0;
+	double sourceX = 0.0;
+	double sourceY = 0.0;
+
+	if (dataType == "vehicle")
+	{
+		totalDistance = stringToNum(data->GetName().get(2).toUri());
+		sourceX = stringToNum(data->GetName().get(3).toUri());
+		sourceY = stringToNum(data->GetName().get(4).toUri());
+	}
+	else
+	{
+		sourceX = stringToNum(data->GetName().get(2).toUri());
+		sourceY = stringToNum(data->GetName().get(3).toUri());
+	}
+
 	Ptr<const Packet> nrPayload = data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
@@ -1720,7 +1738,15 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	uint32_t forwardId = nrheader.getForwardId();
 	std::string forwardLane = nrheader.getLane();
 
-	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature() << endl;
+	Vector localPos = GetObject<MobilityModel>()->GetPosition();
+	localPos.z = 0; //Just in case
+	Vector remotePos(sourceX, sourceY, 0);
+	double currentDistance = CalculateDistance(localPos, remotePos);
+
+	int priority = getPriorityOfData(const string &dataType, cosnt double &currentDistance);
+
+	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature();
+	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << "Priority " << priority << endl;
 
 	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
 
@@ -1752,10 +1778,18 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		return;
 	}
 
+	//数据包属于高优先级
+	if (priority == 0)
+	{
+		//
+		return;
+	}
+
 	msgdirection = m_sensor->RSUGetDistanceWithVehicle(m_node->GetId(), nrheader.getX(), nrheader.getY());
 	cout << "(forwarding.cc-OnData_RSU) 数据包的方向为 " << msgdirection.first << " " << msgdirection.second << endl;
 
-	if (m_dataSignatureSeen.Get(data->GetSignature()))
+	// 2018.12.13 低优先级的数据包不需要缓存，不用记录已经转发过的路段
+	if ((priority == 1) && m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		if (msgdirection.first && msgdirection.second < 0)
 		{
@@ -1773,8 +1807,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		//return;
 	}
 
-	if (!msgdirection.first || msgdirection.second <= 0) // 数据包位于其他路段或当前路段后方
+	if (msgdirection.first && msgdirection.second <= 0) // 数据包位于当前路段后方
 	{
+		//Just For Test
+		if ((dataType == "vehicle") && (currentDistance > totalDistance))
+		{
+			cout << "(OnData_RSU) currentDistance " << currentDistance << " is beyond totalDistance and data comes behind" << endl;
+		}
+
 		//第一次收到该数据包
 		if (!isDuplicatedData(nodeId, signature))
 		{
@@ -1785,22 +1825,22 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			{
 				// 2018.1.6 added by sy
 				//CachingDataSourcePacket(data->GetSignature(),data);
-				// 2018.1.28
-				std::unordered_set<std::string> forwardedroutes;
-				forwardedroutes.insert(forwardLane);
-				m_RSUforwardedData[signature] = forwardedroutes;
-
+				//2018.12.13
+				if (priority == 1)
+				{
+					std::unordered_set<std::string> forwardedroutes;
+					forwardedroutes.insert(forwardLane);
+					m_RSUforwardedData[signature] = forwardedroutes;
+				}
 				//BroadcastStopMessage(data);
-				cout << "该数据包第一次从后方或其他路段收到数据包且对该数据包感兴趣" << endl;
+				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				//cout<<"缓存该数据包"<<endl;
 				//getchar();
 				return;
 			}
 			else
 			{
-				//cout<<"该数据包第一次从后方或其他路段收到数据包且当前节点对该数据包不感兴趣"<<endl;
-				//DropDataPacket(data);
-				//getchar();
+				//cout<<"该数据包第一次从后方收到数据包且当前节点对该数据包不感兴趣"<<endl;
 				return;
 			}
 		}
@@ -1812,13 +1852,20 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 	}
-	//数据包来源于当前路段前方
+	//数据包来源于当前路段前方或其他路段
 	else
 	{
 		/*if(isDuplicatedData(nodeId,signature))
 		{
 			cout<<"(forwarding.cc-OnData_RSU) 该数据包从前方或其他路段得到，重复,仍然转发 "<<endl;
 		}*/
+
+		if ((dataType == "vehicle") && (currentDistance > totalDistance))
+		{
+			cout << "(OnData_RSU) currentDistance " << currentDistance << " is beyond totalDistance" << endl;
+			BroadcastStopDataMessage(data);
+			return;
+		}
 
 		//缓存数据包
 		//CachingDataSourcePacket(signature,data);
@@ -1882,15 +1929,18 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 
 			//2018.2.8
 			//有部分路段未被满足
-			if (!remainroutes.empty())
+			if ((priority == 1) && !remainroutes.empty())
 			{
 				CachingDataPacket(signature, data);
 				cout << "(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 " << signature << endl;
 			}
 
-			//初始化已经转发过的路段
-			std::unordered_set<std::string> forwardedroutes;
-			m_RSUforwardedData[signature] = forwardedroutes;
+			if (priority == 1)
+			{
+				//初始化已经转发过的路段
+				std::unordered_set<std::string> forwardedroutes;
+				m_RSUforwardedData[signature] = forwardedroutes;
+			}
 			//getchar();
 
 			// 2018.1.15
@@ -1918,6 +1968,39 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			//getchar();
 		}
+	}
+}
+
+double NavigationRouteHeuristic::stringToNum(const string &str)
+{
+	istringstream iss(str);
+	double num;
+	iss >> num;
+	return num;
+}
+
+int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, cosnt double &currentDistance)
+{
+	currentDistance = currentDistance / 1000;
+	double factor = 0.4;
+	double highPriority = 2 / 3;
+	double lowPriority = 1 / 3;
+	if (dataType == "road")
+		factor = 0.6;
+
+	double result = exp(-factor * currentDistance);
+	cout << "(getPriorityOfData) the result is " << result << endl;
+	if (result <= 1 && result > highPriority)
+	{
+		return 0;
+	}
+	else if (result <= highPriority && result > lowPriority)
+	{
+		return 1;
+	}
+	else if (result <= lowPriority && result > 0)
+	{
+		return 2;
 	}
 }
 
@@ -3082,7 +3165,7 @@ Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedDataInSecondPit(Ptr<const Data> data)
 {
 	string dataName = data->GetName().get(0).toUri();
-	Name roadName("/"+dataName);
+	Name roadName("/" + dataName);
 	return m_nrpit->FindSecondPIT(roadName);
 }
 
