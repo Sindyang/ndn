@@ -1979,7 +1979,7 @@ double NavigationRouteHeuristic::stringToNum(const string &str)
 	return num;
 }
 
-int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, cosnt double &currentDistance)
+int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const double &currentDistance)
 {
 	currentDistance = currentDistance / 1000;
 	double factor = 0.4;
