@@ -42,7 +42,7 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	   	            MakeTimeAccessor (&DistanceBasedForwarding::HelloInterval),
 	   	            MakeTimeChecker ())
 	    .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	   	            UintegerValue (6),
+	   	            UintegerValue (2),
 	   	            MakeUintegerAccessor (&DistanceBasedForwarding::AllowedHelloLoss),
 	   	            MakeUintegerChecker<uint32_t> ())
 	    .AddAttribute ("UniformRv", "Access to the underlying UniformRandomVariable",
@@ -171,13 +171,13 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 
-/*
+	//2018.12.20 小锟师兄注释了这个函数
 	if(isDuplicatedData(nodeId,signature))
 	{
 		ExpireDataPacketTimer(nodeId,signature);
 		return;
 	}
-*/
+
 	NotifyUpperLayer(data);
 
 	FwHopCountTag hopCountTag;
