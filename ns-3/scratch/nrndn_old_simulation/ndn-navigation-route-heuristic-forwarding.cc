@@ -1774,7 +1774,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		//return;
 	}
 
-	if (!msgdirection.first || msgdirection.second <= 0) // 数据包位于其他路段或当前路段后方
+	if (msgdirection.first && msgdirection.second <= 0) // 数据包位于其他路段或当前路段后方
 	{
 		//第一次收到该数据包
 		if (!isDuplicatedData(nodeId, signature))
