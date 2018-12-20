@@ -47,7 +47,7 @@ TypeId NavigationRouteHeuristic::GetTypeId(void)
 	            MakeTimeAccessor (&NavigationRouteHeuristic::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
-	            UintegerValue (6),
+	            UintegerValue (2),
 	            MakeUintegerAccessor (&NavigationRouteHeuristic::AllowedHelloLoss),
 	            MakeUintegerChecker<uint32_t> ())
 

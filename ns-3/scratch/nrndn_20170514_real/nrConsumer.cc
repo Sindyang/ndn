@@ -286,12 +286,12 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	//延迟为数据包从发出到Consumer收到的时间
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-
+	// 2018.1.25 只统计感兴趣的延迟
+	// 2018.12.20 都统计一下
+	nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
 	if (IsInterestData(data->GetName()))
 	{
 		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
-		// 2018.1.25 只统计感兴趣的延迟
-		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
 		std::cout << " 感兴趣 ";
 	}
 	else
