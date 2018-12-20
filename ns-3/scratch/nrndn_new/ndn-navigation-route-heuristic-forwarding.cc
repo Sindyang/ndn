@@ -1743,7 +1743,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	Vector remotePos(sourceX, sourceY, 0);
 	double currentDistance = CalculateDistance(localPos, remotePos);
 
-	int priority = getPriorityOfData(const string &dataType, cosnt double &currentDistance);
+	int priority = getPriorityOfData(dataType, currentDistance);
 
 	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature();
 	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << "Priority " << priority << endl;
