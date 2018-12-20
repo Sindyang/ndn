@@ -306,7 +306,7 @@ Name nrProducer::getDataName(Name m_prefix)
 
 string nrProducer::numToString(double value)
 {
-	ostreamstream stream;
+	ostringstream stream;
 	stream << value;
 	return stream.str();
 }
