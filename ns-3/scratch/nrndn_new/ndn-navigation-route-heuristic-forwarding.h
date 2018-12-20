@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <map>
+#include <math.h>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -105,6 +106,12 @@ public:
 	GetLocalandFutureInterest(vector<string> forwardroute,vector<string> interestroute);
 	
 	double getRealIndex(double& index, const std::vector<uint32_t>& pri);
+
+	int 
+	getPriorityOfData(const string &dataType, const double &currentDistance);
+
+	double 
+	stringToNum(const string &str);
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
