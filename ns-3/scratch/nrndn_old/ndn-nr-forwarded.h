@@ -2,6 +2,8 @@
 #ifndef NRNDN_FORWARDED_H_
 #define NRNDN_FORWARDED_H_
 
+#include "ns3/simulator.h"
+
 #include <set>
 #include <map>
 #include <string>

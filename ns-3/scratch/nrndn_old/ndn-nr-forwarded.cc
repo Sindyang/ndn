@@ -35,7 +35,7 @@ std::set<std::string> Forwarded::getForwardedRoads(const uint32_t RSUId, const u
     {
         return it->second;
     }
-    return 0;
+    NS_ASSERT_MSG(false, "RSU未转发过该数据包");
 }
 
 bool Forwarded::IsAllForwarded(const uint32_t RSUId, const uint32_t signature, std::unordered_set<std::string> allinteresRoutes)
@@ -94,10 +94,10 @@ void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std
     if (it != RSUForwarded.end())
     {
         std::set<std::string> forwardedRoads = it->second;
-        std::set<std::string> itforward = forwardRoads.find(road);
-        if (itforward != forwardRoads.end())
+        std::set<std::string> itforward = forwardedRoads.find(road);
+        if (itforward != forwardedRoads.end())
         {
-            forwardRoads.erase(itforward);
+            forwardedRoads.erase(itforward);
             std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "已删除路段" << road << std::endl;
         }
         else
@@ -117,8 +117,8 @@ void Forwarded::printAllRoads(const uint32_t RSUId, const uint32_t signature)
     {
         std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << " 转发过的路段为";
         std::set<std::string> forwardedRoads = it->second;
-        std::set<std::string> itforward = forwardRoads.begin();
-        for (; itforward != forwardRoads.end(); itforward++)
+        std::set<std::string> itforward = forwardedRoads.begin();
+        for (; itforward != forwardedRoads.end(); itforward++)
         {
             std::cout << *itforward << " ";
         }
