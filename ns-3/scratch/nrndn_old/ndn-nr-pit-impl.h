@@ -116,12 +116,6 @@ class NrPitImpl : public Pit
      * not simply add the name into the pit
      * multi entry of pit will be operated
      */
-    //changed by sy
-    // bool UpdateCarPit(const std::vector<std::string>& route,const uint32_t& id);
-
-    //added by sy
-    //bool UpdateRSUPit(const std::vector<std::string>& route,const uint32_t& id);
-
     bool UpdateRSUPit(bool &IsExist, std::string junction, const std::string forwardRoute, const std::vector<std::string> &interestRoute, const uint32_t &id);
 
     std::pair<std::vector<std::string>, std::vector<std::string>> getInterestRoutesReadytoPass(const std::string junction, const std::string forwardRoute, const std::vector<std::string> &interestRoute);

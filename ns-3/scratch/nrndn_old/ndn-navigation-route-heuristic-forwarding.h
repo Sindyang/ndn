@@ -591,11 +591,7 @@ private:
 	uint32_t m_TTLMax;// \brief This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded
 
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
-	
-	double m_sendInterestTime;
-	
-	double m_sendDataTime;
-	
+		
 	std::unordered_set<uint32_t> overtake;//added by sy 用于记录超车的车辆
 	
 	std::unordered_set<uint32_t> alreadyPassed;//2018.3.17 用于记录已经通过该RSU的车辆
