@@ -117,7 +117,7 @@ void Forwarded::printAllRoads(const uint32_t RSUId, const uint32_t signature)
     {
         std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << " 转发过的路段为";
         std::set<std::string> forwardedRoads = it->second;
-        std::set<std::string> itforward = forwardedRoads.begin();
+        std::set<std::string> ::iterator itforward = forwardedRoads.begin();
         for (; itforward != forwardedRoads.end(); itforward++)
         {
             std::cout << *itforward << " ";
