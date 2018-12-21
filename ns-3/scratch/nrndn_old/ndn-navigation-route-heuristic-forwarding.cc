@@ -1547,7 +1547,7 @@ double NavigationRouteHeuristic::getRealIndex(double &index, const std::vector<u
 	return index;
 }
 
-std::unordered_set<std::string> NavigationRouteHeuristic::getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond)
+std::unordered_set<std::string>& NavigationRouteHeuristic::getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond)
 {
 	Ptr<pit::nrndn::EntryNrImpl> entry;
 	std::unordered_set<std::string> allinteresRoutes;
@@ -1610,7 +1610,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-		std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+		std::unordered_set<std::string>& allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 		bool isall = RSUForwarded.IsAllForwarded(m_node->GetId(), signature, allinteresRoutes);
 
@@ -1643,7 +1643,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	//缓存数据包
 	//CachingDataSourcePacket(signature,data);
 
-	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+	std::unordered_set<std::string>& allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 	NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
@@ -1771,7 +1771,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-			std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+			std::unordered_set<std::string>& allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 			bool isall = RSUForwarded.IsAllForwarded(m_node->GetId(), signature, allinteresRoutes);
 
@@ -1839,7 +1839,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 
-		std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+		std::unordered_set<std::string>& allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 		NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
@@ -2546,7 +2546,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			}
 			else
 			{
-				std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+				std::unordered_set<std::string>& allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 				NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
