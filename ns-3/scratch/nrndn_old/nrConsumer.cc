@@ -307,7 +307,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	}
 	std::cout << " 延迟为 " << delay;
 	std::cout << std::endl;
-	getchar();
+	//getchar();
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
 }
 

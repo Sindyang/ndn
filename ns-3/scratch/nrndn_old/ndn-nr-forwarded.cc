@@ -45,7 +45,7 @@ bool Forwarded::IsAllForwarded(const uint32_t RSUId, const uint32_t signature, s
     {
         std::set<std::string> forwardedRoads = it->second;
         std::set<std::string>::iterator itroads = forwardedRoads.begin();
-        for (; itroads != forwardedRoads.end(); it++)
+        for (; itroads != forwardedRoads.end(); itroads++)
         {
             std::unordered_set<std::string>::iterator itfind = allinteresRoutes.find(*itroads);
             if (itfind != allinteresRoutes.end())
