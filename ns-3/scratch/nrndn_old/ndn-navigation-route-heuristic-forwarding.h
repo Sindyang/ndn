@@ -235,48 +235,7 @@ private:
 	 * \return priority list
 	 */
 	std::pair<std::vector<uint32_t>,std::unordered_set<std::string>> RSUGetPriorityListOfData(const Name& dataName,const std::unordered_set<std::string>& interestRoutes);
-	/**
-	 * @brief Get priority list of data packet from the source node
-	 * @param dataName	the name of the data packet
-	 * \return priority list
-	 */
-	//std::vector<uint32_t> GetPriorityListOfDataSource(const Name& dataName);
-
-
-	/**
-	 * @brief	Get priority list of data packet from the forwarding node which is interested about the data
-	 * 			if a node is interest about the data, it will know which node behind will interested.
-	 * 			First sort the interest nodes, 	then add not interested nodes
-	 * 			list structure:
-	 * 			slot1	|	interest node 1 |
-	 * 			slot2	|	interest node 2 |
-	 * 			slop...i|...................|
-	 * 			slot i+1|disinterested node1|
-	 * 			slot i+2|disinterested node2|
-	 * 			slot i.n|...................|
-	 * @param interestNodes	the list of the interested
-	 * @param recPri 		priority list from last hop
-	 * \return priority list
-	 */
-	//std::vector<uint32_t>
-	//GetPriorityListOfDataForwarderInterestd(
-		//	const std::unordered_set<uint32_t>& interestNodes,
-			//const std::vector<uint32_t>& recPri);
-
-	/**
-	 * @brief	Get priority list of data packet from the forwarding node which is disinterested about the data
-	 * 			if a node is disinterested about the data, it will NOT know which node behind will interested.
-	 * 			Just Sort the neighbors by distance
-	 * 			List structure:
-	 * 			slot 1	|neighbor node1|
-	 * 			slot 2	|neighbor node2|
-	 * 			slot ...|..............|
-	 *
-	 *@param recPri 		priority list from last hop
-	 * \return priority list
-	 */
-	//std::vector<uint32_t> GetPriorityListOfDataForwarderDisinterestd(const std::vector<uint32_t>& recPri);
-
+	
 	/**
 	 * @brief Get Customize data for navigation route heuristic forwarding
 	 * @param type		type of Packet which is to sent
@@ -309,16 +268,6 @@ private:
 	*/
 	pair<bool, double>
 				packetFromDirection(Ptr<Interest> interest);
-
-	/**
-	 * \brief	Given a route information, this method should tell whether the received node
-	 *			is on the route of the packet
-	 *			It should satisfy 2 conditions:
-	 *			1. the packet and the received node is moving to the same direction
-	 *			2. the received node is on the route of the packet
-	 *	\return	true if it is on the route of the packet
-	 */
-	//bool onTheRouteOfPacket(Ptr<Interest> interest);
 
 	/**
 	 * 	\brief	recognize the duplicated interest
@@ -370,12 +319,6 @@ private:
 	void DropInterestePacket(Ptr<Interest> interest);
 
 	/**
-	 * 	\brief	mark the duplicated interest
-	 *	@param	interest    Interest packet
-	 */
-	//void MarkDuplicatedInterest(Ptr<const Interest> interest);
-
-	/**
 	 * \brief	Schedule next send of hello message
 	 */
 	void HelloTimerExpire ();
@@ -390,18 +333,6 @@ private:
 	 * \brief	send the hello message
 	 */
 	void SendHello ();
-
-	/**
-	 * 	\brief	Determin whether a given location is in the front of the node
-	 *	@param	lane	lane of given location
-	 *	@param	pos		offset of lane of given location
-	 *	@param  route   navigation route
-	 *	\return	(true,distance)
-	 *					 if it is in the front of the node, and along with the distance
-	 *			(false,0)
-	 *					otherwise
-	 */
-	//pair<bool, double> IsPositionInFront(const string& lane,const double &pos,const std::vector<std::string>& route);
 
 	/**
 	 * 	\brief	Determin whether a rest route from the interest packet is covered by the local node
@@ -527,6 +458,9 @@ private:
 	
 	//2018.1.2 
 	bool IsInterestData(const Name& name);
+
+	std::unordered_set<std::string> 
+	getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond);
 
 private:
 	typedef GreenYellowRed super;
