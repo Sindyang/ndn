@@ -2551,7 +2551,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 				NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
 				//获取该数据包已转发过的上一跳路段
-				std::set<std::string> forwardedroutes = getForwardedRoads(nodeId, signature);
+				std::set<std::string> forwardedroutes = RSUForwarded.getForwardedRoads(nodeId, signature);
 
 				std::unordered_set<std::string> newinterestRoutes;
 				if (forwardedroutes.empty())
@@ -2564,7 +2564,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 					//从上一跳路段中去除已转发过的路段
 					for (std::unordered_set<std::string>::const_iterator itinterest = allinteresRoutes.begin(); itinterest != allinteresRoutes.end(); itinterest++)
 					{
-						std::unordered_set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
+						std::set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if (itforward != forwardedroutes.end())
 						{
 							//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
