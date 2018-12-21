@@ -263,7 +263,7 @@ void nrProducer::OnSendingTrafficData()
 	nrUtils::SetNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.first);
 	cout << "(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 " << size_InterestSize.first << " 感兴趣的节点总数为 " << size_InterestSize.second << std::endl
 		 << std::endl;
-	getchar();
+	//getchar();
 	//当前对该数据包感兴趣节点总数
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.second);
 	m_face->ReceiveData(data);

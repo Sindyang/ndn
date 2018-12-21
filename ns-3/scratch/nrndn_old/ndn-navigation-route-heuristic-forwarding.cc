@@ -374,7 +374,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face, Ptr<Interest> inte
 		std::string newroutes = routes.substr(found);
 		//cout<<"(forwarding.cc-OnInterest_Car) newroutes "<<newroutes<<endl;
 		interest->SetRoutes(newroutes);
-		getchar();
+		//getchar();;
 
 		//added by sy
 		ndn::nrndn::nrHeader nrheader;
@@ -1266,7 +1266,7 @@ NavigationRouteHeuristic::GetLocalandFutureInterest(vector<string> forwardroute,
 			}
 		}
 		//cout<<endl;
-		getchar();
+		//getchar();;
 	}
 	return futureinterest;
 }
@@ -1930,7 +1930,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 		if (remoteId >= numsofvehicles)
 		{
 			std::pair<bool, double> result = m_sensor->RSUGetDistanceWithRSU(remoteId, currentroute);
-			getchar();
+			//getchar();
 			return result;
 		}
 		else
@@ -2007,7 +2007,7 @@ void NavigationRouteHeuristic::CachingInterestPacket(uint32_t nonce, Ptr<Interes
 	{
 		cout << "(forwarding.cc-CachingInterestPacket) 该兴趣包未能成功缓存" << endl;
 	}
-	getchar();
+	//getchar();
 }
 
 /*
@@ -2172,7 +2172,7 @@ void NavigationRouteHeuristic::DoInitialize(void)
 	//getchar();
 	super::DoInitialize();
 	//cout<<"(NavigationRouteHeuristic.cc-DoInitialize):初始化完成"<<std::endl;
-	//getchar();
+	////getchar();
 }
 
 void NavigationRouteHeuristic::DropPacket()
@@ -2263,7 +2263,7 @@ void NavigationRouteHeuristic::HelloTimerExpire()
 {
 	if (!m_running)
 		return;
-	//getchar();
+	////getchar();
 	//cout<<endl<<"进入(forwarding.cc-HelloTimerExpire)"<<endl;
 
 	if (m_HelloLogEnable)
@@ -2303,7 +2303,7 @@ void NavigationRouteHeuristic::SendHello()
 	const string &LaneName = m_sensor->getLane();
 
 	//cout<<"(forwarding.cc-SendHello) 普通车辆的数目为 "<<num<<endl;
-	//getchar();
+	////getchar();
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>('/' + LaneName);
 
@@ -2379,7 +2379,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			{
 				nums_car_behind += 1;
 			}
-			//getchar();
+			////getchar();
 		}
 		else
 		{
@@ -2426,7 +2426,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{
 			//cout<<"(forwarding.cc-ProcessHello) 无兴趣包在缓存中"<<endl;
 		}
-		//getchar();
+		////getchar();
 	}
 
 	// 2018.1.7
@@ -2448,7 +2448,7 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				//cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
 
-			//getchar();
+			////getchar();
 		}
 	}
 }
@@ -2473,7 +2473,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		{
 			cout << "(forwarding.cc-notifyUpperOnInterest) idx " << idx << endl;
 			consumer->SendPacket();
-			getchar();
+			//getchar();
 			break;
 		}
 		idx++;
@@ -2608,7 +2608,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 		}
 		//cout<<endl;
 
-		//getchar();
+		////getchar();
 
 		double random = m_uniformRandomVariable->GetInteger(0, 100);
 		Time sendInterval(MilliSeconds(random));
@@ -2673,7 +2673,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				alreadyPassed.insert(sourceId);
 
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
-				//getchar();
+				////getchar();
 				if (resend.first == false)
 					notifyUpperOnInterest(resend.second);
 			}
@@ -2736,7 +2736,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		}
 	}
 	//cout<<endl;
-	getchar();
+	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
 
@@ -2915,7 +2915,7 @@ void NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		deletepacket->SetName(name);
 
 		nodeWithRoutes.erase(it);
-		getchar();
+		//getchar();;
 
 		if (newPriorityList.empty())
 		{
@@ -2931,7 +2931,7 @@ void NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
 		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
 							&NavigationRouteHeuristic::SendInterestPacket, this, deletepacket);
 
-		getchar();
+		//getchar();;
 	}
 }
 

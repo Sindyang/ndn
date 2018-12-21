@@ -148,7 +148,7 @@ NrPitImpl::UpdateRSUPit(bool& IsExist,std::string junction,const std::string for
 			result &= UpdatePrimaryPit(IsExist,interestRoute,id,*it);
 			result &= result;
 		}
-		getchar();
+		//getchar();
 		return result;
 	}
 }
