@@ -21,6 +21,7 @@
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
 #include "ndn-nr-cs-impl.h"
+#include "ndn-nr-forwarded.h"
 
 #include <vector>
 #include <map>
@@ -562,6 +563,9 @@ private:
 	
 	// 2018.1.18
 	std::map< uint32_t,std::unordered_set<std::string> > m_RSUforwardedData;
+
+	//2018.12.21
+	Forwarded RSUForwarded;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
 							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages
