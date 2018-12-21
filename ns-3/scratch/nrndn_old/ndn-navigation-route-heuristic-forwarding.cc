@@ -1574,6 +1574,7 @@ std::unordered_set<std::string>& NavigationRouteHeuristic::getAllInterestedRoute
 			allinteresRoutes.insert(*it);
 		}
 	}
+	return allinteresRoutes;
 }
 
 void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data> data)
