@@ -203,7 +203,7 @@ int main (int argc, char **argv)
 //构造函数
 nrndnExample::nrndnExample () :
   random_seed(54321),
-  certain_count(20), //定点数量
+  certain_count(25), //定点数量
   certain_interval(10),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
@@ -924,7 +924,7 @@ void nrndnExample::InstallTraffics()
 	// RSU不产生数据包 需要减去RSU的数量
 	UniformVariable rnd(0,nodes.GetN()-36);
 	std::cout<<"(main.cc-InstallTraffics)插入事件："<<accidentNum<<endl<<endl;
-	if(random_accident)
+	if(0)//(random_accident)
 	{
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
@@ -942,7 +942,7 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {120,179,367,444,459,529,560,611,619,636,687,699,702,723,733,734,778,79,794,795};
+		uint32_t array[25] = {120,179,229,274,288,367,459,516,517,578,609,619,636,678,708,733,734,759,763,765,769,778,79,794,795};
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
