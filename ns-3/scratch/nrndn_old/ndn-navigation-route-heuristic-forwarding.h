@@ -459,7 +459,7 @@ private:
 	//2018.1.2 
 	bool IsInterestData(const Name& name);
 
-	std::unordered_set<std::string>&
+	std::unordered_set<std::string>
 	getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond);
 
 private:
