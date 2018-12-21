@@ -22,8 +22,8 @@ void Forwarded::setForwardedRoads(const uint32_t RSUId, const uint32_t signature
         forwardedRoads = it->second;
     }
 
-    std::set<std::string>::iterator itForwarded;
-    forwardedRoads.insert(itForwarded, road);
+    std::set<std::string>::iterator itforward;
+    forwardedRoads.insert(itforward, road);
     RSUForwarded[id] = forwardedRoads;
 }
 
@@ -94,7 +94,7 @@ void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std
     if (it != RSUForwarded.end())
     {
         std::set<std::string> forwardedRoads = it->second;
-        std::set<std::string> itforward = forwardedRoads.find(road);
+        std::set<std::string> ::iterator itforward = forwardedRoads.find(road);
         if (itforward != forwardedRoads.end())
         {
             forwardedRoads.erase(itforward);
