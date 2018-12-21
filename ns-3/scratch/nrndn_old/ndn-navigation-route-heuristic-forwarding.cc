@@ -1543,7 +1543,7 @@ double NavigationRouteHeuristic::getRealIndex(double &index, const std::vector<u
 		else
 			break;
 	}
-	//cout<<"(forwarding.cc-getRealIndex) index is "<<index<<endl;
+	cout<<"(forwarding.cc-getRealIndex) index is "<<index<<endl;
 	return index;
 }
 
@@ -1556,7 +1556,7 @@ std::unordered_set<std::string> NavigationRouteHeuristic::getAllInterestedRoutes
 	{
 		entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 		const std::unordered_set<std::string> &interestRoutes = entry->getIncomingnbs();
-		cout << "(forwarding.cc-OnData_RSU_RSU) 主PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
+		cout << "(forwarding.cc-getAllInterestedRoutes) 主PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
 		for (std::unordered_set<std::string>::const_iterator it = interestRoutes.begin(); it != interestRoutes.end(); ++it)
 		{
 			allinteresRoutes.insert(*it);
