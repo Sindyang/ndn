@@ -80,10 +80,6 @@ void Forwarded::clearAllRoads(const uint32_t RSUId, const uint32_t signature)
         RSUForwarded[id] = forwardedRoads;
         std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "全部清空" << std::endl;
     }
-    else
-    {
-        NS_ASSERT_MSG(false, "RSU未转发过该数据包");
-    }
 }
 
 void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std::string road)
@@ -106,7 +102,6 @@ void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std
         }
         return;
     }
-    std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << std::endl;
 }
 
 void Forwarded::printAllRoads(const uint32_t RSUId, const uint32_t signature)
@@ -125,7 +120,6 @@ void Forwarded::printAllRoads(const uint32_t RSUId, const uint32_t signature)
         std::cout << std::endl;
         return;
     }
-    std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << std::endl;
 }
 
 } /* namespace nrndn */
