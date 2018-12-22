@@ -29,13 +29,14 @@ void Forwarded::setForwardedRoads(const uint32_t RSUId, const uint32_t signature
 
 std::set<std::string> Forwarded::getForwardedRoads(const uint32_t RSUId, const uint32_t signature)
 {
+    std::set<std::string> forwardedRoads;
     std::pair<uint32_t, uint32_t> id(RSUId, signature);
     it = RSUForwarded.find(id);
     if (it != RSUForwarded.end())
     {
-        return it->second;
+        forwardedRoads = it->second;
     }
-    return NULL;
+    return forwardedRoads;
 }
 
 bool Forwarded::IsAllForwarded(const uint32_t RSUId, const uint32_t signature, std::unordered_set<std::string> allinteresRoutes)
