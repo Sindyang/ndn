@@ -24,7 +24,7 @@ void Forwarded::setForwardedRoads(const uint32_t RSUId, const uint32_t signature
 
     forwardedRoads.insert(road);
     RSUForwarded[id] = forwardedRoads;
-    std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "已转发过路段 " << road << std::endl;
+    std::cout << "(forwarded.cc-setForwardedRoads) RSU " << RSUId << " signature " << signature << " 已转发过路段 " << road << std::endl;
 }
 
 std::set<std::string> Forwarded::getForwardedRoads(const uint32_t RSUId, const uint32_t signature)
@@ -60,7 +60,7 @@ bool Forwarded::IsAllForwarded(const uint32_t RSUId, const uint32_t signature, s
             return true;
         }
 
-        std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "未转发过的路段为";
+        std::cout << "(forwarded.cc-IsAllForwarded) RSU " << RSUId << " signature " << signature << " 未转发过的路段为 ";
         std::unordered_set<std::string>::iterator itfind = allinteresRoutes.begin();
         for (; itfind != allinteresRoutes.end(); itfind++)
         {
@@ -80,7 +80,7 @@ void Forwarded::clearAllRoads(const uint32_t RSUId, const uint32_t signature)
     {
         std::set<std::string> forwardedRoads;
         RSUForwarded[id] = forwardedRoads;
-        std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "全部清空" << std::endl;
+        std::cout << "(forwarded.cc-clearAllRoads) RSU " << RSUId << " signature " << signature << "全部清空" << std::endl;
     }
 }
 
@@ -96,11 +96,11 @@ void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std
         {
             forwardedRoads.erase(itforward);
             it->second = forwardedRoads;
-            std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "已删除路段" << road << std::endl;
+            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "已删除路段" << road << std::endl;
         }
         else
         {
-            std::cout << "(forwarded.cc) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << road << std::endl;
+            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << road << std::endl;
         }
         return;
     }

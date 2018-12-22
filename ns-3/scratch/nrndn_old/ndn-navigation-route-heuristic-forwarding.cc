@@ -1556,7 +1556,7 @@ std::unordered_set<std::string> NavigationRouteHeuristic::getAllInterestedRoutes
 	{
 		entry = DynamicCast<pit::nrndn::EntryNrImpl>(Will);
 		const std::unordered_set<std::string> &interestRoutes = entry->getIncomingnbs();
-		cout << "(forwarding.cc-getAllInterestedRoutes) 主PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
+		//cout << "(forwarding.cc-getAllInterestedRoutes) 主PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
 		for (std::unordered_set<std::string>::const_iterator it = interestRoutes.begin(); it != interestRoutes.end(); ++it)
 		{
 			allinteresRoutes.insert(*it);
@@ -1568,7 +1568,7 @@ std::unordered_set<std::string> NavigationRouteHeuristic::getAllInterestedRoutes
 	{
 		entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillSecond);
 		const std::unordered_set<std::string> &interestRoutes = entry->getIncomingnbs();
-		cout << "(forwarding.cc-getAllInterestedRoutes) 副PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
+		//cout << "(forwarding.cc-getAllInterestedRoutes) 副PIT中感兴趣的上一跳路段数目为 " << interestRoutes.size() << endl;
 		for (std::unordered_set<std::string>::const_iterator it = interestRoutes.begin(); it != interestRoutes.end(); ++it)
 		{
 			allinteresRoutes.insert(*it);
@@ -1776,7 +1776,6 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		if (msgdirection.first && msgdirection.second < 0)
 		{
 			RSUForwarded.setForwardedRoads(m_node->GetId(), signature, forwardLane);
-			cout << "数据包 " << signature << " 已经转发过，上一跳路段为 " << forwardLane << endl;
 
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
@@ -2556,6 +2555,9 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			}
 			else
 			{
+				cout << endl
+					 << "(forwarding.cc-SendDataInCache) 数据包的signature " << signature << " 当前节点 " << nodeId << " 源节点为 " << sourceId << endl;
+
 				std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 				NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
@@ -2609,16 +2611,6 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 		{
 			newPriorityList = VehicleGetPriorityListOfData();
 		}
-
-		cout << "(forwarding.cc-SendDataInCache) 数据包的signature " << signature << " 当前节点 " << nodeId << " 源节点为 " << sourceId << endl;
-		cout << "(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 " << endl;
-		for (uint32_t i = 0; i < newPriorityList.size(); i++)
-		{
-			cout << newPriorityList[i] << " ";
-		}
-		cout << endl;
-
-		////getchar();
 
 		double random = m_uniformRandomVariable->GetInteger(0, 100);
 		Time sendInterval(MilliSeconds(random));
@@ -2852,8 +2844,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	if (behind_change_mode > 1 && m_cs->GetDataSize() > 0)
 	{
 		cout << "(forwarding.cc-ProcessHelloRSU) behind_change_mode " << behind_change_mode << endl;
-		//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+		cout << "(forwarding.cc-ProcessHelloRSU) 当前节点 " << nodeId << " 发送心跳包的节点 " << sourceId << " At time " << Simulator::Now().GetSeconds() << endl;
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
 		std::unordered_set<std::string> routesCollection;
@@ -3414,7 +3405,7 @@ std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> NavigationRout
 	{
 		priorityList.push_back(size);
 	}
-	cout << "(RSUGetPriorityListOfData) 有车辆的路段数目为 " << size << endl;
+	//cout << "(RSUGetPriorityListOfData) 有车辆的路段数目为 " << size << endl;
 
 	//加入每一个路段的车辆数目
 	std::unordered_set<std::string>::iterator itroutes;
@@ -3427,7 +3418,7 @@ std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> NavigationRout
 			remainroutes.erase(itroutes);
 		}
 		priorityList.push_back((itvehicles->second).size());
-		cout << "上一跳路段为 " << itvehicles->first << " 车辆数目为 " << (itvehicles->second).size() << endl;
+		//cout << "上一跳路段为 " << itvehicles->first << " 车辆数目为 " << (itvehicles->second).size() << endl;
 	}
 
 	for (itvehicles = sortvehicles.begin(); itvehicles != sortvehicles.end(); itvehicles++)
