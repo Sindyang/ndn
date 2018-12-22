@@ -35,7 +35,7 @@ std::set<std::string> Forwarded::getForwardedRoads(const uint32_t RSUId, const u
     {
         return it->second;
     }
-    NS_ASSERT_MSG(false, "RSU未转发过该数据包");
+    return NULL;
 }
 
 bool Forwarded::IsAllForwarded(const uint32_t RSUId, const uint32_t signature, std::unordered_set<std::string> allinteresRoutes)

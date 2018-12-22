@@ -2609,13 +2609,13 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			newPriorityList = VehicleGetPriorityListOfData();
 		}
 
-		//cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
-		//cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;
+		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
+		cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;
 		for (uint32_t i = 0; i < newPriorityList.size(); i++)
 		{
-			//cout<<newPriorityList[i]<<" ";
+			cout<<newPriorityList[i]<<" ";
 		}
-		//cout<<endl;
+		cout<<endl;
 
 		////getchar();
 
