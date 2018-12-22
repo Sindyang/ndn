@@ -2766,7 +2766,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		std::map<std::string, uint32_t>::iterator itroutes_front_pre = routes_front_pre.begin();
 		for (; itroutes_front_pre != routes_front_pre.end(); ++itroutes_front_pre)
 		{
-			itroutes_front = routes_front.find(*itroutes_front_pre);
+			itroutes_front = routes_front.find(itroutes_front_pre->first);
 			if (itroutes_front == routes_front.end())
 			{
 				nbchangeroad = true;
@@ -2779,6 +2779,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				if (numofNow > numofBefore)
 				{
 					nbchangecar = true;
+					cout << "(processHelloRSU) At time " << Simulator::Now().GetSeconds() << "RSU " << nodeId << "所在前方路段 " << itroutes_front->first << "有了新车辆" << endl;
+					break;
 				}
 			}
 		}
@@ -2806,18 +2808,21 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		std::unordered_set<std::string>::iterator itroutes_behind_pre = routes_behind_pre.begin();
 		for (; itroutes_behind_pre != routes_behind_pre.end(); ++itroutes_behind_pre)
 		{
-			if (routes_behind.find(*itroutes_behind_pre) == routes_behind.end())
+			itroutes_behind = routes_behind.find(itroutes_behind_pre->first);
+			if (itroutes_behind == routes_behind.end())
 			{
 				nbchangeroad = true;
 				break;
 			}
 			else
 			{
-				uint32_t numofNow = routes_behind->second;
+				uint32_t numofNow = itroutes_behind->second;
 				uint32_t numofBefore = itroutes_behind_pre->second;
 				if (numofNow > numofBefore)
 				{
 					nbchangecar = true;
+					cout << "(processHelloRSU) At time " << Simulator::Now().GetSeconds() << "RSU " << nodeId << "所在后方路段 " << itroutes_behind->first << "有了新车辆" << endl;
+					break;
 				}
 			}
 		}
