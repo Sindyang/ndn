@@ -1683,11 +1683,11 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 		}
 
 		//2018.12.21
-		if (forwardLane != "")
+		/*if (forwardLane != "")
 		{
 			RSUForwarded.setForwardedRoads(m_node->GetId(), signature, forwardLane);
 			cout << "(forwarding.cc-OnData_RSU_RSU) 认为 " << forwardLane << " 为已经转发过的路段" << endl;
-		}
+		}*/
 
 		// 2018.1.15
 		if (newPriorityList.empty())
@@ -1809,8 +1809,9 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			{
 				// 2018.1.6 added by sy
 				//CachingDataSourcePacket(data->GetSignature(),data);
-				// 2018.1.28
-				RSUForwarded.setForwardedRoads(m_node->GetId(), signature, forwardLane);
+
+				//2018.12.22 注释该函数
+				//RSUForwarded.setForwardedRoads(m_node->GetId(), signature, forwardLane);
 
 				//BroadcastStopMessage(data);
 				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
@@ -2030,7 +2031,7 @@ void NavigationRouteHeuristic::CachingDataPacket(uint32_t signature, Ptr<const D
 	bool result = m_cs->AddData(signature, data);
 	if (result)
 	{
-		cout << "(forwarding.cc-CachingDataPacket) At Time " << Simulator::Now().GetSeconds() << " 节点 " << m_node->GetId() << " 已缓存数据包" << signature << endl;
+		//cout << "(forwarding.cc-CachingDataPacket) At Time " << Simulator::Now().GetSeconds() << " 节点 " << m_node->GetId() << " 已缓存数据包" << signature << endl;
 	}
 	//getchar();
 }
@@ -2609,13 +2610,13 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			newPriorityList = VehicleGetPriorityListOfData();
 		}
 
-		cout<<"(forwarding.cc-SendDataInCache) 数据包的signature "<<signature<<" 当前节点 "<<nodeId<<" 源节点为 "<<sourceId<<endl;
-		cout<<"(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 "<<endl;
+		cout << "(forwarding.cc-SendDataInCache) 数据包的signature " << signature << " 当前节点 " << nodeId << " 源节点为 " << sourceId << endl;
+		cout << "(forwarding.cc-SendDataInCache) 数据包转发优先级列表为 " << endl;
 		for (uint32_t i = 0; i < newPriorityList.size(); i++)
 		{
-			cout<<newPriorityList[i]<<" ";
+			cout << newPriorityList[i] << " ";
 		}
-		cout<<endl;
+		cout << endl;
 
 		////getchar();
 
@@ -2655,42 +2656,8 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 	if (sourceId < numsofvehicles)
 	{
-		pair<bool, double> msgdirection = packetFromDirection(interest);
-		//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆发送的心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-
-		//发送心跳包的车辆位于当前节点后方
-		//2018.12.14 该心跳包由车辆发送
-		if (msgdirection.first && msgdirection.second < 0)
-		{
-			overtake.insert(sourceId);
-		}
-		else if (msgdirection.first && msgdirection.second > 0)
-		{
-			std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
-			//该车辆超车
-			if (it != overtake.end())
-			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
-				std::pair<bool, uint32_t> resend = m_nrpit->DeleteFrontNode(remoteroute, sourceId);
-				NodesToDeleteFromTable(sourceId);
-
-				overtake.erase(it);
-
-				//2018.3.17
-				//该车辆已经超过RSU，记录下来
-				alreadyPassed.insert(sourceId);
-
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
-				////getchar();
-				if (resend.first == false)
-					notifyUpperOnInterest(resend.second);
-			}
-			else
-			{
-				//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
-			}
-		}
+		//删除超车的PIT
+		deleteOverTake(interest, sourceId, remoteroute);
 	}
 
 	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb = m_nb.getNb().begin();
@@ -2698,18 +2665,19 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 	// 2017.12.27 added by sy
 	// routes_front代表有车辆/RSU的前方路段集合
-	std::unordered_set<std::string> routes_front;
-	std::unordered_set<std::string>::iterator itroutes_front;
+	std::map<std::string, uint32_t> routes_front;
+	std::map<std::string, uint32_t>::iterator itroutes_front;
 
 	//2018.1.8 added by sy
 	// routes_behind代表有车辆/RSU的后方路段集合
-	std::unordered_set<std::string> routes_behind;
-	std::unordered_set<std::string>::iterator itroutes_behind;
+	std::map<std::string, uint32_t> routes_behind;
+	std::map<std::string, uint32_t>::iterator itroutes_behind;
 
 	for (; nb != m_nb.getNb().end(); ++nb)
 	{
 		if (nb->first >= numsofvehicles)
 		{
+			//获取RSU-RSU组成的道路集合
 			set<string> roadCollection = m_sensor->RSUGetRoadWithRSU(nb->first);
 			set<string>::iterator itroad = roadCollection.begin();
 			for (; itroad != roadCollection.end(); itroad++)
@@ -2719,12 +2687,28 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				if (result.first && result.second > 0)
 				{
 					//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroad<<" 前方有RSU"<<endl;
-					routes_front.insert(itroutes_front, *itroad);
+					itroutes_front = routes_front.find(*itroad);
+					if (itroutes_front != routes_front.end())
+					{
+						(itroutes_front->second)++;
+					}
+					else
+					{
+						routes_front[*itroad] = 1;
+					}
 				}
 				else if (result.first && result.second < 0)
 				{
 					//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<*itroad<<" 后方有RSU"<<endl;
-					routes_behind.insert(itroutes_behind, *itroad);
+					itroutes_behind = routes_behind.find(*itroad);
+					if (itroutes_behind != routes_behind.end())
+					{
+						(itroutes_behind->second)++;
+					}
+					else
+					{
+						routes_behind[*itroad] = 1;
+					}
 				}
 			}
 		}
@@ -2735,12 +2719,28 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if (result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<" 前方有车辆"<<endl;
-				routes_front.insert(itroutes_front, nb->second.m_lane);
+				itroutes_front = routes_front.find(*itroad);
+				if (itroutes_front != routes_front.end())
+				{
+					(itroutes_front->second)++;
+				}
+				else
+				{
+					routes_front[*itroad] = 1;
+				}
 			}
 			else if (result.first && result.second < 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<" 后方有车辆"<<endl;
-				routes_behind.insert(itroutes_behind, nb->second.m_lane);
+				itroutes_behind = routes_behind.find(*itroad);
+				if (itroutes_behind != routes_behind.end())
+				{
+					(itroutes_behind->second)++;
+				}
+				else
+				{
+					routes_behind[*itroad] = 1;
+				}
 			}
 		}
 	}
@@ -2748,19 +2748,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	//getchar();
 	int front_change_mode = 0;
 	int behind_change_mode = 0;
-
-	/*cout<<"routes_front_pre"<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_front_pre.begin();it != routes_front_pre.end();++it)
-	{
-		cout<<*it<<" ";
-	}
-	
-	cout<<endl<<"routes_front"<<endl;
-	for(std::unordered_set<std::string>::iterator it = routes_front.begin();it != routes_front.end();++it)
-	{
-		cout<<*it<<" ";
-	}
-	cout<<endl;*/
 
 	if (routes_front_pre.size() < routes_front.size())
 	{
@@ -2774,19 +2761,32 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else
 	{
-		bool nbchange = false;
-		std::unordered_set<std::string>::iterator itroutes_front_pre = routes_front_pre.begin();
+		bool nbchangeroad = false;
+		bool nbchangecar = false;
+		std::map<std::string, uint32_t>::iterator itroutes_front_pre = routes_front_pre.begin();
 		for (; itroutes_front_pre != routes_front_pre.end(); ++itroutes_front_pre)
 		{
-			if (routes_front.find(*itroutes_front_pre) == routes_front.end())
+			itroutes_front = routes_front.find(*itroutes_front_pre);
+			if (itroutes_front == routes_front.end())
 			{
-				nbchange = true;
+				nbchangeroad = true;
 				break;
+			}
+			else
+			{
+				uint32_t numofNow = itroutes_front->second;
+				uint32_t numofBefore = itroutes_front_pre->second;
+				if (numofNow > numofBefore)
+				{
+					nbchangecar = true;
+				}
 			}
 		}
 		//邻居数目不变，但是有增加
-		if (nbchange)
+		if (nbchangeroad || nbchangecar)
+		{
 			front_change_mode = 3;
+		}
 	}
 
 	//cout<<"(forwarding.cc-ProcessHelloRSU) front_change_mode "<<front_change_mode<<endl;
@@ -2801,18 +2801,28 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	}
 	else
 	{
-		bool nbchange = false;
+		bool nbchangeroad = false;
+		bool nbchangecar = false;
 		std::unordered_set<std::string>::iterator itroutes_behind_pre = routes_behind_pre.begin();
 		for (; itroutes_behind_pre != routes_behind_pre.end(); ++itroutes_behind_pre)
 		{
 			if (routes_behind.find(*itroutes_behind_pre) == routes_behind.end())
 			{
-				nbchange = true;
+				nbchangeroad = true;
 				break;
+			}
+			else
+			{
+				uint32_t numofNow = routes_behind->second;
+				uint32_t numofBefore = itroutes_behind_pre->second;
+				if (numofNow > numofBefore)
+				{
+					nbchangecar = true;
+				}
 			}
 		}
 		//邻居数目不变，但是有增加
-		if (nbchange)
+		if (nbchangeroad || nbchangecar)
 			behind_change_mode = 3;
 	}
 
@@ -2841,11 +2851,11 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		for (std::unordered_set<std::string>::iterator it = routes_behind.begin(); it != routes_behind.end(); it++)
+		/*for (std::unordered_set<std::string>::iterator it = routes_behind.begin(); it != routes_behind.end(); it++)
 		{
 			cout << *it << " ";
 		}
-		cout << endl;
+		cout << endl;*/
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU)PIT中对应的数据包为 "<<endl;
@@ -2876,6 +2886,46 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	routes_front_pre = routes_front;
 	routes_behind_pre = routes_behind;
 	m_preNB = m_nb;
+}
+
+void NavigationRouteHeuristic::deleteOverTake(Ptr<Interest> interest, uint32_t sourceId, string remoteroute)
+{
+	pair<bool, double> msgdirection = packetFromDirection(interest);
+	//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆发送的心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+
+	//发送心跳包的车辆位于当前节点后方
+	//2018.12.14 该心跳包由车辆发送
+	if (msgdirection.first && msgdirection.second < 0)
+	{
+		overtake.insert(sourceId);
+	}
+	else if (msgdirection.first && msgdirection.second > 0)
+	{
+		std::unordered_set<uint32_t>::iterator it = overtake.find(sourceId);
+		//该车辆超车
+		if (it != overtake.end())
+		{
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
+			std::pair<bool, uint32_t> resend = m_nrpit->DeleteFrontNode(remoteroute, sourceId);
+			NodesToDeleteFromTable(sourceId);
+
+			overtake.erase(it);
+
+			//2018.3.17
+			//该车辆已经超过RSU，记录下来
+			alreadyPassed.insert(sourceId);
+
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<" 从PIT中删除该表项"<<endl;
+			////getchar();
+			if (resend.first == false)
+				notifyUpperOnInterest(resend.second);
+		}
+		else
+		{
+			//cout<<"(forwarding.cc-ProcessHelloRSU) 车辆 "<<sourceId<<"一直位于前方"<<endl;
+		}
+	}
 }
 
 void NavigationRouteHeuristic::NodesToDeleteFromTable(uint32_t sourceId)
