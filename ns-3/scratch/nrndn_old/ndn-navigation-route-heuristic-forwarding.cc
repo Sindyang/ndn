@@ -2719,27 +2719,27 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 			if (result.first && result.second > 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<" 前方有车辆"<<endl;
-				itroutes_front = routes_front.find(*itroad);
+				itroutes_front = routes_front.find(nb->second.m_lane);
 				if (itroutes_front != routes_front.end())
 				{
 					(itroutes_front->second)++;
 				}
 				else
 				{
-					routes_front[*itroad] = 1;
+					routes_front[nb->second.m_lane] = 1;
 				}
 			}
 			else if (result.first && result.second < 0)
 			{
 				//cout<<"(forwarding.cc-ProcessHelloRSU) 路段 "<<nb->second.m_lane<<" 后方有车辆"<<endl;
-				itroutes_behind = routes_behind.find(*itroad);
+				itroutes_behind = routes_behind.find(nb->second.m_lane);
 				if (itroutes_behind != routes_behind.end())
 				{
 					(itroutes_behind->second)++;
 				}
 				else
 				{
-					routes_behind[*itroad] = 1;
+					routes_behind[nb->second.m_lane] = 1;
 				}
 			}
 		}
