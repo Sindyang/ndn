@@ -2779,7 +2779,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				if (numofNow > numofBefore)
 				{
 					nbchangecar = true;
-					cout << "(processHelloRSU) At time " << Simulator::Now().GetSeconds() << "RSU " << nodeId << "所在前方路段 " << itroutes_front->first << "有了新车辆" << endl;
 					break;
 				}
 			}
@@ -2821,7 +2820,6 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				if (numofNow > numofBefore)
 				{
 					nbchangecar = true;
-					cout << "(processHelloRSU) At time " << Simulator::Now().GetSeconds() << "RSU " << nodeId << "所在后方路段 " << itroutes_behind->first << "有了新车辆" << endl;
 					break;
 				}
 			}
@@ -2833,6 +2831,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 	if (front_change_mode > 1 && m_cs->GetInterestSize() > 0)
 	{
+		cout << "(forwarding.cc-ProcessHelloRSU) front_change_mode " << front_change_mode << endl;
 		for (itroutes_front = routes_front.begin(); itroutes_front != routes_front.end(); itroutes_front++)
 		{
 			map<uint32_t, Ptr<const Interest>> interestcollection = m_cs->GetInterest(itroutes_front->first);
@@ -2852,6 +2851,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 	if (behind_change_mode > 1 && m_cs->GetDataSize() > 0)
 	{
+		cout << "(forwarding.cc-ProcessHelloRSU) behind_change_mode " << behind_change_mode << endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 当前节点 "<<nodeId<<" 发送心跳包的节点 "<<sourceId<<" At time "<<Simulator::Now().GetSeconds()<<endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 
@@ -2868,7 +2868,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 		std::unordered_map<std::string, std::unordered_set<std::string>> dataandroutes = m_nrpit->GetDataNameandLastRoute(routesCollection);
 
-		for (std::unordered_map<std::string, std::unordered_set<std::string>>::iterator it = dataandroutes.begin(); it != dataandroutes.end(); it++)
+		/*for (std::unordered_map<std::string, std::unordered_set<std::string>>::iterator it = dataandroutes.begin(); it != dataandroutes.end(); it++)
 		{
 			//cout<<"数据包名称为 "<<it->first<<endl;
 			//cout<<"对应的上一跳路段为 ";
@@ -2878,7 +2878,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 				//cout<<*itcollect<<" ";
 			}
 			//cout<<endl;
-		}
+		}*/
 
 		std::map<uint32_t, Ptr<const Data>> datacollection = m_cs->GetData(dataandroutes);
 		if (!datacollection.empty())
