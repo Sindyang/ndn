@@ -2805,7 +2805,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		bool nbchangeroad = false;
 		bool nbchangecar = false;
-		std::unordered_set<std::string>::iterator itroutes_behind_pre = routes_behind_pre.begin();
+		std::map<std::string, uint32_t>::iterator itroutes_behind_pre = routes_behind_pre.begin();
 		for (; itroutes_behind_pre != routes_behind_pre.end(); ++itroutes_behind_pre)
 		{
 			itroutes_behind = routes_behind.find(itroutes_behind_pre->first);
@@ -2835,10 +2835,10 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 	{
 		for (itroutes_front = routes_front.begin(); itroutes_front != routes_front.end(); itroutes_front++)
 		{
-			map<uint32_t, Ptr<const Interest>> interestcollection = m_cs->GetInterest(*itroutes_front);
+			map<uint32_t, Ptr<const Interest>> interestcollection = m_cs->GetInterest(itroutes_front->first);
 			if (!interestcollection.empty())
 			{
-				cout << "(forwarding.cc-ProcessHelloRSU) 缓存的兴趣包对应的路段 " << *itroutes_front << " 有车辆。当前节点为 " << nodeId << endl;
+				cout << "(forwarding.cc-ProcessHelloRSU) 缓存的兴趣包对应的路段 " << itroutes_front->first << " 有车辆。当前节点为 " << nodeId << endl;
 				SendInterestInCache(interestcollection);
 			}
 			//getchar();
@@ -2856,16 +2856,17 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 心跳包的位置为 "<<msgdirection.first<<" "<<msgdirection.second<<endl;
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU) 有车辆的路段为 "<<endl;
-		/*for (std::unordered_set<std::string>::iterator it = routes_behind.begin(); it != routes_behind.end(); it++)
+		std::unordered_set<std::string> routesCollection;
+		for (std::map<std::string, uint32_t>::iterator it = routes_behind.begin(); it != routes_behind.end(); it++)
 		{
-			cout << *it << " ";
+			routesCollection.insert(it->first);
 		}
-		cout << endl;*/
+		//cout << endl;
 		//cout<<"(forwarding.cc-ProcessHelloRSU) routes_behind的大小为 "<<routes_behind.size()<<endl;
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU)PIT中对应的数据包为 "<<endl;
 
-		std::unordered_map<std::string, std::unordered_set<std::string>> dataandroutes = m_nrpit->GetDataNameandLastRoute(routes_behind);
+		std::unordered_map<std::string, std::unordered_set<std::string>> dataandroutes = m_nrpit->GetDataNameandLastRoute(routesCollection);
 
 		for (std::unordered_map<std::string, std::unordered_set<std::string>>::iterator it = dataandroutes.begin(); it != dataandroutes.end(); it++)
 		{
