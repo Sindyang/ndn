@@ -1739,7 +1739,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy
-				CachingDataSourcePacket(data->GetSignature(),data);
+				CachingDataSourcePacket(data->GetSignature(), data);
 
 				//2018.12.22 注释该函数
 				//RSUForwarded.setForwardedRoads(m_node->GetId(), signature, forwardLane);
@@ -1768,7 +1768,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	else
 	{
 		//缓存数据包
-		CachingDataSourcePacket(signature,data);
+		CachingDataSourcePacket(signature, data);
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
@@ -2353,13 +2353,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			//cout<<"(forwarding.cc-ProcessHello) 获得缓存的兴趣包"<<endl;
 			if (!interestcollection.empty())
 			{
-				double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
-				if (interval < 1)
-				{
-					//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
-					return;
-				}
-				m_sendInterestTime = Simulator::Now().GetSeconds();
 				SendInterestInCache(interestcollection);
 			}
 		}
@@ -2378,13 +2371,6 @@ void NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			map<uint32_t, Ptr<const Data>> datacollection = m_cs->GetData();
 			if (!datacollection.empty())
 			{
-				double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
-				if (interval < 1)
-				{
-					//cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
-					return;
-				}
-				m_sendDataTime = Simulator::Now().GetSeconds();
 				SendDataInCache(datacollection);
 				//cout<<"(forwarding.cc-ProcessHello) 当前节点为 "<<m_node->GetId()<<" 从缓存中取出数据包"<<endl;
 			}
@@ -2424,7 +2410,14 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 // 2017.12.21 发送缓存的兴趣包
 void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t, Ptr<const Interest>> interestcollection)
 {
-	//cout<<"进入(forwarding.cc-SendInterestInCache)"<<endl;
+	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
+	if (interval < 1)
+	{
+		//cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
+		return;
+	}
+	m_sendInterestTime = Simulator::Now().GetSeconds();
+	
 	std::map<uint32_t, Ptr<const Interest>>::iterator it;
 	for (it = interestcollection.begin(); it != interestcollection.end(); it++)
 	{
@@ -2463,6 +2456,13 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t, Ptr<const 
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data>> datacollection)
 {
+	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
+	if (interval < 1)
+	{
+		//cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
+		return;
+	}
+	m_sendDataTime = Simulator::Now().GetSeconds();
 	std::map<uint32_t, Ptr<const Data>>::iterator it;
 	for (it = datacollection.begin(); it != datacollection.end(); it++)
 	{
@@ -2501,7 +2501,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 				if (forwardedroutes.empty())
 				{
 					newinterestRoutes = allinteresRoutes;
-					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
+					cout << "(forwarding.cc-SendDataInCache) 数据包 " << signature << " 对应的上一跳路段全部未转发过" << endl;
 				}
 				else
 				{
@@ -2511,11 +2511,11 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 						std::set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if (itforward != forwardedroutes.end())
 						{
-							cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
+							cout << "(forwarding.cc-SendDataInCache) 数据包 " << signature << " 已转发过的上一跳路段为 " << *itinterest << endl;
 							continue;
 						}
 						newinterestRoutes.insert(*itinterest);
-						cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
+						cout << "(forwarding.cc-SendDataInCache) 数据包 " << signature << " 未转发过的上一跳路段为 " << *itinterest << endl;
 					}
 				}
 
