@@ -2413,7 +2413,7 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t, Ptr<const 
 	double interval = Simulator::Now().GetSeconds() - m_sendInterestTime;
 	if (interval < 1)
 	{
-		cout<<"(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime "<<m_sendInterestTime<<endl;
+		cout << "(forwarding.cc-SendInterestInCache) 时间小于一秒，不发送 m_sendInterestTime " << m_sendInterestTime << " 节点 " << m_node->GetId() << endl;
 		return;
 	}
 
@@ -2460,11 +2460,11 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 	double interval = Simulator::Now().GetSeconds() - m_sendDataTime;
 	if (interval < 1)
 	{
-		cout<<"(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime "<<m_sendDataTime<<endl;
+		cout << "(forwarding.cc-SendDataInCache) 时间小于一秒，不发送 m_sendDataTime " << m_sendDataTime << " 节点 " << m_node->GetId() << endl;
 		return;
 	}
 	m_sendDataTime = Simulator::Now().GetSeconds();
-	
+
 	std::map<uint32_t, Ptr<const Data>>::iterator it;
 	for (it = datacollection.begin(); it != datacollection.end(); it++)
 	{
