@@ -487,7 +487,7 @@ void NavigationRouteHeuristic::OnInterest_Car(Ptr<Face> face, Ptr<Interest> inte
 			std::vector<uint32_t> newPriorityList = VehicleGetPriorityListOfInterest();
 			if (newPriorityList.empty())
 			{
-				cout<<"(forwarding.cc-OnInterest_Car) At Time "<<Simulator::Now().GetSeconds()<<" 节点 "<<myNodeId<<"准备缓存兴趣包 "<<seq<<endl;
+				cout << "(forwarding.cc-OnInterest_Car) At Time " << Simulator::Now().GetSeconds() << " 节点 " << myNodeId << "准备缓存兴趣包 " << seq << endl;
 				//getchar();
 				CachingInterestPacket(seq, interest);
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval, &NavigationRouteHeuristic::BroadcastStopInterestMessage, this, interest);
@@ -741,7 +741,7 @@ void NavigationRouteHeuristic::OnInterest_RSU(Ptr<Face> face, Ptr<Interest> inte
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		//cout<<"(forwarding.cc-OnInterest_RSU) 该兴趣包从后方得到。源节点 "<<nodeId<<",当前节点 "<<myNodeId<<",转发节点 "<<forwardId<<endl;
-	
+
 		vector<string> interestRoute = ExtractRouteFromName(interest->GetName());
 
 		// routes代表车辆的实际转发路线
@@ -997,12 +997,11 @@ void NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest, 
 	if (!datacollection.empty())
 	{
 		// 2018.2.21
-		std::map<uint32_t, Ptr<const Data>>::iterator itdata = datacollection.begin();
+		/*std::map<uint32_t, Ptr<const Data>>::iterator itdata = datacollection.begin();
 		for (; itdata != datacollection.end(); itdata++)
 		{
 			RSUForwarded.clearOneRoad(m_node->GetId(), itdata->first, currentroute);
-		}
-		//cout<<"(forwarding.cc-DetectDatainCache) 从缓存中取出数据包"<<endl;
+		}*/
 		SendDataInCache(datacollection);
 	}
 }
@@ -1583,7 +1582,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	CachingDataSourcePacket(signature,data);
+	CachingDataSourcePacket(signature, data);
 
 	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
@@ -2502,7 +2501,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 				if (forwardedroutes.empty())
 				{
 					newinterestRoutes = allinteresRoutes;
-					//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
+					cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 对应的上一跳路段全部未转发过"<<endl;
 				}
 				else
 				{
@@ -2512,11 +2511,11 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 						std::set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
 						if (itforward != forwardedroutes.end())
 						{
-							//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
+							cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 已转发过的上一跳路段为 "<<*itinterest<<endl;
 							continue;
 						}
 						newinterestRoutes.insert(*itinterest);
-						//cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
+						cout<<"(forwarding.cc-SendDataInCache) 数据包 "<<signature<<" 未转发过的上一跳路段为 "<<*itinterest<<endl;
 					}
 				}
 

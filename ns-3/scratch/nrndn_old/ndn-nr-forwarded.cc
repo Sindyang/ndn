@@ -100,7 +100,7 @@ void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std
         }
         else
         {
-            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << road << std::endl;
+            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << std::endl;
         }
         return;
     }

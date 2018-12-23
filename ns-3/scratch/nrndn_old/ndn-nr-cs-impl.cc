@@ -179,7 +179,7 @@ bool NrCsImpl::AddDataSource(uint32_t signature, Ptr<const Data> data)
 
 	//2018.5.25 在仿真地图中去掉数据源的有效时间
 	Simulator::Schedule(Seconds(interval), &NrCsImpl::CleanExpiredTimedoutDataSource, this, signature);
-	std::cout << "(cs-impl.c-AddDataSource) 数据包 " << signature << " 有效时间为 " << interval << std::endl;
+	//std::cout << "(cs-impl.c-AddDataSource) 数据包 " << signature << " 有效时间为 " << interval << std::endl;
 	return true;
 }
 
@@ -291,6 +291,7 @@ NrCsImpl::GetDataSource(std::vector<std::string> interest)
 				//修改数据包的Timestamp
 				//data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
+				std::cout << "(cs-impl.cc-GetDataSource) 从缓存中得到的数据包为 " << data->GetSignature() << std::endl;
 			}
 		}
 	}
