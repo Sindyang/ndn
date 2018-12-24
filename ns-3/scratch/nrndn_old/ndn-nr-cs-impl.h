@@ -193,7 +193,6 @@ class NrCsImpl : public ContentStore
     std::map<uint32_t, Ptr<cs::Entry>> m_data;
     std::map<uint32_t, Ptr<cs::Entry>> m_datasource;
     std::map<uint32_t, Ptr<cs::EntryInterest>> m_interest;
-    //std::map<uint32_t,std::unordered_set<std::string> > m_lastroutes;
 };
 
 } /* namespace nrndn */

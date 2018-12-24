@@ -456,7 +456,7 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond);
 
 	//2018.12.22
-	void 
+	void
 	deleteOverTake(Ptr<Interest> interest, uint32_t sourceId, string remoteroute);
 
   private:

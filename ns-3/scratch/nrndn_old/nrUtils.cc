@@ -50,7 +50,6 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c = NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize)感兴趣的节点：";
 	cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) 修改RSU数目" << endl;
 	getchar();
 
@@ -61,27 +60,21 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 			continue;
 		Ptr<Application> app = (*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
-		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) producer " << endl;
 		NS_ASSERT(producer);
 		if (producer->IsActive())
 			++nodeSize;
 		else
 		{ //非活跃节点直接跳过，避免段错误
 			idx++;
-			//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) no active" << endl;
 			continue;
 		}
-		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) IsInterestLane " << endl;
 		if (producer->IsInterestLane(lane))
 		{
 			++interestSize;
 			cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx " << idx << endl;
 		}
 		idx++;
-		//cout << "(nrUtils.cc-GetNodeSizeAndInterestNodeSize) idx++ " << endl;
 	}
-	//cout<<"(nrUtils.cc-GetNodeSizeAndInterestNodeSize) utils:统计结束"<<endl;
-	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize, interestSize);
 }
 
@@ -189,10 +182,6 @@ double nrUtils::GetAverageAccurateRate()
 				double accurateRate = interestedNodeNum / receiveNodesNum;
 				result.push_back(accurateRate);
 			}
-
-			//	cout<<"From msgArrivalCounter, ID="<<it1->first<<" Signature="<<it2->first<<
-			//			" interest node="<< msgAttr.InterestedNodeReceiveCounter<<
-			//            " disinterest node="<<msgAttr.DisinterestedNodeReceiveCounter<<endl;
 		}
 	}
 
@@ -218,10 +207,6 @@ double nrUtils::GetAverageDisinterestedRate()
 				double accurateRate = disinterestedNodeNum / receiveNodesNum;
 				result.push_back(accurateRate);
 			}
-
-			//	cout<<"From msgArrivalCounter, ID="<<it1->first<<" Signature="<<it2->first<<
-			//			" interest node="<< msgAttr.InterestedNodeReceiveCounter<<
-			//            " disinterest node="<<msgAttr.DisinterestedNodeReceiveCounter<<endl;
 		}
 	}
 	return GetAverage(result);
@@ -249,9 +234,6 @@ double nrUtils::GetAverageHitRate()
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
-				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点数量"<<interestedNodeNum<<endl;
-				//cout<<"(nrUtils.cc-GetAverageHitRate) 兴趣的节点总数"<<interestedNodeSum<<endl;
-				//getchar();
 			}
 		}
 	}
@@ -388,11 +370,8 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 {
 	Ptr<Packet> packet = Wire::FromData(data);
 	uint32_t size = packet->GetSize();
-	//cout << "(nrUtils-AggrateDataPacketSize) Data size = " << size << endl;
 	ByteSent += size;
 	DataByteSent += size;
-	//cout << "(nrUtils.cc-AggrateDataPacketSize) data size" << size << endl;
-	//getchar();
 }
 
 void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
@@ -415,7 +394,6 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	{
 		InterestByteSent += size;
 		//cout << "(nrUtils-AggrateInterestPacketSize) Interest size " << size << endl;
-		//getchar();
 	}
 }
 

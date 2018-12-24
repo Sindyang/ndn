@@ -125,28 +125,19 @@ bool NrCsImpl::AddData(uint32_t signature, Ptr<const Data> data)
 	Ptr<cs::Entry> csEntry = FindData(signature);
 	if (csEntry != 0)
 	{
-		//std::cout<<"(cs-impl.cc-AddData) 该数据包已经在缓存中"<<std::endl;
 		return false;
 	}
 	//数据包保留的时间 = 产生时间+有效时间-当前时间
 	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds() - Simulator::Now().GetSeconds();
 	if (interval < 0)
 	{
-		//std::cout<<"(cs-impl.cc-AddData) 数据包 "<<signature<<" 已经超过了有效时间"<<std::endl;
 		return false;
 	}
-
-	//uint32_t size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包前的缓存大小为 "<<size<<std::endl;
 
 	csEntry = ns3::Create<cs::Entry>(this, data);
 	m_data[signature] = csEntry;
 
-	//size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
-
 	Simulator::Schedule(Seconds(interval), &NrCsImpl::CleanExpiredTimedoutData, this, signature);
-	//std::cout<<"(cs-impl.c-AddData) 数据包 "<<signature<<" 有效时间为 "<<interval<<std::endl;
 	return true;
 }
 
@@ -156,30 +147,19 @@ bool NrCsImpl::AddDataSource(uint32_t signature, Ptr<const Data> data)
 	Ptr<cs::Entry> csEntry = FindDataSource(signature);
 	if (csEntry != 0)
 	{
-		//std::cout<<"(cs-impl.cc-AddDataSource) 该数据包已经在缓存中"<<std::endl;
 		return false;
 	}
 	//数据包保留的时间 = 产生时间+有效时间-当前时间
-	// 2018.5.5 重新加入有效期的判断
 	double interval = data->GetTimestamp().GetSeconds() + data->GetFreshness().GetSeconds() - Simulator::Now().GetSeconds();
 	if (interval < 0)
 	{
-		std::cout << "(cs-impl.cc-AddDataSource) 数据包 " << signature << " 已经超过了有效时间" << std::endl;
 		return false;
 	}
-
-	//uint32_t size = GetDataSourceSize();
-	//std::cout<<"(cs-impl.cc-AddDataSource) 加入该数据包前的缓存大小为 "<<size<<std::endl;
 
 	csEntry = ns3::Create<cs::Entry>(this, data);
 	m_datasource[signature] = csEntry;
 
-	//size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-AddData) 加入该数据包后的缓存大小为 "<<size<<std::endl;
-
-	//2018.5.25 在仿真地图中去掉数据源的有效时间
 	Simulator::Schedule(Seconds(interval), &NrCsImpl::CleanExpiredTimedoutDataSource, this, signature);
-	//std::cout << "(cs-impl.c-AddDataSource) 数据包 " << signature << " 有效时间为 " << interval << std::endl;
 	return true;
 }
 
@@ -188,15 +168,8 @@ void NrCsImpl::CleanExpiredTimedoutData(uint32_t signature)
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it = m_data.find(signature);
 	if (it != m_data.end())
 	{
-		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
 		m_data.erase(it);
 	}
-	else
-	{
-		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 不在缓存中"<<std::endl;
-	}
-	//uint32_t size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 }
 
 void NrCsImpl::CleanExpiredTimedoutDataSource(uint32_t signature)
@@ -204,15 +177,8 @@ void NrCsImpl::CleanExpiredTimedoutDataSource(uint32_t signature)
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it = m_datasource.find(signature);
 	if (it != m_datasource.end())
 	{
-		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 已经超时，删除"<<std::endl;
 		m_datasource.erase(it);
 	}
-	else
-	{
-		//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 当前时间；"<<Simulator::Now().GetSeconds()<<" 数据包 "<<signature<<" 不在缓存中"<<std::endl;
-	}
-	//uint32_t size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-CleanExpiredTimedoutData) 删除数据包后的缓存大小为 "<<size<<std::endl;
 }
 
 void NrCsImpl::DeleteData(const uint32_t signature)
@@ -226,69 +192,49 @@ void NrCsImpl::DeleteData(const uint32_t signature)
 		size = GetDataSize();
 		std::cout << "(cs-impl.cc-DeleteData) 删除数据包后的缓存大小为 " << size << " 数据包序列号为 " << signature << std::endl;
 	}
-	//else
-	//std::cout<<"(cs-impl.cc-DeleteData) 该数据包不在缓存中"<<std::endl;
 }
 
 std::map<uint32_t, Ptr<const Data>>
 NrCsImpl::GetData(std::unordered_map<std::string, std::unordered_set<std::string>> dataname_route)
 {
-	//uint32_t size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
-
 	std::map<uint32_t, Ptr<const Data>> DataCollection;
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it;
 
-	//std::cout<<"(cs-impl.cc-GetData) RSU获取缓存中的数据包"<<std::endl;
 	std::unordered_map<std::string, std::unordered_set<std::string>>::iterator itdataroute = dataname_route.begin();
-	//从缓存中取出对应的数据包
 	for (; itdataroute != dataname_route.end(); itdataroute++)
 	{
 		for (it = m_data.begin(); it != m_data.end(); it++)
 		{
 			std::string dataname = it->second->GetName().toUri();
 			//std::cout << "(cs-impl.cc-GetData) 缓存中的数据包名称为 " << dataname << std::endl;
-			//从缓存中得到数据包
 			if (itdataroute->first == dataname)
 			{
 				Ptr<const Data> src = it->second->GetData();
-				//复制数据包
 				Ptr<Data> data = Create<Data>(*src);
-				//修改数据包的Timestamp
 				//data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
 				std::cout << "(cs-impl.cc-GetData) 从缓存中得到的数据包为 " << data->GetSignature() << std::endl;
 			}
 		}
 	}
-
-	//size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
-
 	return DataCollection;
 }
 
 std::map<uint32_t, Ptr<const Data>>
 NrCsImpl::GetDataSource(std::vector<std::string> interest)
 {
-	//std::cout<<"(cs-impl.cc-GetDataSource) RSU获取缓存中的数据包"<<std::endl;
-
 	std::map<uint32_t, Ptr<const Data>> DataCollection;
 	std::vector<std::string>::iterator itinterest;
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it;
 	for (itinterest = interest.begin(); itinterest != interest.end(); itinterest++)
 	{
-		//std::cout<<"(cs-impl.cc-GetDataSource) 想要得到的数据包为 "<<*itinterest<<std::endl;
 		for (it = m_datasource.begin(); it != m_datasource.end(); it++)
 		{
 			std::string dataname = it->second->GetName().get(0).toUri();
 			if (*itinterest == dataname)
 			{
-				//std::cout<<"(cs-impl.cc-GetDataSource) 缓存中有对应的数据包"<<std::endl;
 				Ptr<const Data> src = it->second->GetData();
-				//复制数据包
 				Ptr<Data> data = Create<Data>(*src);
-				//修改数据包的Timestamp
 				//data->SetTimestamp(Simulator::Now());
 				DataCollection[data->GetSignature()] = data;
 				std::cout << "(cs-impl.cc-GetDataSource) 从缓存中得到的数据包为 " << data->GetSignature() << std::endl;
@@ -301,11 +247,6 @@ NrCsImpl::GetDataSource(std::vector<std::string> interest)
 std::map<uint32_t, Ptr<const Data>>
 NrCsImpl::GetData()
 {
-	//std::cout<<"(cs-impl.cc-GetData) 普通车辆获取缓存中的数据包"<<std::endl;
-
-	//uint32_t size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-GetData) 删除数据包前的缓存大小为 "<<size<<std::endl;
-
 	std::map<uint32_t, Ptr<const Data>> DataCollection;
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it;
 
@@ -314,15 +255,8 @@ NrCsImpl::GetData()
 		Ptr<const Data> src = it->second->GetData();
 		//复制数据包
 		Ptr<Data> data = Create<Data>(*src);
-		//修改数据包的Timestamp
-		//data->SetTimestamp(Simulator::Now());
 		DataCollection[data->GetSignature()] = data;
 	}
-	//m_data.clear();
-
-	//size = GetDataSize();
-	//std::cout<<"(cs-impl.cc-GetData) 删除数据包后的缓存大小为 "<<size<<std::endl;
-
 	return DataCollection;
 }
 
@@ -394,56 +328,28 @@ bool NrCsImpl::AddInterest(uint32_t nonce, Ptr<const Interest> interest)
 	Ptr<cs::EntryInterest> csEntryInterest = FindInterest(nonce);
 	if (csEntryInterest != 0)
 	{
-		//std::cout<<"(cs-impl.cc-AddInterest) 该兴趣包已经被加入到缓存中 "<<std::endl;
-
-		//PrintInterestEntry(nonce);
 		return false;
 	}
-	//uint32_t size = GetInterestSize();
-	//std::cout<<"(cs-impl.cc-AddInterest) 加入该兴趣包前的缓存大小为 "<<size<<std::endl;
 	csEntryInterest = ns3::Create<cs::EntryInterest>(this, interest);
-
-	//std::string routes = interest->GetRoutes();
-	//std::cout<<"(cs-interest.cc-AddInterest) routes "<<routes<<std::endl;
-	//getchar();
-
 	m_interest[nonce] = csEntryInterest;
-	//size = GetInterestSize();
-	//std::cout<<"(NrCsImpl.cc-AddInterest) 加入该兴趣包后的缓存大小为 "<<size<<std::endl;
 	return true;
 }
 
 std::map<uint32_t, Ptr<const Interest>>
 NrCsImpl::GetInterest(std::string lane)
 {
-	//uint32_t size = GetInterestSize();
-	//std::cout<<"(cs-impl.cc-GetInterest) 该路段有车辆 "<<lane<<std::endl;
-	//std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
-	//PrintInterestCache();
 	std::map<uint32_t, Ptr<const Interest>> InterestCollection;
 	std::map<uint32_t, Ptr<cs::EntryInterest>>::iterator it;
 	for (it = m_interest.begin(); it != m_interest.end(); it++)
 	{
 		Ptr<const Interest> interest = it->second->GetInterest();
 		std::string routes = interest->GetRoutes();
-		//std::cout<<"(cs-interest.cc-GetInterest) 兴趣包 "<<interest->GetNonce()<<" 的转发路线为 "<<routes;
 		std::string currentroute = routes.substr(0, lane.length());
-		//std::cout<<" 兴趣包下一行驶路段 "<<currentroute<<std::endl;
-		//getchar();
 		if (currentroute == lane)
 		{
-			//PrintEntryInterest(interest->GetNonce());
 			InterestCollection[interest->GetNonce()] = interest;
-			//m_interest.erase(it++);
 		}
-		//else
-		//{
-		//++it;
-		//}
 	}
-	//size = GetInterestSize();
-	//std::cout<<"(cs-impl.cc-GetInterest) 删除兴趣包后的缓存大小为 "<<size<<std::endl;
-	//getchar();
 	return InterestCollection;
 }
 
@@ -457,7 +363,6 @@ Ptr<cs::EntryInterest>
 NrCsImpl::FindInterest(const uint32_t nonce)
 {
 	std::map<uint32_t, Ptr<cs::EntryInterest>>::iterator it = m_interest.find(nonce);
-	//NS_ASSERT_MSG(m_csInterestContainer.size()!=0,"Empty cs container. No initialization?");
 	if (it != m_interest.end())
 	{
 		return it->second;
@@ -468,16 +373,12 @@ NrCsImpl::FindInterest(const uint32_t nonce)
 void NrCsImpl::DeleteInterest(const uint32_t nonce)
 {
 	uint32_t size = GetInterestSize();
-	//std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包前的缓存大小为 "<<size<<std::endl;
 	std::map<uint32_t, Ptr<cs::EntryInterest>>::iterator it = m_interest.find(nonce);
 	if (it != m_interest.end())
 	{
 		m_interest.erase(it);
 		size = GetInterestSize();
-		//std::cout<<"(cs-impl.cc-DeleteInterest) 删除兴趣包后的缓存大小为 "<<size<<" 兴趣包序列号为 "<<nonce<<std::endl;
 	}
-	//else
-	//std::cout<<"(cs-impl.cc-DeleteInterest) 该兴趣包不在缓存中"<<std::endl;
 }
 
 void NrCsImpl::PrintInterestCache() const

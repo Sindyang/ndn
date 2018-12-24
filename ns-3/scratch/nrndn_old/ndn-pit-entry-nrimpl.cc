@@ -5,59 +5,61 @@
  *      Author: chenyishun
  */
 
-
 #include "ndn-pit-entry-nrimpl.h"
 #include "ns3/ndn-interest.h"
 #include "ns3/core-module.h"
 #include "ns3/ndn-forwarding-strategy.h"
 
 #include "ns3/log.h"
-NS_LOG_COMPONENT_DEFINE ("ndn.pit.nrndn.EntryNrImpl");
+NS_LOG_COMPONENT_DEFINE("ndn.pit.nrndn.EntryNrImpl");
 
-namespace ns3 {
-namespace ndn {
+namespace ns3
+{
+namespace ndn
+{
 
 class Pit;
 
-namespace pit {
-namespace nrndn{
-EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header,Ptr<fib::Entry> fibEntry,Time cleanInterval)
-	:Entry(container,header,fibEntry),
-	 m_infaceTimeout(cleanInterval)
+namespace pit
 {
-	NS_ASSERT_MSG(header->GetName().size()<2,"In EntryNrImpl, "
-			"each name of interest should be only one component, "
-			"for example: /routeSegment, do not use more than one slash, "
-			"such as/route1/route2/...");
-	m_interest_name=header->GetName().toUri();
+namespace nrndn
+{
+EntryNrImpl::EntryNrImpl(Pit &container, Ptr<const Interest> header, Ptr<fib::Entry> fibEntry, Time cleanInterval)
+	: Entry(container, header, fibEntry),
+	  m_infaceTimeout(cleanInterval)
+{
+	NS_ASSERT_MSG(header->GetName().size() < 2, "In EntryNrImpl, "
+												"each name of interest should be only one component, "
+												"for example: /routeSegment, do not use more than one slash, "
+												"such as/route1/route2/...");
+	m_interest_name = header->GetName().toUri();
 }
 
-EntryNrImpl::~EntryNrImpl ()
+EntryNrImpl::~EntryNrImpl()
 {
-  
 }
 
 /* 2017.12.24 added by sy 
  * 添加邻居信息
  * lane为兴趣包来时的路段,id为兴趣包的源节点
  */
-std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator
-EntryNrImpl::AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id)
+std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator
+EntryNrImpl::AddIncomingNeighbors(bool &flag, std::string lane, uint32_t id)
 {
 	//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 兴趣包来时的路段为 "<<lane<<" 兴趣包源节点为 "<<id<<std::endl;
-	std::unordered_map<std::string,std::unordered_set<uint32_t> > ::iterator incominglane = m_incomingnbs.find(lane);
+	std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator incominglane = m_incomingnbs.find(lane);
 	//未找到该路段
-	if(incominglane == m_incomingnbs.end())
+	if (incominglane == m_incomingnbs.end())
 	{
 		flag = false;
 		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors;
 		//添加邻居信息
 		neighbors.insert(id);
-		
-		std::pair<std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator,bool> ret;
-		ret = m_incomingnbs.insert(std::pair<std::string,std::unordered_set<uint32_t>>(lane,neighbors));
-		
+
+		std::pair<std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator, bool> ret;
+		ret = m_incomingnbs.insert(std::pair<std::string, std::unordered_set<uint32_t>>(lane, neighbors));
+
 		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 已添加该路段"<<std::endl;
 		return ret.first;
 	}
@@ -66,7 +68,7 @@ EntryNrImpl::AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id)
 		//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 在表项中找到该路段"<<std::endl;
 		std::unordered_set<uint32_t> neighbors = incominglane->second;
 		std::unordered_set<uint32_t>::iterator itcomingnb = neighbors.find(id);
-		if(itcomingnb == neighbors.end())
+		if (itcomingnb == neighbors.end())
 		{
 			flag = false;
 			//std::cout<<"(ndn-pit-entry-nrimpl.cc-AddIncomingNeighbors) 未找到源节点"<<std::endl;
@@ -84,16 +86,16 @@ EntryNrImpl::AddIncomingNeighbors(bool& flag,std::string lane,uint32_t id)
 }
 
 // 2017.12.24 added by sy
-void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
+void EntryNrImpl::CleanPITNeighbors(bool &flag, uint32_t id)
 {
-	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
+	NS_LOG_DEBUG("At PIT Entry:" << GetInterest()->GetName().toUri() << " To delete neighbor:" << id);
 	//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 感兴趣路段为 "<<m_interest_name<<std::endl;
-	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
-	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
+	std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator it;
+	for (it = m_incomingnbs.begin(); it != m_incomingnbs.end(); it++)
 	{
 		std::unordered_set<uint32_t> neighbors = it->second;
 		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
-		if(incomingnb != neighbors.end())
+		if (incomingnb != neighbors.end())
 		{
 			neighbors.erase(incomingnb);
 			it->second = neighbors;
@@ -104,12 +106,12 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
 		else
 		{
 			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 节点 "<<id<<" 并不在上一条路段 "<<it->first<<" 中"<<std::endl;
-		}	
+		}
 	}
 	//删除节点为空的路段
-	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();)
+	for (it = m_incomingnbs.begin(); it != m_incomingnbs.end();)
 	{
-		if((it->second).empty())
+		if ((it->second).empty())
 		{
 			//std::cout<<"(ndn-pit-entry-nrimpl.cc-CleanPITNeighbors) 上一跳路段 "<<it->first<<" 所对应的节点为空"<<std::endl;
 			m_incomingnbs.erase(it++);
@@ -126,16 +128,15 @@ void EntryNrImpl::CleanPITNeighbors(bool& flag,uint32_t id)
  * 2018.3.23
  * 检查节点是否在该表项中
  */
-bool 
-EntryNrImpl::DetectId(uint32_t id)
+bool EntryNrImpl::DetectId(uint32_t id)
 {
 	bool flag = false;
-	std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator it;
-	for(it = m_incomingnbs.begin();it != m_incomingnbs.end();it++)
+	std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator it;
+	for (it = m_incomingnbs.begin(); it != m_incomingnbs.end(); it++)
 	{
 		std::unordered_set<uint32_t> neighbors = it->second;
 		std::unordered_set<uint32_t>::iterator incomingnb = neighbors.find(id);
-		if(incomingnb != neighbors.end())
+		if (incomingnb != neighbors.end())
 		{
 			flag = true;
 			break;
@@ -143,7 +144,6 @@ EntryNrImpl::DetectId(uint32_t id)
 	}
 	return flag;
 }
-	
 
 std::string
 EntryNrImpl::GetDataName()
@@ -151,12 +151,11 @@ EntryNrImpl::GetDataName()
 	return m_interest_name;
 }
 
-bool 
-EntryNrImpl::IsRouteInEntry(std::string route)
+bool EntryNrImpl::IsRouteInEntry(std::string route)
 {
 	//std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 上一跳路段为 "<<route<<std::endl;
-	std::unordered_map<std::string,std::unordered_set< uint32_t > >::iterator it = m_incomingnbs.find(route);
-	if(it != m_incomingnbs.end())
+	std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator it = m_incomingnbs.find(route);
+	if (it != m_incomingnbs.end())
 	{
 		//std::cout<<"(ndn-pit-entry-nrimpl.cc-GetDataName) 已找到上一跳路段"<<std::endl;
 		return true;
@@ -170,20 +169,19 @@ void EntryNrImpl::CleanAllNodes()
 	m_incomingnbs.clear();
 }
 
-
 void EntryNrImpl::listPitEntry()
 {
-	std::cout<<"(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name："<<m_interest_name<<std::endl;
-	for(std::unordered_map<std::string,std::unordered_set<uint32_t> >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
+	std::cout << "(ndn-pit-entry-nrimpl.cc-listPitEntry) interest_name：" << m_interest_name << std::endl;
+	for (std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator ite = m_incomingnbs.begin(); ite != m_incomingnbs.end(); ite++)
 	{
-		std::cout<<"上一跳路段为 "<<ite->first<<" 对应的节点为 ";
+		std::cout << "上一跳路段为 " << ite->first << " 对应的节点为 ";
 		std::unordered_set<uint32_t> neighbors = ite->second;
 		std::unordered_set<uint32_t>::iterator it = neighbors.begin();
-		for(;it != neighbors.end();it++)
+		for (; it != neighbors.end(); it++)
 		{
-			std::cout<<*it<<" ";
+			std::cout << *it << " ";
 		}
-		std::cout<<std::endl;
+		std::cout << std::endl;
 	}
 }
 
@@ -233,5 +231,3 @@ void EntryNrImpl::RemoveAllTimeoutEvent()
 } // namespace pit
 } // namespace ndn
 } // namespace ns3
-
-

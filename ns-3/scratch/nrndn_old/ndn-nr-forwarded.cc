@@ -1,3 +1,9 @@
+/*
+ * ndn-nr-forwarded.cc
+ *
+ *  Created on: Dec 20, 2018
+ *      Author: WSY
+ */
 #include "ns3/log.h"
 #include "ndn-nr-forwarded.h"
 
@@ -81,28 +87,6 @@ void Forwarded::clearAllRoads(const uint32_t RSUId, const uint32_t signature)
         std::set<std::string> forwardedRoads;
         RSUForwarded[id] = forwardedRoads;
         std::cout << "(forwarded.cc-clearAllRoads) RSU " << RSUId << " signature " << signature << "全部清空" << std::endl;
-    }
-}
-
-void Forwarded::clearOneRoad(const uint32_t RSUId, const uint32_t signature, std::string road)
-{
-    std::pair<uint32_t, uint32_t> id(RSUId, signature);
-    it = RSUForwarded.find(id);
-    if (it != RSUForwarded.end())
-    {
-        std::set<std::string> forwardedRoads = it->second;
-        std::set<std::string>::iterator itforward = forwardedRoads.find(road);
-        if (itforward != forwardedRoads.end())
-        {
-            forwardedRoads.erase(itforward);
-            it->second = forwardedRoads;
-            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "已删除路段" << road << std::endl;
-        }
-        else
-        {
-            std::cout << "(forwarded.cc-clearOneRoad) RSU " << RSUId << " signature " << signature << "未转发过该数据包" << std::endl;
-        }
-        return;
     }
 }
 

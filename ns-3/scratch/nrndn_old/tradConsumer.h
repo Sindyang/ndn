@@ -24,12 +24,12 @@ namespace nrndn
  * */
 class tradConsumer : public App
 {
-  public:
+public:
 	static TypeId GetTypeId();
 	tradConsumer();
 	virtual ~tradConsumer();
 
-  protected:
+protected:
 	// inherited from App base class. Originally they were private
 	virtual void
 	StartApplication(); ///< @brief Called at time specified by Start
@@ -42,7 +42,7 @@ class tradConsumer : public App
 
 	bool IsInterestData(const Name &name);
 
-  private:
+private:
 	typedef App super;
 	uint32_t m_virtualPayloadSize;
 };

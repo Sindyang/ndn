@@ -75,43 +75,6 @@ nrProducer::~nrProducer()
 
 void nrProducer::OnInterest(Ptr<const Interest> interest)
 {
-
-	//NS_ASSERT_MSG(false,"nrProducer should not be supposed to"" receive Interest Packet!!");
-	/*
-	App::OnInterest(interest); // tracing inside
-
-	NS_LOG_FUNCTION(this << interest);
-
-	if (!m_active)
-		return;
-
-	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
-	//interest->GetName();
-	Ptr<Name> dataName = Create<Name>(interest->GetName());
-	dataName->append(m_postfix);
-	data->SetName(dataName);
-	data->SetFreshness(m_freshness);
-	data->SetTimestamp(Simulator::Now());
-
-	data->SetSignature(m_signature);
-	if (m_keyLocator.size() > 0)
-	{
-		data->SetKeyLocator(Create<Name>(m_keyLocator));
-	}
-
-	NS_LOG_INFO(
-			"node("<< GetNode()->GetId() <<") responding with Data: " << data->GetName ());
-
-	// Echo back FwHopCountTag if exists
-	FwHopCountTag hopCountTag;
-	if (interest->GetPayload()->PeekPacketTag(hopCountTag))
-	{
-		data->GetPayload()->AddPacketTag(hopCountTag);
-	}
-
-	m_face->ReceiveData(data);
-	m_transmittedDatas(data, this, m_face);
-	*/
 }
 
 //Need to collect the new neighborhood traffic information
@@ -121,21 +84,6 @@ void nrProducer::laneChange(std::string oldLane, std::string newLane)
 	NS_LOG_INFO("Lane change of node " << GetNode()->GetId()
 									   << " : move from " << oldLane << " to " << newLane);
 	this->SetAttribute("Prefix", StringValue('/' + newLane));
-	//if(m_face)
-	//{
-	//Ptr<Fib> fib = GetNode()->GetObject<Fib>();
-
-	//Step 1: Remove the old FIB entry
-	//Ptr<const Name> name = &m_prefix;
-	//fib->Remove(name);
-
-	//Step 2: Set the new Prefix
-	//this->SetAttribute("Prefix", StringValue('/' + newLane));
-
-	//Step 3: Add the new FIB entry
-	//Ptr<fib::Entry> fibEntry = fib->Add(m_prefix, m_face, 0);
-	//fibEntry->UpdateStatus(m_face, fib::FaceMetric::NDN_FIB_GREEN);
-	//}
 }
 
 void nrProducer::StartApplication()
@@ -154,16 +102,6 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode()->GetId());
-	//std::cout<<"(nrProducer.cc-StartApplication) 源节点 "<<GetNode()->GetId()<<endl;
-
-	//if(GetNode()->GetId()==50)
-	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
-
-	/*
-	Ptr<Fib> fib = GetNode()->GetObject<Fib>();
-	Ptr<fib::Entry> fibEntry = fib->Add(m_prefix, m_face, 0);
-	fibEntry->UpdateStatus(m_face, fib::FaceMetric::NDN_FIB_GREEN);
-	*/
 }
 
 void nrProducer::StopApplication()
@@ -179,7 +117,6 @@ void nrProducer::StopApplication()
 
 	if (m_DistanceForwarding)
 		m_DistanceForwarding->Stop();
-	//std::cout<<"(nrProducer.cc-StopApplication) "<<"Stop: Node: " << GetNode ()->GetId ()<<endl;
 
 	App::StopApplication();
 }
@@ -202,7 +139,6 @@ void nrProducer::DoInitialize(void)
 	if (m_sensor == 0)
 	{
 		m_sensor = m_node->GetObject<NodeSensor>();
-		//std::cout<<"(nrProducer.cc-DoInitialize) "<<GetNode()->GetId()<<std::endl;
 
 		NS_ASSERT_MSG(m_sensor, "nrProducer::DoInitialize cannot find ns3::ndn::nrndn::NodeSensor");
 		// Setup Lane change action
@@ -216,7 +152,6 @@ void nrProducer::DoInitialize(void)
 
 void nrProducer::NotifyNewAggregate()
 {
-	//std::cout<<"(nrProducer.cc-NotifyNewAggregate)"<<std::endl;
 	super::NotifyNewAggregate();
 }
 
@@ -257,13 +192,13 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG("node(" << GetNode()->GetId() << ")\t sending Traffic Data: " << data->GetName() << " \tsignature:" << data->GetSignature());
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
-	//找出当前时刻，活跃节点数目和对该数据包感兴趣节点数目
+
 	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(), data->GetSignature(), m_prefix.get(0).toUri());
 	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.first);
 	cout << "(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 " << size_InterestSize.first << " 感兴趣的节点总数为 " << size_InterestSize.second << std::endl
 		 << std::endl;
-	//getchar();
+
 	//当前对该数据包感兴趣节点总数
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.second);
 	m_face->ReceiveData(data);
@@ -273,26 +208,21 @@ void nrProducer::OnSendingTrafficData()
 void nrProducer::OnData(Ptr<const Data> contentObject)
 {
 	NS_LOG_FUNCTION("None its business");
-	//std::cout<<"(nrProducer.cc-OnData)"<<"None its business"<<endl;
 	App::OnData(contentObject);
 }
 
 void nrProducer::ScheduleAccident(double t)
 {
-	//std::cout<<"(nrProducer.cc-ScheduleAccident)NodeId: "<<GetNode()->GetId()<<" ScheduleAccident"<<endl;
 	m_accidentList.insert(t);
 	Simulator::Schedule(Seconds(t), &nrProducer::OnSendingTrafficData, this);
 }
 
 void nrProducer::setContentStore(std::string prefix)
 {
-	//	this->Consumer::SetAttribute("Prefix",StringValue(interest));
-	//this->Producer::se
 }
 
 void nrProducer::addAccident()
 {
-	//std::cout<<"(nrProducer.cc-addAccident()) NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	double mean = start + (end - start) / 2;
@@ -312,7 +242,6 @@ void nrProducer::addAccident()
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId() << " add accident at " << t);
-	//std::cout<<"(nrProducer.cc-addAccident()) m_node->GetId(): "<<m_node->GetId()<<" add accident at "<<t<<endl;
 	return;
 }
 
@@ -323,21 +252,12 @@ void nrProducer::addAccident(double iType)
 		addAccident();
 		return;
 	}
-
-	//产生定时事件
-	/*else if(iType == 1)
-	{
-
-	}*/
-
-	//std::cout<<"(nrProducer.cc-addAccident(double iType))NodeId: "<<GetNode()->GetId()<<" addAccident"<<endl;
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 
 	for (double dTime = 200; dTime < 500; dTime += iType)
 	{
 		ScheduleAccident(dTime);
-		//std::cout<<"(nrProducer.cc-addAccident) NodeId: "<<m_node->GetId()<<" add accident at "<< dTime <<" start "<<start<<" end "<<end<<endl;
 	}
 	return;
 }
@@ -355,23 +275,10 @@ bool nrProducer::IsInterestLane(const std::string &lane)
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	const std::vector<std::string> &route = sensor->getNavigationRoute();
-	//cout << "(nrProducer.cc-IsInterestLane)sensor->getNavigationRoute()" << endl;
-	//getchar();
 	//找出当前路段在导航路线中的位置
 	it = std::find(route.begin(), route.end(), currentLane);
 	//判断lane是否对未来路段感兴趣
 	it2 = std::find(it, route.end(), lane);
-	//cout << "(nrProducer.cc-IsInterestLane)" << endl;
-
-	if (it2 != route.end())
-	{
-		//std::cout<<"(nrProducer.cc-IsInterestLane) 当前节点为 "<<GetNode()->GetId();
-		//std::cout<<" 对该路段感兴趣"<<std::endl;
-	}
-	else
-	{
-		//std::cout<<" 对该路段不感兴趣"<<std::endl;
-	}
 	return (it2 != route.end());
 }
 

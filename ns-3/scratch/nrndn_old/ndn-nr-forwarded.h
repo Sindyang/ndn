@@ -25,7 +25,6 @@ class Forwarded
     std::set<std::string> getForwardedRoads(const uint32_t RSUId, const uint32_t signature);
     bool IsAllForwarded(const uint32_t RSUId, const uint32_t signature, std::unordered_set<std::string> allinteresRoutes);
     void clearAllRoads(const uint32_t RSUId, const uint32_t signature);
-    void clearOneRoad(const uint32_t RSUId, const uint32_t signature, std::string road);
     void printAllRoads(const uint32_t RSUId, const uint32_t signature);
 
 
