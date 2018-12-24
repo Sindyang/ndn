@@ -48,6 +48,8 @@ class SumoNodeSensor : public NodeSensor
 	virtual const std::string RSUGetJunctionId(uint32_t id);
 
 	std::string uriConvertToString(std::string str);
+	//std::vector <double> split(const std::string & s, const std::string & d);
+	virtual std::pair<bool, double> getDistanceWith(const double &x, const double &y, const std::vector<std::string> &route);
 
 	//2017.12.16 added by sy
 	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double &x, const double &y);
