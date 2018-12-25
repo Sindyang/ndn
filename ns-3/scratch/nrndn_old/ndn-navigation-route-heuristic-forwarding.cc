@@ -1503,7 +1503,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	//CachingDataSourcePacket(signature, data);
+	CachingDataSourcePacket(signature, data);
 
 	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
@@ -1648,7 +1648,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy 2018.12.24 remove it
-				//CachingDataSourcePacket(data->GetSignature(), data);
+				CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
@@ -1669,7 +1669,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	else
 	{
 		//缓存数据包
-		//CachingDataSourcePacket(signature, data);
+		CachingDataSourcePacket(signature, data);
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
