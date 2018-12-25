@@ -20,7 +20,6 @@
 #include "NodeSensor.h"
 
 #include <string>
-#include <sstream>
 
 namespace ns3
 {
@@ -39,9 +38,9 @@ namespace nrndn
  *	node currently be.
  */
 
-class nrProducer: public App
+class nrProducer : public App
 {
-public:
+  public:
 	static TypeId GetTypeId();
 
 	nrProducer();
@@ -72,33 +71,32 @@ public:
 
 	bool IsActive();
 
-	  /**
+	/**
 	 * \brief Decide whether a lane is interested
 	 */
-	bool IsInterestLane(const std::string& lane);
+	bool IsInterestLane(const std::string &lane);
 
 	void ScheduleAccident(double Time);
 
-protected:
+  protected:
 	// inherited from Application base class.
 	virtual void
-	StartApplication();    // Called at time specified by Start
+	StartApplication(); // Called at time specified by Start
 
 	virtual void
-	StopApplication();     // Called at time specified by Stop
+	StopApplication(); // Called at time specified by Stop
 
 	virtual void DoInitialize(void);
 
 	// inherited from Object class
-	virtual void NotifyNewAggregate (); ///< @brief Even when object is aggregated to another Object
+	virtual void NotifyNewAggregate(); ///< @brief Even when object is aggregated to another Object
 
-	virtual void OnData (Ptr<const Data> contentObject);
+	virtual void OnData(Ptr<const Data> contentObject);
 
-private:
+  private:
 	void setContentStore(std::string);
 
-
-private:
+  private:
 	UniformVariable m_rand; ///< @brief nonce generator
 	Name m_prefix;
 	Name m_postfix;
@@ -109,10 +107,10 @@ private:
 	Name m_keyLocator;
 
 	typedef App super;
-	Ptr<fw::nrndn::NavigationRouteHeuristic>	m_forwardingStrategy;
-	Ptr<fw::nrndn::CDSBasedForwarding>			m_CDSBasedForwarding;
-	Ptr<fw::nrndn::DistanceBasedForwarding>		m_DistanceForwarding;
-	Ptr<NodeSensor>	m_sensor;
+	Ptr<fw::nrndn::NavigationRouteHeuristic> m_forwardingStrategy;
+	Ptr<fw::nrndn::CDSBasedForwarding> m_CDSBasedForwarding;
+	Ptr<fw::nrndn::DistanceBasedForwarding> m_DistanceForwarding;
+	Ptr<NodeSensor> m_sensor;
 
 	//A list indicates that when it will broadcast an accident message(aka, traffic data)
 	std::set<double> m_accidentList;

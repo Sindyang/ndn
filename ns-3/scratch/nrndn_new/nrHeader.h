@@ -12,7 +12,6 @@
 #include "ns3/address-utils.h"
 #include "ns3/ndn-name.h"
 
-
 #include <vector>
 
 namespace ns3
@@ -22,14 +21,14 @@ namespace ndn
 namespace nrndn
 {
 
-class nrHeader: public Header
+class nrHeader : public Header
 {
-public:
+  public:
 	nrHeader();
-	nrHeader(const uint32_t& sourceId,
-			const double& x,
-			const double& y,
-			const std::vector<uint32_t>& priorityList);
+	nrHeader(const uint32_t &sourceId,
+			 const double &x,
+			 const double &y,
+			 const std::vector<uint32_t> &priorityList);
 	virtual ~nrHeader();
 
 	///\name Header serialization/deserialization
@@ -46,13 +45,12 @@ public:
 	///\name Fields
 	//\{
 
-
-	const std::vector<uint32_t>& getPriorityList() const
+	const std::vector<uint32_t> &getPriorityList() const
 	{
 		return m_priorityList;
 	}
 
-	void setPriorityList(const std::vector<uint32_t>& priorityList)
+	void setPriorityList(const std::vector<uint32_t> &priorityList)
 	{
 		m_priorityList = priorityList;
 	}
@@ -66,7 +64,7 @@ public:
 	{
 		m_sourceId = sourceId;
 	}
-	
+
 	//added by siukwan
 	uint32_t getForwardId() const
 	{
@@ -86,7 +84,7 @@ public:
 
 	void setX(double x)
 	{
-		m_x=x;
+		m_x = x;
 	}
 
 	double getY() const
@@ -98,7 +96,7 @@ public:
 	{
 		m_y = y;
 	}
-	
+
 	//added by siukwan
 	std::string getLane() const
 	{
@@ -112,13 +110,13 @@ public:
 
 	//\}
 
-private:
-	uint32_t		m_sourceId;	//\ (source)	id of source node (source)
-	uint32_t		m_forwardId;//\ (source)	id of forward node (source)
-	double			m_x;		//\ (forwarder)	forwarder x coordinate, not source node position!!!!
-	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
+  private:
+	uint32_t m_sourceId;  //\ (source)	id of source node (source)
+	uint32_t m_forwardId; //\ (source)	id of forward node (source)
+	double m_x;			  //\ (forwarder)	forwarder x coordinate, not source node position!!!!
+	double m_y;			  //\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
-				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
+		m_priorityList; //\(forwarder)	priority list indicating the gap between transmitting
 	std::string m_lane;
 };
 

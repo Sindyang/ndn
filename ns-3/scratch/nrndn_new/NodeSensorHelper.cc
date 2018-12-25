@@ -5,6 +5,7 @@
  *      Author: chen
  */
 
+
 #include "NodeSensorHelper.h"
 #include "NodeSensor.h"
 
@@ -38,7 +39,7 @@ void NodeSensorHelper::Install(Ptr<Node> node) const
 		if (sensor == 0)
 		{
 			NS_FATAL_ERROR(
-				"The requested sensor model is not a sensor model: \"" << m_sensor.GetTypeId().GetName() << "\"");
+					"The requested sensor model is not a sensor model: \""<< m_sensor.GetTypeId ().GetName ()<<"\"");
 		}
 		object->AggregateObject(sensor);
 	}
@@ -47,38 +48,39 @@ void NodeSensorHelper::Install(Ptr<Node> node) const
 
 void NodeSensorHelper::Install(NodeContainer c) const
 {
-	for (NodeContainer::Iterator i = c.Begin(); i != c.End(); ++i)
-	{
-		Install(*i);
-	}
+	  for (NodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+	    {
+	      Install (*i);
+	    }
 }
 
 void NodeSensorHelper::InstallAll(void)
 {
-	Install(NodeContainer::GetGlobal());
+	 Install (NodeContainer::GetGlobal ());
 }
 
-void NodeSensorHelper::SetSensorModel(std::string type,
-									  std::string n1, const AttributeValue &v1,
-									  std::string n2, const AttributeValue &v2,
-									  std::string n3, const AttributeValue &v3,
-									  std::string n4, const AttributeValue &v4,
-									  std::string n5, const AttributeValue &v5,
-									  std::string n6, const AttributeValue &v6,
-									  std::string n7, const AttributeValue &v7,
-									  std::string n8, const AttributeValue &v8,
-									  std::string n9, const AttributeValue &v9)
+void
+NodeSensorHelper::SetSensorModel (std::string type,
+                                  std::string n1, const AttributeValue &v1,
+                                  std::string n2, const AttributeValue &v2,
+                                  std::string n3, const AttributeValue &v3,
+                                  std::string n4, const AttributeValue &v4,
+                                  std::string n5, const AttributeValue &v5,
+                                  std::string n6, const AttributeValue &v6,
+                                  std::string n7, const AttributeValue &v7,
+                                  std::string n8, const AttributeValue &v8,
+                                  std::string n9, const AttributeValue &v9)
 {
-	m_sensor.SetTypeId(type);
-	m_sensor.Set(n1, v1);
-	m_sensor.Set(n2, v2);
-	m_sensor.Set(n3, v3);
-	m_sensor.Set(n4, v4);
-	m_sensor.Set(n5, v5);
-	m_sensor.Set(n6, v6);
-	m_sensor.Set(n7, v7);
-	m_sensor.Set(n8, v8);
-	m_sensor.Set(n9, v9);
+	m_sensor.SetTypeId (type);
+	m_sensor.Set (n1, v1);
+	m_sensor.Set (n2, v2);
+	m_sensor.Set (n3, v3);
+	m_sensor.Set (n4, v4);
+	m_sensor.Set (n5, v5);
+	m_sensor.Set (n6, v6);
+	m_sensor.Set (n7, v7);
+	m_sensor.Set (n8, v8);
+	m_sensor.Set (n9, v9);
 }
 /*
 Ptr<NodeSensor> NodeSensorHelper::GetSumoNodeSensor(

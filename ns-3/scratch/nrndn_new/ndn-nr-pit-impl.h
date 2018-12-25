@@ -30,8 +30,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-
-
 namespace ns3
 {
 namespace ndn
@@ -46,134 +44,133 @@ namespace nrndn
  * @brief Class implementing Pending Interests Table,
  * 		  with navigation route customize
  */
-class NrPitImpl	: public Pit				
+class NrPitImpl : public Pit
 {
-public:
+  public:
     /**
      * \brief Interface ID
      *
      * \return interface ID
      */
-    static TypeId GetTypeId ();
-    
+    static TypeId GetTypeId();
+
     /**
      * \brief PIT constructor
      */
     NrPitImpl();
-    
+
     /**
      * \brief Destructor
      */
     virtual ~NrPitImpl();
-    
+
     // inherited from Pit
-    
+
     //abandon
     virtual Ptr<Entry>
-    Lookup (const Data &header);
-    
+    Lookup(const Data &header);
+
     //abandon
     virtual Ptr<Entry>
-    Lookup (const Interest &header);
-    
+    Lookup(const Interest &header);
+
     //This prefix is different from the format of interest's name
     virtual Ptr<Entry>
-    Find (const Name &prefix);
-	
-	Ptr<Entry>
-	FindSecondPIT(const Name &prefix);
-    
+    Find(const Name &prefix);
+
+    Ptr<Entry>
+    FindSecondPIT(const Name &prefix);
+
     //abandon
     virtual Ptr<Entry>
-    Create (Ptr<const Interest> header);
-    
+    Create(Ptr<const Interest> header);
+
     //replace NrPitImpl::Create
     bool
-    InitializeNrPitEntry ();
-    
+    InitializeNrPitEntry();
+
     //abandon
     virtual void
-    MarkErased (Ptr<Entry> entry);
-    
+    MarkErased(Ptr<Entry> entry);
+
     virtual void
-    Print (std::ostream &os) const;
-    
+    Print(std::ostream &os) const;
+
     virtual uint32_t
-    GetSize () const;
-    
+    GetSize() const;
+
     virtual Ptr<Entry>
-    Begin ();
-    
+    Begin();
+
     virtual Ptr<Entry>
-    End ();
-    
+    End();
+
     virtual Ptr<Entry>
-    Next (Ptr<Entry>);
-    
+        Next(Ptr<Entry>);
+
+    //获取车辆当前所在的路段
+    //added by siukwan
+    std::string getCurrentLane();
     /**
      * This function update the pit using Interest packet
      * not simply add the name into the pit
      * multi entry of pit will be operated
-     */ 
-    bool UpdateRSUPit(bool& IsExist,std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute, const uint32_t& id);
-    
-    std::pair<std::vector<std::string>,std::vector<std::string> > getInterestRoutesReadytoPass(const std::string junction,const std::string forwardRoute,const std::vector<std::string>& interestRoute);
-    
-    void SplitString(const std::string& s,std::vector<std::string>& v,const std::string& c);
-	
-	bool UpdatePrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute, const uint32_t& id,const std::string currentRoute);
-	
-	//2018.3.1
-	bool UpdateSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
-	
-	//2018.3.23
-	void
-	DetectPrimaryPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id);
-	
-	void
-    DetectSecondPit(bool& IsExist,const std::vector<std::string>& interestRoute,const uint32_t& id,const std::string currentRoute);
-	
+     */
+    bool UpdateRSUPit(bool &IsExist, std::string junction, const std::string forwardRoute, const std::vector<std::string> &interestRoute, const uint32_t &id);
+
+    std::pair<std::vector<std::string>, std::vector<std::string>> getInterestRoutesReadytoPass(const std::string junction, const std::string forwardRoute, const std::vector<std::string> &interestRoute);
+
+    void SplitString(const std::string &s, std::vector<std::string> &v, const std::string &c);
+
+    bool UpdatePrimaryPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id, const std::string currentRoute);
+
+    //2018.3.1
+    bool UpdateSecondPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id, const std::string currentRoute);
+
+    //2018.3.23
+    void
+    DetectPrimaryPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id);
+
+    void
+    DetectSecondPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id, const std::string currentRoute);
+
     //added by sy
-    std::pair<bool,uint32_t> DeleteFrontNode(const std::string lane,const uint32_t& id);
-	
-	//2018.3.10
-	bool DeleteSecondPIT(const std::string lane,const uint32_t& id);
-	
-	// 2017.1.8 
-	std::unordered_map<std::string,std::unordered_set<std::string> > GetDataNameandLastRoute(std::unordered_set<std::string> routes);
-    
+    std::pair<bool, uint32_t> DeleteFrontNode(const std::string lane, const uint32_t &id);
+
+    //2018.3.10
+    bool DeleteSecondPIT(const std::string lane, const uint32_t &id);
+
+    // 2017.1.8
+    std::unordered_map<std::string, std::unordered_set<std::string>> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
+
     void showPit();
-	
-	//2018.3.1
-	void showSecondPit();
-	
+
+    //2018.3.1
+    void showSecondPit();
+
     void laneChange(std::string oldLane, std::string newLane);
-	
-    
+
     //小锟添加，2015-8-23
     std::string uriConvertToString(std::string str);
-protected:
+
+  protected:
     // inherited from Object class
-    virtual void NotifyNewAggregate (); ///< @brief Even when object is aggregated to another Object
-    virtual void DoDispose (); ///< @brief Do cleanup
+    virtual void NotifyNewAggregate(); ///< @brief Even when object is aggregated to another Object
+    virtual void DoDispose();          ///< @brief Do cleanup
     virtual void DoInitialize(void);
-    
-    
-    
-private:
+
+  private:
     Time m_cleanInterval;
-    Ptr<ForwardingStrategy>		                   m_forwardingStrategy;
-    std::vector<Ptr<Entry> >		               m_pitContainer;
-	std::vector<Ptr<Entry> >                       m_secondPitContainer;
-    Ptr<ndn::nrndn::NodeSensor>	                   m_sensor;
+    Ptr<ForwardingStrategy> m_forwardingStrategy;
+    std::vector<Ptr<Entry>> m_pitContainer;
+    std::vector<Ptr<Entry>> m_secondPitContainer;
+    Ptr<ndn::nrndn::NodeSensor> m_sensor;
     friend class EntryNrImpl;
-    
-    
+
     Ptr<Fib> m_fib; ///< \brief Link to FIB table(Useless, Just for compatibility)
 };
 
-
-}/* namespace nrndn */
+} /* namespace nrndn */
 } /* namespace pit */
 } /* namespace ndn */
 } /* namespace ns3 */

@@ -13,7 +13,6 @@
 #include "ns3/ndnSIM/apps/ndn-consumer-cbr.h"
 #include <string>
 
-
 namespace ns3
 {
 namespace ndn
@@ -21,83 +20,83 @@ namespace ndn
 namespace nrndn
 {
 
-class nrConsumer: public ndn::ConsumerCbr
+class nrConsumer : public ndn::ConsumerCbr
 {
-public:
+  public:
+	//2018.1.5
+	bool IsActive();
 
-    //2018.1.5 
-    bool IsActive();
-
-	static TypeId GetTypeId ();
+	static TypeId GetTypeId();
 
 	nrConsumer();
 	virtual ~nrConsumer();
-	
+
 	/**
 	 * @brief Actually send packet, it will take place in Consumer::SendPacket
 	 */
-	void SendPacket ();
+	void SendPacket();
 
-protected:
-	  // inherited from App base class. Originally they were private
-	  virtual void
-	  StartApplication ();    ///< @brief Called at time specified by Start
+  protected:
+	// inherited from App base class. Originally they were private
+	virtual void
+	StartApplication(); ///< @brief Called at time specified by Start
 
-	  virtual void
-	  StopApplication ();     ///< @brief Called at time specified by Stop
+	virtual void
+	StopApplication(); ///< @brief Called at time specified by Stop
 
-	  virtual void
-	  OnData (Ptr<const Data> contentObject);
+	virtual void
+	OnData(Ptr<const Data> contentObject);
 
-	  /**
+	/**
 	   * \brief Constructs the Interest packet and sends it using a callback to the underlying NDN protocol
 	   */
-	  virtual void
-	  ScheduleNextPacket ();
+	virtual void
+	ScheduleNextPacket();
 
-	  /**
+	/**
 	   * \brief get the current route for the interests
 	   */
-	  std::vector<std::string>
-	  GetCurrentInterest();
+	std::vector<std::string>
+	GetCurrentInterest();
 
-	  /**
+	/**
 	   * @brief It will do the similar action like ConsumerCbr::ScheduleNextPacket do
 	   * 		However, I change some details of it, so use this function to replace it.
 	   */
-	  void  doConsumerCbrScheduleNextPacket();
-	  
-	  /**
+	void doConsumerCbrScheduleNextPacket();
+
+	/**
 	  * 2017.12.13 added by sy
 	  * @brief obtain actual route from interest name
 	  */
-	  std::vector<std::string> 
-	  ExtractActualRouteFromName(const Name& name);
+	std::vector<std::string>
+	ExtractActualRouteFromName(const Name &name);
 
-	  virtual void
-	  OnTimeout (uint32_t sequenceNumber);
+	virtual void
+	OnTimeout(uint32_t sequenceNumber);
 
-	  /**
+	/**
 	    * @brief Get Customize data for navigation route heuristic forwarding
 	    */
-	  //Ptr<Packet> GetNrPayload();
+	//Ptr<Packet> GetNrPayload();
 
-	  // inherited from Object class
-	  virtual void NotifyNewAggregate (); ///< @brief Even when object is aggregated to another Object
+	// inherited from Object class
+	virtual void NotifyNewAggregate(); ///< @brief Even when object is aggregated to another Object
 
-	  virtual void DoInitialize(void);
+	virtual void DoInitialize(void);
 
-	  virtual void
-	  OnInterest (Ptr<const Interest> interest);
+	virtual void
+	OnInterest(Ptr<const Interest> interest);
 
-	  bool IsInterestData(const Name& name);
-private:
-	  typedef ConsumerCbr super;
-	  Ptr<NodeSensor> m_sensor;
-	  Ptr<fw::nrndn::NavigationRouteHeuristic> m_forwardingStrategy;
-	  uint32_t m_virtualPayloadSize;
-	  ndn::nrndn::cache::LRUCache<uint32_t,bool> m_dataReceivedSeen;
-	  //Ptr<ForwardingStrategy>		m_forwardingStrategy;
+	bool IsInterestData(const Name &name);
+
+  private:
+	typedef ConsumerCbr super;
+	Ptr<NodeSensor> m_sensor;
+	Ptr<fw::nrndn::NavigationRouteHeuristic> m_forwardingStrategy;
+	uint32_t m_virtualPayloadSize;
+	ndn::nrndn::cache::LRUCache<uint32_t, bool> m_dataReceivedSeen;
+	//Ptr<ForwardingStrategy>		m_forwardingStrategy;
 };
 
 } /* namespace nrndn */

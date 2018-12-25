@@ -27,7 +27,7 @@ namespace nrndn
 
 class Neighbors
 {
-  public:
+public:
 	Neighbors(Time delay);
 	virtual ~Neighbors();
 
@@ -75,7 +75,7 @@ class Neighbors
 	}
 	//\}
 
-  private:
+private:
 	// link failure callback
 	Callback<void, uint32_t> m_handleLinkFailure;
 	// Timer for neighbor's list. Schedule Purge().
