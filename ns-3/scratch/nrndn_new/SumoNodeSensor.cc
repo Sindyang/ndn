@@ -499,7 +499,7 @@ std::pair<bool, double> SumoNodeSensor::RSUGetDistanceWithRSU(const uint32_t rem
 	}
 	else
 	{
-		std::cout << "(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU不在指定路段" << std::endl;
+		//std::cout << "(SumoNodeSensor.cc-RSUGetDistanceWithRSU) RSU不在指定路段" << std::endl;
 		return std::pair<bool, double>(false, 0);
 	}
 }

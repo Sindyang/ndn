@@ -1648,8 +1648,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy 2018.12.24 remove it
-				CachingDataSourcePacket(data->GetSignature(), data);
-				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
+				//CachingDataSourcePacket(data->GetSignature(), data);
+				cout << "该车辆第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
 			else

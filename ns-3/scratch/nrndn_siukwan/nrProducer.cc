@@ -369,7 +369,7 @@ void nrProducer::addAccident(double iType)
 	
 	std::cout<<"start "<<start<<std::endl;
 	std::cout<<"end "<<end<<std::endl;
-	for(double dTime = start+20; dTime < end-40; dTime += iType)
+	for(double dTime = 200; dTime < 450; dTime += iType)
 	{
 		ScheduleAccident(dTime);
 		//std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<< dTime <<endl;
