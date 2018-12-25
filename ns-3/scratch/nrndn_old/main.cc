@@ -199,8 +199,8 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample() : random_seed(54321),
-							   certain_count(20),	//定点数量
-							   certain_interval(10), //定点事件间隔
+							   certain_count(50),	//定点数量
+							   certain_interval(50), //定点事件间隔
 							   random_accident(0),   //默认不随机
 							   size(3),
 							   totalTime(36000),
@@ -893,7 +893,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	// 2017.12.29 added by sy
 	// RSU不产生数据包 需要减去RSU的数量
-	UniformVariable rnd(0, nodes.GetN() - 36);
+	UniformVariable rnd(0, nodes.GetN() - 527);
 	std::cout << "(main.cc-InstallTraffics)插入事件：" << accidentNum << endl
 			  << endl;
 	if (0) //(random_accident)
@@ -914,7 +914,8 @@ void nrndnExample::InstallTraffics()
 	}
 	else
 	{
-		uint32_t array[20] = {120, 179, 367, 444, 459, 529, 530, 568, 571, 619, 650, 699, 708, 723, 729, 733, 734, 764, 776, 79};
+		//uint32_t array[20] = {120, 179, 367, 444, 459, 529, 530, 568, 571, 619, 650, 699, 708, 723, 729, 733, 734, 764, 776, 79};
+		uint32_t array[50] = {0, 3, 6, 26, 27, 32, 33, 76, 87, 98, 106, 111, 113, 116, 120, 130, 155, 166, 181, 182, 199, 209, 210, 227, 249, 261, 269, 321, 344, 349, 351, 355, 360, 367, 368, 381, 395, 429, 430, 453, 459, 464, 527, 533, 537, 552, 561, 571, 590, 597};
 		for (uint32_t index = 0; index < certain_count; index++)
 		{
 
