@@ -1506,8 +1506,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 
 	NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
-	//缓存数据包
-	CachingDataSourcePacket(signature, data);
+	
 
 	bool idIsInPriorityList;
 	std::vector<uint32_t>::const_iterator priorityListIt;
@@ -1518,6 +1517,9 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 
 	if (idIsInPriorityList)
 	{
+		//缓存数据包
+		CachingDataSourcePacket(signature, data);
+
 		//cout<<"(forwarding.cc-OnData_RSU_RSU) RSU在数据包转发优先级列表中"<<endl;
 		double index = distance(pri.begin() + size + 1, priorityListIt);
 		index = getRealIndex(index, pri);
@@ -1649,7 +1651,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy 2018.12.24 remove it
-				//CachingDataSourcePacket(data->GetSignature(), data);
+				CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该车辆第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
