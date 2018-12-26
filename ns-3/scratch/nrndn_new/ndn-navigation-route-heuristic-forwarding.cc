@@ -1502,9 +1502,6 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 		return;
 	}
 
-	//缓存数据包
-	//CachingDataSourcePacket(signature, data);
-
 	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 
 	NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
@@ -1518,6 +1515,9 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 
 	if (idIsInPriorityList)
 	{
+		//缓存数据包
+		//CachingDataSourcePacket(signature, data);
+
 		//cout<<"(forwarding.cc-OnData_RSU_RSU) RSU在数据包转发优先级列表中"<<endl;
 		double index = distance(pri.begin() + size + 1, priorityListIt);
 		index = getRealIndex(index, pri);
@@ -1600,7 +1600,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	uint32_t myNodeId = m_node->GetId();
 	uint32_t forwardId = nrheader.getForwardId();
 	std::string forwardLane = nrheader.getLane();
-	
+
 	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature();
 	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << "Priority " << priority << endl;
 
@@ -1707,7 +1707,14 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		}
 
 		//缓存数据包
-		//CachingDataSourcePacket(signature, data);
+		CachingDataSourcePacket(signature, data);
+
+		//数据包为高优先级
+		if(priority == 0)
+		{
+			set<string> frontRoads = m_sensor->GetFrontLinkingRoads(myNodeId);
+			
+		}
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
@@ -1768,6 +1775,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		}
 	}
 }
+
 
 double NavigationRouteHeuristic::stringToNum(const string &str)
 {

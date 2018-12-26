@@ -8,7 +8,6 @@
 #ifndef NODESENSOR_H_
 #define NODESENSOR_H_
 
-
 #include "ns3/object.h"
 #include "ns3/traced-value.h"
 #include "ns3/trace-source-accessor.h"
@@ -21,11 +20,10 @@ namespace ndn
 namespace nrndn
 {
 
-class NodeSensor:public Object
+class NodeSensor : public Object
 {
-public:
-	  static TypeId GetTypeId ();
-
+  public:
+	static TypeId GetTypeId();
 
 	NodeSensor();
 	virtual ~NodeSensor();
@@ -34,21 +32,20 @@ public:
 	 * @brief get the X coordinate
 	 * \return the X coordinate of the node
 	 * */
-	virtual double getX()		=0;
+	virtual double getX() = 0;
 
 	/*
  	 * @brief get the Y coordinate
  	 * \return the Y coordinate of the node
  	 *
 	 * */
-	virtual double getY()		=0;
-	
+	virtual double getY() = 0;
 
 	/*
 	 * @brief get the simulation time
 	 * \return the simulation time
 	 * */
-	virtual double getTime()	=0;
+	virtual double getTime() = 0;
 
 	/*
 	 * @brief get the offset of lane of the node currently at.Temporarily useless
@@ -62,49 +59,49 @@ public:
 	 * \return just return 0
 	 *
 	 **/
-	virtual double getAngle()	=0;
+	virtual double getAngle() = 0;
 
 	/*
 	 * @brief get the lane slope of the node currently at. Temporarily useless
 	 * \return just return 0
 	 *
 	 **/
-	virtual double getSlope()	=0;
+	virtual double getSlope() = 0;
 
 	/*
 	 * @brief get the speed of the node.
 	 * \return speed of the node in unit m/s
 	 *
 	 **/
-	virtual double getSpeed()	=0;
+	virtual double getSpeed() = 0;
 
 	/*
 	 * @brief get the type of the node. eg.TAXI,BUS,ect.
 	 * \return the type name of the node
 	 *
 	 **/
-	
-	virtual const std::string& getType()=0;
+
+	virtual const std::string &getType() = 0;
 
 	/*
 	 * @brief get the lane name of the node currently at.
 	 * \return the default name: NodeSensor::emptyLane
 	 *
 	 **/
-	virtual const std::string& getLane();
-	
+	virtual const std::string &getLane();
+
 	/*
 	 * added by sy
 	 * @brief get the number of vehicles(excluding RSU)
 	 *
 	 **/
 	virtual const uint32_t getNumsofVehicles() = 0;
-	
+
 	/*
 	 * @brief get the id of the node
      * \return the id of the node 	 
 	 **/
-	
+
 	virtual const std::uint32_t getNodeId() = 0;
 
 	/*
@@ -112,8 +109,8 @@ public:
 	 * \return list of navigation route, from the start lane to the terminal lane
 	 *
 	 **/
-	virtual const std::vector<std::string>& getNavigationRoute()=0;
-	
+	virtual const std::vector<std::string> &getNavigationRoute() = 0;
+
 	/*
 	* @brief get the junction id 
 	* added by sy
@@ -160,49 +157,51 @@ public:
 	 *			(false,straight_line_distance)
 	 *					otherwise. Notice the straight line distance is always positive(+)
 	 */
-	virtual std::pair<bool, double> getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route) = 0;
-	
-	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double& x,const double& y) = 0;
-	
-	virtual std::pair<bool, double> VehicleGetDistanceWithRSU(const double& x,const double& y,const uint32_t& RSUID) = 0;
-	
-	//2017.12.25 
-	virtual std::pair<bool,double> RSUGetDistanceWithVehicle(const uint32_t RSUID,const double& x,const double& y) = 0;
-	
-	//2017.12.25 
-	virtual std::pair<bool,double> RSUGetDistanceWithRSU(const uint32_t remoteid,std::string lane) = 0;
-	
+	virtual std::pair<bool, double> getDistanceWith(const double &x, const double &y, const std::vector<std::string> &route) = 0;
+
+	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double &x, const double &y) = 0;
+
+	virtual std::pair<bool, double> VehicleGetDistanceWithRSU(const double &x, const double &y, const uint32_t &RSUID) = 0;
+
+	//2017.12.25
+	virtual std::pair<bool, double> RSUGetDistanceWithVehicle(const uint32_t RSUID, const double &x, const double &y) = 0;
+
+	//2017.12.25
+	virtual std::pair<bool, double> RSUGetDistanceWithRSU(const uint32_t remoteid, std::string lane) = 0;
+
 	//2018.12.16
 	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid) = 0;
-	
-	//2017.12.27 
-	virtual std::pair<std::string,std::string> GetLaneJunction(const std::string lane)=0;
+
+	//2017.12.27
+	virtual std::pair<std::string, std::string> GetLaneJunction(const std::string lane) = 0;
+
+	virtual void GetFrontLinkingRoads(uint32_t id) = 0;
 
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
-	
+
 	const static std::string emptyType;
 	const static std::string emptyLane;
 
-protected:
-    TracedValue<std::string> m_lane;
+  protected:
+	TracedValue<std::string> m_lane;
 
-    /**
+	/**
      *  @brief	m_lane is a traceable value, however, it can only forwarding calls to a single function
      *  		In order to forward to more functions, m_lane's callback connnects to m_laneChangeCallback
      *  		throught member function NodeSensor::LaneChangeEvent
      * */
-    TracedCallback<std::string,std::string> m_laneChangeCallback;
+	TracedCallback<std::string, std::string> m_laneChangeCallback;
 
-private:
+  private:
 	/**
 	 *  @brief	m_lane is a traceable value, however, it can only forwarding calls to a single function
 	 *  		In order to forward to more functions, m_lane's callback connnects to m_laneChangeCallback
 	 *  		throught member function NodeSensor::LaneChangeEvent
 	 * */
-    void LaneChangeEvent(std::string oldLane, std::string newLane);
+	void LaneChangeEvent(std::string oldLane, std::string newLane);
 
-    // Reflash the lane name every 1s
-    Timer m_laneTimer;
+	// Reflash the lane name every 1s
+	Timer m_laneTimer;
 };
 
 } /* namespace nrndn */

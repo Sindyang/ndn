@@ -9,6 +9,7 @@
 #define SUMONODESENSOR_H_
 
 #include "NodeSensor.h"
+#include "nrndn-Neighbors.h"
 #include "ns3/SumoMobility.h"
 
 #include <unordered_map>
@@ -69,6 +70,9 @@ class SumoNodeSensor : public NodeSensor
 	//2018.12.15 获得RSU之间的道路
 	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid);
 
+	//2018.12.26 获得前方连通路段
+	virtual void GetFrontLinkingRoads(uint32_t id);
+
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
   private:
@@ -82,6 +86,7 @@ class SumoNodeSensor : public NodeSensor
 	Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
 	std::vector<std::string> m_navigationRoute;
 	std::string m_sumoLane;
+	Neighbors m_nb; ///< \brief Handle neighbors
 };
 
 } /* namespace nrndn */

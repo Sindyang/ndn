@@ -104,11 +104,15 @@ class NavigationRouteHeuristic : public GreenYellowRed
 
 	double getRealIndex(double &index, const std::vector<uint32_t> &pri);
 
-	int 
+	int
 	getPriorityOfData(const string &dataType, const double &currentDistance);
 
-	double 
+	double
 	stringToNum(const string &str);
+
+	//2018.12.26 获得前方连通路段
+	void
+	GetFrontLinkingRoads();
 
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
