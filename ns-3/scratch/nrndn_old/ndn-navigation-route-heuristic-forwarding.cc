@@ -1518,7 +1518,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	if (idIsInPriorityList)
 	{
 		//缓存数据包
-		CachingDataSourcePacket(signature, data);
+		//CachingDataSourcePacket(signature, data);
 
 		//cout<<"(forwarding.cc-OnData_RSU_RSU) RSU在数据包转发优先级列表中"<<endl;
 		double index = distance(pri.begin() + size + 1, priorityListIt);
@@ -1672,7 +1672,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	else
 	{
 		//缓存数据包
-		CachingDataSourcePacket(signature, data);
+		//CachingDataSourcePacket(signature, data);
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
