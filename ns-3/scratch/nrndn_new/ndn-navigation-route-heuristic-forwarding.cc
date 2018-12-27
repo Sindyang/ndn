@@ -1638,7 +1638,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	cout << "(forwarding.cc-OnData_RSU) 数据包的方向为 " << msgdirection.first << " " << msgdirection.second << endl;
 
 	//2018.12.25 低优先级的数据包不用缓存，因此不用记录
-	if ((priority == 1) && m_dataSignatureSeen.Get(data->GetSignature()))
+	if ((priority < 2) && m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		if (msgdirection.first && msgdirection.second < 0)
 		{
@@ -1679,7 +1679,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy 2018.12.24 remove it
-				//CachingDataSourcePacket(data->GetSignature(), data);
+				CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
@@ -1709,11 +1709,10 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		//缓存数据包
 		CachingDataSourcePacket(signature, data);
 
-		//数据包为高优先级
-		if(priority == 0)
+		if (priority == 0)
 		{
-			set<string> frontRoads = m_sensor->GetFrontLinkingRoads(myNodeId);
-			
+			ProcessHighPriorityData(data);
+			return;
 		}
 
 		Ptr<pit::Entry> Will = WillInterestedData(data);
@@ -1776,6 +1775,101 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	}
 }
 
+void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
+{
+	Ptr<const Packet> nrPayload = data->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	uint32_t nodeId = nrheader.getSourceId();
+	uint32_t signature = data->GetSignature();
+	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
+
+	bool idIsInPriorityList;
+	std::vector<uint32_t>::const_iterator priorityListIt;
+	int size = pri[0];
+	priorityListIt = find(pri.begin() + size + 1, pri.end(), m_node->GetId());
+	idIsInPriorityList = (priorityListIt != pri.end());
+
+	if (idIsInPriorityList)
+	{
+		double index = distance(pri.begin() + size + 1, priorityListIt);
+		index = getRealIndex(index, pri);
+		double random = m_uniformRandomVariable->GetInteger(0, 20);
+		Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+
+		Ptr<pit::Entry> Will = WillInterestedData(data);
+		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+		if (!Will && !WillSecond)
+		{
+			cout << "(forwarding.cc-ProcessHighPriorityData) RSU " << m_node->GetId() << " 对数据包 " << signature << "不感兴趣" << endl;
+		}
+		std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+		allinteresRoutes = AddDummyInterestedRoutes(allinteresRoutes);
+
+		if (allinteresRoutes.empty())
+		{
+			CachingDataPacket(signature, data);
+			cout << "(forwarding.cc-ProcessHighPriorityData) 所有后方路段都无车辆，缓存该数据包 " << signature << endl;
+			m_sendingDataEvent[nodeId][signature] =
+				Simulator::Schedule(sendInterval,
+									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
+			return;
+		}
+
+		NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
+		std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(), allinteresRoutes);
+		std::vector<uint32_t> newPriorityList = collection.first;
+		std::unordered_set<std::string> remainroutes = collection.second;
+
+		//有部分路段未被满足
+		if (!remainroutes.empty())
+		{
+			CachingDataPacket(signature, data);
+			cout << "(forwarding.cc-OnData_RSU) 有部分兴趣路段无车辆，缓存该数据包 " << signature << endl;
+		}
+
+		if (newPriorityList.empty())
+		{
+			m_sendingDataEvent[nodeId][signature] =
+				Simulator::Schedule(sendInterval,
+									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
+		}
+		else
+		{
+			m_sendingDataEvent[nodeId][signature] =
+				Simulator::Schedule(sendInterval,
+									&NavigationRouteHeuristic::ForwardDataPacket, this, data,
+									newPriorityList);
+		}
+	}
+}
+
+unordered_set<string> NavigationRouteHeuristic::AddDummyInterestedRoutes(unordered_set<string> allinteresRoutes)
+{
+	unordered_set<string> behindRoads = m_sensor->GetBehindLinkingRoads(m_node->GetId());
+	if (allinteresRoutes.empty())
+	{
+		return behindRoads;
+	}
+
+	if (behindRoads.empty())
+	{
+		return allinteresRoutes;
+	}
+
+	unordered_set<string> newallinteresRoutes(allinteresRoutes);
+
+	for (set<string>::iterator it = behindRoads.begin(); it != behindRoads.end(); it++)
+	{
+		unordered_set<string>::iterator itfind = allinteresRoutes.find(*it);
+		if (itfind == allinteresRoutes.end())
+		{
+			cout << "(forwarding.cc-AddDummyInterestedRoutes) 路段 " << *it << "对此数据包不感兴趣" << endl;
+			newallinteresRoutes.insert(*it);
+		}
+	}
+	return newallinteresRoutes;
+}
 
 double NavigationRouteHeuristic::stringToNum(const string &str)
 {

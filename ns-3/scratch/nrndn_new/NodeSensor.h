@@ -175,7 +175,7 @@ class NodeSensor : public Object
 	//2017.12.27
 	virtual std::pair<std::string, std::string> GetLaneJunction(const std::string lane) = 0;
 
-	virtual void GetFrontLinkingRoads(uint32_t id) = 0;
+	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id) = 0;
 
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
 

@@ -71,7 +71,7 @@ class SumoNodeSensor : public NodeSensor
 	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid);
 
 	//2018.12.26 获得前方连通路段
-	virtual void GetFrontLinkingRoads(uint32_t id);
+	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id);
 
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
