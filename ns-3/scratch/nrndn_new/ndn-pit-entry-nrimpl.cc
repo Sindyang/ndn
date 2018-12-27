@@ -85,6 +85,27 @@ EntryNrImpl::AddIncomingNeighbors(bool &flag, std::string lane, uint32_t id)
 	return incominglane;
 }
 
+//2018.12.27 构造虚拟的PIT表项
+std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator
+EntryNrImpl::AddFakeRoutes(std::string lane)
+{
+	std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator incominglane = m_incomingnbs.find(lane);
+	if (incominglane == m_incomingnbs.end())
+	{
+		//此neighbors为空
+		std::unordered_set<uint32_t> neighbors;
+		std::pair<std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator, bool> ret;
+		ret = m_incomingnbs.insert(std::pair<std::string, std::unordered_set<uint32_t>>(lane, neighbors));
+		std::cout << "后方路段 " << lane << "加入到虚拟PIT表项 " < m_interest_name << std::endl;
+		return ret.first;
+	}
+	else
+	{
+		std::cout << "后方路段 " << lane << " 已存在于虚拟PIT表项 " << m_interest_name << std::endl;
+		return incominglane;
+	}
+}
+
 // 2017.12.24 added by sy
 void EntryNrImpl::CleanPITNeighbors(bool &flag, uint32_t id)
 {

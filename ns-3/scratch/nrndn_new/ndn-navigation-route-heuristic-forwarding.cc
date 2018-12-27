@@ -1803,13 +1803,14 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 		{
 			cout << "(forwarding.cc-ProcessHighPriorityData) RSU " << m_node->GetId() << " 对数据包 " << signature << "不感兴趣" << endl;
 		}
+		
+
 		std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 		allinteresRoutes = AddDummyInterestedRoutes(allinteresRoutes);
 
 		if (allinteresRoutes.empty())
 		{
-			CachingDataPacket(signature, data);
-			cout << "(forwarding.cc-ProcessHighPriorityData) 所有后方路段都无车辆，缓存该数据包 " << signature << endl;
+			cout << "(forwarding.cc-ProcessHighPriorityData) 所有后方路段都无车辆 " << signature << endl;
 			m_sendingDataEvent[nodeId][signature] =
 				Simulator::Schedule(sendInterval,
 									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
@@ -2789,6 +2790,7 @@ void NavigationRouteHeuristic::ProcessHelloRSU(Ptr<Interest> interest)
 
 		//cout<<"(forwarding.cc-ProcessHelloRSU)PIT中对应的数据包为 "<<endl;
 
+		//2018.12.27 用map毫无意义，只是为了输出上一跳路段
 		std::unordered_map<std::string, std::unordered_set<std::string>> dataandroutes = m_nrpit->GetDataNameandLastRoute(routesCollection);
 
 		/*for (std::unordered_map<std::string, std::unordered_set<std::string>>::iterator it = dataandroutes.begin(); it != dataandroutes.end(); it++)
