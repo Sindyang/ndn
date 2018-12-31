@@ -234,6 +234,8 @@ double nrUtils::GetAverageHitRate()
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
+				cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
+					 << " hitRate " << hitRate << endl;
 			}
 		}
 	}

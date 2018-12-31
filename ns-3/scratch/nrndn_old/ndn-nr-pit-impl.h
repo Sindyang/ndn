@@ -141,7 +141,7 @@ class NrPitImpl : public Pit
     bool DeleteSecondPIT(const std::string lane, const uint32_t &id);
 
     // 2017.1.8
-    std::unordered_map<std::string, std::unordered_set<std::string>> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
+    std::unordered_set<std::string> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
 
     void showPit();
 

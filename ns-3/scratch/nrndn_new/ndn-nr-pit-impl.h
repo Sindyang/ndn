@@ -83,6 +83,9 @@ public:
   Ptr<Entry>
   FindSecondPIT(const Name &prefix);
 
+  Ptr<Entry>
+  FindFakePIT(const Name &prefix);
+
   //abandon
   virtual Ptr<Entry>
   Create(Ptr<const Interest> header);
@@ -129,6 +132,15 @@ public:
   //2018.3.1
   bool UpdateSecondPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id, const std::string currentRoute);
 
+  //2018.12.28
+  bool UpdateFakePit(const std::string interestRoute, const std::set<std::string> incomingRoutes);
+
+  //2018.12.28
+  void AddTimeoutEvent(std::string lane);
+
+  //2018.12.28
+  void CleanExpiredFakeEntry(std::string lane);
+
   //2018.3.23
   void
   DetectPrimaryPit(bool &IsExist, const std::vector<std::string> &interestRoute, const uint32_t &id);
@@ -142,13 +154,16 @@ public:
   //2018.3.10
   bool DeleteSecondPIT(const std::string lane, const uint32_t &id);
 
-  // 2017.1.8
-  std::unordered_map<std::string, std::unordered_set<std::string>> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
+  // 2018.12.28
+  std::unordered_set<std::string> GetDataNameandLastRoute(std::unordered_set<std::string> routes);
 
   void showPit();
 
   //2018.3.1
   void showSecondPit();
+
+  //2018.12.28
+  void showFakePit();
 
   void laneChange(std::string oldLane, std::string newLane);
 
@@ -166,7 +181,9 @@ private:
   Ptr<ForwardingStrategy> m_forwardingStrategy;
   std::vector<Ptr<Entry>> m_pitContainer;
   std::vector<Ptr<Entry>> m_secondPitContainer;
+  std::vector<Ptr<Entry>> m_fakePitContainer;
   Ptr<ndn::nrndn::NodeSensor> m_sensor;
+  std::unordered_map<std::string, EventId> m_TimeoutEvent;
   friend class EntryNrImpl;
 
   Ptr<Fib> m_fib; ///< \brief Link to FIB table(Useless, Just for compatibility)

@@ -110,10 +110,6 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	double
 	stringToNum(const string &str);
 
-	//2018.12.26 获得前方连通路段
-	void
-	GetFrontLinkingRoads();
-
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
 	 *
@@ -128,6 +124,8 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	OnData_RSU(Ptr<Face> face, Ptr<Data> data);
 
 	void OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data> data);
+
+	void ProcessHighPriorityData(Ptr<Data> data);
 
 	virtual void
 	OnData_Car(Ptr<Face> face, Ptr<Data> data);
@@ -304,6 +302,9 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	Ptr<pit::Entry>
 	WillInterestedDataInSecondPit(Ptr<const Data> data);
 
+	Ptr<pit::Entry>
+	WillExistinFakePit(Ptr<const Data> data);
+
 	/**
 	 * \brief	drop the data
 	 * 			Simply do nothing
@@ -464,6 +465,9 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	//2018.12.21
 	std::unordered_set<std::string>
 	getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond);
+
+	std::unordered_set<std::string>
+	getFakeInterestedRoutes(Ptr<pit::Entry> WillFake);
 
 	//2018.12.22
 	void

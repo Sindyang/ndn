@@ -528,7 +528,28 @@ std::set<std::string> SumoNodeSensor::RSUGetRoadWithRSU(const uint32_t remoteid)
 	return roadCollection;
 }
 
-//2018.12.26 获得前方连通路段
+//2018.12.23 获取RSU后方道路
+std::set<std::string> SumoNodeSensor::RSUGetBehindRoutes()
+{
+	set<string> roadCollection;
+	std::string junction = RSUGetJunctionId(getNodeId());
+	const map<string, vanetmobility::sumomobility::Edge> &edges = m_sumodata->getRoadmap().getEdges();
+	std::map<std::string, vanetmobility::sumomobility::Edge>::const_iterator eit;
+	cout<<"(SumoNodeSensor.cc-RSUGetBehindRoutes) 后方的道路为 ";
+	for (eit = edges.begin(); eit != edges.end(); eit++)
+	{
+		string from = eit->second.from;
+		if (from == localjunction)
+		{
+			roadCollection.insert(eit->first);
+			cout<<eit->first<<" ";
+		}
+	}
+	cout<<endl;
+	return roadCollection;
+}
+
+//2018.12.26 获得后方连通路段
 unordered_set<string> SumoNodeSensor::GetBehindLinkingRoads(uint32_t id)
 {
 	pair<bool, double> msgdirection;
@@ -554,7 +575,7 @@ unordered_set<string> SumoNodeSensor::GetBehindLinkingRoads(uint32_t id)
 				if (msgdirection.first && msgdirection.second < 0)
 				{
 					behindRoads.insert(*itroad);
-					cout << "(SumoNodeSensor-GetFrontLinkingRoads) 当前RSU为 " << id << " RSU为 " << nb->first << " 前方路段为 " << *itroad << endl;
+					cout << "(SumoNodeSensor-GetBehindLinkingRoads) 当前RSU为 " << id << " RSU为 " << nb->first << " 后方路段为 " << *itroad << endl;
 				}
 			}
 		}
@@ -565,7 +586,7 @@ unordered_set<string> SumoNodeSensor::GetBehindLinkingRoads(uint32_t id)
 			if (msgdirection.first && msgdirection.second < 0)
 			{
 				behindRoads.insert(nb->second.m_lane);
-				cout << "(SumoNodeSensor-GetFrontLinkingRoads) 当前RSU为 " << id << " 车辆为 " << nb->first << " 前方路段为 " << nb->second.m_lane << endl;
+				cout << "(SumoNodeSensor-GetBehindLinkingRoads) 当前RSU为 " << id << " 车辆为 " << nb->first << " 后方路段为 " << nb->second.m_lane << endl;
 			}
 		}
 	}
@@ -587,6 +608,7 @@ std::pair<std::string, std::string> SumoNodeSensor::GetLaneJunction(const std::s
 	std::string to = eit->second.to;
 	return std::pair<std::string, std::string>(from, to);
 }
+
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(
 	const double &x, const double &y)

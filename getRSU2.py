@@ -27,8 +27,8 @@ def get_road(in_file):
 				continue
 
 			#去除 只有一个路段终点的Junction
-			#if each_part[6][0] == 'i':
-				#continue
+			if each_part[6][0] == 'i':
+				continue
 				
 			road = road[len(incLanes):]
 			road = road.rstrip('"')
@@ -64,8 +64,8 @@ def roadlength(in_file,junctions):
 				nPos4 = line.find('allow=\"pedestrian\"')
 				if nPos4 >= 0:
 					print "delete junction's lane_id "+lane_id
-					junctions.pop(lane_id)
-					continue
+					#junctions.pop(lane_id)
+					#continue
 				if nPos3 >= 0:
 					nPos2 = nPos3
 				length = line[nPos1+8:nPos2-2]

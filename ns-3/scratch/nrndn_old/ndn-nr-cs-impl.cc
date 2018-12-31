@@ -195,19 +195,19 @@ void NrCsImpl::DeleteData(const uint32_t signature)
 }
 
 std::map<uint32_t, Ptr<const Data>>
-NrCsImpl::GetData(std::unordered_map<std::string, std::unordered_set<std::string>> dataname_route)
+NrCsImpl::GetData(std::unordered_set<std::string> interestDataName)
 {
 	std::map<uint32_t, Ptr<const Data>> DataCollection;
 	std::map<uint32_t, Ptr<cs::Entry>>::iterator it;
 
-	std::unordered_map<std::string, std::unordered_set<std::string>>::iterator itdataroute = dataname_route.begin();
-	for (; itdataroute != dataname_route.end(); itdataroute++)
+	std::unordered_set<std::string>::iterator itdataroute = interestDataName.begin();
+	for (; itdataroute != interestDataName.end(); itdataroute++)
 	{
 		for (it = m_data.begin(); it != m_data.end(); it++)
 		{
 			std::string dataname = it->second->GetName().toUri();
 			//std::cout << "(cs-impl.cc-GetData) 缓存中的数据包名称为 " << dataname << std::endl;
-			if (itdataroute->first == dataname)
+			if (*itdataroute == dataname)
 			{
 				Ptr<const Data> src = it->second->GetData();
 				Ptr<Data> data = Create<Data>(*src);

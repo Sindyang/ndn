@@ -52,25 +52,25 @@ class SumoNodeSensor : public NodeSensor
 	//std::vector <double> split(const std::string & s, const std::string & d);
 	virtual std::pair<bool, double> getDistanceWith(const double &x, const double &y, const std::vector<std::string> &route);
 
-	//2017.12.16 added by sy
+	//2017.12.16 车辆-车辆之间的方向和距离
 	virtual std::pair<bool, double> VehicleGetDistanceWithVehicle(const double &x, const double &y);
 
-	//2017.12.16 added by sy
+	//2017.12.16 车辆-RSU之间的方向和距离
 	virtual std::pair<bool, double> VehicleGetDistanceWithRSU(const double &x, const double &y, const uint32_t &RSUID);
 
-	//2017.12.25 added by sy
+	//2017.12.25 RSU-车辆之间的方向和距离
 	virtual std::pair<bool, double> RSUGetDistanceWithVehicle(const uint32_t RSUID, const double &x, const double &y);
 
-	//2017.12.25 added by sy
+	//2017.12.25 RSU-RSU之间的方向和距离
 	virtual std::pair<bool, double> RSUGetDistanceWithRSU(const uint32_t remoteid, std::string lane);
 
-	//2017.12.27 added by sy
+	//2017.12.27 获得道路的起始交点
 	virtual std::pair<std::string, std::string> GetLaneJunction(const std::string lane);
 
 	//2018.12.15 获得RSU之间的道路
 	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid);
 
-	//2018.12.26 获得前方连通路段
+	//2018.12.26 获得后方连通路段
 	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id);
 
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);

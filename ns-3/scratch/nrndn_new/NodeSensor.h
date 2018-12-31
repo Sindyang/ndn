@@ -177,6 +177,8 @@ class NodeSensor : public Object
 
 	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id) = 0;
 
+	virtual std::set<std::string> RSUGetBehindRoutes() = 0;
+
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route) = 0;
 
 	const static std::string emptyType;
