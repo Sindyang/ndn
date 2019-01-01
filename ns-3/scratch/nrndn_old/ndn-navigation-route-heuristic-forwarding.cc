@@ -1529,8 +1529,9 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 		if (!Will && !WillSecond)
 		{
-			//或者改为广播停止转发数据包
-			BroadcastStopDataMessage(data);
+			m_sendingDataEvent[nodeId][signature] =
+				Simulator::Schedule(sendInterval,
+									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
 			cout << "(forwarding.cc-OnData_RSU_RSU) 主、副PIT列表中都没有该数据包对应的表项" << endl;
 			return;
 		}
