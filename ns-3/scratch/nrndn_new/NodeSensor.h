@@ -176,7 +176,7 @@ class NodeSensor : public Object
 	//2017.12.27
 	virtual std::pair<std::string, std::string> GetLaneJunction(const std::string lane) = 0;
 
-	virtual std::unordered_set<string> GetBehindLinkingRoads(uint32_t id) = 0;
+	virtual std::unordered_set<std::string> GetBehindLinkingRoads(uint32_t id) = 0;
 
 	virtual std::set<std::string> RSUGetBehindRoutes() = 0;
 

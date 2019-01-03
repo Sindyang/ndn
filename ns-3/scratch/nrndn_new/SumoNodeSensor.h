@@ -13,6 +13,7 @@
 #include "ns3/SumoMobility.h"
 
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <string>
 #include <set>
@@ -71,7 +72,7 @@ class SumoNodeSensor : public NodeSensor
 	virtual std::set<std::string> RSUGetRoadWithRSU(const uint32_t remoteid);
 
 	//2018.12.26 获得后方连通路段
-	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id);
+	virtual std::unordered_set<std::string> GetBehindLinkingRoads(uint32_t id);
 
 	//2018.12.28 获取后方所有道路
 	virtual std::set<std::string> RSUGetBehindRoutes();

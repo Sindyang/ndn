@@ -539,7 +539,7 @@ std::set<std::string> SumoNodeSensor::RSUGetBehindRoutes()
 	for (eit = edges.begin(); eit != edges.end(); eit++)
 	{
 		string from = eit->second.from;
-		if (from == localjunction)
+		if (from == junction)
 		{
 			roadCollection.insert(eit->first);
 			cout << eit->first << " ";
