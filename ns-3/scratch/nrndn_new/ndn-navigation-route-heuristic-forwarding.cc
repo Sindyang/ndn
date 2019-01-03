@@ -2554,6 +2554,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			string dataType = data->GetName().get(1).toUri();
 			double sourceX = 0.0;
 			double sourceY = 0.0;
+			int totalDistance = 0;
 
 			if (dataType == "vehicle")
 			{
