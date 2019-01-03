@@ -1223,7 +1223,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face, Ptr<Data> data)
 	uint32_t forwardId = nrheader.getForwardId();
 
 	cout << endl
-		 << "(forwarding.cc-OnData_Car) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature();
+		 << "(forwarding.cc-OnData_Car) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature() << endl;
 
 	string dataType = data->GetName().get(1).toUri();
 	int totalDistance = 0;
@@ -1247,7 +1247,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face, Ptr<Data> data)
 	double currentDistance = CalculateDistance(localPos, remotePos);
 
 	int priority = getPriorityOfData(dataType, currentDistance);
-	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << "Priority " << priority << endl;
+	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
 
 	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
 	cout << "(forwarding.cc-OnData_Car) 数据包的转发优先级列表为 ";
@@ -1570,7 +1570,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	CachingDataSourcePacket(signature, data);
+	//CachingDataSourcePacket(signature, data);
 
 	if (priority == 0)
 	{
@@ -1692,8 +1692,8 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	uint32_t forwardId = nrheader.getForwardId();
 	std::string forwardLane = nrheader.getLane();
 
-	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature();
-	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << "Priority " << priority << endl;
+	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature() << endl;
+	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
 
 	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
 	cout << "(forwarding.cc-OnData_RSU) 数据包的转发优先级列表为 ";
@@ -1781,7 +1781,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 			if (Will || WillSecond)
 			{
-				CachingDataSourcePacket(data->GetSignature(), data);
+				//CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
@@ -1808,7 +1808,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		}
 
 		//缓存数据包
-		CachingDataSourcePacket(signature, data);
+		//CachingDataSourcePacket(signature, data);
 
 		if (priority == 0)
 		{
