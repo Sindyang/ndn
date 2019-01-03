@@ -96,7 +96,7 @@ EntryNrImpl::AddFakeRoutes(std::string lane)
 		std::unordered_set<uint32_t> neighbors;
 		std::pair<std::unordered_map<std::string, std::unordered_set<uint32_t>>::iterator, bool> ret;
 		ret = m_incomingnbs.insert(std::pair<std::string, std::unordered_set<uint32_t>>(lane, neighbors));
-		std::cout << "后方路段 " << lane << "加入到虚拟PIT表项 " < m_interest_name << std::endl;
+		std::cout << "后方路段 " << lane << "加入到虚拟PIT表项 " << m_interest_name << std::endl;
 		return ret.first;
 	}
 	else

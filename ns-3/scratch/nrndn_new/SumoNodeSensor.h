@@ -9,7 +9,6 @@
 #define SUMONODESENSOR_H_
 
 #include "NodeSensor.h"
-#include "nrndn-Neighbors.h"
 #include "ns3/SumoMobility.h"
 
 #include <unordered_map>
@@ -86,7 +85,6 @@ class SumoNodeSensor : public NodeSensor
 	Ptr<vanetmobility::sumomobility::SumoMobility> m_sumodata;
 	std::vector<std::string> m_navigationRoute;
 	std::string m_sumoLane;
-	Neighbors m_nb; ///< \brief Handle neighbors
 };
 
 } /* namespace nrndn */
