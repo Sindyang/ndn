@@ -12,6 +12,7 @@
 #include "ns3/traced-value.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/timer.h"
+#include <unordered_set>
 
 namespace ns3
 {

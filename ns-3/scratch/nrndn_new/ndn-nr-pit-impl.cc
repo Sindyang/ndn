@@ -410,7 +410,7 @@ void NrPitImpl::AddTimeoutEvent(std::string lane)
 {
 	if (m_TimeoutEvent.find(lane) != m_TimeoutEvent.end())
 	{
-		m_TimeoutEvent.Cancel();
+		m_TimeoutEvent[lane].Cancel();
 		Simulator::Remove(m_TimeoutEvent[lane]); // slower, but better for memory
 	}
 	//Schedule a new cleaning event
