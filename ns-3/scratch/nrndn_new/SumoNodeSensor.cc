@@ -549,50 +549,6 @@ std::set<std::string> SumoNodeSensor::RSUGetBehindRoutes()
 	return roadCollection;
 }
 
-//2018.12.26 获得后方连通路段
-unordered_set<string> SumoNodeSensor::GetBehindLinkingRoads(uint32_t id)
-{
-	pair<bool, double> msgdirection;
-	unordered_set<string> behindRoads;
-	const uint32_t numsofvehicles = getNumsofVehicles();
-	std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb;
-	for (nb = m_nb.getNb().begin(); nb != m_nb.getNb().end(); ++nb)
-	{
-		//判断RSU与RSU的位置关系
-		if (nb->first >= numsofvehicles)
-		{
-			//忽略自身节点
-			if (nb->first == id)
-				continue;
-
-			//获取两个RSU组成的路段
-			set<string> roadCollection = RSUGetRoadWithRSU(nb->first);
-			set<string>::iterator itroad = roadCollection.begin();
-			for (; itroad != roadCollection.end(); itroad++)
-			{
-				msgdirection = RSUGetDistanceWithRSU(nb->first, *itroad);
-				//得到位于后方的道路
-				if (msgdirection.first && msgdirection.second < 0)
-				{
-					behindRoads.insert(*itroad);
-					cout << "(SumoNodeSensor-GetBehindLinkingRoads) 当前RSU为 " << id << " RSU为 " << nb->first << " 后方路段为 " << *itroad << endl;
-				}
-			}
-		}
-		//判断RSU与其他车辆的位置关系
-		else
-		{
-			msgdirection = RSUGetDistanceWithVehicle(id, nb->second.m_x, nb->second.m_y);
-			if (msgdirection.first && msgdirection.second < 0)
-			{
-				behindRoads.insert(nb->second.m_lane);
-				cout << "(SumoNodeSensor-GetBehindLinkingRoads) 当前RSU为 " << id << " 车辆为 " << nb->first << " 后方路段为 " << nb->second.m_lane << endl;
-			}
-		}
-	}
-	return behindRoads;
-}
-
 /*
  * 2017.12.27 
  * 获取路段的起点和终点

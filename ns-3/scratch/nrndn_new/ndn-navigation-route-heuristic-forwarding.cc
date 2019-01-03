@@ -1436,8 +1436,15 @@ std::unordered_set<std::string> NavigationRouteHeuristic::getFakeInterestedRoute
 	if (WillFake)
 	{
 		entry = DynamicCast<pit::nrndn::EntryNrImpl>(WillFake);
-		return entry->getIncomingnbs();
+		allinteresRoutes = entry->getIncomingnbs();
+		cout << "(forwarding.cc-getFakeInterestedRoutes) 虚拟PIT中的感兴趣路段为" << endl;
+		for (std::unordered_set<std::string>::iterator it = allinteresRoutes.begin(); it != allinteresRoutes.end(); it++)
+		{
+			cout << *it << " ";
+		}
+		cout << endl;
 	}
+	return allinteresRoutes;
 }
 
 std::unordered_set<std::string> NavigationRouteHeuristic::getAllInterestedRoutes(Ptr<pit::Entry> Will, Ptr<pit::Entry> WillSecond)
@@ -1905,27 +1912,10 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 		std::set<std::string> fakeRoutes = m_sensor->RSUGetBehindRoutes();
 		m_nrpit->UpdateFakePit(data->GetName().get(0).toUri(), fakeRoutes);
 
-		Ptr<pit::Entry> Will = WillInterestedData(data);
-		Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
-		if (!Will && !WillSecond)
-		{
-			cout << "(forwarding.cc-ProcessHighPriorityData) RSU " << m_node->GetId() << " 对数据包 " << signature << "不感兴趣" << endl;
-		}
-
-		std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
-		allinteresRoutes = AddDummyInterestedRoutes(allinteresRoutes);
-
-		if (allinteresRoutes.empty())
-		{
-			CachingDataPacket(signature, data);
-			cout << "(forwarding.cc-ProcessHighPriorityData) 所有后方路段都无车辆且RSU对该数据包不感兴趣,数据包已缓存 " << signature << endl;
-			m_sendingDataEvent[nodeId][signature] =
-				Simulator::Schedule(sendInterval,
-									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
-			return;
-		}
-
+		Ptr<pit::Entry> WillFake = WillExistinFakePit(data);
+		std::unordered_set<std::string> allinteresRoutes = getFakeInterestedRoutes(WillFake);
 		NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
+
 		std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(), allinteresRoutes);
 		std::vector<uint32_t> newPriorityList = collection.first;
 		std::unordered_set<std::string> remainroutes = collection.second;
@@ -1951,34 +1941,6 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 									newPriorityList);
 		}
 	}
-}
-
-unordered_set<string> NavigationRouteHeuristic::AddDummyInterestedRoutes(unordered_set<string> allinteresRoutes)
-{
-	unordered_set<string> behindRoads = m_sensor->GetBehindLinkingRoads(m_node->GetId());
-	if (allinteresRoutes.empty())
-	{
-		return behindRoads;
-	}
-
-	if (behindRoads.empty())
-	{
-		cout << "(forwarding.cc-AddDummyInterestedRoutes) At Time " << Simulator::Now().GetSeconds() << " RSU " << m_node->GetId() << " 后方路段为空" << endl;
-		return allinteresRoutes;
-	}
-
-	unordered_set<string> newallinteresRoutes(allinteresRoutes);
-
-	for (set<string>::iterator it = behindRoads.begin(); it != behindRoads.end(); it++)
-	{
-		unordered_set<string>::iterator itfind = allinteresRoutes.find(*it);
-		if (itfind == allinteresRoutes.end())
-		{
-			cout << "(forwarding.cc-AddDummyInterestedRoutes) RSU" << m_node->GetId() << " 路段 " << *it << "对此数据包不感兴趣，加入到感兴趣路段中" << endl;
-			newallinteresRoutes.insert(*it);
-		}
-	}
-	return newallinteresRoutes;
 }
 
 double NavigationRouteHeuristic::stringToNum(const string &str)
@@ -2615,9 +2577,10 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 			Ptr<pit::Entry> WillFake = WillExistinFakePit(data);
+
 			if (!Will && !WillSecond && (priority == 1))
 			{
-				NS_ASSERT_MSG(false, "RSU对该中等优先级的数据包不感兴趣");
+				NS_ASSERT_MSG(false, "RSU对中等优先级的数据包不感兴趣");
 			}
 
 			cout << "(forwarding.cc-SendDataInCache) signature " << signature << " 当前节点 " << nodeId << " 源节点为 " << sourceId << " Priority " << priority << endl;
