@@ -73,6 +73,9 @@ class SumoNodeSensor : public NodeSensor
 	//2018.12.26 获得后方连通路段
 	virtual unordered_set<string> GetBehindLinkingRoads(uint32_t id);
 
+	//2018.12.28 获取后方所有道路
+	virtual std::set<std::string> RSUGetBehindRoutes();
+
 	//virtual bool IsCoverThePath(const double& x,const double& y,const std::vector<std::string>& route);
 	//bool IsCorrectPosition(bool x_increase,bool y_increase,int x_begin, int y_begin, int x_end,int y_end, int x,int y);
   private:

@@ -535,17 +535,17 @@ std::set<std::string> SumoNodeSensor::RSUGetBehindRoutes()
 	std::string junction = RSUGetJunctionId(getNodeId());
 	const map<string, vanetmobility::sumomobility::Edge> &edges = m_sumodata->getRoadmap().getEdges();
 	std::map<std::string, vanetmobility::sumomobility::Edge>::const_iterator eit;
-	cout<<"(SumoNodeSensor.cc-RSUGetBehindRoutes) 后方的道路为 ";
+	cout << "(SumoNodeSensor.cc-RSUGetBehindRoutes) RSU ID为 " << getNodeId() << "交点为 " << junction << "后方的道路为 ";
 	for (eit = edges.begin(); eit != edges.end(); eit++)
 	{
 		string from = eit->second.from;
 		if (from == localjunction)
 		{
 			roadCollection.insert(eit->first);
-			cout<<eit->first<<" ";
+			cout << eit->first << " ";
 		}
 	}
-	cout<<endl;
+	cout << endl;
 	return roadCollection;
 }
 
@@ -608,7 +608,6 @@ std::pair<std::string, std::string> SumoNodeSensor::GetLaneJunction(const std::s
 	std::string to = eit->second.to;
 	return std::pair<std::string, std::string>(from, to);
 }
-
 
 std::pair<std::string, double> SumoNodeSensor::convertCoordinateToLanePos(
 	const double &x, const double &y)

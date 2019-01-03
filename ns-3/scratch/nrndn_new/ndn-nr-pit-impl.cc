@@ -116,7 +116,7 @@ bool NrPitImpl::UpdateRSUPit(bool &IsExist, std::string junction, const std::str
 		std::pair<std::vector<std::string>, std::vector<std::string>> collection = getInterestRoutesReadytoPass(junction, forwardRoute, interestRoute);
 		std::vector<std::string> futureInterestRoutes = collection.first;
 		std::vector<std::string> unpassedRoutes = collection.second;
-		
+
 		bool result = UpdateSecondPit(IsExist, futureInterestRoutes, id, currentroute);
 
 		std::cout << "(NrPitImpl.cc-UpdateRSUPit) 未来会通过该节点的兴趣路线为 ";
@@ -369,6 +369,8 @@ bool NrPitImpl::
 //2018.12.27 为高优先级的数据包增加虚拟PIT
 bool NrPitImpl::UpdateFakePit(const std::string interestRoute, const std::set<std::string> incomingRoutes)
 {
+	AddTimeoutEvent(interestRoute);
+
 	std::cout << "(ndn-nr-pit-impl.cc-UpdateFakePit) 为数据包 " << interestRoute << "建立虚拟PIT表项" << std::endl;
 	std::vector<Ptr<Entry>>::iterator pit = m_fakePitContainer.begin();
 	for (; pit != m_fakePitContainer.end(); ++pit)
@@ -400,6 +402,7 @@ bool NrPitImpl::UpdateFakePit(const std::string interestRoute, const std::set<st
 			pitEntry->AddFakeRoutes(*it);
 		}
 	}
+	showFakePit();
 	return true;
 }
 
@@ -412,6 +415,7 @@ void NrPitImpl::AddTimeoutEvent(std::string lane)
 	}
 	//Schedule a new cleaning event
 	m_TimeoutEvent[lane] = Simulator::Schedule(Seconds(10), &NrPitImpl::CleanExpiredFakeEntry, this, lane);
+	std::cout << "(ndn-nr-pit-impl.cc-AddTimeoutEvent) At time " << Simulator::Now().GetSeconds() << " 为lane " << lane << "设置超时时间" << std::endl;
 }
 
 void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
@@ -432,6 +436,10 @@ void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
 		pitEntry->CleanAllNodes();
 		m_fakePitContainer.erase(pit);
 		std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) 在虚拟PIT中已删除路段信息 " << lane << std::endl;
+	}
+	else
+	{
+		std::cout << "(ndn-nr-pit0impl.cc-CleanExpiredFakeEntry) 没有在虚拟PIT中找到超时的路段信息 " << lane << std::endl;
 	}
 }
 
