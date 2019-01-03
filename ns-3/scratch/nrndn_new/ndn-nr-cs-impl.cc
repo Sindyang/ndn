@@ -205,7 +205,7 @@ NrCsImpl::GetData(std::unordered_set<std::string> interestDataName)
 	{
 		for (it = m_data.begin(); it != m_data.end(); it++)
 		{
-			std::string dataname = it->second->GetName().toUri();
+			std::string dataname = it->second->GetName().get(0).toUri();
 			//std::cout << "(cs-impl.cc-GetData) 缓存中的数据包名称为 " << dataname << std::endl;
 			if (*itdataroute == dataname)
 			{

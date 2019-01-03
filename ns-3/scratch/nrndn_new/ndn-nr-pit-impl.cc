@@ -435,11 +435,11 @@ void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		pitEntry->CleanAllNodes();
 		m_fakePitContainer.erase(pit);
-		std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) 在虚拟PIT中已删除路段信息 " << lane << std::endl;
+		std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) At time " << Simulator::Now().GetSeconds() << " 在虚拟PIT中已删除路段信息 " << lane << std::endl;
 	}
 	else
 	{
-		std::cout << "(ndn-nr-pit0impl.cc-CleanExpiredFakeEntry) 没有在虚拟PIT中找到超时的路段信息 " << lane << std::endl;
+		std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) 没有在虚拟PIT中找到超时的路段信息 " << lane << std::endl;
 	}
 }
 
