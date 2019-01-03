@@ -3072,20 +3072,22 @@ void NavigationRouteHeuristic::ExpireDataPacketTimer(uint32_t nodeId, uint32_t s
 Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedData(Ptr<const Data> data)
 {
-
-	return m_pit->Find(data->GetName());
+	Name dataName('/' + data->GetName().get(0).toUri());
+	return m_pit->Find(dataName);
 }
 
 Ptr<pit::Entry>
 NavigationRouteHeuristic::WillInterestedDataInSecondPit(Ptr<const Data> data)
 {
-	return m_nrpit->FindSecondPIT(data->GetName());
+	Name dataName('/' + data->GetName().get(0).toUri());
+	return m_nrpit->FindSecondPIT(dataName);
 }
 
 Ptr<pit::Entry>
 NavigationRouteHeuristic::WillExistinFakePit(Ptr<const Data> data)
 {
-	return m_nrpit->FindFakePIT(data->GetName());
+	Name dataName('/' + data->GetName().get(0).toUri());
+	return m_nrpit->FindFakePIT(dataName);
 }
 
 bool NavigationRouteHeuristic::IsInterestData(const Name &name)
