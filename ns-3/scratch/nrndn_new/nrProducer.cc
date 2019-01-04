@@ -198,7 +198,7 @@ void nrProducer::OnSendingTrafficData()
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
 
-	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(), data->GetSignature(), m_prefix.get(0).toUri());
+	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(m_sensor->getX(), m_sensor->getY(), data->GetSignature(), m_prefix.get(0).toUri());
 	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.first);
 	cout << "(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 " << size_InterestSize.first << " 感兴趣的节点总数为 " << size_InterestSize.second << std::endl
@@ -308,7 +308,7 @@ bool nrProducer::IsActive()
 	return m_active;
 }
 
-bool nrProducer::IsInterestLane(const std::string &lane)
+bool nrProducer::IsInterestLane(const double &x, const double &y, const std::string &lane)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
@@ -320,6 +320,19 @@ bool nrProducer::IsInterestLane(const std::string &lane)
 	it = std::find(route.begin(), route.end(), currentLane);
 	//判断lane是否对未来路段感兴趣
 	it2 = std::find(it, route.end(), lane);
+	if (it2 == route.end())
+	{
+		return false;
+	}
+
+	//2019.1.4 判断与生产者的位置关系
+	std::pair<bool, double> result = sensor->VehicleGetDistanceWithVehicle(x, y);
+	//消费者位于生产者前方且传输距离超过300米
+	if (result.first && result.second < -300)
+	{
+		cout << "消费者 " << GetNode()->GetId() << " 位于生产者前方且传输距离超过300米" << endl;
+		return false;
+	}
 	return (it2 != route.end());
 }
 
