@@ -43,7 +43,7 @@ nrUtils::~nrUtils()
 }
 
 std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
-	double &x, double &y, uint32_t signature, const std::string &lane)
+	const double &x, const double &y, uint32_t signature, const std::string &lane)
 {
 	uint32_t nodeSize = 0;
 	uint32_t interestSize = 0;

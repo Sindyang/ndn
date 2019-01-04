@@ -74,7 +74,7 @@ class nrProducer : public App
 	/**
 	 * \brief Decide whether a lane is interested
 	 */
-	bool IsInterestLane(const std::string &lane);
+	bool IsInterestLane(const double &x, const double &y, const std::string &lane);
 
 	void ScheduleAccident(double Time);
 
