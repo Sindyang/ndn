@@ -538,8 +538,8 @@ std::set<std::string> SumoNodeSensor::RSUGetBehindRoutes()
 	cout << "(SumoNodeSensor.cc-RSUGetBehindRoutes) RSU ID为 " << getNodeId() << "交点为 " << junction << "后方的道路为 ";
 	for (eit = edges.begin(); eit != edges.end(); eit++)
 	{
-		string from = eit->second.from;
-		if (from == junction)
+		string to = eit->second.to;
+		if (to == junction)
 		{
 			roadCollection.insert(eit->first);
 			cout << eit->first << " ";
