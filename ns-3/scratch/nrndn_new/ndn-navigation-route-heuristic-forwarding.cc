@@ -1595,7 +1595,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 
 		if ((dataType == "vehicle") && (currentDistance > totalDistance))
 		{
-			cout << "(OnData_RSU_RSU) 当前距离 " << currentDistance << " 已经超过了有效距离" << signature << endl;
+			cout << "(OnData_RSU_RSU) 当前距离 " << currentDistance << " 已经超过了有效距离 " << signature << endl;
 			m_sendingDataEvent[nodeId][signature] =
 				Simulator::Schedule(sendInterval,
 									&NavigationRouteHeuristic::BroadcastStopDataMessage, this, data);
@@ -1948,7 +1948,7 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 //2019.1.4
 void NavigationRouteHeuristic::TestFakeRoutes(Ptr<Data> data)
 {
-	Ptr<pit::Entry> WillFake = WillInterestedData(data);
+	Ptr<pit::Entry> WillFake = WillExistinFakePit(data);
 	std::unordered_set<std::string> fakeinteresRoutes = getFakeInterestedRoutes(WillFake);
 
 	Ptr<pit::Entry> Will = WillInterestedData(data);
