@@ -1247,7 +1247,7 @@ void NavigationRouteHeuristic::OnData_Car(Ptr<Face> face, Ptr<Data> data)
 	double currentDistance = CalculateDistance(localPos, remotePos);
 
 	int priority = getPriorityOfData(dataType, currentDistance);
-	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
+	cout << "dataType " << dataType << " totalDistance " << totalDistance << " currentDistance " << currentDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
 
 	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
 	cout << "(forwarding.cc-OnData_Car) 数据包的转发优先级列表为 ";
@@ -1693,7 +1693,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 	std::string forwardLane = nrheader.getLane();
 
 	cout << "(forwarding.cc-OnData_RSU) 源节点 " << nodeId << " 转发节点 " << forwardId << " 当前节点 " << myNodeId << " Signature " << data->GetSignature() << endl;
-	cout << "dataType " << dataType << " totalDistance " << totalDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
+	cout << "dataType " << dataType << " totalDistance " << totalDistance << " currentDistance " << currentDistance << " sourceX " << sourceX << " sourceY " << sourceY << " Priority " << priority << endl;
 
 	const std::vector<uint32_t> &pri = nrheader.getPriorityList();
 	cout << "(forwarding.cc-OnData_RSU) 数据包的转发优先级列表为 ";
@@ -1955,8 +1955,8 @@ int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const do
 {
 	double sameDistance = currentDistance / 1000;
 	double factor = 0.4;
-	double highPriority = 2 / 3;
-	double lowPriority = 1 / 3;
+	double highPriority = 2.0 / 3.0;
+	double lowPriority = 1.0 / 3.0;
 	if (dataType == "road")
 		factor = 0.6;
 

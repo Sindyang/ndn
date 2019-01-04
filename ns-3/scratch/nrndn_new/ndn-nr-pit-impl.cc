@@ -402,7 +402,7 @@ bool NrPitImpl::UpdateFakePit(const std::string interestRoute, const std::set<st
 			pitEntry->AddFakeRoutes(*it);
 		}
 	}
-	showFakePit();
+	//showFakePit();
 	return true;
 }
 
