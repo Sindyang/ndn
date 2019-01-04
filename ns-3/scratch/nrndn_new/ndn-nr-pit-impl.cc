@@ -415,7 +415,7 @@ void NrPitImpl::AddTimeoutEvent(std::string lane)
 	}
 	//Schedule a new cleaning event
 	m_TimeoutEvent[lane] = Simulator::Schedule(Seconds(10), &NrPitImpl::CleanExpiredFakeEntry, this, lane);
-	std::cout << "(ndn-nr-pit-impl.cc-AddTimeoutEvent) At time " << Simulator::Now().GetSeconds() << " 为lane " << lane << "设置超时时间" << std::endl;
+	//std::cout << "(ndn-nr-pit-impl.cc-AddTimeoutEvent) At time " << Simulator::Now().GetSeconds() << " 为lane " << lane << "设置超时时间" << std::endl;
 }
 
 void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
@@ -426,7 +426,7 @@ void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
 		const name::Component &pitName = (*pit)->GetInterest()->GetName().get(0);
 		if (pitName.toUri() == lane)
 		{
-			std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) 在虚拟PIT中找到了超时的路段信息 " << lane << std::endl;
+			//std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) 在虚拟PIT中找到了超时的路段信息 " << lane << std::endl;
 			break;
 		}
 	}
@@ -435,7 +435,7 @@ void NrPitImpl::CleanExpiredFakeEntry(std::string lane)
 		Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 		pitEntry->CleanAllNodes();
 		m_fakePitContainer.erase(pit);
-		std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) At time " << Simulator::Now().GetSeconds() << " 在虚拟PIT中已删除路段信息 " << lane << std::endl;
+		//std::cout << "(ndn-nr-pit-impl.cc-CleanExpiredFakeEntry) At time " << Simulator::Now().GetSeconds() << " 在虚拟PIT中已删除路段信息 " << lane << std::endl;
 	}
 	else
 	{

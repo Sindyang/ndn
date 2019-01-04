@@ -110,6 +110,9 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	double
 	stringToNum(const string &str);
 
+	void 
+	TestFakeRoutes(Ptr<Data> data);
+
 	/**
 	 * \brief Actual processing of incoming Ndn content objects
 	 *

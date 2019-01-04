@@ -1916,6 +1916,8 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 		std::unordered_set<std::string> allinteresRoutes = getFakeInterestedRoutes(WillFake);
 		NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
 
+		TestFakeRoutes(data);
+
 		std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(), allinteresRoutes);
 		std::vector<uint32_t> newPriorityList = collection.first;
 		std::unordered_set<std::string> remainroutes = collection.second;
@@ -1943,6 +1945,24 @@ void NavigationRouteHeuristic::ProcessHighPriorityData(Ptr<Data> data)
 	}
 }
 
+//2019.1.4
+void NavigationRouteHeuristic::TestFakeRoutes(Ptr<Data> data)
+{
+	Ptr<pit::Entry> WillFake = WillInterestedData(data);
+	std::unordered_set<std::string> fakeinteresRoutes = getFakeInterestedRoutes(WillFake);
+
+	Ptr<pit::Entry> Will = WillInterestedData(data);
+	Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+	for(std::unordered_set<std::string>::iterator itfake = fakeinteresRoutes.begin(); itfake != fakeinteresRoutes.end(); itfake++)
+	{
+		if(allinteresRoutes.find(*itfake) == allinteresRoutes.end())
+		{
+			cout<<"当前RSU对路段 "<<*itfake<<" 不感兴趣"<<endl;
+		}
+	}
+}
+
 double NavigationRouteHeuristic::stringToNum(const string &str)
 {
 	istringstream iss(str);
@@ -1954,11 +1974,11 @@ double NavigationRouteHeuristic::stringToNum(const string &str)
 int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const double &currentDistance)
 {
 	double sameDistance = currentDistance / 1000;
-	double factor = 0.4;
+	double factor = 0.8;
 	double highPriority = 2.0 / 3.0;
 	double lowPriority = 1.0 / 3.0;
 	if (dataType == "road")
-		factor = 0.6;
+		factor = 1.0;
 
 	double result = exp(-factor * sameDistance);
 	cout << "(getPriorityOfData) the result is " << result << endl;
