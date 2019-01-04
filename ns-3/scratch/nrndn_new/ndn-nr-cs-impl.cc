@@ -207,9 +207,9 @@ NrCsImpl::GetData(std::unordered_set<std::string> interestDataName)
 		{
 			std::string dataname = it->second->GetName().get(0).toUri();
 			dataname = "/" + dataname;
-			std::cout << "(cs-impl.cc-GetData) 缓存中的数据包名称为 " << dataname << std::endl;
 			if (*itdataroute == dataname)
 			{
+				std::cout << "(cs-impl.cc-GetData) 缓存中的数据包名称为 " << dataname << std::endl;
 				Ptr<const Data> src = it->second->GetData();
 				Ptr<Data> data = Create<Data>(*src);
 				//data->SetTimestamp(Simulator::Now());
