@@ -183,7 +183,7 @@ void nrProducer::OnSendingTrafficData()
 	data->SetName(dataName);
 	// 2018.1.24
 	data->SetFreshness(Seconds(10.0));
-	data->SetTimestamp(Simulator::Now());
+	data->SetTimestamp(Simulator::Now().GetSeconds());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
 	if (m_keyLocator.size() > 0)
