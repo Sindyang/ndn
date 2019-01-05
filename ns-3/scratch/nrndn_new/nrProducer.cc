@@ -273,7 +273,9 @@ void nrProducer::addAccident()
 	SeedManager::SetSeed(15);
 	NormalVariable nrnd(mean, varience, (end - start) / 2);
 	double t = 0;
-	while (true)
+	//2019.1.5 设定每个生产者发送25个数据包
+	uint32_t count = 25;
+	while (count--)
 	{
 		t = nrnd.GetValue();
 		if (!m_accidentList.count(t))
