@@ -279,7 +279,7 @@ void nrProducer::addAccident()
 		if (!m_accidentList.count(t))
 		{
 			ScheduleAccident(t);
-			break;
+			//break;
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId() << " add accident at " << t);
