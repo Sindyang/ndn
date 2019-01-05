@@ -182,8 +182,8 @@ void nrProducer::OnSendingTrafficData()
 	//dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(10.0));
-	data->SetTimestamp(Simulator::Now().GetSeconds());
+	data->SetFreshness(Seconds(10.0123));
+	data->SetTimestamp(Seconds(Simulator::Now().GetSeconds()));
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
 	if (m_keyLocator.size() > 0)
