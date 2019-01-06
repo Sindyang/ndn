@@ -331,6 +331,14 @@ int nrConsumer::getPriorityOfData(const string &dataType, const double &currentD
 	}
 }
 
+double nrConsumer::stringToNum(const string &str)
+{
+	istringstream iss(str);
+	double num;
+	iss >> num;
+	return num;
+}
+
 void nrConsumer::NotifyNewAggregate()
 {
 	super::NotifyNewAggregate();
