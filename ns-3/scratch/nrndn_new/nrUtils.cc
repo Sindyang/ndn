@@ -103,15 +103,15 @@ void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
 	//2019.1.6
 	if (priority == 0)
 	{
-		msgArrivalCounter[id][signature].HighPriorityInterestedNode;
+		msgArrivalCounter[id][signature].HighPriorityInterestedNode++;
 	}
 	else if (priority == 1)
 	{
-		msgArrivalCounter[id][signature].MediumPriorityInterestedNode;
+		msgArrivalCounter[id][signature].MediumPriorityInterestedNode++;
 	}
 	else if (priority == 2)
 	{
-		msgArrivalCounter[id][signature].LowPriorityInterestedNode;
+		msgArrivalCounter[id][signature].LowPriorityInterestedNode++;
 	}
 }
 

@@ -529,23 +529,23 @@ void nrndnExample::Report()
 			  << std::left << std::setw(10) << "accuracyR"
 			  << std::left << std::setw(10) << "hitR"
 			  << std::left << std::setw(10) << "HighhitR"
-			  << std::left << std::setw(10) << "MediumhitR"
-			  << std::left << std::setw(10) << "LowhitR"
+			  << std::left << std::setw(15) << "MediumhitR"
+			  << std::left << std::setw(15) << "LowhitR"
 			  << std::left << std::setw(10) << "avgDelay"
-			  << std::left << std::setw(10) << "HighavgDelay"
-			  << std::left << std::setw(10) << "MediumavgDelay"
-			  << std::left << std::setw(10) << "LowavgDelay"
+			  << std::left << std::setw(15) << "HighAvgDelay"
+			  << std::left << std::setw(15) << "MediumAvgDelay"
+			  << std::left << std::setw(15) << "LowAvgDelay"
 			  << std::left << std::setw(10) << "avgFwd" << endl;
 	std::cout << std::left << std::setw(11) << arrivalRate
 			  << std::left << std::setw(10) << accuracyRate
 			  << std::left << std::setw(10) << hitRate
 			  << std::left << std::setw(10) << hitRateOfHigh
-			  << std::left << std::setw(10) << hitRateOfMedium
-			  << std::left << std::setw(10) << hitRateOfLow
+			  << std::left << std::setw(15) << hitRateOfMedium
+			  << std::left << std::setw(15) << hitRateOfLow
 			  << std::left << std::setw(10) << averageDelay
-			  << std::left << std::setw(10) << averageDelayOfHigh
-			  << std::left << std::setw(10) << averageDelayOfMedium
-			  << std::left << std::setw(10) << averageDelayOfLow
+			  << std::left << std::setw(15) << averageDelayOfHigh
+			  << std::left << std::setw(15) << averageDelayOfMedium
+			  << std::left << std::setw(15) << averageDelayOfLow
 			  << std::left << std::setw(10) << averageForwardTimes << endl
 			  << endl;
 
