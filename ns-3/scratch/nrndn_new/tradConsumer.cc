@@ -80,9 +80,9 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize, "packetPayloadSize is not equal to " << m_virtualPayloadSize);
 
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-	nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
+	nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay, 0);
 	if (IsInterestData(data->GetName()))
-		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
+		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, 0);
 	else
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature);
 }

@@ -242,13 +242,6 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		return;
 	}
 
-	// 2018.1.12 added by sy
-	if (m_dataReceivedSeen.Get(signature))
-	{
-		//std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
-		return;
-	}
-
 	Ptr<Packet> nrPayload = data->GetPayload()->Copy();
 	const Name &name = data->GetName();
 	nrHeader nrheader;
@@ -256,6 +249,13 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	uint32_t nodeId = nrheader.getSourceId();
 	uint32_t signature = data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
+
+	// 2018.1.12 added by sy
+	if (m_dataReceivedSeen.Get(signature))
+	{
+		//std::cout<<"(nrConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
+		return;
+	}
 
 	string dataType = data->GetName().get(1).toUri();
 	int totalDistance = 0;
