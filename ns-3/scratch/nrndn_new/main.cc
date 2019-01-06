@@ -136,6 +136,12 @@ class nrndnExample
 	//hitRate: among all the interested nodes, how many are received
 	double hitRate;
 
+	double hitRateOfHigh;
+
+	double hitRateOfMedium;
+
+	double hitRateOfLow;
+
 	//accuracyRate: among all the nodes received, how many are interested
 	double accuracyRate;
 	double disinterestRate;
@@ -144,6 +150,9 @@ class nrndnExample
 	double averageInterestForwardTimes;
 	double averageDeleteForwardTimes;
 	double averageDelay;
+	double averageDelayOfHigh;
+	double averageDelayOfMedium;
+	double averageDelayOfLow;
 	uint32_t SumForwardTimes;
 
 	bool noFwStop;
@@ -199,9 +208,9 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample() : random_seed(54321),
-							   certain_count(20),	//定点数量
+							   certain_count(20),   //定点数量
 							   certain_interval(0), //定点事件间隔
-							   random_accident(0),   //默认不随机
+							   random_accident(0),  //默认不随机
 							   size(3),
 							   totalTime(36000),
 							   readTotalTime(0),
@@ -220,6 +229,9 @@ nrndnExample::nrndnExample() : random_seed(54321),
 							   method(0),
 							   interestFrequency(2), //本来是1秒1次,0.0001是10000秒一次
 							   hitRate(0),
+							   hitRateOfHigh(0),
+							   hitRateOfMedium(0),
+							   hitRateOfLow(0),
 							   accuracyRate(0),
 							   disinterestRate(0),
 							   arrivalRate(0),
@@ -227,6 +239,9 @@ nrndnExample::nrndnExample() : random_seed(54321),
 							   averageDeleteForwardTimes(0),
 							   averageInterestForwardTimes(0),
 							   averageDelay(0),
+							   averageDelayOfHigh(0),
+							   averageDelayOfMedium(0),
+							   averageDelayOfLow(0),
 							   SumForwardTimes(0),
 							   noFwStop(true),
 							   TTLMax(1),
@@ -513,12 +528,24 @@ void nrndnExample::Report()
 	std::cout << std::left << std::setw(11) << "arrivalR"
 			  << std::left << std::setw(10) << "accuracyR"
 			  << std::left << std::setw(10) << "hitR"
+			  << std::left << std::setw(10) << "HighhitR"
+			  << std::left << std::setw(10) << "MediumhitR"
+			  << std::left << std::setw(10) << "LowhitR"
 			  << std::left << std::setw(10) << "avgDelay"
+			  << std::left << std::setw(10) << "HighavgDelay"
+			  << std::left << std::setw(10) << "MediumavgDelay"
+			  << std::left << std::setw(10) << "LowavgDelay"
 			  << std::left << std::setw(10) << "avgFwd" << endl;
 	std::cout << std::left << std::setw(11) << arrivalRate
 			  << std::left << std::setw(10) << accuracyRate
 			  << std::left << std::setw(10) << hitRate
+			  << std::left << std::setw(10) << hitRateOfHigh
+			  << std::left << std::setw(10) << hitRateOfMedium
+			  << std::left << std::setw(10) << hitRateOfLow
 			  << std::left << std::setw(10) << averageDelay
+			  << std::left << std::setw(10) << averageDelayOfHigh
+			  << std::left << std::setw(10) << averageDelayOfMedium
+			  << std::left << std::setw(10) << averageDelayOfLow
 			  << std::left << std::setw(10) << averageForwardTimes << endl
 			  << endl;
 
@@ -896,7 +923,7 @@ void nrndnExample::InstallTraffics()
 	UniformVariable rnd(0, nodes.GetN() - 36);
 	std::cout << "(main.cc-InstallTraffics)插入事件：" << accidentNum << endl
 			  << endl;
-	if (0)//(random_accident)
+	if (0) //(random_accident)
 	{
 		for (uint32_t idx = 0; idx < certain_count; idx++)
 		{
@@ -1000,8 +1027,20 @@ void nrndnExample::getStatistic()
 	//3. get average hit rate
 	hitRate = nrUtils::GetAverageHitRate();
 
+	hitRateOfHigh = nrUtils::GetAverageHitRateOfPriority(0);
+
+	hitRateOfMedium = nrUtils::GetAverageHitRateOfPriority(1);
+
+	hitRateOfLow = nrUtils::GetAverageHitRateOfPriority(2);
+
 	//4. get average delay
 	averageDelay = nrUtils::GetAverageDelay();
+
+	averageDelayOfHigh = nrUtils::GetAverageDelayOfHighPriority();
+
+	averageDelayOfMedium = nrUtils::GetAverageDelayOfMediumPriority();
+
+	averageDelayOfLow = nrUtils::GetAverageDelayOfLowPriority();
 
 	//5. get average data forward times
 	pair<uint32_t, double> AverageDataForwardPair = nrUtils::GetAverageForwardTimes();

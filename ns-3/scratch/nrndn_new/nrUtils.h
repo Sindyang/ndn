@@ -47,11 +47,17 @@ struct MsgAttribute
 	MsgAttribute() : NodeSize(0),
 					 InterestedNodeSize(0),
 					 InterestedNodeReceiveCounter(0),
-					 DisinterestedNodeReceiveCounter(0) {}
+					 DisinterestedNodeReceiveCounter(0),
+					 HighPriorityInterestedNode(0),
+					 MediumPriorityInterestedNode(0),
+					 LowPriorityInterestedNode(0) {}
 	uint32_t NodeSize;
 	uint32_t InterestedNodeSize;
 	uint32_t InterestedNodeReceiveCounter;	//节点收到感兴趣数据的数量
 	uint32_t DisinterestedNodeReceiveCounter; //节点收到不感兴趣数据的数量
+	uint32_t HighPriorityInterestedNode;	  //数据包在高优先级时被收到的数量
+	uint32_t MediumPriorityInterestedNode;	//数据包在中优先级时被收到的数量
+	uint32_t LowPriorityInterestedNode;		  //数据包在低优先级时被收到的数量
 };
 
 class nrUtils
@@ -74,7 +80,7 @@ class nrUtils
 	//设置感兴趣节点个数
 	static void SetInterestedNodeSize(uint32_t id, uint32_t signature, uint32_t InterestedNodeSize);
 	//consumer对该数据包感兴趣的个数
-	static void IncreaseInterestedNodeCounter(uint32_t id, uint32_t signature);
+	static void IncreaseInterestedNodeCounter(uint32_t id, uint32_t signature, uint32_t priority);
 	//consumer对该数据包不感兴趣的个数
 	static void IncreaseDisinterestedNodeCounter(uint32_t id, uint32_t signature);
 
@@ -89,14 +95,20 @@ class nrUtils
 
 	//3. Delay Record
 	static TransmissionDelayMap TransmissionDelayRecord; //\brief TransmissionDelayRecord[nodeid][signature]=Delay time;
+	// 2019.1.6
+	static TransmissionDelayMap HighPriorityTransmissionDelayRecord;
+	static TransmissionDelayMap MediumPriorityTransmissionDelayRecord;
+	static TransmissionDelayMap LowPriorityTransmissionDelayRecord;
+
 	//consumer在收到data后，记录传输时间
-	static void InsertTransmissionDelayItem(uint32_t id, uint32_t signature, double delay);
+	static void InsertTransmissionDelayItem(uint32_t id, uint32_t signature, double delay, uint32_t priority);
 	static double GetAverageTransmissionDelay();
 
 	static double GetAverageArrivalRate();
 	static double GetAverageAccurateRate();
 	static double GetAverageDisinterestedRate();
 	static double GetAverageHitRate();
+	static double GetAverageHitRateOfPriority(uint32_t priority);
 
 	/*
 	 * @brief get the average forward times
@@ -114,6 +126,12 @@ class nrUtils
 	static std::pair<uint32_t, double> GetAverageDeleteForwardTimes();
 
 	static double GetAverageDelay();
+
+	static double GetAverageDelayOfHighPriority();
+
+	static double GetAverageDelayOfMediumPriority();
+
+	static double GetAverageDelayOfLowPriority();
 
 	//4 . appIndex
 	static AppIndexType appIndex;

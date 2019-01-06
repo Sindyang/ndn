@@ -93,9 +93,23 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 
 //收到数据包的consumer对该数据包感兴趣的个数
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
-											uint32_t signature)
+											uint32_t signature, uint32_t priority)
 {
 	msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
+
+	//2019.1.6
+	if (priority == 0)
+	{
+		msgArrivalCounter[id][signature].HighPriorityInterestedNode;
+	}
+	else if (priority == 1)
+	{
+		msgArrivalCounter[id][signature].MediumPriorityInterestedNode;
+	}
+	else if (priority == 2)
+	{
+		msgArrivalCounter[id][signature].LowPriorityInterestedNode;
+	}
 }
 
 //收到数据包的consumer对该数据包不感兴趣的个数
@@ -125,9 +139,21 @@ void nrUtils::IncreaseDeleteForwardCounter(uint32_t id, uint32_t nonce)
 
 //数据包从发出到收到的时间
 void nrUtils::InsertTransmissionDelayItem(uint32_t id,
-										  uint32_t signature, double delay)
+										  uint32_t signature, double delay, uint32_t priority)
 {
 	TransmissionDelayRecord[id][signature].push_back(delay);
+	if (priority == 0)
+	{
+		HighPriorityTransmissionDelayRecord[id][signature].push_back(delay);
+	}
+	else if (priority == 1)
+	{
+		MediumPriorityTransmissionDelayRecord[id][signature].push_back(delay);
+	}
+	else if (priority == 2)
+	{
+		LowPriorityTransmissionDelayRecord[id][signature].push_back(delay);
+	}
 }
 
 //平均到达率表示的是所有车辆节点中收到数据包车辆的平均占比，用于评价数据包的覆盖范围
@@ -246,6 +272,52 @@ double nrUtils::GetAverageHitRate()
 	return GetAverage(result);
 }
 
+double nrUtils::GetAverageHitRateOfPriority(uint32_t priority)
+{
+	MessageArrivalMap::iterator it1;
+	std::unordered_map<uint32_t, MsgAttribute>::iterator it2;
+	vector<double> result;
+
+	//每一个Producer
+	for (it1 = msgArrivalCounter.begin(); it1 != msgArrivalCounter.end(); ++it1)
+	{
+		//每一个Singature
+		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+		{
+			//每一个Singature对应的信息
+			const MsgAttribute &msgAttr = it2->second;
+			//收到感兴趣数据包的节点个数
+			double interestedNodeNum = 0.0;
+			if (priority == 0)
+			{
+				interestedNodeNum = msgAttr.HighPriorityInterestedNode;
+			}
+			else if (priority == 1)
+			{
+				interestedNodeNum = msgAttr.MediumPriorityInterestedNode;
+			}
+			else if (priority == 2)
+			{
+				interestedNodeNum = msgAttr.LowPriorityInterestedNode;
+			}
+			//对该数据包感兴趣的节点个数
+			double interestedNodeSum = msgAttr.InterestedNodeSize;
+			if (interestedNodeSum != 0)
+			{
+				double hitRate = interestedNodeNum / interestedNodeSum;
+				if (hitRate > 1.0)
+				{
+					hitRate = 1.0;
+				}
+				result.push_back(hitRate);
+				cout << "车辆 " << it1->first << " 数据包 " << it2->first << " Priority " << priority << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
+					 << " hitRate " << hitRate << endl;
+			}
+		}
+	}
+	return GetAverage(result);
+}
+
 //数据包平均转发次数
 pair<uint32_t, double> nrUtils::GetAverageForwardTimes()
 {
@@ -333,6 +405,67 @@ double nrUtils::GetAverageDelay()
 
 	//每一个Producer
 	for (it1 = TransmissionDelayRecord.begin(); it1 != TransmissionDelayRecord.end(); ++it1)
+	{
+		//每一个Singature
+		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+		{
+			//该数据包从发出到接收的平均时间
+			double averageDelayOfOneMsg = GetAverage(it2->second);
+			result.push_back(averageDelayOfOneMsg);
+		}
+	}
+	return GetAverage(result);
+}
+
+//2019.1.6 高优先级数据包从发出到收到的时间
+double nrUtils::GetAverageDelayOfHighPriority()
+{
+	TransmissionDelayMap::iterator it1;
+	std::unordered_map<uint32_t, std::vector<double>>::iterator it2;
+	vector<double> result;
+
+	//每一个Producer
+	for (it1 = HighPriorityTransmissionDelayRecord.begin(); it1 != HighPriorityTransmissionDelayRecord.end(); ++it1)
+	{
+		//每一个Singature
+		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+		{
+			//该数据包从发出到接收的平均时间
+			double averageDelayOfOneMsg = GetAverage(it2->second);
+			result.push_back(averageDelayOfOneMsg);
+		}
+	}
+	return GetAverage(result);
+}
+
+double nrUtils::GetAverageDelayOfMediumPriority()
+{
+	TransmissionDelayMap::iterator it1;
+	std::unordered_map<uint32_t, std::vector<double>>::iterator it2;
+	vector<double> result;
+
+	//每一个Producer
+	for (it1 = MediumPriorityTransmissionDelayRecord.begin(); it1 != MediumPriorityTransmissionDelayRecord.end(); ++it1)
+	{
+		//每一个Singature
+		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+		{
+			//该数据包从发出到接收的平均时间
+			double averageDelayOfOneMsg = GetAverage(it2->second);
+			result.push_back(averageDelayOfOneMsg);
+		}
+	}
+	return GetAverage(result);
+}
+
+double nrUtils::GetAverageDelayOfLowPriority()
+{
+	TransmissionDelayMap::iterator it1;
+	std::unordered_map<uint32_t, std::vector<double>>::iterator it2;
+	vector<double> result;
+
+	//每一个Producer
+	for (it1 = LowPriorityTransmissionDelayRecord.begin(); it1 != LowPriorityTransmissionDelayRecord.end(); ++it1)
 	{
 		//每一个Singature
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)

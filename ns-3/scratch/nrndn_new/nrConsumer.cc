@@ -236,13 +236,6 @@ std::vector<std::string> nrConsumer::ExtractActualRouteFromName(const Name &name
 void nrConsumer::OnData(Ptr<const Data> data)
 {
 	NS_LOG_FUNCTION(this);
-	Ptr<Packet> nrPayload = data->GetPayload()->Copy();
-	const Name &name = data->GetName();
-	nrHeader nrheader;
-	nrPayload->RemoveHeader(nrheader);
-	uint32_t nodeId = nrheader.getSourceId();
-	uint32_t signature = data->GetSignature();
-	uint32_t packetPayloadSize = nrPayload->GetSize();
 
 	if (m_node->GetId() >= 800)
 	{
@@ -256,10 +249,40 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		return;
 	}
 
+	Ptr<Packet> nrPayload = data->GetPayload()->Copy();
+	const Name &name = data->GetName();
+	nrHeader nrheader;
+	nrPayload->RemoveHeader(nrheader);
+	uint32_t nodeId = nrheader.getSourceId();
+	uint32_t signature = data->GetSignature();
+	uint32_t packetPayloadSize = nrPayload->GetSize();
+
+	string dataType = data->GetName().get(1).toUri();
+	int totalDistance = 0;
+	double sourceX = 0.0;
+	double sourceY = 0.0;
+
+	if (dataType == "vehicle")
+	{
+		totalDistance = stringToNum(data->GetName().get(2).toUri());
+		sourceX = stringToNum(data->GetName().get(3).toUri());
+		sourceY = stringToNum(data->GetName().get(4).toUri());
+	}
+	else
+	{
+		sourceX = stringToNum(data->GetName().get(2).toUri());
+		sourceY = stringToNum(data->GetName().get(3).toUri());
+	}
+	Vector localPos = GetObject<MobilityModel>()->GetPosition();
+	localPos.z = 0; //Just in case
+	Vector remotePos(sourceX, sourceY, 0);
+	double currentDistance = CalculateDistance(localPos, remotePos);
+
+	int priority = getPriorityOfData(dataType, currentDistance);
+
 	NS_LOG_DEBUG("At time " << Simulator::Now().GetSeconds() << ":" << m_node->GetId() << "\treceived data " << name.toUri() << " from " << nodeId << "\tSignature " << signature << "\t forwarded by(" << nrheader.getX() << "," << nrheader.getY() << ")");
 	NS_LOG_DEBUG("payload Size:" << packetPayloadSize);
-	std::cout << "(nrConsumer.cc-OnData)"
-			  << "At time " << Simulator::Now().GetSeconds() << " 当前节点 " << m_node->GetId() << " 收到数据包 " << name.toUri() << " 源节点 " << nodeId << " Signature " << signature;
+	std::cout << "At time " << Simulator::Now().GetSeconds() << " 当前节点 " << m_node->GetId() << " 收到数据包 " << name.toUri() << " 源节点 " << nodeId << " Signature " << signature << "Priority " << priority;
 
 	m_dataReceivedSeen.Put(signature, true);
 
@@ -270,8 +293,8 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	{
 		// 2018.1.25 只统计感兴趣的延迟
 		// 2018.12.20 都统计一下
-		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
-		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
+		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, priority);
+		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay, priority);
 		std::cout << " 感兴趣 ";
 	}
 	else
@@ -279,8 +302,33 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature);
 		std::cout << " 不感兴趣 ";
 	}
-	std::cout << " 延迟为 " << delay << " TimeStamp为 " << data->GetTimestamp().GetSeconds();
+	std::cout << " 延迟为 " << delay;
 	std::cout << std::endl;
+}
+
+int nrConsumer::getPriorityOfData(const string &dataType, const double &currentDistance)
+{
+	double sameDistance = currentDistance / 1000;
+	double factor = 0.6;
+	double highPriority = 2.0 / 3.0;
+	double lowPriority = 1.0 / 3.0;
+	if (dataType == "road")
+		factor = 0.7;
+
+	double result = exp(-factor * sameDistance);
+	cout << "(getPriorityOfData) the result is " << result << endl;
+	if (result <= 1 && result > highPriority)
+	{
+		return 0;
+	}
+	else if (result <= highPriority && result > lowPriority)
+	{
+		return 1;
+	}
+	else if (result <= lowPriority && result > 0)
+	{
+		return 2;
+	}
 }
 
 void nrConsumer::NotifyNewAggregate()

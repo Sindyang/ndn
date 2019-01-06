@@ -90,6 +90,8 @@ class nrConsumer : public ndn::ConsumerCbr
 
 	bool IsInterestData(const Name &name);
 
+	int getPriorityOfData(const string &dataType, const double &currentDistance);
+
   private:
 	typedef ConsumerCbr super;
 	Ptr<NodeSensor> m_sensor;
