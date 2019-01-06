@@ -267,7 +267,8 @@ void nrProducer::addAccident()
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	double mean = start + (end - start) / 2;
-	double varience = (end - start) / 4;
+	//double varience = (end - start) / 4;
+	double varience = start + 40;
 
 	//Use normal distribution
 	SeedManager::SetSeed(15);
