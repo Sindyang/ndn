@@ -279,7 +279,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature);
 		std::cout << " 不感兴趣 ";
 	}
-	std::cout << " 延迟为 " << delay << " TimeStamp为 " << data->GetTimestamp().GetSeconds() << " Freshness为 " << data->GetFreshness().GetSeconds();
+	std::cout << " 延迟为 " << delay << " TimeStamp为 " << data->GetTimestamp().GetSeconds();
 	std::cout << std::endl;
 }
 

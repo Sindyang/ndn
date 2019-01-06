@@ -182,8 +182,8 @@ void nrProducer::OnSendingTrafficData()
 	//dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(10.0123));
-	data->SetTimestamp(Seconds(Simulator::Now().GetSeconds()));
+	data->SetFreshness(Seconds(10));
+	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
 	if (m_keyLocator.size() > 0)
@@ -272,7 +272,8 @@ void nrProducer::addAccident()
 	//Use normal distribution
 	SeedManager::SetSeed(15);
 	NormalVariable nrnd(mean, varience, (end - start) / 2);
-	double t = 0;
+	//2019.1.6 修改发送数据包的时刻
+	uint32_t t = 0;
 	//2019.1.5 设定每个生产者发送25个数据包
 	uint32_t count = 25;
 	while (count--)
