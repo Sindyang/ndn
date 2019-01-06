@@ -273,8 +273,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 		sourceX = stringToNum(data->GetName().get(2).toUri());
 		sourceY = stringToNum(data->GetName().get(3).toUri());
 	}
-	Vector localPos = GetObject<MobilityModel>()->GetPosition();
-	localPos.z = 0; //Just in case
+	Vector localPos(m_sensor->GetX(), m_sensor->GetY(), 0);
 	Vector remotePos(sourceX, sourceY, 0);
 	double currentDistance = CalculateDistance(localPos, remotePos);
 
@@ -282,7 +281,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	NS_LOG_DEBUG("At time " << Simulator::Now().GetSeconds() << ":" << m_node->GetId() << "\treceived data " << name.toUri() << " from " << nodeId << "\tSignature " << signature << "\t forwarded by(" << nrheader.getX() << "," << nrheader.getY() << ")");
 	NS_LOG_DEBUG("payload Size:" << packetPayloadSize);
-	std::cout << "At time " << Simulator::Now().GetSeconds() << " 当前节点 " << m_node->GetId() << " 收到数据包 " << name.toUri() << " 源节点 " << nodeId << " Signature " << signature << "Priority " << priority;
+	std::cout << "At time " << Simulator::Now().GetSeconds() << " 当前节点 " << m_node->GetId() << " 收到数据包 " << name.toUri() << " 源节点 " << nodeId << " Signature " << signature << "Priority " << priority << " Y " << m_sensor->GetX() << " Y " << m_sensor->GetY();
 
 	m_dataReceivedSeen.Put(signature, true);
 
