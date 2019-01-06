@@ -266,17 +266,24 @@ void nrProducer::addAccident()
 {
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
-	double mean = start + (end - start) / 2;
+
+	//double mean = start + (end - start) / 2;
 	//double varience = (end - start) / 4;
-	double varience = start + 40;
+	//double varience = start + 40;
 
 	//Use normal distribution
-	SeedManager::SetSeed(15);
-	NormalVariable nrnd(mean, varience, (end - start) / 2);
+	//SeedManager::SetSeed(15);
+	//NormalVariable nrnd(mean, varience, (end - start) / 2);
+
+	SeedManager::SetSeed(54321);
+	// 2017.12.29 added by sy
+	// RSU不产生数据包 需要减去RSU的数量
+	UniformVariable nrnd(start+20, end-40);
+
 	//2019.1.6 修改发送数据包的时刻
 	uint32_t t = 0;
-	//2019.1.5 设定每个生产者发送25个数据包
-	uint32_t count = 25;
+	//2019.1.5 设定每个生产者发送20个数据包
+	uint32_t count = 20;
 	while (count--)
 	{
 		t = nrnd.GetValue();
