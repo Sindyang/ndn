@@ -63,10 +63,10 @@ class nrProducer : public App
 	//2016.11.18 siukwan add，定时发送事件
 	void addAccident(double iType);
 
-	//2018.12.12 
+	//2018.12.12
 	Name getDataName(Name name);
-	
-	//2018.12.12 
+
+	//2018.12.12
 	string numToString(double num);
 
 	double stringToNum(const string &str);
@@ -76,7 +76,7 @@ class nrProducer : public App
 	/**
 	 * \brief Decide whether a lane is interested
 	 */
-	bool IsInterestLane(const double &x, const double &y, const std::string &lane);
+	bool IsInterestLane(const double &x, const double &y, const std::string &lane, const std::string &dataType, const uint32_t &distance);
 
 	void ScheduleAccident(double Time);
 
