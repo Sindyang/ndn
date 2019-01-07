@@ -177,7 +177,7 @@ void nrProducer::OnSendingTrafficData()
 	dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(15.0));
+	data->SetFreshness(Seconds(10.0));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -225,20 +225,20 @@ void nrProducer::addAccident()
 {
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
-	double mean = start + (end - start) / 2;
-	double varience = (end - start) / 4;
-
-	//Use normal distribution
-	SeedManager::SetSeed(15);
-	NormalVariable nrnd(mean, varience, (end - start) / 2);
-	double t = 0;
-	while (true)
+	SeedManager::SetSeed(54321);
+	UniformVariable nrnd(start + 20, end - 40);
+	//2019.1.6 修改发送数据包的时刻
+	uint32_t t = 0;
+	//2019.1.5 设定每个生产者发送的数据包个数
+	uint32_t count = (end - 40 - start - 20) / 20;
+	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << count << "个数据包" << std::endl;
+	while (count--)
 	{
 		t = nrnd.GetValue();
 		if (!m_accidentList.count(t))
 		{
 			ScheduleAccident(t);
-			break;
+			//break;
 		}
 	}
 	NS_LOG_DEBUG(m_node->GetId() << " add accident at " << t);
