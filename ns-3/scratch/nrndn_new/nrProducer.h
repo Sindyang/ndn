@@ -69,6 +69,8 @@ class nrProducer : public App
 	//2018.12.12 
 	string numToString(double num);
 
+	double stringToNum(const string &str);
+
 	bool IsActive();
 
 	/**

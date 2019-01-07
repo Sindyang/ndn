@@ -198,7 +198,16 @@ void nrProducer::OnSendingTrafficData()
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
 
-	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(m_sensor->getX(), m_sensor->getY(), data->GetSignature(), m_prefix.get(0).toUri());
+	std::string interestLane = m_prefix.get(0).toUri();
+	std::string dataType = m_prefix.get(1).toUri();
+	uint32_t distance = 0;
+
+	if (dataType = "vehicle")
+	{
+		distance = stringToNum(m_prefix.get(2).toUri());
+	}
+
+	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(m_sensor->getX(), m_sensor->getY(), data->GetSignature(), interestLane, dataType, distance);
 	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.first);
 	cout << "(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 " << size_InterestSize.first << " 感兴趣的节点总数为 " << size_InterestSize.second << std::endl
@@ -244,6 +253,14 @@ string nrProducer::numToString(double value)
 	ostringstream stream;
 	stream << value;
 	return stream.str();
+}
+
+double nrProducer::stringToNum(const string &str)
+{
+	istringstream iss(str);
+	double num;
+	iss >> num;
+	return num;
 }
 
 void nrProducer::OnData(Ptr<const Data> contentObject)
@@ -308,7 +325,7 @@ bool nrProducer::IsActive()
 	return m_active;
 }
 
-bool nrProducer::IsInterestLane(const double &x, const double &y, const std::string &lane)
+bool nrProducer::IsInterestLane(const double &x, const double &y, const std::string &lane, const std::string &dataType, const uint32_t &distance)
 {
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	const std::string &currentLane = sensor->getLane();
@@ -332,6 +349,13 @@ bool nrProducer::IsInterestLane(const double &x, const double &y, const std::str
 		cout << "消费者 " << GetNode()->GetId() << " 位于生产者前方且传输距离超过300米" << endl;
 		return false;
 	}
+
+	if (dataType == "vehicle" && (result.second > distance || result.second < -distance))
+	{
+		cout << "消费者 " << GetNode()->GetId() << " 和生产者的距离超过了有效距离 " << distance << endl;
+		return false;
+	}
+
 	return (it2 != route.end());
 }
 
