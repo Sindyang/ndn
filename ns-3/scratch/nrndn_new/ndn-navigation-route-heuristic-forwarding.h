@@ -263,6 +263,8 @@ class NavigationRouteHeuristic : public GreenYellowRed
 	// 2018.1.9 发送缓存的数据包
 	void SendDataInCache(std::map<uint32_t, Ptr<const Data>> datatcollection);
 
+	void SendDataInDataSourceCache(std::map<uint32_t, Ptr<const Data>> datacollection);
+
 	/**
 	 * \brief	Tell the direction of the Packet from
 	 *          the front and behind is Only base on the moving direction of received Packet

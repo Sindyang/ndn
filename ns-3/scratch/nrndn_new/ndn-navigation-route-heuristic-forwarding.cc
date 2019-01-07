@@ -949,7 +949,7 @@ void NavigationRouteHeuristic::DetectDatainCache(vector<string> futureinterest, 
 
 	if (!datacollection.empty())
 	{
-		SendDataInCache(datacollection);
+		SendDataInDataSourceCache(datacollection);
 	}
 }
 
@@ -1570,7 +1570,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	//CachingDataSourcePacket(signature, data);
+	CachingDataSourcePacket(signature, data);
 
 	if (priority == 0)
 	{
@@ -1781,7 +1781,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 			if (Will || WillSecond)
 			{
-				//CachingDataSourcePacket(data->GetSignature(), data);
+				CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该数据包第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
@@ -1808,7 +1808,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 		}
 
 		//缓存数据包
-		//CachingDataSourcePacket(signature, data);
+		CachingDataSourcePacket(signature, data);
 
 		if (priority == 0)
 		{
@@ -1954,11 +1954,11 @@ void NavigationRouteHeuristic::TestFakeRoutes(Ptr<Data> data)
 	Ptr<pit::Entry> Will = WillInterestedData(data);
 	Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 	std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
-	for(std::unordered_set<std::string>::iterator itfake = fakeinteresRoutes.begin(); itfake != fakeinteresRoutes.end(); itfake++)
+	for (std::unordered_set<std::string>::iterator itfake = fakeinteresRoutes.begin(); itfake != fakeinteresRoutes.end(); itfake++)
 	{
-		if(allinteresRoutes.find(*itfake) == allinteresRoutes.end())
+		if (allinteresRoutes.find(*itfake) == allinteresRoutes.end())
 		{
-			cout<<"当前RSU对路段 "<<*itfake<<" 不感兴趣"<<endl;
+			cout << "当前RSU对路段 " << *itfake << " 不感兴趣" << endl;
 		}
 	}
 }
@@ -2555,7 +2555,6 @@ void NavigationRouteHeuristic::SendInterestInCache(std::map<uint32_t, Ptr<const 
 
 void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data>> datacollection)
 {
-
 	std::map<uint32_t, Ptr<const Data>>::iterator it;
 	for (it = datacollection.begin(); it != datacollection.end(); it++)
 	{
@@ -2662,6 +2661,95 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 				//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
 				CachingDataPacket(signature, data);
 				continue;
+			}
+		}
+		else
+		{
+			newPriorityList = VehicleGetPriorityListOfData();
+		}
+
+		double random = m_uniformRandomVariable->GetInteger(0, 100);
+		Time sendInterval(MilliSeconds(random));
+		m_sendingDataEvent[sourceId][signature] = Simulator::Schedule(sendInterval, &NavigationRouteHeuristic::ForwardDataPacket, this, data, newPriorityList);
+	}
+}
+
+void NavigationRouteHeuristic::SendDataInDataSourceCache(std::map<uint32_t, Ptr<const Data>> datacollection)
+{
+	std::map<uint32_t, Ptr<const Data>>::iterator it;
+	for (it = datacollection.begin(); it != datacollection.end(); it++)
+	{
+		uint32_t signature = it->first;
+		uint32_t nodeId = m_node->GetId();
+		Ptr<const Data> data = it->second;
+
+		//added by sy
+		ndn::nrndn::nrHeader nrheader;
+		data->GetPayload()->PeekHeader(nrheader);
+		uint32_t sourceId = nrheader.getSourceId();
+
+		std::vector<uint32_t> newPriorityList;
+
+		if (m_sensor->getType() == "RSU")
+		{
+			Ptr<pit::Entry> Will = WillInterestedData(data);
+			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
+			if (!Will && !WillSecond)
+			{
+				NS_ASSERT_MSG(false, "RSU对该数据包不感兴趣");
+			}
+			else
+			{
+				cout << endl
+					 << "(forwarding.cc-SendDataInDataSourceCache) signature " << signature << " 当前节点 " << nodeId << " 源节点为 " << sourceId << endl;
+
+				std::unordered_set<std::string> allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
+
+				NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
+
+				//获取该数据包已转发过的上一跳路段
+				std::set<std::string> forwardedroutes = RSUForwarded.getForwardedRoads(nodeId, signature);
+
+				std::unordered_set<std::string> newinterestRoutes;
+				if (forwardedroutes.empty())
+				{
+					newinterestRoutes = allinteresRoutes;
+					cout << "(forwarding.cc-SendDataInDataSourceCache) 数据包 " << signature << " 对应的上一跳路段全部未转发过" << endl;
+				}
+				else
+				{
+					//从上一跳路段中去除已转发过的路段
+					for (std::unordered_set<std::string>::const_iterator itinterest = allinteresRoutes.begin(); itinterest != allinteresRoutes.end(); itinterest++)
+					{
+						std::set<std::string>::iterator itforward = forwardedroutes.find(*itinterest);
+						if (itforward != forwardedroutes.end())
+						{
+							cout << "(forwarding.cc-SendDataInDataSourceCache) 数据包 " << signature << " 已转发过的上一跳路段为 " << *itinterest << endl;
+							continue;
+						}
+						newinterestRoutes.insert(*itinterest);
+						cout << "(forwarding.cc-SendDataInDataSourceCache) 数据包 " << signature << " 未转发过的上一跳路段为 " << *itinterest << endl;
+					}
+				}
+
+				if (newinterestRoutes.empty())
+				{
+					//2018.2.8 修改后不该进入该函数
+					cout << "数据包 " << signature << " 对应的上一跳路段全部转发过" << endl;
+					continue;
+				}
+
+				std::pair<std::vector<uint32_t>, std::unordered_set<std::string>> collection = RSUGetPriorityListOfData(data->GetName(), newinterestRoutes);
+				newPriorityList = collection.first;
+				std::unordered_set<std::string> remainroutes = collection.second;
+
+				if (newPriorityList.empty())
+				{
+					//cout<<"数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
+					//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
+					CachingDataPacket(signature, data);
+					continue;
+				}
 			}
 		}
 		else
