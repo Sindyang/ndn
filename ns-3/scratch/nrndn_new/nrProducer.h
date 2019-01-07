@@ -20,6 +20,7 @@
 #include "NodeSensor.h"
 
 #include <string>
+#include <stdlib.h>
 
 namespace ns3
 {

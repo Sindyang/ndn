@@ -340,7 +340,6 @@ bool nrProducer::IsInterestLane(const double &x, const double &y, const std::str
 	{
 		return false;
 	}
-
 	//2019.1.4 判断与生产者的位置关系
 	std::pair<bool, double> result = sensor->VehicleGetDistanceWithVehicle(x, y);
 	//消费者位于生产者前方且传输距离超过300米
@@ -350,9 +349,10 @@ bool nrProducer::IsInterestLane(const double &x, const double &y, const std::str
 		return false;
 	}
 
-	if (dataType == "vehicle" && (result.second > distance || result.second < -distance))
+	result.second = abs(result.second);
+	if (dataType == "vehicle" && result.second > distance)
 	{
-		cout << "消费者 " << GetNode()->GetId() << " 和生产者的距离超过了有效距离 " << distance << endl;
+		cout << "消费者 " << GetNode()->GetId() << " 和生产者的距离" << result.second << "超过了有效距离 " << distance << endl;
 		return false;
 	}
 
