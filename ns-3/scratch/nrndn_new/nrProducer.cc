@@ -202,7 +202,7 @@ void nrProducer::OnSendingTrafficData()
 	std::string dataType = m_prefix.get(1).toUri();
 	uint32_t distance = 0;
 
-	if (dataType = "vehicle")
+	if (dataType == "vehicle")
 	{
 		distance = stringToNum(m_prefix.get(2).toUri());
 	}
