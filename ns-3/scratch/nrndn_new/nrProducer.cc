@@ -182,7 +182,7 @@ void nrProducer::OnSendingTrafficData()
 	//dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(10));
+	data->SetFreshness(Seconds(5));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -343,11 +343,11 @@ bool nrProducer::IsInterestLane(const double &x, const double &y, const std::str
 	//2019.1.4 判断与生产者的位置关系
 	std::pair<bool, double> result = sensor->VehicleGetDistanceWithVehicle(x, y);
 	//消费者位于生产者前方且传输距离超过300米
-	/*if (result.first && result.second < -300)
+	if (result.first && result.second < -300)
 	{
 		cout << "消费者 " << GetNode()->GetId() << " 位于生产者前方且传输距离超过300米" << endl;
 		return false;
-	}*/
+	}
 
 	result.second = abs(result.second);
 	if (dataType == "vehicle" && result.second > distance)
