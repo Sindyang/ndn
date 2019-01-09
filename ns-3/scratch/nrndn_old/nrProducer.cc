@@ -226,7 +226,7 @@ void nrProducer::addAccident()
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	SeedManager::SetSeed(54321);
-	UniformVariable nrnd(start + 40, end - 20);
+	UniformVariable nrnd(start + 30, end - 30);
 	//2019.1.6 修改发送数据包的时刻
 	uint32_t t = 0;
 	//2019.1.5 设定每个生产者发送的数据包个数
