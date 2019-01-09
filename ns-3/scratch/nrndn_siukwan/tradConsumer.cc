@@ -14,7 +14,7 @@
 #include "ns3/ndn-data.h"
 #include "ns3/log.h"
 
-NS_LOG_COMPONENT_DEFINE ("ndn.nrndn.tradConsumer");
+NS_LOG_COMPONENT_DEFINE("ndn.nrndn.tradConsumer");
 
 namespace ns3
 {
@@ -23,27 +23,24 @@ namespace ndn
 namespace nrndn
 {
 
-NS_OBJECT_ENSURE_REGISTERED (tradConsumer);
+NS_OBJECT_ENSURE_REGISTERED(tradConsumer);
 
-tradConsumer::tradConsumer():
-		m_virtualPayloadSize(0),
-		m_dataReceivedSeen(5000)
+tradConsumer::tradConsumer() : m_virtualPayloadSize(0),
+							   m_dataReceivedSeen(5000)
 {
 	// TODO Auto-generated constructor stub
-
 }
 
 TypeId tradConsumer::GetTypeId()
 {
-	static TypeId tid = TypeId ("ns3::ndn::nrndn::tradConsumer")
-		    .SetGroupName ("Nrndn")
-		    .SetParent<App> ()
-		    .AddConstructor<tradConsumer> ()
-		    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-		                    UintegerValue (1024),
-		                    MakeUintegerAccessor (&tradConsumer::m_virtualPayloadSize),
-		                    MakeUintegerChecker<uint32_t> ())
-		   ;
+	static TypeId tid = TypeId("ns3::ndn::nrndn::tradConsumer")
+							.SetGroupName("Nrndn")
+							.SetParent<App>()
+							.AddConstructor<tradConsumer>()
+							.AddAttribute("PayloadSize", "Virtual payload size for traffic Content packets",
+										  UintegerValue(1024),
+										  MakeUintegerAccessor(&tradConsumer::m_virtualPayloadSize),
+										  MakeUintegerChecker<uint32_t>());
 	return tid;
 }
 
@@ -54,13 +51,13 @@ tradConsumer::~tradConsumer()
 
 void tradConsumer::StartApplication()
 {
-	NS_LOG_FUNCTION_NOARGS ();
+	NS_LOG_FUNCTION_NOARGS();
 	super::StartApplication();
 }
 
 void tradConsumer::StopApplication()
 {
-	NS_LOG_FUNCTION_NOARGS ();
+	NS_LOG_FUNCTION_NOARGS();
 	super::StopApplication();
 }
 
@@ -68,71 +65,70 @@ void tradConsumer::OnData(Ptr<const Data> data)
 {
 	NS_LOG_FUNCTION(this);
 	Ptr<Packet> nrPayload = data->GetPayload()->Copy();
-	const Name& name = data->GetName();
+	const Name &name = data->GetName();
 	nrHeader nrheader;
 	nrPayload->RemoveHeader(nrheader);
 	uint32_t nodeId = nrheader.getSourceId();
 	uint32_t signature = data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
-	
-	// 2018.4.14 added by sy
-	if(m_dataReceivedSeen.Get(signature))
+
+	//2018.5.19
+	if (m_node->GetId() >= 800)
 	{
-		std::cout<<"(tradConsumer.cc-OnData) 当前节点 "<<m_node->GetId()<<" 已经收到过该数据包"<<std::endl;
+		return;
+	}
+
+	// 2018.4.14 added by sy
+	if (m_dataReceivedSeen.Get(signature))
+	{
+		std::cout << "(tradConsumer.cc-OnData) 当前节点 " << m_node->GetId() << " 已经收到过该数据包" << std::endl;
 		return;
 	}
 
 	NS_LOG_DEBUG(
-			"At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()
-			<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "
-			<<signature);
-	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
-	std::cout<<"(tradnrConsumer.cc-OnData)"<<"At time "<<Simulator::Now().GetSeconds()<<" 当前节点 "<<m_node->GetId()<<" 收到数据包 "<<name.toUri()<<" 源节点 "<<nodeId<<" Signature "<<signature;
-
+		"At time " << Simulator::Now().GetSeconds() << ":" << m_node->GetId()
+				   << "\treceived data " << name.toUri() << " from " << nodeId << "\tSignature "
+				   << signature);
+	NS_LOG_DEBUG("payload Size:" << packetPayloadSize);
+	std::cout << "(tradnrConsumer.cc-OnData)"
+			  << "At time " << Simulator::Now().GetSeconds() << " 当前节点 " << m_node->GetId() << " 收到数据包 " << name.toUri() << " 源节点 " << nodeId << " Signature " << signature;
 
 	//NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
 
-	m_dataReceivedSeen.Put(signature,true);
-	
+	m_dataReceivedSeen.Put(signature, true);
+
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
-	
-	if(IsInterestData(data->GetName()))
+
+	if (IsInterestData(data->GetName()))
 	{
-		//2018.5.19 
-		if(m_node->GetId() >= 800)
-		{
-			std::cout<<" 感兴趣"<<endl;
-			return;
-		}
-			
-		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
+		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
 		// 2018.1.25 只统计感兴趣的延迟
-		nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
-		std::cout<<" 感兴趣 ";
+		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
+		std::cout << " 感兴趣 ";
 	}
 	else
 	{
-		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
-		std::cout<<" 不感兴趣 ";
+		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature);
+		std::cout << " 不感兴趣 ";
 	}
-	std::cout<<" 延迟为 "<<delay;
-	std::cout<<std::endl;
+	std::cout << " 延迟为 " << delay;
+	std::cout << std::endl;
 }
 
-bool tradConsumer::IsInterestData(const Name& name)
+bool tradConsumer::IsInterestData(const Name &name)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
-	const std::string& currentLane = sensor->getLane();
+	const std::string &currentLane = sensor->getLane();
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
-	const std::vector<std::string>& route = sensor->getNavigationRoute();
+	const std::vector<std::string> &route = sensor->getNavigationRoute();
 
-	it =std::find(route.begin(),route.end(),currentLane);
+	it = std::find(route.begin(), route.end(), currentLane);
 
-	it2=std::find(it,route.end(),name.get(0).toUri());
+	it2 = std::find(it, route.end(), name.get(0).toUri());
 
-	return (it2!=route.end());
+	return (it2 != route.end());
 }
 
 } /* namespace nrndn */
