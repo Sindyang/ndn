@@ -38,7 +38,7 @@ TypeId DistanceBasedForwarding::GetTypeId()
 	    .SetParent<ForwardingStrategy> ()
 	    .AddConstructor<DistanceBasedForwarding>()
 	    .AddAttribute ("HelloInterval", "HELLO messages emission interval.",
-	   	            TimeValue (Seconds (2)),
+	   	            TimeValue (Seconds (1)),
 	   	            MakeTimeAccessor (&DistanceBasedForwarding::HelloInterval),
 	   	            MakeTimeChecker ())
 	    .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
