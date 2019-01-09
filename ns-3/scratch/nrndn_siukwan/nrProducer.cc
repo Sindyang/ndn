@@ -320,7 +320,7 @@ void nrProducer::addAccident()
 	//2019.1.6 修改发送数据包的时刻
 	uint32_t t = 0;
 	//2019.1.5 设定每个生产者发送的数据包个数
-	uint32_t count = (end - 40 - start - 20) / 20;
+	uint32_t count = (end - start) / 20;
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << count << "个数据包" << std::endl;
 	while (count--)
 	{
