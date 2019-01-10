@@ -1983,7 +1983,7 @@ int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const do
 	double result = exp(-factor * sameDistance);
 	cout << "(getPriorityOfData) the result is " << result << endl;
 	
-	return 0;
+	return 1;
 	if (result <= 1 && result > highPriority)
 	{
 		return 0;
