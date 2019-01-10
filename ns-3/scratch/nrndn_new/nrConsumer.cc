@@ -316,7 +316,8 @@ int nrConsumer::getPriorityOfData(const string &dataType, const double &currentD
 
 	double result = exp(-factor * sameDistance);
 	cout << "(getPriorityOfData) the result is " << result << endl;
-	result = 0;
+	
+	return 0;
 	if (result <= 1 && result > highPriority)
 	{
 		return 0;
