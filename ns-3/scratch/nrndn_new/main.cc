@@ -923,7 +923,7 @@ void nrndnExample::InstallTraffics()
 	UniformVariable rnd(0, nodes.GetN() - 36);
 	std::cout << "(main.cc-InstallTraffics)插入事件：" << accidentNum << endl
 			  << endl;
-	if (random_accident)
+	if(0)// (random_accident)
 	{
 		for (uint32_t idx = 0; idx < certain_count; idx++)
 		{
