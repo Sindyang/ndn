@@ -2659,6 +2659,7 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			if (newPriorityList.empty())
 			{
 				cout << "(forwarding.cc-SendDataInCache) 数据包 " << signature << " 对应的未转发过的上一跳路段为空" << endl;
+				NS_ASSERT_MSG(false, "转发优先级列表不该为空");
 				//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
 				CachingDataPacket(signature, data);
 				continue;
@@ -2746,7 +2747,7 @@ void NavigationRouteHeuristic::SendDataInDataSourceCache(std::map<uint32_t, Ptr<
 
 				if (newPriorityList.empty())
 				{
-					//cout<<"数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
+					cout<<"(forwarding.cc-SendDataInDataSourceCache) 数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
 					//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
 					CachingDataPacket(signature, data);
 					continue;
