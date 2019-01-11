@@ -877,11 +877,11 @@ void NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest, 
 
 				//将节点和借路路线添加至待删除列表中
 				nodeWithRoutes[nodeId] = newforwardRoute;
-				for (itnode = nodeWithRoutes.begin(); itnode != nodeWithRoutes.end(); ++itnode)
+				/*for (itnode = nodeWithRoutes.begin(); itnode != nodeWithRoutes.end(); ++itnode)
 				{
 					cout << "(" << itnode->first << " " << itnode->second << ")";
 				}
-				cout << endl;
+				cout << endl;*/
 
 				//将后续路线添加至转发路线中
 				for (uint32_t i = 2; i < routes.size(); i++)
@@ -1981,7 +1981,7 @@ int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const do
 		factor = 0.7;
 
 	double result = exp(-factor * sameDistance);
-	cout << "(getPriorityOfData) the result is " << result << endl;
+	//cout << "(getPriorityOfData) the result is " << result << endl;
 	
 	if (result <= 1 && result > highPriority)
 	{

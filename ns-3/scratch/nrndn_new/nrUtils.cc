@@ -313,8 +313,8 @@ double nrUtils::GetAverageHitRateOfPriority(uint32_t priority)
 					hitRate = 1.0;
 				}
 				result.push_back(hitRate);
-				cout << "车辆 " << it1->first << " 数据包 " << it2->first << " Priority " << priority << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
-					 << " hitRate " << hitRate << endl;
+				//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " Priority " << priority << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
+					// << " hitRate " << hitRate << endl;
 			}
 		}
 	}
