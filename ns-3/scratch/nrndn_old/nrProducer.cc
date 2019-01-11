@@ -279,6 +279,19 @@ bool nrProducer::IsInterestLane(const std::string &lane)
 	it = std::find(route.begin(), route.end(), currentLane);
 	//判断lane是否对未来路段感兴趣
 	it2 = std::find(it, route.end(), lane);
+
+	if (it2 == route.end())
+	{
+		return false;
+	}
+	//2019.1.4 判断与生产者的位置关系
+	std::pair<bool, double> result = sensor->VehicleGetDistanceWithVehicle(x, y);
+	//消费者位于生产者前方且传输距离超过300米
+	if (result.first && result.second < -300)
+	{
+		cout << "消费者 " << GetNode()->GetId() << " 位于生产者前方且传输距离超过300米" << endl;
+		return false;
+	}
 	return (it2 != route.end());
 }
 

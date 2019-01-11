@@ -233,6 +233,10 @@ double nrUtils::GetAverageHitRate()
 			if (interestedNodeSum != 0)
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
+				if (hitRate > 1.0)
+				{
+					hitRate = 1.0;
+				}
 				result.push_back(hitRate);
 				cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
 					 << " hitRate " << hitRate << endl;
