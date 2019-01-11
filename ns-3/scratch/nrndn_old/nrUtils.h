@@ -68,7 +68,7 @@ class nrUtils
 	//1. Arrival Condition
 	static MessageArrivalMap msgArrivalCounter;
 	//producer在发送数据包时，需要记录当前活跃节点个数和对该数据包感兴趣的节点个数
-	static std::pair<uint32_t, uint32_t> GetNodeSizeAndInterestNodeSize(uint32_t id, uint32_t signature, const std::string &lane);
+	static std::pair<uint32_t, uint32_t> GetNodeSizeAndInterestNodeSize(const double &x, const double &y, uint32_t id, uint32_t signature, const std::string &lane);
 	//设置节点个数
 	static void SetNodeSize(uint32_t id, uint32_t signature, uint32_t nodesize);
 	//设置感兴趣节点个数
