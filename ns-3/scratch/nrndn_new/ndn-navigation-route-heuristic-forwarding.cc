@@ -1974,11 +1974,11 @@ double NavigationRouteHeuristic::stringToNum(const string &str)
 int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const double &currentDistance)
 {
 	double sameDistance = currentDistance / 1000;
-	double factor = 0.6;
+	double factor = 0.4;
 	double highPriority = 2.0 / 3.0;
 	double lowPriority = 1.0 / 3.0;
 	if (dataType == "road")
-		factor = 0.7;
+		factor = 0.6;
 
 	double result = exp(-factor * sameDistance);
 	//cout << "(getPriorityOfData) the result is " << result << endl;
@@ -2611,13 +2611,9 @@ void NavigationRouteHeuristic::SendDataInCache(std::map<uint32_t, Ptr<const Data
 			{
 				allinteresRoutes = getFakeInterestedRoutes(WillFake);
 			}
-			else if (priority == 1)
-			{
-				allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
-			}
 			else
 			{
-				NS_ASSERT_MSG(false, "数据包的优先级不为高或中");
+				allinteresRoutes = getAllInterestedRoutes(Will, WillSecond);
 			}
 
 			NS_ASSERT_MSG(allinteresRoutes.size() != 0, "感兴趣的上一跳路段不该为0");
