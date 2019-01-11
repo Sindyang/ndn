@@ -1982,7 +1982,7 @@ int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const do
 
 	double result = exp(-factor * sameDistance);
 	//cout << "(getPriorityOfData) the result is " << result << endl;
-	
+
 	if (result <= 1 && result > highPriority)
 	{
 		return 0;
@@ -2687,6 +2687,30 @@ void NavigationRouteHeuristic::SendDataInDataSourceCache(std::map<uint32_t, Ptr<
 
 		if (m_sensor->getType() == "RSU")
 		{
+			string dataType = data->GetName().get(1).toUri();
+			double sourceX = 0.0;
+			double sourceY = 0.0;
+			int totalDistance = 0;
+
+			if (dataType == "vehicle")
+			{
+				totalDistance = stringToNum(data->GetName().get(2).toUri());
+				sourceX = stringToNum(data->GetName().get(3).toUri());
+				sourceY = stringToNum(data->GetName().get(4).toUri());
+			}
+			else
+			{
+				sourceX = stringToNum(data->GetName().get(2).toUri());
+				sourceY = stringToNum(data->GetName().get(3).toUri());
+			}
+
+			Vector localPos = GetObject<MobilityModel>()->GetPosition();
+			localPos.z = 0; //Just in case
+			Vector remotePos(sourceX, sourceY, 0);
+			double currentDistance = CalculateDistance(localPos, remotePos);
+
+			int priority = getPriorityOfData(dataType, currentDistance);
+
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			Ptr<pit::Entry> WillSecond = WillInterestedDataInSecondPit(data);
 			if (!Will && !WillSecond)
@@ -2729,7 +2753,6 @@ void NavigationRouteHeuristic::SendDataInDataSourceCache(std::map<uint32_t, Ptr<
 
 				if (newinterestRoutes.empty())
 				{
-					//2018.2.8 修改后不该进入该函数
 					cout << "数据包 " << signature << " 对应的上一跳路段全部转发过" << endl;
 					continue;
 				}
@@ -2740,9 +2763,16 @@ void NavigationRouteHeuristic::SendDataInDataSourceCache(std::map<uint32_t, Ptr<
 
 				if (newPriorityList.empty())
 				{
-					cout<<"(forwarding.cc-SendDataInDataSourceCache) 数据包 "<<signature<<" 对应的未转发过的上一跳路段为空"<<endl;
+					cout << "(forwarding.cc-SendDataInDataSourceCache) 数据包 " << signature << " 对应的未转发过的上一跳路段为空" << endl;
 					//从m_datasource中得到的数据包，对应的转发优先级列表为空，需要存储到m_data中
 					CachingDataPacket(signature, data);
+
+					if (priority == 0)
+					{
+						//建立虚拟的PIT表项
+						std::set<std::string> fakeRoutes = m_sensor->RSUGetBehindRoutes();
+						m_nrpit->UpdateFakePit(data->GetName().get(0).toUri(), fakeRoutes);
+					}
 					continue;
 				}
 			}
