@@ -414,7 +414,7 @@ void NrPitImpl::AddTimeoutEvent(std::string lane)
 		Simulator::Remove(m_TimeoutEvent[lane]); // slower, but better for memory
 	}
 	//Schedule a new cleaning event
-	m_TimeoutEvent[lane] = Simulator::Schedule(Seconds(10), &NrPitImpl::CleanExpiredFakeEntry, this, lane);
+	m_TimeoutEvent[lane] = Simulator::Schedule(Seconds(2), &NrPitImpl::CleanExpiredFakeEntry, this, lane);
 	//std::cout << "(ndn-nr-pit-impl.cc-AddTimeoutEvent) At time " << Simulator::Now().GetSeconds() << " 为lane " << lane << "设置超时时间" << std::endl;
 }
 
