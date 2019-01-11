@@ -267,7 +267,7 @@ bool nrProducer::IsActive()
 	return m_active;
 }
 
-bool nrProducer::IsInterestLane(const std::string &lane)
+bool nrProducer::IsInterestLane(const double &x, const double &y, const std::string &lane)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
