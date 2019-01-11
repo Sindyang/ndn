@@ -193,7 +193,7 @@ void nrProducer::OnSendingTrafficData()
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
 
-	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(), data->GetSignature(), m_prefix.get(0).toUri());
+	std::pair<uint32_t, uint32_t> size_InterestSize = nrUtils::GetNodeSizeAndInterestNodeSize(m_sensor->getX(), m_sensor->getY(), GetNode()->GetId(), data->GetSignature(), m_prefix.get(0).toUri());
 	//当前活跃节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(), data->GetSignature(), size_InterestSize.first);
 	cout << "(nrProducer.cc-OnSendingTrafficData) 当前活跃节点个数为 " << size_InterestSize.first << " 感兴趣的节点总数为 " << size_InterestSize.second << std::endl
