@@ -237,7 +237,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 {
 	NS_LOG_FUNCTION(this);
 
-	if (m_node->GetId() >= 500)
+	if (m_node->GetId() >= 800)
 	{
 		return;
 	}
