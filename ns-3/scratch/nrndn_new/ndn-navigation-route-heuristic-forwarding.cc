@@ -1974,11 +1974,11 @@ double NavigationRouteHeuristic::stringToNum(const string &str)
 int NavigationRouteHeuristic::getPriorityOfData(const string &dataType, const double &currentDistance)
 {
 	double sameDistance = currentDistance / 1000;
-	double factor = 0.6;
+	double factor = 0.5;
 	double highPriority = 2.0 / 3.0;
 	double lowPriority = 1.0 / 3.0;
 	if (dataType == "road")
-		factor = 0.7;
+		factor = 0.6;
 
 	double result = exp(-factor * sameDistance);
 	//cout << "(getPriorityOfData) the result is " << result << endl;
