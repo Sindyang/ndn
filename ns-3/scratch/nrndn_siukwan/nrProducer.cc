@@ -316,11 +316,11 @@ void nrProducer::addAccident()
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	SeedManager::SetSeed(54321);
-	UniformVariable nrnd(start, end);
+	UniformVariable nrnd(start, end - 50);
 	//2019.1.6 修改发送数据包的时刻
 	uint32_t t = 0;
 	//2019.1.5 设定每个生产者发送的数据包个数
-	uint32_t count = (end - start) / 20;
+	uint32_t count = (end - start - 50) / 20;
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << count << "个数据包" << std::endl;
 	while (count--)
 	{
