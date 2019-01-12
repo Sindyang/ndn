@@ -218,8 +218,11 @@ double nrUtils::GetAverageHitRate()
 			if (interestedNodeSum != 0)
 			{
 				double hitRate = interestedNodeNum / interestedNodeSum;
+				if (hitRate > 1.0)
+				{
+					hitRate = 1.0;
+				}
 				result.push_back(hitRate);
-
 				//cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				//cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
 				//getchar();
