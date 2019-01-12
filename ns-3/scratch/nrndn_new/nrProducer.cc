@@ -182,7 +182,7 @@ void nrProducer::OnSendingTrafficData()
 	//dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(2));
+	data->SetFreshness(Seconds(5));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -234,7 +234,7 @@ Name nrProducer::getDataName(Name m_prefix)
 	//车辆状态相关
 	if (index == 0)
 	{
-		UniformVariable randDistance(2000, 2500);
+		UniformVariable randDistance(2500, 3000);
 		uint32_t distance = randDistance.GetValue();
 		string m_distance = numToString(distance);
 		m_name = "/vehicle/" + m_distance + "/" + m_x + "/" + m_y;
@@ -287,7 +287,7 @@ void nrProducer::addAccident()
 	uint32_t t = 0;
 	double totalTime = end - start;
 	uint32_t totalCount = totalTime / 20;
-	UniformVariable nrnd(start, start + totalTime * 0.25);
+	UniformVariable nrnd(start, start + totalTime * 0.2);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
 	uint32_t count = 1.0 * totalCount;
@@ -302,7 +302,7 @@ void nrProducer::addAccident()
 	}
 
 	count = 0 * totalCount;
-	UniformVariable nrndnew(start + totalTime * 0.25, end);
+	UniformVariable nrndnew(start + totalTime * 0.2, end);
 	while (count--)
 	{
 		t = nrndnew.GetValue();
