@@ -2508,7 +2508,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t id)
 		if (idx == id)
 		{
 			cout << "(forwarding.cc-notifyUpperOnInterest) idx " << idx << endl;
-			consumer->SendPacket();
+			//consumer->SendPacket();
 			break;
 		}
 		idx++;
