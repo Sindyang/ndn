@@ -334,10 +334,10 @@ void nrProducer::addAccident()
 	}
 
 	count = 0.25 * totalCount;
-	nrnd(totalTime * 0.25, end);
+	UniformVariable nrndnew(totalTime * 0.25, end);
 	while (count--)
 	{
-		t = nrnd.GetValue();
+		t = nrndnew.GetValue();
 		if (!m_accidentList.count(t))
 		{
 			ScheduleAccident(t);
