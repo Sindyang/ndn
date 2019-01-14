@@ -314,7 +314,7 @@ double nrUtils::GetAverageHitRateOfPriority(uint32_t priority)
 				}
 				result.push_back(hitRate);
 				//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " Priority " << priority << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
-					// << " hitRate " << hitRate << endl;
+				// << " hitRate " << hitRate << endl;
 			}
 		}
 	}
@@ -415,6 +415,7 @@ double nrUtils::GetAverageDelay()
 			//该数据包从发出到接收的平均时间
 			double averageDelayOfOneMsg = GetAverage(it2->second);
 			result.push_back(averageDelayOfOneMsg);
+			cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 平均延迟 " << averageDelayOfOneMsg << endl;
 		}
 	}
 	return GetAverage(result);
