@@ -182,7 +182,7 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 
 	FwHopCountTag hopCountTag;
 	nrPayload->PeekPacketTag(hopCountTag);
-	bool isTTLReachMax = (hopCountTag.Get() >= m_TTLMax);
+	bool isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
 	if(hopCountTag.Get() >= m_TTLMax)
 	{
 		cout << m_node->GetId() << " " << hopCountTag.Get() << " " << m_TTLMax << endl;
