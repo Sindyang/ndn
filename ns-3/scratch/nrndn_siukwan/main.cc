@@ -198,7 +198,7 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample() : random_seed(54321),
-							   certain_count(40),   //定点数量
+							   certain_count(35),   //定点数量
 							   certain_interval(0), //定点事件间隔
 							   random_accident(0),  //默认不随机
 							   size(3),
@@ -875,7 +875,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0, nodes.GetN() - 260);
 	std::cout << "插入事件：" << accidentNum << endl;
-	if (random_accident)
+	if (0) //(random_accident)
 	{
 		for (uint32_t idx = 0; idx < certain_count; idx++)
 		{
@@ -904,7 +904,7 @@ void nrndnExample::InstallTraffics()
 	{
 		//uint32_t array[20] = {79,120,179,367,444,459,529,548,560,571,619,624,639,662,708,729,733,734,763,776};
 		//uint32_t array[30] = {120,179,367,444,459,529,548,560,571,611,619,624,626,636,639,645,662,665,687,696,699,708,729,733,734,763,776,781,79,794};
-		uint32_t array[50] = {2,13,42,62,86,101,124,126,129,136,151,156,166,167,168,201,209,211,215,227,294,325,332,335,339,348,361,362,365,376,377,379,381,389,395,396,399,402,415,416,421,430,431,439,440,446,453,462,474,477};
+		uint32_t array[35] = {0, 2, 26, 36, 43, 57, 76, 84, 95, 104, 105, 106, 141, 146, 147, 159, 168, 185, 221, 252, 261, 262, 265, 271, 284, 290, 293, 305, 308, 309, 386, 424, 441, 452, 493};
 		for (uint32_t index = 0; index < certain_count; index++)
 		{
 
