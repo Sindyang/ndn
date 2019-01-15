@@ -1508,7 +1508,7 @@ void NavigationRouteHeuristic::OnData_RSU_RSU(const uint32_t remoteId, Ptr<Data>
 	}
 
 	//缓存数据包
-	CachingDataSourcePacket(signature, data);
+	//CachingDataSourcePacket(signature, data);
 
 	bool idIsInPriorityList;
 	std::vector<uint32_t>::const_iterator priorityListIt;
@@ -1673,7 +1673,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			if (Will || WillSecond)
 			{
 				// 2018.1.6 added by sy 2018.12.24 remove it
-				CachingDataSourcePacket(data->GetSignature(), data);
+				//CachingDataSourcePacket(data->GetSignature(), data);
 				cout << "该车辆第一次从后方收到数据包且对该数据包感兴趣" << endl;
 				return;
 			}
@@ -1699,7 +1699,7 @@ void NavigationRouteHeuristic::OnData_RSU(Ptr<Face> face, Ptr<Data> data)
 			return;
 		}
 		//缓存数据包
-		CachingDataSourcePacket(signature, data);
+		//CachingDataSourcePacket(signature, data);
 
 		bool idIsInPriorityList;
 		std::vector<uint32_t>::const_iterator priorityListIt;
