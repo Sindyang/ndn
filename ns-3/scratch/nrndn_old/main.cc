@@ -893,7 +893,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(random_seed);
 	// 2017.12.29 added by sy
 	// RSU不产生数据包 需要减去RSU的数量
-	UniformVariable rnd(0, nodes.GetN() - 260);
+	UniformVariable rnd(0, nodes.GetN() - 214);
 	std::cout << "(main.cc-InstallTraffics)插入事件：" << accidentNum << endl
 			  << endl;
 	if (random_accident)
