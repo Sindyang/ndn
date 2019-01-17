@@ -381,7 +381,7 @@ void RoadMap::InitializeEdges(TiXmlNode* pParent) {
 
 int main() {
 	RoadMap roadmap;
-	string netxmlpath = "E:/ndn_input_data/input_huaqiangbei_new_500/input_net.net.xml";
+	string netxmlpath = "E:/ndn_input_data/input_daxuecheng_new_600/input_net.net.xml";
 	roadmap.LoadNetXMLFile(netxmlpath.data());
 	return 0;
 }

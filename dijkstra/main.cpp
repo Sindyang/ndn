@@ -13,7 +13,7 @@
 using namespace std;
 
 #define INF 200000000
-#define N 245 //RSU的个数
+#define N 310 //RSU的个数
 
 struct Edge {
 	int to;          // 边终止节点
