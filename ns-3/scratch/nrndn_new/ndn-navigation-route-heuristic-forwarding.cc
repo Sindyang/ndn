@@ -2341,8 +2341,7 @@ void NavigationRouteHeuristic::SendHello()
 
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
-
-	cout<<"TEST"<<m_node->GetId()<<endl;
+		
 	const double &x = m_sensor->getX();
 	const double &y = m_sensor->getY();
 	const string &LaneName = m_sensor->getLane();
