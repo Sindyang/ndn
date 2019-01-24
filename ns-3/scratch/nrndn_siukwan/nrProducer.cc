@@ -334,7 +334,7 @@ void nrProducer::addAccident()
 	}
 
 	count = 0.2 * totalCount;
-	UniformVariable nrndnew(200, end);
+	UniformVariable nrndnew(250, end);
 	while (count--)
 	{
 		t = nrndnew.GetValue();
