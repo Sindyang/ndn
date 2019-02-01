@@ -59,7 +59,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	for (it = c.Begin(); it != c.End(); ++it)
 	{
 		// 2018.1.15 忽略RSU
-		if (idx >= 600)
+		if (idx >= 500)
 			continue;
 		Ptr<Application> app = (*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
