@@ -73,7 +73,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	uint32_t packetPayloadSize = nrPayload->GetSize();
 
 	//2018.5.19
-	if (m_node->GetId() >= 500)
+	if (m_node->GetId() >= 600)
 	{
 		return;
 	}
