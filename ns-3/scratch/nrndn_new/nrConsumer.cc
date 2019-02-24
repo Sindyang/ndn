@@ -237,7 +237,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 {
 	NS_LOG_FUNCTION(this);
 
-	if (m_node->GetId() >= 600)
+	if (m_node->GetId() >= 800)
 	{
 		return;
 	}
@@ -308,11 +308,11 @@ void nrConsumer::OnData(Ptr<const Data> data)
 int nrConsumer::getPriorityOfData(const string &dataType, const double &currentDistance)
 {
 	double sameDistance = currentDistance / 1000;
-	double factor = 0.6;
+	double factor = 0.4;
 	double highPriority = 2.0 / 3.0;
 	double lowPriority = 1.0 / 3.0;
 	if (dataType == "road")
-		factor = 0.7;
+		factor = 0.5;
 
 	double result = exp(-factor * sameDistance);
 	cout << "(getPriorityOfData) the result is " << result << endl;

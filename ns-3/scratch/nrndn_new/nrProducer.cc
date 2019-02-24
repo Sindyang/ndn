@@ -234,7 +234,7 @@ Name nrProducer::getDataName(Name m_prefix)
 	//车辆状态相关
 	if (index == 0)
 	{
-		UniformVariable randDistance(1500, 2000);
+		UniformVariable randDistance(2500, 3000);
 		uint32_t distance = randDistance.GetValue();
 		string m_distance = numToString(distance);
 		m_name = "/vehicle/" + m_distance + "/" + m_x + "/" + m_y;
@@ -286,7 +286,7 @@ void nrProducer::addAccident()
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
 	double totalTime = 500 - start;
-	uint32_t totalCount = totalTime / 5;
+	uint32_t totalCount = totalTime / 10;
 	UniformVariable nrnd(start, 200);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
