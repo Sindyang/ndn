@@ -234,7 +234,7 @@ Name nrProducer::getDataName(Name m_prefix)
 	//车辆状态相关
 	if (index == 0)
 	{
-		UniformVariable randDistance(2500, 3000);
+		UniformVariable randDistance(2000, 2500);
 		uint32_t distance = randDistance.GetValue();
 		string m_distance = numToString(distance);
 		m_name = "/vehicle/" + m_distance + "/" + m_x + "/" + m_y;
