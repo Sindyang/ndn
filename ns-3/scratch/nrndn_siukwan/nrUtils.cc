@@ -226,8 +226,8 @@ double nrUtils::GetAverageHitRate()
 				//cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				//cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
 				//getchar();
-				cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
-					 << " hitRate " << hitRate << endl;
+				//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
+					 //<< " hitRate " << hitRate << endl;
 			}
 		}
 	}
@@ -299,7 +299,7 @@ double nrUtils::GetAverageDelay()
 		{
 			double averageDelayOfOneMsg = GetAverage(it2->second);
 			result.push_back(averageDelayOfOneMsg);
-			cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 平均延迟 " << averageDelayOfOneMsg << endl;
+			//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 平均延迟 " << averageDelayOfOneMsg << endl;
 		}
 	}
 
