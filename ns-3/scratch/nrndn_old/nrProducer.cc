@@ -177,7 +177,7 @@ void nrProducer::OnSendingTrafficData()
 	dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(2.0));
+	data->SetFreshness(Seconds(5.0));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
