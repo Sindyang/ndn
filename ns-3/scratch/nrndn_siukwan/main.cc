@@ -228,7 +228,7 @@ nrndnExample::nrndnExample() : random_seed(54321),
 							   SumForwardTimes(0),
 							   noFwStop(true),
 							   TTLMax(10),
-							   virtualPayloadSize(512)
+							   virtualPayloadSize(2000)
 {
 	//os =  std::cout;
 	string home = getenv("HOME");
