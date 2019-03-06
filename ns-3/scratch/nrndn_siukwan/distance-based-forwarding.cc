@@ -294,7 +294,7 @@ void DistanceBasedForwarding::ForwardDataPacket(Ptr<Data> src, Time sendInterval
 	Ptr<Data> data = Create<Data>(*src);
 	data->SetPayload(nrPayload);
 
-	cout<<"数据包 "<<signature<<" 的等待时间为 "<<sendInterval <<endl;
+	cout<<"数据包 "<<signature<<" 的等待时间为 "<<sendInterval..GetSeconds() <<endl;
 
 	// 3. Send the data Packet. Already wait, so no schedule
 	SendDataPacket(data);
