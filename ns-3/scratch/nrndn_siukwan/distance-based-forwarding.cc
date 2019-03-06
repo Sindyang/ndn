@@ -15,6 +15,7 @@
 #include "ns3/ndn-face.h"
 #include "ns3/log.h"
 #include "ns3/timer.h"
+#include "nrUtils.h"
 #include <utility>
 #include <vector>
 

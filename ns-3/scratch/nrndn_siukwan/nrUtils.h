@@ -104,6 +104,8 @@ public:
 
 	static double GetAverageDelay();
 
+	static double GetAverageWaitTime();
+
 	//4 . appIndex
 	static AppIndexType appIndex;
 
@@ -113,7 +115,7 @@ public:
 	static uint32_t HelloByteSent;
 	static uint32_t HelloCount;
 	//2019.3.6
-	static vector<double> WaitTime;
+	static std::vector<double> WaitTime;
 	static void AggratWaitTime(double time);
 
 	static void AggrateDataPacketSize(Ptr<const Data> data);

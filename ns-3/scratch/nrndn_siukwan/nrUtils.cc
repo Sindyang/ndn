@@ -30,7 +30,7 @@ uint32_t nrUtils::InterestByteSent = 0;
 uint32_t nrUtils::HelloByteSent = 0;
 uint32_t nrUtils::HelloCount = 0;
 
-vector<double> nrUtils::WaitTime;
+std::vector<double> nrUtils::WaitTime;
 
 nrUtils::nrUtils()
 {
