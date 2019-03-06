@@ -208,7 +208,7 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 
 	m_sendingDataEvent[nodeId][signature]=
 			Simulator::Schedule(sendInterval,
-			&DistanceBasedForwarding::ForwardDataPacket, this, data);
+			&DistanceBasedForwarding::ForwardDataPacket, this, data, sendInterval);
 	return;
 }
 
@@ -258,10 +258,11 @@ void DistanceBasedForwarding::NotifyNewAggregate()
 	super::NotifyNewAggregate();
 }
 
-void DistanceBasedForwarding::ForwardDataPacket(Ptr<Data> src)
+void DistanceBasedForwarding::ForwardDataPacket(Ptr<Data> src, Time sendInterval)
 {
 	if(!m_running) return;
 	NS_LOG_FUNCTION (this);
+
 	uint32_t sourceId=0;
 	uint32_t signature=0;
 	// 1. record the Data Packet(only record the forwarded packet)
@@ -292,6 +293,8 @@ void DistanceBasedForwarding::ForwardDataPacket(Ptr<Data> src)
 	// 	2.3 copy the data packet, and install new payload to data
 	Ptr<Data> data = Create<Data>(*src);
 	data->SetPayload(nrPayload);
+
+	cout<<"数据包 "<<signature<<" 的等待时间为 "<<sendInterval <<endl;
 
 	// 3. Send the data Packet. Already wait, so no schedule
 	SendDataPacket(data);

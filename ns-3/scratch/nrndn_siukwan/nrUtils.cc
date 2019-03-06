@@ -299,7 +299,7 @@ double nrUtils::GetAverageDelay()
 		{
 			double averageDelayOfOneMsg = GetAverage(it2->second);
 			result.push_back(averageDelayOfOneMsg);
-			//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 平均延迟 " << averageDelayOfOneMsg << endl;
+			cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 平均延迟 " << averageDelayOfOneMsg << endl;
 		}
 	}
 
