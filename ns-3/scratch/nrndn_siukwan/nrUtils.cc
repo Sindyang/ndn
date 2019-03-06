@@ -332,7 +332,7 @@ double nrUtils::GetAverageTransmissionDelay()
 
 double nrUtils::GetAverageWaitTime()
 {
-	return Gverage(WaitTime);
+	return GetAverage(WaitTime);
 }
 
 void nrUtils::AggratWaitTime(double time)
