@@ -296,7 +296,7 @@ void DistanceBasedForwarding::ForwardDataPacket(Ptr<Data> src, Time sendInterval
 	data->SetPayload(nrPayload);
 
 	//2019.3.6 统计等待时间
-	nrUtils::AggratWaitTime(sendInterval.GetSeconds());
+	ndn::nrndn::nrUtils::AggratWaitTime(sendInterval.GetSeconds());
 
 	// 3. Send the data Packet. Already wait, so no schedule
 	SendDataPacket(data);
