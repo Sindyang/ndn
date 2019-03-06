@@ -127,7 +127,7 @@ private:
 	 * \brief	the function which will be executed after DataPacketTimer expire
 	 * @param	src	the data packet received
 	 */
-	void ForwardDataPacket(Ptr<Data> src);
+	void ForwardDataPacket(Ptr<Data> src,Time sendInterval);
 
 	/**
 	 * \brief	Send the data packet immediately,
