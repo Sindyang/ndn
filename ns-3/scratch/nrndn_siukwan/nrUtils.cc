@@ -30,6 +30,8 @@ uint32_t nrUtils::InterestByteSent = 0;
 uint32_t nrUtils::HelloByteSent = 0;
 uint32_t nrUtils::HelloCount = 0;
 
+vector<double> nrUtils::WaitTime;
+
 nrUtils::nrUtils()
 {
 	// TODO Auto-generated constructor stub
@@ -227,7 +229,7 @@ double nrUtils::GetAverageHitRate()
 				//cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
 				//getchar();
 				//cout << "车辆 " << it1->first << " 数据包 " << it2->first << " 收到个数 " << interestedNodeNum << " 总数 " << interestedNodeSum
-					 //<< " hitRate " << hitRate << endl;
+				//<< " hitRate " << hitRate << endl;
 			}
 		}
 	}
@@ -326,6 +328,16 @@ double nrUtils::GetAverageTransmissionDelay()
 	NS_ASSERT(SumSize != 0);
 
 	return SumDelay / SumSize;
+}
+
+double nrUtils::GetAverageWaitTime()
+{
+	return Gverage(WaitTime);
+}
+
+void nrUtils::AggratWaitTime(double time)
+{
+	WaitTime.push_back(time);
 }
 
 void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)

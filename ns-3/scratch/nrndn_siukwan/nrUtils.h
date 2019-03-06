@@ -112,6 +112,10 @@ public:
 	static uint32_t InterestByteSent;
 	static uint32_t HelloByteSent;
 	static uint32_t HelloCount;
+	//2019.3.6
+	static vector<double> WaitTime;
+	static void AggratWaitTime(double time);
+
 	static void AggrateDataPacketSize(Ptr<const Data> data);
 	static void AggrateInterestPacketSize(Ptr<const Interest> interest);
 };
