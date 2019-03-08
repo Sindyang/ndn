@@ -13,6 +13,7 @@
 
 #include "ns3/ndn-data.h"
 #include "ns3/log.h"
+#include "ns3/ndnSIM/utils/ndn-fw-hop-count-tag.h"
 
 NS_LOG_COMPONENT_DEFINE("ndn.nrndn.tradConsumer");
 
