@@ -72,6 +72,9 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	uint32_t signature = data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
 
+	FwHopCountTag hopCountTag;
+	nrPayload->PeekPacketTag(hopCountTag);
+
 	//2018.5.19
 	if (m_node->GetId() >= 800)
 	{
@@ -104,7 +107,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
 		// 2018.1.25 只统计感兴趣的延迟
 		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
-		std::cout << " 感兴趣 ";
+		std::cout << " 跳数为 " << hopCountTag.Get() << " 感兴趣 ";
 	}
 	else
 	{

@@ -509,7 +509,7 @@ void nrndnExample::Report()
 			  << std::left << std::setw(10) << "accuracyR"
 			  << std::left << std::setw(10) << "hitR"
 			  << std::left << std::setw(10) << "avgDelay"
-			  << std::left << std::setw(10) << "avgWaitTime"
+			  << std::left << std::setw(10) << "avgWait"
 			  << std::left << std::setw(10) << "avgFwd" << endl;
 	std::cout << std::left << std::setw(11) << arrivalRate
 			  << std::left << std::setw(10) << accuracyRate
