@@ -823,6 +823,7 @@ void NavigationRouteHeuristic::Interest_InInterestRoute(Ptr<Interest> interest, 
 	vector<uint32_t>::const_iterator idit;
 	idit = find(pri.begin(), pri.end(), m_node->GetId());
 	double index = distance(pri.begin(), idit);
+	cout<<"(Interest_InInterestRoute) index "<<index<<endl;
 	double random = m_uniformRandomVariable->GetInteger(0, 20);
 	Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 	//构造转发优先级列表，并判断前方邻居是否为空
@@ -929,6 +930,7 @@ void NavigationRouteHeuristic::Interest_NotInInterestRoute(Ptr<Interest> interes
 	vector<uint32_t>::const_iterator idit;
 	idit = find(pri.begin(), pri.end(), m_node->GetId());
 	double index = distance(pri.begin(), idit);
+	cout<<"(Interest_NotInInterestRoute) index "<<index<<endl;
 	double random = m_uniformRandomVariable->GetInteger(0, 20);
 	Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 	//构造转发优先级列表，并判断前方邻居是否为空
