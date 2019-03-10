@@ -108,6 +108,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature);
 		// 2018.1.25 只统计感兴趣的延迟
 		nrUtils::InsertTransmissionDelayItem(nodeId, signature, delay);
+		nrUtils::InsertHopCount(hopCountTag.Get());
 		std::cout << " 跳数为 " << hopCountTag.Get() << " 感兴趣 ";
 	}
 	else

@@ -31,6 +31,7 @@ uint32_t nrUtils::HelloByteSent = 0;
 uint32_t nrUtils::HelloCount = 0;
 
 std::vector<double> nrUtils::WaitTime;
+std::vector<int> nrUtils::Hop;
 
 nrUtils::nrUtils()
 {
@@ -338,6 +339,15 @@ double nrUtils::GetAverageWaitTime()
 void nrUtils::AggratWaitTime(double time)
 {
 	WaitTime.push_back(time);
+}
+
+double nrUtils::GetAverageHop(){
+	return GetAverage(Hop);
+}
+
+void nrUtils::InsertHopCount(int hop)
+{
+	Hop.push_back(hop);
 }
 
 void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)

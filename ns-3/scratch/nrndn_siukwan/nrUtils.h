@@ -106,6 +106,8 @@ public:
 
 	static double GetAverageWaitTime();
 
+	static double GetAverageHop();
+
 	//4 . appIndex
 	static AppIndexType appIndex;
 
@@ -116,7 +118,10 @@ public:
 	static uint32_t HelloCount;
 	//2019.3.6
 	static std::vector<double> WaitTime;
+	static std::vector<int> Hop;
+	
 	static void AggratWaitTime(double time);
+	static void InsertHopCount(int hop);
 
 	static void AggrateDataPacketSize(Ptr<const Data> data);
 	static void AggrateInterestPacketSize(Ptr<const Interest> interest);

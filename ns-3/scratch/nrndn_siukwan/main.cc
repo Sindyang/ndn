@@ -144,6 +144,7 @@ class nrndnExample
 	double averageInterestForwardTimes;
 	double averageDelay;
 	double averageWaitTime;
+	double averagehop;
 	uint32_t SumForwardTimes;
 
 	bool noFwStop;
@@ -227,6 +228,7 @@ nrndnExample::nrndnExample() : random_seed(54321),
 							   averageInterestForwardTimes(0),
 							   averageDelay(0),
 							   averageWaitTime(0),
+							   averagehop(0),
 							   SumForwardTimes(0),
 							   noFwStop(true),
 							   TTLMax(10),
@@ -510,12 +512,14 @@ void nrndnExample::Report()
 			  << std::left << std::setw(10) << "hitR"
 			  << std::left << std::setw(10) << "avgDelay"
 			  << std::left << std::setw(10) << "avgWait"
+			  << std::left << std::setw(10) << "avgHop"
 			  << std::left << std::setw(10) << "avgFwd" << endl;
 	std::cout << std::left << std::setw(11) << arrivalRate
 			  << std::left << std::setw(10) << accuracyRate
 			  << std::left << std::setw(10) << hitRate
 			  << std::left << std::setw(10) << averageDelay
 			  << std::left << std::setw(10) << averageWaitTime
+			  << std::left << std::setw(10) << averagehop
 			  << std::left << std::setw(10) << averageForwardTimes << endl
 			  << endl;
 
@@ -1004,6 +1008,8 @@ void nrndnExample::getStatistic()
 	averageDelay = nrUtils::GetAverageDelay();
 
 	averageWaitTime = nrUtils::GetAverageWaitTime();
+
+	averagehop = nrUtils::GetAverageHop();
 
 	//5. get average data forward times
 	pair<uint32_t, double> AverageDataForwardPair = nrUtils::GetAverageForwardTimes();
