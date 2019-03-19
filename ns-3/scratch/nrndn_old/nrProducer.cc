@@ -268,7 +268,7 @@ void nrProducer::addAccident(double iType)
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 
-	for (uint32_t dTime = 90; dTime < end-10; dTime += iType)
+	for (uint32_t dTime = 90; dTime < end; dTime += iType)
 	{
 		ScheduleAccident(dTime);
 	}
