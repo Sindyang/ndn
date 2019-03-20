@@ -251,7 +251,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	uint32_t packetPayloadSize = nrPayload->GetSize();
 
 	//2018.5.19 
-	if(m_node->GetId() >= 600)
+	if(m_node->GetId() >= 500)
 	{
 		return;
 	}

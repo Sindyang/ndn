@@ -244,7 +244,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	uint32_t signature = data->GetSignature();
 	uint32_t packetPayloadSize = nrPayload->GetSize();
 
-	if (m_node->GetId() >= 600)
+	if (m_node->GetId() >= 500)
 	{
 		return;
 	}
