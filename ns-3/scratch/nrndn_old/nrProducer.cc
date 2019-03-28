@@ -177,7 +177,7 @@ void nrProducer::OnSendingTrafficData()
 	dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(5.0));
+	data->SetFreshness(Seconds(2.0));
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -228,7 +228,7 @@ void nrProducer::addAccident()
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
 	double totalTime = 500 - start;
-	uint32_t totalCount = totalTime / 10;
+	uint32_t totalCount = totalTime / 8;
 	UniformVariable nrnd(start, 200);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
