@@ -636,7 +636,7 @@ void nrndnExample::CreateDevices()
 	{
 		wifi.EnableLogComponents(); // Turn on all Wifi logging
 	}
-	wifi.SetStandard(WIFI_PHY_STANDARD_80211b);
+	wifi.SetStandard(WIFI_PHY_STANDARD_80211p);
 	wifi.SetRemoteStationManager("ns3::ConstantRateWifiManager", "DataMode",
 								 StringValue(phyMode), "ControlMode", StringValue(phyMode));
 
