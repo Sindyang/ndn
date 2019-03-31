@@ -77,7 +77,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	nrPayload->PeekPacketTag(hopCountTag);
 
 	//2018.5.19
-	if (m_node->GetId() >= 500)
+	if (m_node->GetId() >= 800)
 	{
 		return;
 	}
