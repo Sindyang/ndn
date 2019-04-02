@@ -177,7 +177,7 @@ void nrProducer::OnSendingTrafficData()
 	//生成数据包名称
 	uint32_t index = 0;
 
-	m_prefix = getDataName(index,m_prefix);
+	m_prefix = getDataName(index, m_prefix);
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 
 	//2018.12.10 doesn't work
@@ -185,7 +185,7 @@ void nrProducer::OnSendingTrafficData()
 	data->SetName(dataName);
 	// 2018.1.24
 
-	if(index == 0)
+	if (index == 0)
 	{
 		data->SetFreshness(Seconds(2));
 	}
@@ -193,8 +193,7 @@ void nrProducer::OnSendingTrafficData()
 	{
 		data->SetFreshness(Seconds(5));
 	}
-	
-	
+
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -204,7 +203,7 @@ void nrProducer::OnSendingTrafficData()
 	}
 
 	std::cout << "(nrProducer.cc-OnSendingTrafficData) 源节点 " << GetNode()->GetId() << " at time " << Simulator::Now().GetSeconds()
-			  << " 发送数据包:" << m_prefix.toUri() << " Signature " << data->GetSignature() << std::endl;
+			  << " 发送数据包:" << m_prefix.toUri() << " Freshness " << data->GetFreshness().GetSeconds() << " Signature " << data->GetSignature() << std::endl;
 
 	NS_LOG_DEBUG("node(" << GetNode()->GetId() << ")\t sending Traffic Data: " << data->GetName() << " \tsignature:" << data->GetSignature());
 	FwHopCountTag hopCountTag;
@@ -231,7 +230,7 @@ void nrProducer::OnSendingTrafficData()
 	m_transmittedDatas(data, this, m_face);
 }
 
-Name nrProducer::getDataName(uint32_t& index, Name m_prefix)
+Name nrProducer::getDataName(uint32_t &index, Name m_prefix)
 {
 	string m_name = "";
 	//获得数据源的坐标
@@ -298,7 +297,7 @@ void nrProducer::addAccident()
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
 	double totalTime = 500 - start;
-	uint32_t totalCount = totalTime / 30;
+	uint32_t totalCount = totalTime / 15;
 	UniformVariable nrnd(start, 200);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 

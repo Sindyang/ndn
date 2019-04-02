@@ -199,7 +199,7 @@ void nrProducer::OnSendingTrafficData()
 	}
 
 	std::cout << "(nrProducer.cc-OnSendingTrafficData) 源节点 " << GetNode()->GetId() << " at time " << Simulator::Now().GetSeconds()
-			  << " 发送数据包:" << m_prefix.toUri() << " Signature " << data->GetSignature() << std::endl;
+			  << " 发送数据包:" << m_prefix.toUri() << " Freshness "<<data->GetFreshness().GetSeconds()<< " Signature " << data->GetSignature() << std::endl;
 
 	NS_LOG_DEBUG("node(" << GetNode()->GetId() << ")\t sending Traffic Data: " << data->GetName() << " \tsignature:" << data->GetSignature());
 	FwHopCountTag hopCountTag;
@@ -240,7 +240,7 @@ void nrProducer::addAccident()
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
 	double totalTime = 500 - start;
-	uint32_t totalCount = totalTime / 30;
+	uint32_t totalCount = totalTime / 15;
 	UniformVariable nrnd(start, 200);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
