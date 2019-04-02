@@ -175,14 +175,26 @@ void nrProducer::OnSendingTrafficData()
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
 
 	//生成数据包名称
-	m_prefix = getDataName(m_prefix);
+	uint32_t index = 0;
+
+	m_prefix = getDataName(index,m_prefix);
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 
 	//2018.12.10 doesn't work
 	//dataName->append(m_postfix); //m_postfix is "/", seems OK
 	data->SetName(dataName);
 	// 2018.1.24
-	data->SetFreshness(Seconds(2));
+
+	if(index == 0)
+	{
+		data->SetFreshness(Seconds(2));
+	}
+	else
+	{
+		data->SetFreshness(Seconds(5));
+	}
+	
+	
 	data->SetTimestamp(Simulator::Now());
 
 	data->SetSignature(m_rand.GetValue()); //just generate a random number
@@ -219,7 +231,7 @@ void nrProducer::OnSendingTrafficData()
 	m_transmittedDatas(data, this, m_face);
 }
 
-Name nrProducer::getDataName(Name m_prefix)
+Name nrProducer::getDataName(uint32_t& index, Name m_prefix)
 {
 	string m_name = "";
 	//获得数据源的坐标
@@ -230,7 +242,7 @@ Name nrProducer::getDataName(Name m_prefix)
 
 	//随机确定事件类型
 	UniformVariable randType(0, 2);
-	uint32_t index = randType.GetValue();
+	index = randType.GetValue();
 	//车辆状态相关
 	if (index == 0)
 	{
@@ -368,7 +380,6 @@ bool nrProducer::IsInterestLane(const double &x, const double &y, const std::str
 		cout << "消费者 " << GetNode()->GetId() << " 和生产者的距离" << result.second << "超过了有效距离 " << distance << endl;
 		return false;
 	}
-
 	return (it2 != route.end());
 }
 
