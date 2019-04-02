@@ -65,7 +65,7 @@ class nrProducer : public App
 	void addAccident(double iType);
 
 	//2018.12.12
-	Name getDataName(Name name);
+	Name getDataName(uint32_t& index, Name name);
 
 	//2018.12.12
 	string numToString(double num);
