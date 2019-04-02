@@ -298,7 +298,7 @@ void nrProducer::addAccident()
 	uint32_t t = 0;
 	double totalTime = end - start;
 	double medium = totalTime/2 + start;
-	uint32_t totalCount =  totalTime  / 7;
+	uint32_t totalCount =  totalTime  / 15;
 	UniformVariable nrnd(start+5, medium);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
