@@ -319,11 +319,11 @@ void nrProducer::addAccident()
 	uint32_t t = 0;
 	double totalTime = end - start-10;
 	double medium = totalTime/2 + start;
-	uint32_t totalCount =  totalTime  / 15;
+	uint32_t totalCount =  totalTime  / 7;
 	UniformVariable nrnd(start+5, medium);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
-	uint32_t count = 0.4 * totalCount;
+	uint32_t count = 0.5 * totalCount;
 	while (count--)
 	{
 		t = nrnd.GetValue();
@@ -334,7 +334,7 @@ void nrProducer::addAccident()
 		}
 	}
 
-	count = 0.6 * totalCount;
+	count = 0.5 * totalCount;
 	UniformVariable nrndnew(medium, end-5);
 	while (count--)
 	{
