@@ -296,7 +296,7 @@ void nrProducer::addAccident()
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
-	double totalTime = end - start;
+	double totalTime = end - start - 10;
 	double medium = totalTime/2 + start;
 	uint32_t totalCount =  totalTime  / 15;
 	UniformVariable nrnd(start+5, medium);
