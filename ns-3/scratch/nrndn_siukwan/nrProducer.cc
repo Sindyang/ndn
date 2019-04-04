@@ -317,10 +317,10 @@ void nrProducer::addAccident()
 	double start = m_startTime.GetSeconds();
 	double end = m_stopTime.GetSeconds();
 	uint32_t t = 0;
-	double totalTime = end - start - 10;
-	double medium = totalTime / 2 + start;
-	uint32_t totalCount = totalTime / 3;
-	UniformVariable nrnd(start + 5, medium);
+	double totalTime = 500 - start;
+	double medium = (end-start-10)/2 + start;
+	uint32_t totalCount = totalTime / 10;
+	UniformVariable nrnd(start+5, medium);
 	std::cout << "(nrProducer.cc-addAccident) 生产者 " << m_node->GetId() << "预计发送 " << totalCount << "个数据包" << std::endl;
 
 	uint32_t count = 0.5 * totalCount;
